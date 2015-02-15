@@ -1,12 +1,11 @@
 var request = require('request');
-var Entity = require('./entity');
+var Payment = require('./payment');
 
 var Razorpay = function(key_id, key_secret) {
-
-  this.key_id = key_id;
-  this.key_secret = key_secret;
+  this.payment.key_id = key_id;
+  this.payment.key_secret = key_secret;
 }
 
-Razorpay.prototype.payments = new Entity("payments");
+Razorpay.prototype.payment = new Payment({entity: 'payment'});
 
 module.exports = Razorpay;

@@ -12,14 +12,9 @@ First, you need to create a razorpay API instance using your merchant key id, an
 
 The most common flow is capturing a payment:
 
-    payment = rzp.payments.fetch("pay-ment_id");
-    payment.capture({amount:100});
+    payment = rzp.payment.fetch("pay-ment_id", function(payment){payment.capture()});
+	payment = rzp.payment.capture({id: "pay-ment_id", amount: 50000})
     //Note that the amount here must come from the user's session
-
-You can similarly refund a payment using the following:
-
-    refund = rzp.payments.fetch("pay-ment_id").refund({amount:100});
-    //This will return a refund object
 
 There are other constructs as well (fetching all payments, and fetching refunds), which you can learn about at our docs.
 
