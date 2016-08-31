@@ -1,10 +1,33 @@
-# Razorpay node.js bindings
+# Razorpay Node SDK
 
 ## Installation
 
-    npm install razorpay
+```bash
+npm i razorpay-node --save
+```
 
 ## Usage
+
+```js
+var rzp = new Razorpay({
+  key_id: 'XXX',
+  key_secret: 'YYY'
+})
+
+rzp.payments.all({
+  from: '2016-08-01',
+  to: '2016-08-20'
+}).then((collection) => {
+
+})
+
+rzp.payments.capture('payment_id', 'amount')
+```
+
+
+
+
+
 
 First, you need to create a razorpay API instance using your merchant key id, and key secret:
 
