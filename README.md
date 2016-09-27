@@ -1,49 +1,163 @@
 # Razorpay Node SDK
 
+Official nodejs bindings for [Razorpay API](https://docs.razorpay.com/docs/payments)
+
 ## Installation
 
 ```bash
-npm i razorpay-node --save
+npm i razorpay --save
 ```
 
-## Usage
+## Documentation
+
+
+### Basic Usage
+
+Instantiate the razorpay instance with `key_id` & `key_secret`. You can obtain the keys from the dashboard app ([https://dashboard.razorpay.com/#/app/keys](https://dashboard.razorpay.com/#/app/keys))
 
 ```js
 var rzp = new Razorpay({
   key_id: 'XXX',
   key_secret: 'YYY'
 })
+```
 
+The resources can be accessed via the `rzp` instance. All the methods invocations follows the namespaced signature
+
+```js
+// API signature
+// {rzpInstance}.{resourceName}.{methodName}(resourceId [, params])
+
+// example
+rzp.payments.fetch(paymentId)
+```
+
+Every resource method returns a promise.
+
+```js
 rzp.payments.all({
   from: '2016-08-01',
   to: '2016-08-20'
-}).then((collection) => {
-
+}).then((response) => {
+  // handle success
+}).catch((error) => {
+  // handle error
 })
-
-rzp.payments.capture('payment_id', 'amount')
 ```
 
+If you want to use callbacks instead of promises, every resource method will accept a callback function as a last parameter. The callback functions will behave as [Error First Callbacks ](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/)
 
+```js
+rzp.payments.all({
+  from: '2016-08-01',
+  to: '2016-08-20'
+}, function(error, response) => {
+  if (error) {
+    // handle error
+  } else {
+    // handle success
+  }
+})
+```
 
+## Resources
 
+### Payments
 
+#### `instance.payments.all({from, to, count, skip})`
 
-First, you need to create a razorpay API instance using your merchant key id, and key secret:
+> Fetches payments list.
 
-    var rzp = new Razorpay("key_id", "key_secret");
+| Name  | Type      | Description                                      |
+|-------|-----------|--------------------------------------------------|
+| from  | Timestamp | timestamp after which the payments were created  |
+| to    | Timestamp | timestamp before which the payments were created |
+| count | Integer   | number of payments to fetch (default: 10)        |
+| skip  | Integer   | number of payments to be skipped (default: 0)    |
 
-The most common flow is capturing a payment:
+--
 
-    payment = rzp.payment.fetch("pay-ment_id", function(payment){payment.capture()});
-	payment = rzp.payment.capture({id: "pay-ment_id", amount: 50000})
-    //Note that the amount here must come from the user's session
+#### `instance.payments.fetch(payment_id)`
 
-There are other constructs as well (fetching all payments, and fetching refunds), which you can learn about at our docs.
+> Retrieves a particular payment.
+
+**Parameters:**
+
+| Name       | Type   | Description                       |
+|------------|--------|-----------------------------------|
+| payment_id | String | Id of the payment to be retrieved |
+
+--
+
+#### `instance.payments.capture(payment_id, amount)`
+
+> Capture a payment.
+
+**Parameters:**
+
+| Name      | Type    | Description                                                                    |
+|-----------|---------|--------------------------------------------------------------------------------|
+| paymentId | String  | Id of the payment to capture                                                   |
+| amount    | Integer | The amount to be captured (should be equal to the authorized amount, in paise) |
+
+--
+
+#### `instance.payments.refund(payment_id, {amount, notes})`
+
+> Refund a payment.
+
+**Parameters:**
+
+| Name       | Type             | Description                          |
+|------------|------------------|--------------------------------------|
+| payment_id | String           | Id of the payment to refund          |
+| amount     | Integer          | The amount to be refunded (in paise) |
+| notes      | Array of strings | Array of notes fields.               |
+
+--
+
+#### `instance.refunds.all({from, to, count, skip, payment_id})`
+
+> Fetches refunds list. If `payment_id` is passed, refunds of that particular payment is fetched
+
+**Parameters:**
+
+| Name       | Type      | Description                                      |
+|------------|-----------|--------------------------------------------------|
+| payment_id | String    | The payment id whose refunds are to be fetched   |
+| from       | Timestamp | timestamp after which the payments were created  |
+| to         | Timestamp | timestamp before which the payments were created |
+| count      | Integer   | number of payments to fetch (default: 10)        |
+| skip       | Boolean   | number of payments to be skipped (default: 0)    |
+
+--
+
+#### `instance.refund.fetch(refund_id, {payment_id})`
+
+> Fetches a refund.
+
+**Parameters:**
+
+| Name       | Type   | Description                                           |
+|------------|--------|-------------------------------------------------------|
+| payment_id | String | The id of the payment whose refund is to be retrieved |
+| refund_id  | String | ID of the refund to be retrieved                      |
+
+---
+
 
 Further documentation is available at <https://docs.razorpay.com>
 
 
 ## Development
 
-We use `mocha` as our testing framework. Just run `npm test` to run all tests.
+```bash
+npm install
+```
+
+Run your tests using `npm test`
+
+## Licence
+
+MIT Licensed. LICENSE file added to repo.
+
