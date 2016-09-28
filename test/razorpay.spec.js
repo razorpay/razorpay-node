@@ -2,7 +2,7 @@
 
 const chai = require('chai')
 const assert = chai.assert
-const Razorpay = require('../dist/rzp')
+const Razorpay = require('../dist/razorpay')
 
 describe('Razorpay is initialized properly', () => {
   it('Validation for key_id & key_secret', () => {
@@ -22,12 +22,12 @@ describe('Razorpay is initialized properly', () => {
   })
 
   it('instance should initialize', () => {
-    let rzp = new Razorpay({
+    let instance = new Razorpay({
       key_id: 'XXX',
       key_secret: 'YYY'
     })
 
-    assert.equal(rzp.key_id, 'XXX')
-    assert.equal(rzp.key_secret, 'YYY')
+    assert.equal(instance.key_id, 'XXX')
+    assert.equal(instance.key_secret, 'YYY')
   })
 })

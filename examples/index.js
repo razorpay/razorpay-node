@@ -3,8 +3,8 @@
 const Razorpay = require('razorpay')
 
 let rzp = new Razorpay({
-  key_id: 'rzp_test_ZKfrsOgq4HdpJC',
-  key_secret: 'koLDKEGIOueYwa9RfgLT5btw'
+  key_id: process.env.KEY_ID, // your `KEY_ID`
+  key_secret: process.env.KEY_SECRET // your `KEY_SECRET`
 })
 
 // Fetches all payments

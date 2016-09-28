@@ -1,6 +1,6 @@
 # Razorpay Node SDK
 
-Official nodejs bindings for [Razorpay API](https://docs.razorpay.com/docs/payments)
+Official nodejs bindings for [Razorpay API](https://docs.razorpay.com/docs/payments).
 
 ## Installation
 
@@ -16,26 +16,26 @@ npm i razorpay --save
 Instantiate the razorpay instance with `key_id` & `key_secret`. You can obtain the keys from the dashboard app ([https://dashboard.razorpay.com/#/app/keys](https://dashboard.razorpay.com/#/app/keys))
 
 ```js
-var rzp = new Razorpay({
-  key_id: 'XXX',
-  key_secret: 'YYY'
+var instance = new Razorpay({
+  key_id: 'YOUR_KEY_ID',
+  key_secret: 'YOUR_KEY_SECRET'
 })
 ```
 
-The resources can be accessed via the `rzp` instance. All the methods invocations follows the namespaced signature
+The resources can be accessed via the instance. All the methods invocations follows the namespaced signature
 
 ```js
 // API signature
-// {rzpInstance}.{resourceName}.{methodName}(resourceId [, params])
+// {razorpayInstance}.{resourceName}.{methodName}(resourceId [, params])
 
 // example
-rzp.payments.fetch(paymentId)
+instance.payments.fetch(paymentId)
 ```
 
 Every resource method returns a promise.
 
 ```js
-rzp.payments.all({
+instance.payments.all({
   from: '2016-08-01',
   to: '2016-08-20'
 }).then((response) => {
@@ -48,7 +48,7 @@ rzp.payments.all({
 If you want to use callbacks instead of promises, every resource method will accept a callback function as a last parameter. The callback functions will behave as [Error First Callbacks ](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/)
 
 ```js
-rzp.payments.all({
+instance.payments.all({
   from: '2016-08-01',
   to: '2016-08-20'
 }, function(error, response) => {
@@ -61,6 +61,8 @@ rzp.payments.all({
 ```
 
 ## Resources
+
+> `*` indicates mandatory field
 
 ### Payments
 
@@ -75,7 +77,6 @@ rzp.payments.all({
 | count | integer   | number of payments to fetch (default: 10)        |
 | skip  | integer   | number of payments to be skipped (default: 0)    |
 
---
 
 #### `instance.payments.fetch(payment_id)`
 
@@ -85,9 +86,8 @@ rzp.payments.all({
 
 | Name       | Type   | Description                       |
 |------------|--------|-----------------------------------|
-| payment_id | string | Id of the payment to be retrieved |
+| payment_id* | string | Id of the payment to be retrieved |
 
---
 
 #### `instance.payments.capture(payment_id, amount)`
 
@@ -97,10 +97,8 @@ rzp.payments.all({
 
 | Name      | Type    | Description                                                                    |
 |-----------|---------|--------------------------------------------------------------------------------|
-| paymentId | string  | Id of the payment to capture                                                   |
-| amount    | integer | The amount to be captured (should be equal to the authorized amount, in paise) |
-
---
+| paymentId* | string  | Id of the payment to capture                                                   |
+| amount*    | integer | The amount to be captured (should be equal to the authorized amount, in paise) |
 
 #### `instance.payments.refund(payment_id, {amount, notes})`
 
@@ -108,13 +106,15 @@ rzp.payments.all({
 
 **Parameters:**
 
-| Name       | Type             | Description                          |
-|------------|------------------|--------------------------------------|
-| payment_id | string           | Id of the payment to refund          |
-| amount     | integer          | The amount to be refunded (in paise) |
-| notes      | array of strings | Array of notes fields.               |
+| Name        | Type    | Description                          |
+|-------------|---------|--------------------------------------|
+| payment_id* | string  | Id of the payment to refund          |
+| amount      | integer | The amount to be refunded (in paise) |
+| notes       | object  | A key-value pair                     |
 
 --
+
+### Refunds
 
 #### `instance.refunds.all({from, to, count, skip, payment_id})`
 
@@ -130,7 +130,6 @@ rzp.payments.all({
 | count      | integer   | number of payments to fetch (default: 10)        |
 | skip       | boolean   | number of payments to be skipped (default: 0)    |
 
---
 
 #### `instance.refunds.fetch(refund_id, {payment_id})`
 
@@ -140,8 +139,8 @@ rzp.payments.all({
 
 | Name       | Type   | Description                                           |
 |------------|--------|-------------------------------------------------------|
+| refund_id*  | string | ID of the refund to be retrieved                     |
 | payment_id | string | The id of the payment whose refund is to be retrieved |
-| refund_id  | string | ID of the refund to be retrieved                      |
 
 --
 
@@ -155,14 +154,13 @@ rzp.payments.all({
 
 | Name            | Type    | Description                                                                  |
 |-----------------|---------|------------------------------------------------------------------------------|
-| amount          | integer | Amount of the order to be paid                                               |
+| amount*          | integer | Amount of the order to be paid                                               |
 | currency        | string  | Currency of the order. Currently only INR is supported.                      |
-| receipt         | string  | Your system order reference id.                                              |
+| receipt*         | string  | Your system order reference id.                                              |
 | payment_capture | boolean | Whether the payment should be captured automatically or not. Default `false` |
 | notes           | object  | A key-value pair                                                             |
 
-
-#### `instance.orders.all({from, to, count, skip, authorized, receipt})
+#### `instance.orders.all({from, to, count, skip, authorized, receipt})`
 
 > Fetches orders list
 
@@ -186,7 +184,8 @@ rzp.payments.all({
 
 | Name     | Type   | Description                         |
 |----------|--------|-------------------------------------|
-| order_id | string | The id of the order to be retrieved |
+| order_id* | string | The id of the order to be retrieved |
+
 
 ---
 

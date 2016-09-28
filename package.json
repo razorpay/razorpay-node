@@ -2,7 +2,7 @@
   "name": "razorpay",
   "version": "0.0.0",
   "description": "Official Node SDK for Razorpay API",
-  "main": "dist/rzp.js",
+  "main": "dist/razorpay.js",
   "scripts": {
     "prepublish": "npm run build",
     "clean": "rm -rf dist && mkdir dist",
@@ -17,6 +17,7 @@
   },
   "keywords": [
     "razorpay",
+    "payments",
     "node",
     "nodejs",
     "razorpay-node"
