@@ -70,10 +70,10 @@ rzp.payments.all({
 
 | Name  | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
-| from  | Timestamp | timestamp after which the payments were created  |
-| to    | Timestamp | timestamp before which the payments were created |
-| count | Integer   | number of payments to fetch (default: 10)        |
-| skip  | Integer   | number of payments to be skipped (default: 0)    |
+| from  | timestamp | timestamp after which the payments were created  |
+| to    | timestamp | timestamp before which the payments were created |
+| count | integer   | number of payments to fetch (default: 10)        |
+| skip  | integer   | number of payments to be skipped (default: 0)    |
 
 --
 
@@ -85,7 +85,7 @@ rzp.payments.all({
 
 | Name       | Type   | Description                       |
 |------------|--------|-----------------------------------|
-| payment_id | String | Id of the payment to be retrieved |
+| payment_id | string | Id of the payment to be retrieved |
 
 --
 
@@ -97,8 +97,8 @@ rzp.payments.all({
 
 | Name      | Type    | Description                                                                    |
 |-----------|---------|--------------------------------------------------------------------------------|
-| paymentId | String  | Id of the payment to capture                                                   |
-| amount    | Integer | The amount to be captured (should be equal to the authorized amount, in paise) |
+| paymentId | string  | Id of the payment to capture                                                   |
+| amount    | integer | The amount to be captured (should be equal to the authorized amount, in paise) |
 
 --
 
@@ -110,9 +110,9 @@ rzp.payments.all({
 
 | Name       | Type             | Description                          |
 |------------|------------------|--------------------------------------|
-| payment_id | String           | Id of the payment to refund          |
-| amount     | Integer          | The amount to be refunded (in paise) |
-| notes      | Array of strings | Array of notes fields.               |
+| payment_id | string           | Id of the payment to refund          |
+| amount     | integer          | The amount to be refunded (in paise) |
+| notes      | array of strings | Array of notes fields.               |
 
 --
 
@@ -124,15 +124,15 @@ rzp.payments.all({
 
 | Name       | Type      | Description                                      |
 |------------|-----------|--------------------------------------------------|
-| payment_id | String    | The payment id whose refunds are to be fetched   |
-| from       | Timestamp | timestamp after which the payments were created  |
-| to         | Timestamp | timestamp before which the payments were created |
-| count      | Integer   | number of payments to fetch (default: 10)        |
-| skip       | Boolean   | number of payments to be skipped (default: 0)    |
+| payment_id | string    | The payment id whose refunds are to be fetched   |
+| from       | timestamp | timestamp after which the payments were created  |
+| to         | timestamp | timestamp before which the payments were created |
+| count      | integer   | number of payments to fetch (default: 10)        |
+| skip       | boolean   | number of payments to be skipped (default: 0)    |
 
 --
 
-#### `instance.refund.fetch(refund_id, {payment_id})`
+#### `instance.refunds.fetch(refund_id, {payment_id})`
 
 > Fetches a refund.
 
@@ -140,8 +140,53 @@ rzp.payments.all({
 
 | Name       | Type   | Description                                           |
 |------------|--------|-------------------------------------------------------|
-| payment_id | String | The id of the payment whose refund is to be retrieved |
-| refund_id  | String | ID of the refund to be retrieved                      |
+| payment_id | string | The id of the payment whose refund is to be retrieved |
+| refund_id  | string | ID of the refund to be retrieved                      |
+
+--
+
+### Orders
+
+#### `instance.orders.create({amount, currency, receipt, payment_capture, notes})`
+
+> Create an order in razorpay
+
+**Parameters:**
+
+| Name            | Type    | Description                                                                  |
+|-----------------|---------|------------------------------------------------------------------------------|
+| amount          | integer | Amount of the order to be paid                                               |
+| currency        | string  | Currency of the order. Currently only INR is supported.                      |
+| receipt         | string  | Your system order reference id.                                              |
+| payment_capture | boolean | Whether the payment should be captured automatically or not. Default `false` |
+| notes           | object  | A key-value pair                                                             |
+
+
+#### `instance.orders.all({from, to, count, skip, authorized, receipt})
+
+> Fetches orders list
+
+**Parameters**
+
+| Name       | Type      | Description                                                  |
+|------------|-----------|--------------------------------------------------------------|
+| from       | timestamp | timestamp after which the payments were created              |
+| to         | timestamp | timestamp before which the payments were created             |
+| count      | integer   | number of payments to fetch (default: 10)                    |
+| skip       | integer   | number of payments to be skipped (default: 0)                |
+| authorized | boolean   | Orders for which payments are currently in authorized state. |
+| receipt    | string    | Orders with the provided value for receipt.                  |
+
+
+#### `instance.orders.fetch(order_id)`
+
+> Fetches a particular order
+
+**Parameters**
+
+| Name     | Type   | Description                         |
+|----------|--------|-------------------------------------|
+| order_id | string | The id of the order to be retrieved |
 
 ---
 
