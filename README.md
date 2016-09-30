@@ -1,9 +1,9 @@
 # Razorpay Node SDK
+[![npm version](https://badge.fury.io/js/razorpay.svg)](https://badge.fury.io/js/razorpay)
 
 Official nodejs bindings for [Razorpay API](https://docs.razorpay.com/docs/payments).
 
-Read up here for getting started with Razorpay: https://docs.razorpay.com/docs/getting-started  
-Read up here for understanding the payment flow in Razorpay: https://docs.razorpay.com/docs/payment-flow
+Read up here for getting started and understanding the payment flow with Razorpay: <https://docs.razorpay.com/docs/getting-started>  
 
 ## Installation
 
@@ -11,9 +11,10 @@ Read up here for understanding the payment flow in Razorpay: https://docs.razorp
 npm i razorpay --save
 ```
 
-NPM Link: https://www.npmjs.com/package/razorpay
-
 ## Documentation
+
+
+Documentation of Razorpay's API and their usage is available at <https://docs.razorpay.com>
 
 
 ### Basic Usage
@@ -73,8 +74,6 @@ instance.payments.all({
 
 #### `instance.payments.all({from, to, count, skip})`
 
-Ref: https://docs.razorpay.com/docs/payments
-
 > Fetches payments list.
 
 | Name  | Type      | Description                                      |
@@ -87,8 +86,6 @@ Ref: https://docs.razorpay.com/docs/payments
 
 #### `instance.payments.fetch(payment_id)`
 
-Ref: https://docs.razorpay.com/docs/v1paymentsid
-
 > Retrieves a particular payment.
 
 **Parameters:**
@@ -100,8 +97,6 @@ Ref: https://docs.razorpay.com/docs/v1paymentsid
 
 #### `instance.payments.capture(payment_id, amount)`
 
-Ref: https://docs.razorpay.com/docs/v1paymentsidcapture
-
 > Capture a payment.
 
 **Parameters:**
@@ -112,8 +107,6 @@ Ref: https://docs.razorpay.com/docs/v1paymentsidcapture
 | amount*    | integer | The amount to be captured (should be equal to the authorized amount, in paise) |
 
 #### `instance.payments.refund(payment_id, {amount, notes})`
-
-Ref: https://docs.razorpay.com/docs/v1paymentsidrefund
 
 > Refund a payment.
 
@@ -131,8 +124,6 @@ Ref: https://docs.razorpay.com/docs/v1paymentsidrefund
 
 #### `instance.refunds.all({from, to, count, skip, payment_id})`
 
-Ref: https://docs.razorpay.com/docs/refunds
-
 > Fetches refunds list. If `payment_id` is passed, refunds of that particular payment is fetched
 
 **Parameters:**
@@ -147,8 +138,6 @@ Ref: https://docs.razorpay.com/docs/refunds
 
 
 #### `instance.refunds.fetch(refund_id, {payment_id})`
-
-Ref: https://docs.razorpay.com/docs/refundsid
 
 > Fetches a refund.
 
@@ -165,8 +154,6 @@ Ref: https://docs.razorpay.com/docs/refundsid
 
 #### `instance.orders.create({amount, currency, receipt, payment_capture, notes})`
 
-Ref: https://docs.razorpay.com/docs/orders
-
 > Create an order in razorpay
 
 **Parameters:**
@@ -180,8 +167,6 @@ Ref: https://docs.razorpay.com/docs/orders
 | notes           | object  | A key-value pair                                                             |
 
 #### `instance.orders.all({from, to, count, skip, authorized, receipt})`
-
-Ref: https://docs.razorpay.com/docs/orders-1
 
 > Fetches orders list
 
@@ -199,8 +184,6 @@ Ref: https://docs.razorpay.com/docs/orders-1
 
 #### `instance.orders.fetch(order_id)`
 
-Ref: https://docs.razorpay.com/docs/ordersid
-
 > Fetches a particular order
 
 **Parameters**
@@ -211,9 +194,6 @@ Ref: https://docs.razorpay.com/docs/ordersid
 
 
 ---
-
-
-Further documentation is available at <https://docs.razorpay.com>
 
 
 ## Development
