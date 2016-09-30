@@ -2,11 +2,16 @@
 
 Official nodejs bindings for [Razorpay API](https://docs.razorpay.com/docs/payments).
 
+Read up here for getting started with Razorpay: https://docs.razorpay.com/docs/getting-started  
+Read up here for understanding the payment flow in Razorpay: https://docs.razorpay.com/docs/payment-flow
+
 ## Installation
 
 ```bash
 npm i razorpay --save
 ```
+
+NPM Link: https://www.npmjs.com/package/razorpay
 
 ## Documentation
 
@@ -68,6 +73,8 @@ instance.payments.all({
 
 #### `instance.payments.all({from, to, count, skip})`
 
+Ref: https://docs.razorpay.com/docs/payments
+
 > Fetches payments list.
 
 | Name  | Type      | Description                                      |
@@ -80,6 +87,8 @@ instance.payments.all({
 
 #### `instance.payments.fetch(payment_id)`
 
+Ref: https://docs.razorpay.com/docs/v1paymentsid
+
 > Retrieves a particular payment.
 
 **Parameters:**
@@ -91,6 +100,8 @@ instance.payments.all({
 
 #### `instance.payments.capture(payment_id, amount)`
 
+Ref: https://docs.razorpay.com/docs/v1paymentsidcapture
+
 > Capture a payment.
 
 **Parameters:**
@@ -101,6 +112,8 @@ instance.payments.all({
 | amount*    | integer | The amount to be captured (should be equal to the authorized amount, in paise) |
 
 #### `instance.payments.refund(payment_id, {amount, notes})`
+
+Ref: https://docs.razorpay.com/docs/v1paymentsidrefund
 
 > Refund a payment.
 
@@ -118,6 +131,8 @@ instance.payments.all({
 
 #### `instance.refunds.all({from, to, count, skip, payment_id})`
 
+Ref: https://docs.razorpay.com/docs/refunds
+
 > Fetches refunds list. If `payment_id` is passed, refunds of that particular payment is fetched
 
 **Parameters:**
@@ -132,6 +147,8 @@ instance.payments.all({
 
 
 #### `instance.refunds.fetch(refund_id, {payment_id})`
+
+Ref: https://docs.razorpay.com/docs/refundsid
 
 > Fetches a refund.
 
@@ -148,6 +165,8 @@ instance.payments.all({
 
 #### `instance.orders.create({amount, currency, receipt, payment_capture, notes})`
 
+Ref: https://docs.razorpay.com/docs/orders
+
 > Create an order in razorpay
 
 **Parameters:**
@@ -161,6 +180,8 @@ instance.payments.all({
 | notes           | object  | A key-value pair                                                             |
 
 #### `instance.orders.all({from, to, count, skip, authorized, receipt})`
+
+Ref: https://docs.razorpay.com/docs/orders-1
 
 > Fetches orders list
 
@@ -177,6 +198,8 @@ instance.payments.all({
 
 
 #### `instance.orders.fetch(order_id)`
+
+Ref: https://docs.razorpay.com/docs/ordersid
 
 > Fetches a particular order
 
