@@ -1,6 +1,9 @@
 # Razorpay Node SDK
+[![npm version](https://badge.fury.io/js/razorpay.svg)](https://badge.fury.io/js/razorpay)
 
 Official nodejs bindings for [Razorpay API](https://docs.razorpay.com/docs/payments).
+
+Read up here for getting started and understanding the payment flow with Razorpay: <https://docs.razorpay.com/docs/getting-started>  
 
 ## Installation
 
@@ -9,6 +12,9 @@ npm i razorpay --save
 ```
 
 ## Documentation
+
+
+Documentation of Razorpay's API and their usage is available at <https://docs.razorpay.com>
 
 
 ### Basic Usage
@@ -188,9 +194,6 @@ instance.payments.all({
 
 
 ---
-
-
-Further documentation is available at <https://docs.razorpay.com>
 
 
 ## Development
