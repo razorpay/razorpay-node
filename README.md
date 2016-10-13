@@ -3,7 +3,7 @@
 
 Official nodejs bindings for [Razorpay API](https://docs.razorpay.com/docs/payments).
 
-Read up here for getting started and understanding the payment flow with Razorpay: <https://docs.razorpay.com/docs/getting-started>  
+Read up here for getting started and understanding the payment flow with Razorpay: <https://docs.razorpay.com/docs/getting-started>
 
 ## Installation
 
@@ -203,6 +203,16 @@ npm install
 ```
 
 Run your tests using `npm test`
+
+## Release
+
+1. Switch to `master` branch. Make sure you have the latest changes in the local master
+2. Update the `CHANGELOG.md` & bump the version in `package.json`
+3. Commit
+4. Tag the release & push to Github
+5. Create a release on GitHub using the website with more details about the release
+6. Publish to npm with `npm publish` command
+
 
 ## Licence
 
