@@ -1,5 +1,5 @@
 # Razorpay Node SDK
-[![npm version](https://badge.fury.io/js/razorpay.svg)](https://badge.fury.io/js/razorpay)
+[![npm](https://img.shields.io/npm/v/razorpay.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/razorpay)
 
 Official nodejs bindings for [Razorpay API](https://docs.razorpay.com/docs/payments).
 
