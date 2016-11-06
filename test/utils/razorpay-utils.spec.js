@@ -8,14 +8,16 @@ const {
   normalizeDate,
   isNumber,
   normalizeBoolean,
-  normalizeNotes
+  normalizeNotes,
+  getDateInSecs
 } = require('../../dist/utils/razorpay-utils')
 
 describe('Razorpay Utils', () => {
   it('normalizeDate', () => {
+    let date = 'Aug 25, 2016'
     assert.equal(
-      normalizeDate('Aug 25, 2016'),
-      '1472063400',
+      normalizeDate(date),
+      getDateInSecs(date),
       'Returns date in secs'
     )
   })

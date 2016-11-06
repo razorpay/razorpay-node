@@ -5,6 +5,7 @@ const { assert } = chai
 const Razorpay = require('../../dist/razorpay')
 const mocker = require('../mocker')
 const equal = require('deep-equal')
+const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
 
 let rzpInstance = new Razorpay({
   key_id: 'XXX',
@@ -34,9 +35,13 @@ describe('ORDERS', () => {
     })
 
     it('`From` & `To` date are converted to ms', (done) => {
+      let fromDate = 'Aug 25, 2016'
+      let toDate = 'Aug 30, 2016'
+      let fromDateInSecs = getDateInSecs(fromDate)
+      let toDateInSecs = getDateInSecs(toDate)
       let expectedParams = {
-        from: '1472063400',
-        to: '1472495400',
+        from: fromDateInSecs,
+        to: toDateInSecs,
         authorized: 1,
         receipt: 'testreceiptid',
         count: 25,
@@ -48,8 +53,8 @@ describe('ORDERS', () => {
       })
 
       rzpInstance.orders.all({
-        from: 'Aug 25, 2016',
-        to: 'Aug 30, 2016',
+        from: fromDate,
+        to: toDate,
         authorized: true,
         receipt: 'testreceiptid',
         count: 25,
@@ -62,7 +67,7 @@ describe('ORDERS', () => {
 
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
-          '/v1/orders?from=1472063400&to=1472495400&count=25&skip=5&authorized=1&receipt=testreceiptid',
+          `/v1/orders?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5&authorized=1&receipt=testreceiptid`,
           'Params are appended as part of request'
         )
         done()
