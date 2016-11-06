@@ -1,0 +1,165 @@
+'use strict'
+
+const chai = require('chai')
+const { assert } = chai
+const Razorpay = require('../../dist/razorpay')
+const mocker = require('../mocker')
+const equal = require('deep-equal')
+
+let rzpInstance = new Razorpay({
+  key_id: 'XXX',
+  key_secret: 'YYY'
+})
+
+describe('ORDERS', () => {
+  describe('Fetch Orders', () => {
+    it('Default params', (done) => {
+      let expectedParams = {
+        skip: 0,
+        authorized: 0,
+        count: 10
+      }
+
+      mocker.mock({
+        url: '/orders'
+      })
+
+      rzpInstance.orders.all().then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          expectedParams
+        ), 'authorized, skip & count are passed as default order queryparams')
+        done()
+      })
+    })
+
+    it('`From` & `To` date are converted to ms', (done) => {
+      let expectedParams = {
+        from: '1472063400',
+        to: '1472495400',
+        authorized: 1,
+        receipt: 'testreceiptid',
+        count: 25,
+        skip: 5
+      }
+
+      mocker.mock({
+        url: '/orders'
+      })
+
+      rzpInstance.orders.all({
+        from: 'Aug 25, 2016',
+        to: 'Aug 30, 2016',
+        authorized: true,
+        receipt: 'testreceiptid',
+        count: 25,
+        skip: 5
+      }).then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          expectedParams
+        ), 'from & to dates are converted to ms & authorized to binary')
+
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          '/v1/orders?from=1472063400&to=1472495400&count=25&skip=5&authorized=1&receipt=testreceiptid',
+          'Params are appended as part of request'
+        )
+        done()
+      })
+    })
+  })
+
+  describe('Order fetch', () => {
+    it('Throw error when orderId is provided', () => {
+      assert.throws(
+        rzpInstance.orders.fetch,
+        '`order_id` is mandatory',
+        'Should throw exception when orderId is not provided'
+      )
+    })
+
+    it('Forms the order fetch request', (done) => {
+      let orderId = 'order_sometestId'
+
+      mocker.mock({
+        url: `/orders/${orderId}`
+      })
+
+      rzpInstance.orders.fetch(orderId).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/orders/${orderId}`,
+          'Fetch order url formed correctly'
+        )
+        done()
+      })
+    })
+  })
+
+  describe('Order create', () => {
+    it('Throws error when mandatory fields are not provided', () => {
+      assert.throws(
+        rzpInstance.orders.create,
+        '`amount` is mandatory',
+        'Should throw exception when amount is not provided'
+      )
+
+      try {
+        rzpInstance.orders.create({
+          amount: 100
+        })
+      } catch (e) {
+        assert.equal(
+          e.message,
+          '`receipt` is mandatory',
+          'Should throw exception when receipt is not provided'
+        )
+      }
+    })
+
+    it('Order create request', (done) => {
+      let orderAmount = 100
+      let receipt = 'testreceiptid'
+      let params = {
+        amount: orderAmount,
+        receipt: receipt,
+        currency: 'INR',
+        payment_capture: true,
+        notes: {
+          note1: 'This is note1',
+          note2: 'This is note2'
+        }
+      }
+
+      mocker.mock({
+        url: `/orders`,
+        method: 'POST'
+      })
+
+      rzpInstance.orders.create(params).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          '/v1/orders',
+          'Create request url formed'
+        )
+
+        assert.ok(
+          equal(
+            response.__JUST_FOR_TESTS__.requestBody,
+            {
+              amount: orderAmount,
+              receipt: receipt,
+              currency: 'INR',
+              payment_capture: 1,
+              'notes[note1]': 'This is note1',
+              'notes[note2]': 'This is note2'
+            }
+          ),
+          'All params are passed in request body'
+        )
+        done()
+      })
+    })
+  })
+})
