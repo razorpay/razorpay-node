@@ -58,7 +58,7 @@ rzp.payments.refund('pay_6CnVGA5eq4D7Ce', {
 })
 
 // -------------------------
-//      Customer
+// Customers
 // -------------------------
 rzp.customers.create({
   name: 'selvagsz',

@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next Release
+  - [Feature] Adds Customer & tokens support
   - [Tests] Adds test coverage
 
 ## 1.0.0
