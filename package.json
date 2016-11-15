@@ -4,13 +4,12 @@
   "description": "Official Node SDK for Razorpay API",
   "main": "dist/razorpay.js",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
     "build-server": "babel lib -d dist",
     "build": "npm run clean && npm run build-server",
     "debug": "npm run build && node-debug examples/index.js",
-    "test": "npm run build && mocha --require babel-register",
-    "build-test": "babel test"
+    "test": "npm run build && mocha --require babel-register"
   },
   "repository": {
     "type": "git",
