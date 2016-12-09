@@ -167,4 +167,31 @@ describe('ORDERS', () => {
       })
     })
   })
+
+  describe('Fetch order\'s payments', () => {
+    it('Throw error when orderId is not provided', () => {
+      assert.throws(
+        rzpInstance.orders.fetchPayments,
+        '`order_id` is mandatory',
+        'Throw exception when order_id is not provided'
+      )
+    })
+
+    it('Fetch order\'s payments', (done) => {
+      let orderId = 'order_sometestId'
+
+      mocker.mock({
+        url: `/orders/${orderId}/payments`
+      })
+
+      rzpInstance.orders.fetchPayments(orderId).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          '/v1/orders/order_sometestId/payments',
+          'Request url formed correctly'
+        )
+        done()
+      })
+    })
+  })
 })

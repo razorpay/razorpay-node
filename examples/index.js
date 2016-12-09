@@ -104,3 +104,8 @@ rzp.customers.deleteToken('cust_6fpspJYDovP0Tg', 'tkn_YDovP0Tg6fpsp').then((data
   // error
 })
 
+rzp.orders.fetchPayments('order_6kWIxkrdH3hJWM').then((data) => {
+  // console.log(data)
+}).catch((error) => {
+  // error
+})
