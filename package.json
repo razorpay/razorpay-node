@@ -6,8 +6,8 @@
   "scripts": {
     "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
-    "build-server": "babel lib -d dist",
-    "build": "npm run clean && npm run build-server",
+    "build:commonjs": "babel lib -d dist",
+    "build": "npm run clean && npm run build:commonjs",
     "debug": "npm run build && node-debug examples/index.js",
     "test": "npm run build && mocha --require babel-register"
   },

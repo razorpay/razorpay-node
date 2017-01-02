@@ -104,6 +104,21 @@ rzp.customers.deleteToken('cust_6fpspJYDovP0Tg', 'tkn_YDovP0Tg6fpsp').then((data
   // error
 })
 
+
+// -------------------------
+// Orders
+// -------------------------
+
+rzp.orders.all({
+  from: 'Aug 25, 2016',
+  to: 'Dec 30, 2016',
+  count: 25
+}).then((data) => {
+  // console.log(data)
+}).catch((error) => {
+  // console.error(error)
+})
+
 rzp.orders.fetchPayments('order_6kWIxkrdH3hJWM').then((data) => {
   // console.log(data)
 }).catch((error) => {
