@@ -38,6 +38,12 @@ describe('Razorpay Utils', () => {
 
   it('normalizeBoolean', () => {
     assert.equal(
+      normalizeBoolean(undefined),
+      undefined,
+      'When undefined is passed, just return it'
+    )
+
+    assert.equal(
       normalizeBoolean(true),
       1,
       'Boolean check with true'

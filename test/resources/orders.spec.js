@@ -17,7 +17,6 @@ describe('ORDERS', () => {
     it('Default params', (done) => {
       let expectedParams = {
         skip: 0,
-        authorized: 0,
         count: 10
       }
 
@@ -29,7 +28,7 @@ describe('ORDERS', () => {
         assert.ok(equal(
           response.__JUST_FOR_TESTS__.requestQueryParams,
           expectedParams
-        ), 'authorized, skip & count are passed as default order queryparams')
+        ), 'skip & count are passed as default order queryparams')
         done()
       })
     })
