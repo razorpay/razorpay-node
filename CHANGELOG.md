@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1
+  - [Bugfix] Don't assume `undefined` values as 0 in the requests
+
 ## 1.2.0
   - [Feature] Support for fetching order's payments
 
