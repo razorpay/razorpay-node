@@ -124,3 +124,63 @@ rzp.orders.fetchPayments('order_6kWIxkrdH3hJWM').then((data) => {
 }).catch((error) => {
   // error
 })
+
+// -------------------------
+// Transfers
+// -------------------------
+
+// Fetch all transfers
+rzp.trasfers.all({
+  from: 'Aug 25, 2016',
+  to: 'Dec 30, 2016',
+  count: 25
+}).then((data) => {
+  // console.log(data)
+}).catch((error) => {
+  // console.error(error)
+})
+
+// Fetch all transfers made on a payment
+rzp.trasfers.all({
+  from: 'Aug 25, 2016',
+  to: 'Dec 30, 2016',
+  count: 25,
+  payment_id: 'pay_6CnVGA5eq4D7Ce'
+}).then((data) => {
+  // console.log(data)
+}).catch((error) => {
+  // console.error(error)
+})
+
+// Fetch a particular transfer
+rzp.transfers.fetch('trf_714iNLGsd7k36a').then((data) => {
+  // console.log(data)
+}).catch((error) => {
+  // console.error(error)
+})
+
+// Create transfers on a payment
+rzp.payments.transfers('pay_6CnVGA5eq4D7Ce', {
+  transfers: [
+    {
+      account: 'acc_7HGyrafdeQDGfX',
+      amount: 100,
+      currency: 'INR'
+    }
+  ]
+}).then((data) => {
+  // console.log(data)
+}).catch((error) => {
+  // error
+})
+
+// Create direct transfers
+rzp.transfers.create({
+  account: 'acc_7HGyrafdeQDGfX',
+  amount: 100,
+  currency: 'INR'
+}).then((data) => {
+  // console.log(data)
+}).catch((error) => {
+  // error
+})
