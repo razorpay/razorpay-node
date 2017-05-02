@@ -172,7 +172,7 @@ describe('PAYMENTS', () => {
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
           '/v1/payments/pay_sometestId/refund',
-          'Capture request url formed'
+          'Refund request url formed'
         )
 
         assert.ok(
@@ -185,6 +185,61 @@ describe('PAYMENTS', () => {
             }
           ),
           'Amount & notes are passed in request body'
+        )
+        done()
+      })
+    })
+  })
+
+  describe('Payment Transfers', () => {
+    it('Throw error when paymentId is not provided', () => {
+      assert.throws(
+        rzpInstance.payments.transfer,
+        '`payment_id` is mandatory',
+        'Throw exception when payment_id is not provided'
+      )
+    })
+
+    it('Payment Transfer request', (done) => {
+      let paymentId = 'pay_sometestpayId'
+
+      mocker.mock({
+        url: `/payments/${paymentId}/transfers`,
+        method: 'POST'
+      })
+
+      rzpInstance.payments.transfer(paymentId, {
+        transfers: [
+          {
+            account: 'acc_7jO4N6LScw5CEG',
+            amount: 100,
+            currency: 'INR',
+            on_hold: true
+          }
+        ],
+        notes: {
+          note1: 'This is note1',
+          note2: 'This is note2'
+        }
+      }).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          '/v1/payments/pay_sometestpayId/transfers',
+          'Payment transfer request URL formed'
+        )
+        assert.ok(
+          equal(
+            response.__JUST_FOR_TESTS__.requestBody,
+            {
+              'transfers[0][account]': 'acc_7jO4N6LScw5CEG',
+              'transfers[0][amount]': 100,
+              'transfers[0][currency]': 'INR',
+              'transfers[0][on_hold]': 1,
+              'notes[note1]': 'This is note1',
+              'notes[note2]': 'This is note2'
+            }
+          ),
+          'Correct params are passed in request body'
         )
         done()
       })

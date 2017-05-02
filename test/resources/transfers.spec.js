@@ -41,9 +41,80 @@ describe('TRANSFERS', () => {
       assert.equal(
         response.__JUST_FOR_TESTS__.url,
         '/v1/transfers',
-        'Create Trasnfer request url formed'
+        'Create Transfer request url formed'
       )
-      console.log(response.__JUST_FOR_TESTS__.requestBody);
+      assert.ok(
+        equal(
+          response.__JUST_FOR_TESTS__.requestBody,
+          expectedParams
+        ),
+        'All params are passed in request body'
+      )
+      done()
+    })
+  })
+
+  it('Create Transfer from Payment', (done) => {
+    const TEST_PAYMENT_ID = 'pay_6fqBqgrfTSuj5v'
+    let params = {
+      notes: {
+        note1: 'This is note1',
+        note2: 'This is note2'
+      }
+    }
+
+    let expectedParams = {
+      'notes[note1]': 'This is note1',
+      'notes[note2]': 'This is note2'
+    }
+
+    mocker.mock({
+      url: `/payments/${TEST_PAYMENT_ID}/transfers`,
+      method: 'POST'
+    })
+
+    rzpInstance.payments.transfer(TEST_PAYMENT_ID, params).then((response) => {
+      assert.equal(
+        response.__JUST_FOR_TESTS__.url,
+        `/v1/payments/${TEST_PAYMENT_ID}/transfers`,
+        'Create payment transfer request url formed'
+      )
+      assert.ok(
+        equal(
+          response.__JUST_FOR_TESTS__.requestBody,
+          expectedParams
+        ),
+        'All params are passed in request body'
+      )
+      done()
+    })
+  })
+
+  it('Edit Transfer', (done) => {
+    const TEST_TRANSFER_ID = 'trf_6fqBqgrfTSuj5v'
+    let params = {
+      on_hold: true,
+      notes: {
+        note1: 'This is note1'
+      }
+    }
+
+    let expectedParams = {
+      on_hold: 1,
+      'notes[note1]': 'This is note1'
+    }
+
+    mocker.mock({
+      url: `/transfers/${TEST_TRANSFER_ID}`,
+      method: 'PATCH'
+    })
+
+    rzpInstance.transfers.edit(TEST_TRANSFER_ID, params).then((response) => {
+      assert.equal(
+        response.__JUST_FOR_TESTS__.url,
+        `/v1/transfers/${TEST_TRANSFER_ID}`,
+        'Edit transfer request url formed'
+      )
 
       assert.ok(
         equal(
@@ -55,4 +126,5 @@ describe('TRANSFERS', () => {
       done()
     })
   })
+
 })
