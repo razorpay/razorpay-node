@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.0
+  - [Feature] Support for Marketplace accounts transfers
+
 ## 1.2.1
   - [Bugfix] Don't assume `undefined` values as 0 in the requests
 
