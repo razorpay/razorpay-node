@@ -127,4 +127,117 @@ describe('TRANSFERS', () => {
     })
   })
 
+  it('Create Transfer Reversal', (done) => {
+    const TEST_TRANSFER_ID = 'trf_6fqBqgrfTSuj5v'
+    let params = {
+      amount: 100,
+      currency: 'INR',
+      notes: {
+        note1: 'This is note1'
+      }
+    }
+
+    let expectedParams = {
+      amount: 100,
+      currency: 'INR',
+      'notes[note1]': 'This is note1'
+    }
+
+    mocker.mock({
+      url: `/transfers/${TEST_TRANSFER_ID}/reversals`,
+      method: 'POST'
+    })
+
+    rzpInstance.transfers.reverse(TEST_TRANSFER_ID, params).then((response) => {
+      assert.equal(
+        response.__JUST_FOR_TESTS__.url,
+        `/v1/transfers/${TEST_TRANSFER_ID}/reversals`,
+        'Edit transfer request url formed'
+      )
+
+      assert.ok(
+        equal(
+          response.__JUST_FOR_TESTS__.requestBody,
+          expectedParams
+        ),
+        'All params are passed in request body'
+      )
+      done()
+    })
+  })
+
+  it('Transfer fetch', (done) => {
+    const TEST_TRANSFER_ID = 'trf_6fqBqgrfTSuj5v'
+
+    mocker.mock({
+      url: `/transfers/${TEST_TRANSFER_ID}`
+    })
+
+    rzpInstance.transfers.fetch(TEST_TRANSFER_ID).then((response) => {
+      assert.equal(
+        response.__JUST_FOR_TESTS__.url,
+        `/v1/transfers/${TEST_TRANSFER_ID}`,
+        'Fetch transfer url formed correctly'
+      )
+      done()
+    })
+  })
+
+  describe('Fetch transfers', () => {
+    it('Default params', (done) => {
+      let expectedParams = {
+        skip: 0,
+        count: 10
+      }
+
+      mocker.mock({
+        url: '/transfers'
+      })
+
+      rzpInstance.transfers.all().then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          expectedParams
+        ), 'skip & count are passed as default transfers queryparams')
+        done()
+      })
+    })
+
+    it('`From` & `To` date are converted to ms', (done) => {
+      let fromDate = 'Aug 25, 2016'
+      let toDate = 'Aug 30, 2016'
+      let fromDateInSecs = getDateInSecs(fromDate)
+      let toDateInSecs = getDateInSecs(toDate)
+      let expectedParams = {
+        from: fromDateInSecs,
+        to: toDateInSecs,
+        count: 25,
+        skip: 5
+      }
+
+      mocker.mock({
+        url: '/transfers'
+      })
+
+      rzpInstance.transfers.all({
+        from: fromDate,
+        to: toDate,
+        count: 25,
+        skip: 5
+      }).then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          expectedParams
+        ), 'from & to dates are converted to ms')
+
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/transfers?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5`,
+          'Params are appended as part of request'
+        )
+        done()
+      })
+    })
+  })
+
 })

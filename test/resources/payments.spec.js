@@ -71,7 +71,7 @@ describe('PAYMENTS', () => {
   })
 
   describe('Payment fetch', () => {
-    it('Throw error when paymentId is provided', () => {
+    it('Throw error when paymentId is not provided', () => {
       assert.throws(
         rzpInstance.payments.fetch,
         '`payment_id` is mandatory',
