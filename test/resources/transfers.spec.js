@@ -25,7 +25,7 @@ describe('TRANSFERS', () => {
     }
 
     let expectedParams = {
-      recepient: 'acc_7jO4N6LScw5CEG',
+      account: 'acc_7jO4N6LScw5CEG',
       amount: 100,
       currency: 'INR',
       'notes[note1]': 'This is note1',
@@ -43,6 +43,7 @@ describe('TRANSFERS', () => {
         '/v1/transfers',
         'Create Trasnfer request url formed'
       )
+      console.log(response.__JUST_FOR_TESTS__.requestBody);
 
       assert.ok(
         equal(

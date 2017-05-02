@@ -125,12 +125,13 @@ rzp.orders.fetchPayments('order_6kWIxkrdH3hJWM').then((data) => {
   // error
 })
 
+
 // -------------------------
 // Transfers
 // -------------------------
 
 // Fetch all transfers
-rzp.trasfers.all({
+rzp.transfers.all({
   from: 'Aug 25, 2016',
   to: 'Dec 30, 2016',
   count: 25
@@ -140,8 +141,8 @@ rzp.trasfers.all({
   // console.error(error)
 })
 
-// Fetch all transfers made on a payment
-rzp.trasfers.all({
+// Fetch all transfers made on a specific payment
+rzp.transfers.all({
   from: 'Aug 25, 2016',
   to: 'Dec 30, 2016',
   count: 25,
@@ -152,26 +153,35 @@ rzp.trasfers.all({
   // console.error(error)
 })
 
-// Fetch a particular transfer
+// Fetch a particular transfer by ID
 rzp.transfers.fetch('trf_714iNLGsd7k36a').then((data) => {
   // console.log(data)
 }).catch((error) => {
   // console.error(error)
 })
 
-// Create transfers on a payment
-rzp.payments.transfers('pay_6CnVGA5eq4D7Ce', {
-  transfers: [
-    {
-      account: 'acc_7HGyrafdeQDGfX',
-      amount: 100,
-      currency: 'INR'
-    }
-  ]
+// Edit transfer
+rzp.transfers.edit('trf_714iNLGsd7k36a', {
+  notes: {
+    note1: 'This is a test note'
+  }
 }).then((data) => {
   // console.log(data)
 }).catch((error) => {
-  // error
+  // console.error(error)
+})
+
+// Create a transfer reversal
+rzp.transfers.reverse('trf_714iNLGsd7k36a', {
+  amount: 200,
+  currency: 'INR',
+  notes: {
+    note1: 'This is a test note'
+  }
+}).then((data) => {
+  // console.log(data)
+}).catch((error) => {
+  // console.error(error)
 })
 
 // Create direct transfers
@@ -182,5 +192,20 @@ rzp.transfers.create({
 }).then((data) => {
   // console.log(data)
 }).catch((error) => {
-  // error
+  // console.error(error)
+})
+
+// Create transfers on a payment
+rzp.payments.transfer('pay_6CnVGA5eq4D7Ce', {
+  transfers: [
+    {
+      account: 'acc_7HGyrafdeQDGfX',
+      amount: 100,
+      currency: 'INR'
+    }
+  ]
+}).then((data) => {
+  // console.log(data)
+}).catch((error) => {
+  // console.error(error)
 })
