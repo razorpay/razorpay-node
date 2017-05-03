@@ -77,6 +77,8 @@ instance.payments.all({
 
 - [Customers](https://github.com/razorpay/razorpay-node/wiki#customers)
 
+- [Transfers](https://github.com/razorpay/razorpay-node/wiki#transfers)
+
 ---
 
 
