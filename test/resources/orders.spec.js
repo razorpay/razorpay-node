@@ -2,15 +2,10 @@
 
 const chai = require('chai')
 const { assert } = chai
-const Razorpay = require('../../dist/razorpay')
+const rzpInstance = require('../razorpay')
 const mocker = require('../mocker')
 const equal = require('deep-equal')
 const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
-
-let rzpInstance = new Razorpay({
-  key_id: 'XXX',
-  key_secret: 'YYY'
-})
 
 describe('ORDERS', () => {
   describe('Fetch Orders', () => {
