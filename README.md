@@ -79,6 +79,7 @@ instance.payments.all({
 
 - [Transfers](https://github.com/razorpay/razorpay-node/wiki#transfers)
 
+- [Virtual Accounts](https://github.com/razorpay/razorpay-node/wiki#virtual-accounts)
 ---
 
 
