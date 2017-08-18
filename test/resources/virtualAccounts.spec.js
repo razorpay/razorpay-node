@@ -49,7 +49,6 @@ describe("VIRTUAL_ACCOUNTS", () => {
           fromDateInSecs = getDateInSecs(fromDate),
           toDateInSecs   = getDateInSecs(toDate),
           expectedParams = {
-
             from : fromDateInSecs,
             to   : toDateInSecs,
             count: 25,
@@ -57,12 +56,10 @@ describe("VIRTUAL_ACCOUNTS", () => {
           };
 
       mocker.mock({
-
         url: `${SUB_PATH}`
       });
 
       rzpInstance.virtualAccounts.all({
-      
         from : fromDate,
         to   : toDate,
         count: 25,
@@ -89,12 +86,17 @@ describe("VIRTUAL_ACCOUNTS", () => {
   describe('Fetch Virtual Account', () => {
  
     it ('Validation', (done) => {
-    
+
+      mocker.mock({
+        url: `${SUB_PATH}/${undefined}`
+      });
+
       rzpInstance.virtualAccounts.fetch().then(() => {
-      
-        done("`rzpInstance.virtualAccounts.fetch` doesn't check for account id");
-      }).catch(() => {
-      
+     
+        done(new Error("`rzpInstance.virtualAccounts.fetch` doesn't"+
+                       " check for account id"));
+      }).catch((err) => {
+     
         done();
       });
     });
@@ -108,7 +110,6 @@ describe("VIRTUAL_ACCOUNTS", () => {
       rzpInstance.virtualAccounts.fetch(TEST_VIRTUAL_ACCOUNT).then((response) => {
       
         assert.equal(
-        
           response.__JUST_FOR_TESTS__.url,
           `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
           "Fetch Virtual Account URL Match"
@@ -129,7 +130,6 @@ describe("VIRTUAL_ACCOUNTS", () => {
     }, {notes, ...rest} = params;
 
     mocker.mock({
-    
       url   : `${SUB_PATH}`,
       method: "POST"
     });
@@ -150,9 +150,13 @@ describe("VIRTUAL_ACCOUNTS", () => {
   
     it("Validation", (done) => {
 
+      mocker.mock({
+        url: `${SUB_PATH}/${undefined}`
+      });
+
       rzpInstance.virtualAccounts.close().then(() => {
     
-        done("virtualAccounts.close doesn't check for account id");  
+        done(new Error("virtualAccounts.close doesn't check for account id"));  
       }).catch(() => {
       
         done();
@@ -162,7 +166,6 @@ describe("VIRTUAL_ACCOUNTS", () => {
     it("Url Match", (done) => {
     
       mocker.mock({
-      
         url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
         method: "PATCH"
       });
