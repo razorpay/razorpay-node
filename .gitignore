@@ -3,3 +3,7 @@ dist/
 
 *.orig
 *.log
+*.swp
+*.swo
+*.swn
+*.swm
