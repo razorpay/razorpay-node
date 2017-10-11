@@ -22,19 +22,19 @@ const SUB_PATH  = "/invoices",
 
 const runIDRequiredTest = (params) => {
 
-  let {apiObj, methodName, mockerParams} = params;
+  let {apiObj, methodName, methodArgs, mockerParams} = params;
 
   mocker.mock(mockerParams);
 
   it (`method ${methodName} checks for Invoice ID as param`,
       (done) => {
 
-    apiObj[methodName]().then(() => {
+    apiObj[methodName](...methodArgs).then(() => {
 
       done(new Error(`method ${methodName} does not`+
                      ` check for Invoice ID`));
     },(err) => {
-      
+
       done();
     });
   });
@@ -59,7 +59,7 @@ describe("INVOICES", () => {
         methodName = "create",
         mockerParams = {
          url: `${SUB_PATH}`,
-         method: "POST"       
+         method: "POST"
         };
 
     runCommonTests({
@@ -95,6 +95,7 @@ describe("INVOICES", () => {
     runIDRequiredTest({
       apiObj,
       methodName,
+      methodArgs: [undefined],
       mockerParams: {
         url: `${SUB_PATH}/${undefined}`,
         method: mockerParams.method
@@ -120,10 +121,11 @@ describe("INVOICES", () => {
           url: `${SUB_PATH}/${TEST_INVOICE_ID}/issue`,
           method: "POST"
         };
-    
+
     runIDRequiredTest({
       apiObj,
       methodName,
+      methodArgs: [undefined],
       mockerParams: {
         url: `${SUB_PATH}/${undefined}/issue`,
         method: mockerParams.method
@@ -152,6 +154,7 @@ describe("INVOICES", () => {
     runIDRequiredTest({
       apiObj,
       methodName,
+      methodArgs: [undefined],
       mockerParams: {
         url: `${SUB_PATH}/${undefined}`,
         method: mockerParams.method
@@ -180,6 +183,7 @@ describe("INVOICES", () => {
     runIDRequiredTest({
       apiObj,
       methodName,
+      methodArgs: [undefined],
       mockerParams: {
         url: `${SUB_PATH}/${undefined}/cancel`,
         method: mockerParams.method
@@ -207,6 +211,7 @@ describe("INVOICES", () => {
     runIDRequiredTest({
       apiObj,
       methodName,
+      methodArgs: [undefined],
       mockerParams: {
         url: `${SUB_PATH}/${undefined}`
       }
@@ -284,5 +289,52 @@ describe("INVOICES", () => {
         mockerParams,
         methodArgs
       });
+  });
+
+  describe("Notify", () => {
+
+    let medium = "email",
+        expectedUrl = `${FULL_PATH}/${TEST_INVOICE_ID}/notify_by/${medium}`,
+        methodName = "notifyBy",
+        methodArgs = [TEST_INVOICE_ID, medium],
+        mockerParams = {
+          "url": `${SUB_PATH}/${TEST_INVOICE_ID}/notify_by/${medium}`,
+          "method": "POST"
+        };
+
+    runIDRequiredTest({
+      apiObj,
+      methodName,
+      methodArgs: [undefined, medium],
+      mockerParams: {
+        "url": `${SUB_PATH}/${undefined}/notify_by/${medium}`,
+        "method": "POST"
+      }
+    });
+
+    it ("notify method checks for `medium` parameter", (done) => {
+
+      mocker.mock({
+        url: `${SUB_PATH}/${TEST_INVOICE_ID}/notify_by/${undefined}`,
+        method: "POST"
+      });
+
+      apiObj[methodName](TEST_INVOICE_ID, undefined).then(() => {
+
+        done(new Error("medium parameter is not checked for"));
+      }).catch(() => {
+
+        assert.ok("medium parameter is checked");
+        done();
+      });
+    });
+
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedUrl
+    });
   });
 });
