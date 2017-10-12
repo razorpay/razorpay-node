@@ -38,6 +38,7 @@ Mocker.prototype.mock = function(params) {
         "success": true,
         __JUST_FOR_TESTS__: {
           url,
+          method,
           requestQueryParams,
           requestBody: parseReqBody(requestBody),
           headers: this.req.headers
@@ -51,6 +52,11 @@ const normalizeUrl = function(url) {
 }
 
 const parseReqBody = function(raw) {
+
+  if (raw.length === 0) {
+    return {};
+  }
+
   return raw.split('&').reduce((prev, curr) => {
     let parts = curr.split('=')
     prev[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1])
