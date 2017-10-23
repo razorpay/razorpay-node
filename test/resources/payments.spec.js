@@ -7,6 +7,10 @@ const mocker = require('../mocker')
 const equal = require('deep-equal')
 const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
 
+const { runCommonTests }  = require("../../dist/utils/predefined-tests.js");
+
+const TEST_PAYMENT_ID = 'pay_sometestId';
+
 describe('PAYMENTS', () => {
   describe('Fetch Payments', () => {
     it('Default params', (done) => {
@@ -239,5 +243,31 @@ describe('PAYMENTS', () => {
         done()
       })
     })
+  })
+
+  describe('Payment Bank Transfers', () => {
+  
+    it('Reject the promise if payment id is not provided', (done) => {
+
+      rzpInstance.payments.bankTransfer()
+                 .then(() => {
+
+                   done(new Error(`method bankTransfer does not check` +
+                                  ` for payment_id`))
+                 }, () => {
+
+                   done();
+                 });
+    });
+
+    runCommonTests({
+      apiObj: rzpInstance.payments,
+      methodName: "bankTransfer",
+      methodArgs: [TEST_PAYMENT_ID],
+      mockerParams: {
+        url: `/payments/${TEST_PAYMENT_ID}/bank_transfer`
+      },
+      expectedUrl: `/v1/payments/${TEST_PAYMENT_ID}/bank_transfer`
+    });
   })
 })

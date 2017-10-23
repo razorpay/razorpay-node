@@ -9,10 +9,7 @@ const { getDateInSecs,
         normalizeDate,
         normalizeNotes
       } = require('../../dist/utils/razorpay-utils')
-const { runCallbackCheckTest,
-        runParamsCheckTest,
-        runURLCheckTest,
-        runCommonTests }  = require("../../dist/utils/predefined-tests.js");
+const { runCommonTests }  = require("../../dist/utils/predefined-tests.js");
 
 
 const SUB_PATH  = "/virtual_accounts",
