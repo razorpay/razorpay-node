@@ -65,7 +65,10 @@ module.exports = function subscriptionsApi(api) {
 
       return api.get({ url: url }, callback);
     },
-    all: function all(params, callback) {
+    all: function all() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
 
       /*
        * Get all Subscriptions
@@ -104,7 +107,10 @@ module.exports = function subscriptionsApi(api) {
         })
       }, callback);
     },
-    cancel: function cancel(subscriptionId, cancelAtCycleEnd, callback) {
+    cancel: function cancel(subscriptionId) {
+      var cancelAtCycleEnd = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var callback = arguments[2];
+
 
       /*
        * Cancel a subscription given id and optional cancelAtCycleEnd

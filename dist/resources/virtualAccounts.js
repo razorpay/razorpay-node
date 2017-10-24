@@ -57,7 +57,10 @@ module.exports = function (api) {
         url: url
       }, callback);
     },
-    create: function create(params, callback) {
+    create: function create() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
       var notes = params.notes,
           rest = _objectWithoutProperties(params, ["notes"]);
 

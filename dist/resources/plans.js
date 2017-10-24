@@ -65,7 +65,10 @@ module.exports = function plansApi(api) {
 
       return api.get({ url: url }, callback);
     },
-    all: function all(params, callback) {
+    all: function all() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
 
       /*
        * Get all Plans
