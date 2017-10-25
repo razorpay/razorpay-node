@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/v/razorpay.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/razorpay)
 [![Build Status](https://travis-ci.org/razorpay/razorpay-node.svg?branch=master)](https://travis-ci.org/razorpay/razorpay-node)
 
-Official nodejs bindings for [Razorpay API](https://docs.razorpay.com/docs/payments).
+Official nodejs library for [Razorpay API](https://docs.razorpay.com/docs/payments).
 
 Read up here for getting started and understanding the payment flow with Razorpay: <https://docs.razorpay.com/docs/getting-started>
 
