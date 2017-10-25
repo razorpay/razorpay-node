@@ -58,7 +58,7 @@ If you want to use callbacks instead of promises, every resource method will acc
 instance.payments.all({
   from: '2016-08-01',
   to: '2016-08-20'
-}, function(error, response) => {
+}, (error, response) => {
   if (error) {
     // handle error
   } else {
