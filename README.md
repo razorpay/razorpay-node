@@ -82,6 +82,12 @@ instance.payments.all({
 - [Virtual Accounts](https://github.com/razorpay/razorpay-node/wiki#virtual-accounts)
 
 - [Invoices](https://github.com/razorpay/razorpay-node/wiki#invoices)
+
+- [Plans](https://github.com/razorpay/razorpay-node/wiki#plans)
+
+- [Subscriptions](https://github.com/razorpay/razorpay-node/wiki#subscriptions)
+
+- [Addons](https://github.com/razorpay/razorpay-node/wiki#addons)
 ---
 
 
