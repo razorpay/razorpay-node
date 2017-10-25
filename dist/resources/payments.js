@@ -2,10 +2,14 @@
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
+var Promise = require("promise");
+
 var _require = require('../utils/razorpay-utils'),
     normalizeDate = _require.normalizeDate,
     normalizeBoolean = _require.normalizeBoolean,
     normalizeNotes = _require.normalizeNotes;
+
+var ID_REQUIRED_MSG = '`payment_id` is mandatory';
 
 module.exports = function (api) {
   return {
@@ -105,6 +109,17 @@ module.exports = function (api) {
       return api.post({
         url: '/payments/' + paymentId + '/transfers',
         data: data
+      }, callback);
+    },
+    bankTransfer: function bankTransfer(paymentId, callback) {
+
+      if (!paymentId) {
+
+        return Promise.reject(ID_REQUIRED_MSG);
+      }
+
+      return api.get({
+        url: '/payments/' + paymentId + '/bank_transfer'
       }, callback);
     }
   };

@@ -9,11 +9,33 @@ const { getDateInSecs,
         normalizeDate,
         normalizeNotes
       } = require('../../dist/utils/razorpay-utils')
+const { runCommonTests }  = require("../../dist/utils/predefined-tests.js");
 
 
 const SUB_PATH  = "/virtual_accounts",
       FULL_PATH = `/v1${SUB_PATH}`,
-      TEST_VIRTUAL_ACCOUNT = "12345566";
+      TEST_VIRTUAL_ACCOUNT = "12345566",
+      apiObj = rzpInstance.virtualAccounts;
+
+const runIDRequiredTest = (params) => {
+
+  let {apiObj, methodName, methodArgs, mockerParams} = params;
+
+  mocker.mock(mockerParams);
+
+  it (`method ${methodName} checks for Virtual Account ID as param`,
+      (done) => {
+
+    apiObj[methodName](...methodArgs).then(() => {
+
+      done(new Error(`method ${methodName} does not`+
+                     ` check for Virtual Account ID`));
+    },(err) => {
+
+      done();
+    });
+  });
+}
 
 describe("VIRTUAL_ACCOUNTS", () => {
 
@@ -180,6 +202,33 @@ describe("VIRTUAL_ACCOUNTS", () => {
 
         done();
       });
+    });
+  });
+
+  describe("Virtual Accounts get Payments", () => {
+  
+    let expectedUrl  = `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}/payments`,
+        methodName   = "fetchPayments",
+        methodArgs   = [TEST_VIRTUAL_ACCOUNT],
+        mockerParams = {
+          url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}/payments`
+        };
+
+    runIDRequiredTest({
+      apiObj,
+      methodName,
+      methodArgs: [undefined],
+      mockerParams: {
+        url: `${SUB_PATH}/${undefined}/payments`
+      }
+    });
+
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedUrl
     });
   });
 });

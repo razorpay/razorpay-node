@@ -8,6 +8,9 @@ var _require = require('../utils/razorpay-utils'),
     normalizeDate = _require.normalizeDate,
     normalizeNotes = _require.normalizeNotes;
 
+var BASE_URL = '/virtual_accounts',
+    ID_REQUIRED_MSG = "`virtual_account_id` is mandatory";
+
 module.exports = function (api) {
   return {
     all: function all() {
@@ -18,7 +21,7 @@ module.exports = function (api) {
           count = params.count,
           skip = params.skip;
 
-      var url = '/virtual_accounts';
+      var url = BASE_URL;
 
       if (from) {
         from = normalizeDate(from);
@@ -45,23 +48,26 @@ module.exports = function (api) {
 
       if (!virtualAccountId) {
 
-        return Promise.reject('`virtual_account_id` is mandatory');
+        return Promise.reject(ID_REQUIRED_MSG);
       }
 
-      var url = "/virtual_accounts/" + virtualAccountId;
+      var url = BASE_URL + "/" + virtualAccountId;
 
       return api.get({
         url: url
       }, callback);
     },
-    create: function create(params, callback) {
+    create: function create() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
       var notes = params.notes,
           rest = _objectWithoutProperties(params, ["notes"]);
 
       var data = Object.assign(rest, normalizeNotes(notes));
 
       return api.post({
-        url: '/virtual_accounts',
+        url: BASE_URL,
         data: data
       }, callback);
     },
@@ -69,7 +75,7 @@ module.exports = function (api) {
 
       if (!virtualAccountId) {
 
-        return Promise.reject('`virtual_account_id` is mandatory');
+        return Promise.reject(ID_REQUIRED_MSG);
       }
 
       var data = {
@@ -77,8 +83,21 @@ module.exports = function (api) {
       };
 
       return api.patch({
-        url: "/virtual_accounts/" + virtualAccountId,
+        url: BASE_URL + "/" + virtualAccountId,
         data: data
+      }, callback);
+    },
+    fetchPayments: function fetchPayments(virtualAccountId, callback) {
+
+      if (!virtualAccountId) {
+
+        return Promise.reject(ID_REQUIRED_MSG);
+      }
+
+      var url = BASE_URL + "/" + virtualAccountId + "/payments";
+
+      return api.get({
+        url: url
       }, callback);
     }
   };

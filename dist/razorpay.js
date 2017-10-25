@@ -47,7 +47,10 @@ var Razorpay = function () {
         customers: require('./resources/customers')(this.api),
         transfers: require('./resources/transfers')(this.api),
         virtualAccounts: require('./resources/virtualAccounts')(this.api),
-        invoices: require('./resources/invoices')(this.api)
+        invoices: require('./resources/invoices')(this.api),
+        plans: require('./resources/plans')(this.api),
+        subscriptions: require('./resources/subscriptions')(this.api),
+        addons: require('./resources/addons')(this.api)
       });
     }
   }]);
