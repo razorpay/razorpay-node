@@ -1,5 +1,7 @@
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _require = require('../utils/razorpay-utils'),
     normalizeDate = _require.normalizeDate,
     normalizeBoolean = _require.normalizeBoolean,
@@ -58,7 +60,10 @@ module.exports = function (api) {
           currency = params.currency,
           receipt = params.receipt,
           payment_capture = params.payment_capture,
-          notes = params.notes;
+          notes = params.notes,
+          bank = params.bank,
+          method = params.method,
+          account_number = params.account_number;
 
       currency = currency || 'INR';
 
@@ -70,12 +75,14 @@ module.exports = function (api) {
         throw new Error('`receipt` is mandatory');
       }
 
-      var data = Object.assign({
+      var data = Object.assign(_extends({
         amount: amount,
         currency: currency,
         receipt: receipt,
         payment_capture: normalizeBoolean(payment_capture)
-      }, normalizeNotes(notes));
+      }, !!bank && { bank: bank }, !!method && { method: method }, !!account_number && { account_number: account_number }), normalizeNotes(notes));
+
+      console.log(data);
 
       return api.post({
         url: '/orders',
