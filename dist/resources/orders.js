@@ -82,8 +82,6 @@ module.exports = function (api) {
         payment_capture: normalizeBoolean(payment_capture)
       }, !!bank && { bank: bank }, !!method && { method: method }, !!account_number && { account_number: account_number }), normalizeNotes(notes));
 
-      console.log(data);
-
       return api.post({
         url: '/orders',
         data: data
