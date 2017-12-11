@@ -101,9 +101,7 @@ module.exports = function (api) {
       if (data.transfers) {
         var transfers = data.transfers;
         transfers.forEach(function (transfer) {
-          if (transfer.on_hold) {
-            transfer.on_hold = normalizeBoolean(transfer.on_hold);
-          }
+          transfer.on_hold = normalizeBoolean(!!transfer.on_hold);
         });
       }
       return api.post({
