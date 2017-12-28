@@ -24,3 +24,23 @@ describe('Nodeify should invoke the callback', () => {
     })
   })
 })
+
+describe('Nodeify Promise flow', () => {
+  it('Return Promise if callback is not passed', (done) => {
+    let data = 'some success data'
+    let p = nodeify(Promise.resolve(data))
+    assert.instanceOf(p, Promise,
+      'returned object is an instance of Promise');
+    done()
+  })
+
+  it('Return null if callback is passed', (done) => {
+    let data = 'some success data'
+    let p = nodeify(Promise.resolve(data), (err, response) => {
+      // empty call back
+    })
+    assert.notInstanceOf(p, Promise,
+      'returned object is not an instance of Promise');
+    done()
+  })
+})
