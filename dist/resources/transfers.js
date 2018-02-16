@@ -81,7 +81,7 @@ module.exports = function (api) {
 
       var data = Object.assign(rest, normalizeNotes(notes));
 
-      if (data.on_hold) {
+      if (typeof data.on_hold !== "undefined") {
         data.on_hold = normalizeBoolean(data.on_hold);
       }
 
