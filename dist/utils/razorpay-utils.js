@@ -22,6 +22,11 @@ function normalizeBoolean(bool) {
   return bool ? 1 : 0;
 }
 
+function isDefined(value) {
+
+  return typeof value !== "undefined";
+}
+
 function normalizeNotes() {
   var notes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -57,6 +62,32 @@ function getTestError(summary, expectedVal, gotVal) {
   return new Error("\n" + summary + "\n" + ("Expected(" + (typeof expectedVal === "undefined" ? "undefined" : _typeof(expectedVal)) + ")\n" + prettify(expectedVal) + "\n\n") + ("Got(" + (typeof gotVal === "undefined" ? "undefined" : _typeof(gotVal)) + ")\n" + prettify(gotVal)));
 }
 
+function validateWebhookSignature(body, signature, secret) {
+
+  /*
+   * Verifies webhook signature
+   *
+   * @param {String} summary
+   * @param {String} signature
+   * @param {String} secret
+   *
+   * @return {Boolean}
+   */
+
+  var crypto = require("crypto");
+
+  if (!isDefined(body) || !isDefined(signature) || !isDefined(secret)) {
+
+    throw Error("Invalid Parameters: Please give request body," + "signature sent in X-Razorpay-Header and " + "webhook secret from dashboard as parameters");
+  }
+
+  body = body.toString();
+
+  var expectedSignature = crypto.createHmac('sha256', secret).update(body).digest('hex');
+
+  return expectedSignature === signature;
+};
+
 module.exports = {
   normalizeNotes: normalizeNotes,
   normalizeDate: normalizeDate,
@@ -64,5 +95,7 @@ module.exports = {
   isNumber: isNumber,
   getDateInSecs: getDateInSecs,
   prettify: prettify,
-  getTestError: getTestError
+  isDefined: isDefined,
+  getTestError: getTestError,
+  validateWebhookSignature: validateWebhookSignature
 };

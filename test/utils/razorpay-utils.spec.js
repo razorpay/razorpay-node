@@ -9,7 +9,10 @@ const {
   isNumber,
   normalizeBoolean,
   normalizeNotes,
-  getDateInSecs
+  getDateInSecs,
+  isDefined,
+  getTestError,
+  validateWebhookSignature
 } = require('../../dist/utils/razorpay-utils')
 
 describe('Razorpay Utils', () => {
@@ -20,7 +23,7 @@ describe('Razorpay Utils', () => {
       getDateInSecs(date),
       'Returns date in secs'
     )
-  })
+  });
 
   it('isNumber', () => {
     assert.equal(
@@ -34,7 +37,7 @@ describe('Razorpay Utils', () => {
       false,
       'Number check with alphabets'
     )
-  })
+  });
 
   it('normalizeBoolean', () => {
     assert.equal(
@@ -54,7 +57,7 @@ describe('Razorpay Utils', () => {
       0,
       'Boolean check with false'
     )
-  })
+  });
 
   it('normalizeNotes', () => {
     assert.ok(
@@ -70,5 +73,36 @@ describe('Razorpay Utils', () => {
       ),
       'Transforms the notes'
     )
-  })
+  });
+
+  it('isDefined', () => {
+  
+    assert.ok(
+      !isDefined() && isDefined(""),
+      'Checks if the argument is defined'
+    );
+  });
+
+  it('getTestError', () => {
+    const error = getTestError("", "", "");
+    assert.ok(
+      error.constructor.name === "Error",
+      'Gets common error for all tests'
+    );
+  });
+
+  it('validateWebhookSignature', () => {
+  
+    const respBody         = '{"a":1,"b":2,"c":{"d":3}}',
+          secret           = "123456",
+          correctSignature = "2fe04e22977002e6c7cb553adab8b460cb"+
+                             "9e2a4970d5953cb27a8472752e3bbc",
+          wrongSignature   = "sdfafds";
+
+    assert.ok(
+      validateWebhookSignature(respBody, correctSignature, secret) &&
+      !validateWebhookSignature(respBody, wrongSignature, secret),
+      'Validates webhook signature'
+    );
+  });
 })
