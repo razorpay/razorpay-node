@@ -7,7 +7,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var API = require('./api');
 var pkg = require('../package.json');
 
+var _require = require('./utils/razorpay-utils'),
+    _validateWebhookSignature = _require.validateWebhookSignature;
+
 var Razorpay = function () {
+  _createClass(Razorpay, null, [{
+    key: 'validateWebhookSignature',
+    value: function validateWebhookSignature() {
+
+      return _validateWebhookSignature.apply(undefined, arguments);
+    }
+  }]);
+
   function Razorpay() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
