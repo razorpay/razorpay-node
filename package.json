@@ -37,7 +37,6 @@
     "nock": "^9.0.2"
   },
   "dependencies": {
-    "crypto": "^1.0.1",
     "promise": "^8.0.1",
     "request": "^2.75.0",
     "request-promise": "^4.1.1"
