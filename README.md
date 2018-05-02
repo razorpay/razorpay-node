@@ -9,7 +9,7 @@ Read up here for getting started and understanding the payment flow with Razorpa
 ## Installation
 
 ```bash
-npm i razorpay --save
+npm i razorpay
 ```
 
 ## Documentation
