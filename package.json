@@ -33,12 +33,12 @@
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "deep-equal": "^1.0.1",
-    "mocha": "^3.1.0",
-    "nock": "^9.0.2"
+    "mocha": "^3.5.3",
+    "nock": "^9.2.5"
   },
   "dependencies": {
     "promise": "^8.0.1",
-    "request": "^2.75.0",
-    "request-promise": "^4.1.1"
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2"
   }
 }
