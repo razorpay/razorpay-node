@@ -64,10 +64,7 @@ module.exports = function (api) {
           receipt = params.receipt,
           payment_capture = params.payment_capture,
           notes = params.notes,
-          bank = params.bank,
-          method = params.method,
-          account_number = params.account_number,
-          otherParams = _objectWithoutProperties(params, ['amount', 'currency', 'receipt', 'payment_capture', 'notes', 'bank', 'method', 'account_number']);
+          otherParams = _objectWithoutProperties(params, ['amount', 'currency', 'receipt', 'payment_capture', 'notes']);
 
       currency = currency || 'INR';
 
@@ -84,7 +81,7 @@ module.exports = function (api) {
         currency: currency,
         receipt: receipt,
         payment_capture: normalizeBoolean(payment_capture)
-      }, !!bank && { bank: bank }, !!method && { method: method }, !!account_number && { account_number: account_number }, otherParams), normalizeNotes(notes));
+      }, otherParams), normalizeNotes(notes));
 
       return api.post({
         url: '/orders',
