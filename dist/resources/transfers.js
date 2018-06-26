@@ -15,7 +15,6 @@ module.exports = function (api) {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
-      // TODO: Allow other params (transfers.all)
       var from = params.from,
           to = params.to,
           count = params.count,

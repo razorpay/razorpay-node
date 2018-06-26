@@ -183,7 +183,6 @@ module.exports = function invoicesApi(api) {
        *
        * @return {Promise}
        */
-      // TODO: Allow other params (invoices.all)
       var from = params.from,
           to = params.to,
           count = params.count,
