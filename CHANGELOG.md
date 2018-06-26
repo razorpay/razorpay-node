@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1 - 2018-6-26
+### Fixed
+- Security Fixes
+
 ## 2.0.0 - 2018-6-14
 ### Removed
 - Removed sending only specific parameters to orders api, every parameter will be sent as it is , validation is done on API.
