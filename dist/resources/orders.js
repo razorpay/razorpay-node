@@ -14,13 +14,15 @@ module.exports = function (api) {
     all: function all() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
+
+      // TODO: Allow other params (orders.all)
       var from = params.from,
           to = params.to,
           count = params.count,
           skip = params.skip,
           authorized = params.authorized,
-          receipt = params.receipt;
-
+          receipt = params.receipt,
+          rest = _objectWithoutProperties(params, ['from', 'to', 'count', 'skip', 'authorized', 'receipt']);
 
       if (from) {
         from = normalizeDate(from);
@@ -36,14 +38,14 @@ module.exports = function (api) {
 
       return api.get({
         url: '/orders',
-        data: {
+        data: _extends({
           from: from,
           to: to,
           count: count,
           skip: skip,
           authorized: authorized,
           receipt: receipt
-        }
+        }, rest)
       }, callback);
     },
     fetch: function fetch(orderId, callback) {

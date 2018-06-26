@@ -90,7 +90,7 @@ module.exports = function invoicesApi(api) {
        *
        * @param {String} invoiceId
        * @param {Function} callback
-       * 
+       *
        * @return {Promise}
        */
 
@@ -131,7 +131,7 @@ module.exports = function invoicesApi(api) {
 
       /*
        * Cancels issued invoice
-       * 
+       *
        * @param {String} invoiceId
        * @param {Function} callback
        *
@@ -175,7 +175,6 @@ module.exports = function invoicesApi(api) {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
-
       /*
        * Fetches multiple invoices with given query options
        *
@@ -184,13 +183,13 @@ module.exports = function invoicesApi(api) {
        *
        * @return {Promise}
        */
-
+      // TODO: Allow other params (invoices.all)
       var from = params.from,
           to = params.to,
           count = params.count,
           skip = params.skip,
+          rest = _objectWithoutProperties(params, ["from", "to", "count", "skip"]),
           url = BASE_URL;
-
 
       if (from) {
         from = normalizeDate(from);
@@ -210,18 +209,18 @@ module.exports = function invoicesApi(api) {
           to: to,
           count: count,
           skip: skip
-        })
+        }, rest)
       }, callback);
     },
     notifyBy: function notifyBy(invoiceId, medium, callback) {
 
       /*
        * Send/re-send notification for invoice by given medium
-       * 
+       *
        * @param {String} invoiceId
        * @param {String} medium
        * @param {Function} callback
-       * 
+       *
        * @return {Promise}
        */
 

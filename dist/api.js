@@ -30,10 +30,13 @@ var API = function () {
       }
     });
   }
+  // TODO: remove console logs
+
 
   _createClass(API, [{
     key: 'get',
     value: function get(params, cb) {
+      console.info('API:get >', JSON.stringify(params, null, 2));
       return nodeify(this.rq.get({
         url: params.url,
         qs: params.data
@@ -42,6 +45,7 @@ var API = function () {
   }, {
     key: 'post',
     value: function post(params, cb) {
+      console.info('API:post >', JSON.stringify(params, null, 2));
       return nodeify(this.rq.post({
         url: params.url,
         form: params.data
@@ -50,6 +54,7 @@ var API = function () {
   }, {
     key: 'put',
     value: function put(params, cb) {
+      console.info('API:put >', JSON.stringify(params, null, 2));
       return nodeify(this.rq.put({
         url: params.url,
         form: params.data
@@ -58,6 +63,7 @@ var API = function () {
   }, {
     key: 'patch',
     value: function patch(params, cb) {
+      console.info('API:patch >', JSON.stringify(params, null, 2));
       return nodeify(this.rq.patch({
         url: params.url,
         form: params.data
@@ -66,6 +72,7 @@ var API = function () {
   }, {
     key: 'delete',
     value: function _delete(params, cb) {
+      console.info('API:delete >', JSON.stringify(params, null, 2));
       return nodeify(this.rq.delete({
         url: params.url
       }).catch(normalizeError), cb);

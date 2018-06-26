@@ -1,5 +1,7 @@
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var Promise = require("promise");
@@ -16,11 +18,13 @@ module.exports = function (api) {
     all: function all() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
+
+      // TODO: Allow other params (payments.all)
       var from = params.from,
           to = params.to,
           count = params.count,
-          skip = params.skip;
-
+          skip = params.skip,
+          rest = _objectWithoutProperties(params, ['from', 'to', 'count', 'skip']);
 
       if (from) {
         from = normalizeDate(from);
@@ -35,12 +39,12 @@ module.exports = function (api) {
 
       return api.get({
         url: '/payments',
-        data: {
+        data: _extends({
           from: from,
           to: to,
           count: count,
           skip: skip
-        }
+        }, rest)
       }, callback);
     },
     fetch: function fetch(paymentId, callback) {
