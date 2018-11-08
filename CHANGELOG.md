@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.2 - 2018-11-08
+- Added support for TypeScript.
+
 ## 2.0.1 - 2018-6-26
 ### Fixed
 - Security Fixes
@@ -9,7 +12,7 @@
 - Removed sending only specific parameters to orders api, every parameter will be sent as it is , validation is done on API.
 
 ### Deprecated
-- Removing validations on SDK, all parameters will be sent as it is to all apis respectively 
+- Removing validations on SDK, all parameters will be sent as it is to all apis respectively
 
 ## 1.7.0 - 2018-2-20
 ### Added
