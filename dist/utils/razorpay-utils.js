@@ -14,6 +14,10 @@ function isNumber(num) {
   return !isNaN(Number(num));
 }
 
+function isNonNullObject(input) {
+  return !!input && (typeof input === "undefined" ? "undefined" : _typeof(input)) === "object" && !Array.isArray(input);
+}
+
 function normalizeBoolean(bool) {
   if (bool === undefined) {
     return bool;
@@ -96,6 +100,7 @@ module.exports = {
   getDateInSecs: getDateInSecs,
   prettify: prettify,
   isDefined: isDefined,
+  isNonNullObject: isNonNullObject,
   getTestError: getTestError,
   validateWebhookSignature: validateWebhookSignature
 };
