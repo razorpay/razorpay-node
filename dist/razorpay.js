@@ -25,7 +25,8 @@ var Razorpay = function () {
     _classCallCheck(this, Razorpay);
 
     var key_id = options.key_id,
-        key_secret = options.key_secret;
+        key_secret = options.key_secret,
+        headers = options.headers;
 
 
     if (!key_id) {
@@ -43,7 +44,8 @@ var Razorpay = function () {
       hostUrl: 'https://api.razorpay.com/v1/',
       ua: 'razorpay-node@' + Razorpay.VERSION,
       key_id: key_id,
-      key_secret: key_secret
+      key_secret: key_secret,
+      headers: headers
     });
     this.addResources();
   }
