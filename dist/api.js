@@ -7,6 +7,33 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var request = require('request-promise');
 var nodeify = require('./utils/nodeify');
 
+var _require = require('./utils/razorpay-utils'),
+    isNonNullObject = _require.isNonNullObject;
+
+var allowedHeaders = {
+  "X-Razorpay-Account": ""
+};
+
+function getValidHeaders(headers) {
+
+  var result = {};
+
+  if (!isNonNullObject(headers)) {
+
+    return result;
+  }
+
+  return Object.keys(headers).reduce(function (result, headerName) {
+
+    if (allowedHeaders.hasOwnProperty(headerName)) {
+
+      result[headerName] = headers[headerName];
+    }
+
+    return result;
+  }, result);
+}
+
 function normalizeError(err) {
   throw {
     statusCode: err.statusCode,
@@ -25,9 +52,7 @@ var API = function () {
         user: options.key_id,
         pass: options.key_secret
       },
-      headers: {
-        'User-Agent': options.ua
-      }
+      headers: Object.assign({ 'User-Agent': options.ua }, getValidHeaders(options.headers))
     });
   }
 
