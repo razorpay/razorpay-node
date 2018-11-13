@@ -90,6 +90,8 @@ instance.payments.all({
 - [Addons](https://github.com/razorpay/razorpay-node/wiki#addons)
 
 - [Webhooks](https://github.com/razorpay/razorpay-node/wiki#webhooks)
+
+- [Partner Auth](https://github.com/razorpay/razorpay-node/wiki#partner-auth)
 ---
 
 
