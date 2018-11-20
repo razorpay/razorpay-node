@@ -34,6 +34,11 @@ module.exports = function (api) {
         url: '/customers/' + customerId
       }, callback);
     },
+    all: function all(callback) {
+      return api.get({
+        url: '/customers'
+      }, callback);
+    },
     fetchTokens: function fetchTokens(customerId, callback) {
       return api.get({
         url: '/customers/' + customerId + '/tokens'
