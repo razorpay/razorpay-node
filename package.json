@@ -6,12 +6,7 @@
   "typings": "dist/razorpay",
   "scripts": {
     "prepublish": "npm test",
-    "clean": "rm -rf dist && mkdir dist",
-    "cp-ts": "cp lib/razorpay.d.ts dist/",
-    "build:commonjs": "babel lib -d dist",
-    "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
-    "debug": "npm run build && node-debug examples/index.js",
-    "test": "npm run build && mocha --require babel-register"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
