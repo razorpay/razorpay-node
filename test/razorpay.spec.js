@@ -1,10 +1,15 @@
-'use strict'
+const { assert } = require('chai');
 
-const chai = require('chai')
-const assert = chai.assert
-const Razorpay = require('../dist/razorpay')
+const Razorpay = require('../lib/razorpay');
 
-describe('Razorpay is initialized properly', () => {
+describe('#Razorpay - Constructor', () => {
+  it('validates configuration parameters', () => {
+
+    assert.throws(() => {
+      new Razorpay();
+    }, TypeError, 'The configuration argument should be an object; got undefined');
+
+  });
   it('Validation for key_id & key_secret', () => {
     try {
       new Razorpay()
