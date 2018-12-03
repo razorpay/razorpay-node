@@ -2,37 +2,51 @@ const { assert } = require('chai');
 
 const Razorpay = require('../lib/razorpay');
 
-describe('#Razorpay - Constructor', () => {
-  it('validates configuration parameters', () => {
+describe('#Razorpay', () => {
+
+  it('validates configuration parameters envelope', () => {
 
     assert.throws(() => {
       new Razorpay();
     }, TypeError, 'The configuration argument should be an object; got undefined');
 
+    assert.throws(() => {
+      new Razorpay('test');
+    }, TypeError, 'The configuration argument should be an object; got string');
+
   });
-  it('Validation for key_id & key_secret', () => {
-    try {
-      new Razorpay()
-    } catch (e) {
-      assert.equal(e.message, '`key_id` is mandatory')
-    }
 
-    try {
-      new Razorpay({
-        key_id: 'XXX'
-      })
-    } catch (e) {
-      assert.equal(e.message, '`key_secret` is mandatory')
-    }
-  })
+  it('validates child properties', () => {
 
-  it('instance should initialize', () => {
-    let instance = new Razorpay({
-      key_id: 'XXX',
-      key_secret: 'YYY'
-    })
+    assert.throws(() => {
+      new Razorpay( {} );
+    }, TypeError, 'The property \'keyId\' should be of type string; got undefined');
 
-    assert.equal(instance.key_id, 'XXX')
-    assert.equal(instance.key_secret, 'YYY')
-  })
-})
+    assert.throws(() => {
+      new Razorpay( { keyId: 'test' } );
+    }, TypeError, 'The property \'keySecret\' should be of type string; got undefined');
+
+  });
+
+  it('initializes correctly on correct parameter description', () => {
+
+    const razorpayClient = new Razorpay({
+      keyId: 'test',
+      keySecret: 'test'
+    });
+
+    assert.isOk(razorpayClient.api);
+    assert.isOk(razorpayClient.payments);
+    assert.isOk(razorpayClient.refunds);
+    assert.isOk(razorpayClient.orders);
+    assert.isOk(razorpayClient.customers);
+    assert.isOk(razorpayClient.transfers);
+    assert.isOk(razorpayClient.virtualAccounts);
+    assert.isOk(razorpayClient.invoices);
+    assert.isOk(razorpayClient.plans);
+    assert.isOk(razorpayClient.subscriptions);
+    assert.isOk(razorpayClient.addons);
+
+  });
+
+});
