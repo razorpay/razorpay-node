@@ -20,12 +20,12 @@ Documentation of Razorpay's API and their usage is available at <https://docs.ra
 
 ### Basic Usage
 
-Instantiate the razorpay instance with `key_id` & `key_secret`. You can obtain the keys from the dashboard app ([https://dashboard.razorpay.com/#/app/keys](https://dashboard.razorpay.com/#/app/keys))
+Instantiate the razorpay instance with `keyId` & `keySecret`. You can obtain the keys from the dashboard app ([https://dashboard.razorpay.com/#/app/keys](https://dashboard.razorpay.com/#/app/keys))
 
 ```js
 var instance = new Razorpay({
-  key_id: 'YOUR_KEY_ID',
-  key_secret: 'YOUR_KEY_SECRET'
+  keyId: 'YOUR_KEY_ID',
+  keySecret: 'YOUR_KEY_SECRET'
 })
 ```
 
@@ -120,4 +120,3 @@ npm test
 ## Licence
 
 MIT Licensed. LICENSE file added to repo.
-
