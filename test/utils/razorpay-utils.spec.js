@@ -13,7 +13,7 @@ const {
   isDefined,
   getTestError,
   validateWebhookSignature
-} = require('../../dist/utils/razorpay-utils')
+} = require('../../lib/utils/razorpay-utils')
 
 describe('Razorpay Utils', () => {
   it('normalizeDate', () => {
@@ -76,7 +76,7 @@ describe('Razorpay Utils', () => {
   });
 
   it('isDefined', () => {
-  
+
     assert.ok(
       !isDefined() && isDefined(""),
       'Checks if the argument is defined'
@@ -92,7 +92,7 @@ describe('Razorpay Utils', () => {
   });
 
   it('validateWebhookSignature', () => {
-  
+
     const respBody         = '{"a":1,"b":2,"c":{"d":3}}',
           secret           = "123456",
           correctSignature = "2fe04e22977002e6c7cb553adab8b460cb"+

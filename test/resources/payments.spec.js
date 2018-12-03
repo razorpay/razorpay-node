@@ -5,9 +5,9 @@ const { assert } = chai
 const rzpInstance = require('../razorpay')
 const mocker = require('../mocker')
 const equal = require('deep-equal')
-const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
+const { getDateInSecs } = require('../../lib/utils/razorpay-utils')
 
-const { runCommonTests }  = require("../../dist/utils/predefined-tests.js");
+const { runCommonTests }  = require("../../lib/utils/predefined-tests.js");
 
 const TEST_PAYMENT_ID = 'pay_sometestId';
 
@@ -246,7 +246,7 @@ describe('PAYMENTS', () => {
   })
 
   describe('Payment Bank Transfers', () => {
-  
+
     it('Reject the promise if payment id is not provided', (done) => {
 
       rzpInstance.payments.bankTransfer()

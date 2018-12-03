@@ -8,11 +8,11 @@ const mocker = require('../mocker');
 const { getDateInSecs,
         normalizeDate,
         normalizeNotes
-      } = require('../../dist/utils/razorpay-utils');
+      } = require('../../lib/utils/razorpay-utils');
 const { runCallbackCheckTest,
         runParamsCheckTest,
         runURLCheckTest,
-        runCommonTests }  = require("../../dist/utils/predefined-tests.js");
+        runCommonTests }  = require("../../lib/utils/predefined-tests.js");
 
 const SUB_PATH = "/plans",
       FULL_PATH = `/v1${SUB_PATH}`,
@@ -42,7 +42,7 @@ const runIDRequiredTest = (params) => {
 describe("PLANS", () => {
 
   describe('Create Plan', () => {
-  
+
     let expectedUrl = `${FULL_PATH}`,
         params = {
           param1: "something",
@@ -72,7 +72,7 @@ describe("PLANS", () => {
   });
 
   describe('Fetch Plan', () => {
-  
+
     let expectedUrl = `${FULL_PATH}/${TEST_PLAN_ID}`,
         methodName = "fetch",
         methodArgs = [TEST_PLAN_ID],
@@ -99,7 +99,7 @@ describe("PLANS", () => {
   });
 
   describe('Fech All Plans', () => {
-  
+
     let expectedUrl = `${FULL_PATH}`,
         methodName = "all",
         params = {
@@ -159,7 +159,6 @@ describe("PLANS", () => {
       methodName,
       mockerParams,
       methodArgs
-    });  
+    });
   });
 });
-

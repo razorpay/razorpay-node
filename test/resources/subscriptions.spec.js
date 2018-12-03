@@ -9,11 +9,11 @@ const equal = require('deep-equal')
 const { getDateInSecs,
         normalizeDate,
         normalizeNotes
-      } = require('../../dist/utils/razorpay-utils');
+      } = require('../../lib/utils/razorpay-utils');
 const { runCallbackCheckTest,
         runParamsCheckTest,
         runURLCheckTest,
-        runCommonTests }  = require("../../dist/utils/predefined-tests.js");
+        runCommonTests }  = require("../../lib/utils/predefined-tests.js");
 
 const SUB_PATH = "/subscriptions",
       FULL_PATH = `/v1${SUB_PATH}`,
@@ -43,7 +43,7 @@ const runIDRequiredTest = (params) => {
 describe("SUBSCRIPTIONS", () => {
 
   describe("Create Subscription", () => {
-  
+
     let expectedUrl = `${FULL_PATH}`,
         params = {
           param1: "something",
@@ -73,7 +73,7 @@ describe("SUBSCRIPTIONS", () => {
   });
 
   describe("Fetch Subscription", () => {
-  
+
     let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}`,
         methodName = "fetch",
         methodArgs = [TEST_SUBSCRIPTION_ID],
@@ -100,7 +100,7 @@ describe("SUBSCRIPTIONS", () => {
   });
 
   describe("Fetch All Subscriptions", () => {
- 
+
     let methodName = "all",
        params = {
          "param1": "something",
@@ -165,7 +165,7 @@ describe("SUBSCRIPTIONS", () => {
   });
 
   describe("Cancel Subscription", () => {
-  
+
     let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/cancel`,
         methodName = "cancel",
         methodArgs = [TEST_SUBSCRIPTION_ID, false],
@@ -185,7 +185,7 @@ describe("SUBSCRIPTIONS", () => {
     });
 
     it("Checks for type of arguments", (done) => {
-    
+
       apiObj.cancel(TEST_SUBSCRIPTION_ID, null).then(() => {
 
         done(new Error("Datatype is not checked for the arguments"));
@@ -216,10 +216,10 @@ describe("SUBSCRIPTIONS", () => {
   });
 
   describe("Create Addon", () => {
-  
+
     let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/addons`,
         methodName = "createAddon",
-        params = { 
+        params = {
 			"item": {
 				"name": "Extra Chair",
 				"amount": "30000",

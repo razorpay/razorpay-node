@@ -8,8 +8,8 @@ const equal = require('deep-equal')
 const { getDateInSecs,
         normalizeDate,
         normalizeNotes
-      } = require('../../dist/utils/razorpay-utils')
-const { runCommonTests }  = require("../../dist/utils/predefined-tests.js");
+      } = require('../../lib/utils/razorpay-utils')
+const { runCommonTests }  = require("../../lib/utils/predefined-tests.js");
 
 
 const SUB_PATH  = "/virtual_accounts",
@@ -40,9 +40,9 @@ const runIDRequiredTest = (params) => {
 describe("VIRTUAL_ACCOUNTS", () => {
 
   describe('Fetch Virtual Accounts', () => {
-  
+
     it('Default params', (done) => {
-    
+
       let expectedParams = {
         skip : 0,
         count: 10
@@ -53,7 +53,7 @@ describe("VIRTUAL_ACCOUNTS", () => {
       });
 
       rzpInstance.virtualAccounts.all().then((response) => {
-      
+
         assert.ok(equal(
           response.__JUST_FOR_TESTS__.requestQueryParams,
           expectedParams),
@@ -87,14 +87,14 @@ describe("VIRTUAL_ACCOUNTS", () => {
         count: 25,
         skip : 5
       }).then((response) => {
-      
+
         assert.ok(equal(
           response.__JUST_FOR_TESTS__.requestQueryParams,
           expectedParams),
           'from & to dates are converted to ms'
         )
 
-        assert.equal( 
+        assert.equal(
           response.__JUST_FOR_TESTS__.url,
           `${FULL_PATH}?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5`,
           'Params are appended as part of request'
@@ -106,7 +106,7 @@ describe("VIRTUAL_ACCOUNTS", () => {
   });
 
   describe('Fetch Virtual Account', () => {
- 
+
     it ('Validation', (done) => {
 
       mocker.mock({
@@ -114,23 +114,23 @@ describe("VIRTUAL_ACCOUNTS", () => {
       });
 
       rzpInstance.virtualAccounts.fetch().then(() => {
-     
+
         done(new Error("`rzpInstance.virtualAccounts.fetch` doesn't"+
                        " check for account id"));
       }).catch((err) => {
-     
+
         done();
       });
     });
 
     it ("Url Check", (done) => {
-    
+
       mocker.mock({
         url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}`
       });
 
       rzpInstance.virtualAccounts.fetch(TEST_VIRTUAL_ACCOUNT).then((response) => {
-      
+
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
           `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
@@ -143,9 +143,9 @@ describe("VIRTUAL_ACCOUNTS", () => {
   });
 
   it ("Create Virtual Account", (done) => {
-  
+
     const params = {
-    
+
       notes : {"comment": "My notes"},
       param1: "param1",
       param2: "param2"
@@ -157,7 +157,7 @@ describe("VIRTUAL_ACCOUNTS", () => {
     });
 
     rzpInstance.virtualAccounts.create(params).then((response) => {
- 
+
       assert.ok(equal(
         response.__JUST_FOR_TESTS__.requestBody,
         Object.assign(rest, normalizeNotes(notes))),
@@ -169,7 +169,7 @@ describe("VIRTUAL_ACCOUNTS", () => {
   });
 
   describe("Virtual Accounts close", () => {
-  
+
     it("Validation", (done) => {
 
       mocker.mock({
@@ -177,27 +177,27 @@ describe("VIRTUAL_ACCOUNTS", () => {
       });
 
       rzpInstance.virtualAccounts.close().then(() => {
-    
-        done(new Error("virtualAccounts.close doesn't check for account id"));  
+
+        done(new Error("virtualAccounts.close doesn't check for account id"));
       }).catch(() => {
-      
+
         done();
       });
     });
 
     it("Url Match", (done) => {
-    
+
       mocker.mock({
         url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
         method: "PATCH"
       });
 
       rzpInstance.virtualAccounts.close(TEST_VIRTUAL_ACCOUNT).then((response) => {
-     
+
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
           `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
-          "Url is formed correctly"       
+          "Url is formed correctly"
         );
 
         done();
@@ -206,7 +206,7 @@ describe("VIRTUAL_ACCOUNTS", () => {
   });
 
   describe("Virtual Accounts get Payments", () => {
-  
+
     let expectedUrl  = `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}/payments`,
         methodName   = "fetchPayments",
         methodArgs   = [TEST_VIRTUAL_ACCOUNT],

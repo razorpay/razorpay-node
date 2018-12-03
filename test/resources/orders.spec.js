@@ -5,7 +5,7 @@ const { assert } = chai
 const rzpInstance = require('../razorpay')
 const mocker = require('../mocker')
 const equal = require('deep-equal')
-const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
+const { getDateInSecs } = require('../../lib/utils/razorpay-utils')
 
 describe('ORDERS', () => {
   describe('Fetch Orders', () => {

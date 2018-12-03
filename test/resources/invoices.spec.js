@@ -9,11 +9,11 @@ const equal = require('deep-equal')
 const { getDateInSecs,
         normalizeDate,
         normalizeNotes
-      } = require('../../dist/utils/razorpay-utils');
+      } = require('../../lib/utils/razorpay-utils');
 const { runCallbackCheckTest,
         runParamsCheckTest,
         runURLCheckTest,
-        runCommonTests }  = require("../../dist/utils/predefined-tests.js");
+        runCommonTests }  = require("../../lib/utils/predefined-tests.js");
 
 const SUB_PATH  = "/invoices",
       FULL_PATH = `/v1${SUB_PATH}`,

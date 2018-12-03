@@ -11,7 +11,7 @@ const SUB_PATH = "/addons",
       TEST_ADDON_ID = "addon_sometestid",
       apiObj = rzpInstance.addons;
 
-const { runCommonTests }  = require("../../dist/utils/predefined-tests.js");
+const { runCommonTests }  = require("../../lib/utils/predefined-tests.js");
 
 const runIDRequiredTest = (params) => {
 
@@ -36,7 +36,7 @@ const runIDRequiredTest = (params) => {
 describe("Addons", () => {
 
   describe("Fetch Addon", () => {
-  
+
     let expectedUrl = `${FULL_PATH}/${TEST_ADDON_ID}`,
         methodName = "fetch",
         methodArgs = [TEST_ADDON_ID],
@@ -63,7 +63,7 @@ describe("Addons", () => {
   });
 
   describe("Delete Addon", () => {
-  
+
     let expectedUrl = `${FULL_PATH}/${TEST_ADDON_ID}`,
         methodName = "delete",
         methodArgs = [TEST_ADDON_ID],
