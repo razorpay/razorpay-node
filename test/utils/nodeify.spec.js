@@ -1,26 +1,39 @@
-'use strict'
+const { assert } = require('chai');
+const nodeify = require('../../lib/utils/nodeify');
 
-const chai = require('chai')
-const assert = chai.assert
+describe('#Utilities', () => {
 
-const nodeify = require('../../lib/utils/nodeify')
+  it('promise on no callback', () => {
 
-describe('Nodeify should invoke the callback', () => {
-  it('Resolve', (done) => {
-    let data = 'some success data'
-    nodeify(Promise.resolve(data), (err, response) => {
-      assert.equal(response, data, 'Passes the resolved data')
-      assert.isNotOk(err, 'Error should be passed as null')
-      done()
-    })
-  })
+    const retVal = nodeify(Promise.resolve('test'));
 
-  it('Reject', (done) => {
-    let errorMsg = 'some error'
-    nodeify(Promise.reject(errorMsg), (err, response) => {
-      assert.equal(err, errorMsg, 'Callback is invoked with error')
-      assert.isNotOk(response, 'Response is null')
-      done()
-    })
-  })
-})
+    assert.isOk(retVal.then);
+    assert.isOk(retVal.catch);
+
+  });
+
+  it('resolves on completion', done => {
+
+    let resolveMsg = 'test';
+
+    nodeify(Promise.resolve(resolveMsg), (err, data) => {
+      assert.equal(resolveMsg, data);
+      assert.isNotOk(err, 'err should be passed as null');
+      done();
+    });
+
+  });
+
+  it('rejects on error', (done) => {
+
+    let errorMsg = 'error';
+
+    nodeify(Promise.reject(errorMsg), (err, data) => {
+      assert.equal(err, errorMsg);
+      assert.isNotOk(data, 'Response is null');
+      done();
+    });
+
+  });
+
+});
