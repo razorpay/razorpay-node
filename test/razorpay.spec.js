@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 
-const Razorpay = require('../lib/razorpay');
+const Razorpay = require('../lib');
 
 describe('#Razorpay', () => {
 

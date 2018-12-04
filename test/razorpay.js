@@ -1,4 +1,4 @@
-const Razorpay = require("../lib/razorpay");
+const Razorpay = require("../lib");
 
 module.exports = new Razorpay({
   keyId: "XXX",
