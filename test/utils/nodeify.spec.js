@@ -1,7 +1,7 @@
 const { assert } = require('chai');
 const nodeify = require('../../lib/utils/nodeify');
 
-describe('#Utilities', () => {
+describe('#Nodeify', () => {
 
   it('promise on no callback', () => {
 
