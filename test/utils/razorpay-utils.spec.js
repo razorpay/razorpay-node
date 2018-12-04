@@ -219,18 +219,6 @@ describe('#Utilities', () => {
 
   });
 
-  describe('getTestError()', () => {
-
-    it('generates the correct error type', () => {
-
-      assert.ok(
-        getTestError('', '', '') instanceof Error
-      );
-
-    });
-
-  });
-
   describe('validateWebhookSignature()', () => {
 
     it('validates a valid signature', () => {
