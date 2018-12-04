@@ -134,36 +134,101 @@ describe('#Utilities', () => {
 
   });
 
-  it('normalizeNotes', () => {
-    assert.ok(
-      equal(
-        normalizeNotes({
-          note1: 'This is note1',
-          note2: 'This is note2'
-        }),
-        {
-          'notes[note1]': 'This is note1',
-          'notes[note2]': 'This is note2'
-        }
-      ),
-      'Transforms the notes'
-    )
+  describe('normalizeBoolean()', () => {
+
+    it('parses the parameter correctly', () => {
+
+      assert.equal(
+        normalizeBoolean(undefined),
+        false
+      );
+
+      assert.equal(
+        normalizeBoolean(true),
+        true
+      );
+
+      assert.equal(
+        normalizeBoolean(false),
+        false
+      );
+
+    });
+
   });
 
-  it('isDefined', () => {
+  describe('normalizeNotes()', () => {
 
-    assert.ok(
-      !isDefined() && isDefined(""),
-      'Checks if the argument is defined'
-    );
+    it('normalizes a standard object', () => {
+
+      assert.ok(
+        equal(
+          normalizeNotes({
+            note1: 'example1',
+            note2: 'example2'
+          }),
+          {
+            'notes[note1]': 'example1',
+            'notes[note2]': 'example2'
+          }
+        )
+      );
+
+    });
+
+    it('normalizes an empty object', () => {
+
+      assert.ok(
+        equal(
+          normalizeNotes({}),
+          {}
+        )
+      );
+
+      assert.ok(
+        equal(
+          normalizeNotes(['test']),
+          {'notes[0]': 'test'}
+        )
+      );
+
+    });
+
+    describe('errors out on invalid parameters', () => {
+
+      const testCases = [
+        () => {},
+        'test',
+        false,
+        100,
+        null,
+        void 0
+      ];
+
+      testCases.forEach(testCase => {
+
+        it(`errors out on type ${typeof testCase}`, () => {
+          assert.throws(() => {
+            normalizeNotes(testCase);
+          }, TypeError);
+        });
+
+      });
+
+    });
+
   });
 
-  it('getTestError', () => {
-    const error = getTestError("", "", "");
-    assert.ok(
-      error.constructor.name === "Error",
-      'Gets common error for all tests'
-    );
+  describe('getTestError()', () => {
+
+    it('generates the correct error type', () => {
+
+      assert.ok(
+        getTestError('', '', '') instanceof Error
+      );
+
+    });
+
   });
 
   it('validateWebhookSignature', () => {
