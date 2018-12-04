@@ -1,93 +1,89 @@
-'use strict';
-
-const Promise = require('promise')
-const chai = require('chai')
-const { assert } = chai
-const rzpInstance = require('../razorpay');
+const { assert } = require('chai');
+const Razorpay = require('../razorpay');
 const mocker = require('../mocker');
 
-const SUB_PATH = "/addons",
-      FULL_PATH = `/v1${SUB_PATH}`,
-      TEST_ADDON_ID = "addon_sometestid",
-      apiObj = rzpInstance.addons;
+const { runCommonTests }  = require('../predefined-tests.js');
 
-const { runCommonTests }  = require("../../lib/utils/predefined-tests.js");
+const SUB_PATH = '/addons';
+const FULL_PATH = `/v1${SUB_PATH}`;
+const TEST_ADDON_ID = 'addon_sometestid';
+const apiObj = Razorpay.addons;
 
-const runIDRequiredTest = (params) => {
+const checkForID = params => {
 
-  let {apiObj, methodName, methodArgs, mockerParams} = params;
+  let { apiObj, methodName, methodArgs, mockerParams } = params;
 
   mocker.mock(mockerParams);
 
-  it (`method ${methodName} checks for Addon ID as param`,
-      (done) => {
+  it (`throws an error when no ID parameter is provided (${methodName})`, async () => {
 
-    apiObj[methodName](...methodArgs).then(() => {
+    try {
+      await apiObj[methodName](...methodArgs);
+      throw new Error(
+        `API method '${methodName}' did not throw an error on undefined variable value`
+      );
+    } catch (error) {
+      assert.ok(error);
+    }
 
-      done(new Error(`method ${methodName} does not`+
-                     ` check for Addon ID`));
-    },(err) => {
-
-      done();
-    });
   });
+
 }
 
-describe("Addons", () => {
+describe('#Addons', () => {
 
-  describe("Fetch Addon", () => {
+  describe('Fetch', () => {
 
-    let expectedUrl = `${FULL_PATH}/${TEST_ADDON_ID}`,
-        methodName = "fetch",
-        methodArgs = [TEST_ADDON_ID],
-        mockerParams = {
-          url: `${SUB_PATH}/${TEST_ADDON_ID}`
-        };
+    const expectedUrl = `${FULL_PATH}/${TEST_ADDON_ID}`;
+    const methodName = 'fetch';
 
-    runIDRequiredTest({
+    checkForID({
       apiObj,
       methodName,
-      methodArgs: [undefined],
+      methodArgs: [void 0],
       mockerParams: {
-        url: `${SUB_PATH}/${undefined}`
+        url: `${SUB_PATH}/${void 0}`
       }
     });
 
     runCommonTests({
       apiObj,
       methodName,
-      methodArgs,
-      mockerParams,
+      methodArgs: [TEST_ADDON_ID],
+      mockerParams: {
+        url: `${SUB_PATH}/${TEST_ADDON_ID}`
+      },
       expectedUrl
     });
+
   });
 
-  describe("Delete Addon", () => {
+  describe('Delete', () => {
 
-    let expectedUrl = `${FULL_PATH}/${TEST_ADDON_ID}`,
-        methodName = "delete",
-        methodArgs = [TEST_ADDON_ID],
-        mockerParams = {
-          url: `${SUB_PATH}/${TEST_ADDON_ID}`,
-          method: "DELETE"
-        };
+    const expectedUrl = `${FULL_PATH}/${TEST_ADDON_ID}`;
+    const methodName = 'delete';
 
-    runIDRequiredTest({
+    checkForID({
       apiObj,
       methodName,
-      methodArgs: [undefined],
+      methodArgs: [void 0],
       mockerParams: {
-        url: `${SUB_PATH}/${undefined}`,
-        method: "DELETE"
+        url: `${SUB_PATH}/${void 0}`,
+        method: 'DELETE'
       }
     });
 
     runCommonTests({
       apiObj,
       methodName,
-      methodArgs,
-      mockerParams,
+      methodArgs: [TEST_ADDON_ID],
+      mockerParams: {
+        url: `${SUB_PATH}/${TEST_ADDON_ID}`,
+        method: 'DELETE'
+      },
       expectedUrl
     });
+
   });
+
 });
