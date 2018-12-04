@@ -231,18 +231,36 @@ describe('#Utilities', () => {
 
   });
 
-  it('validateWebhookSignature', () => {
+  describe('validateWebhookSignature()', () => {
 
-    const respBody         = '{"a":1,"b":2,"c":{"d":3}}',
-          secret           = "123456",
-          correctSignature = "2fe04e22977002e6c7cb553adab8b460cb"+
-                             "9e2a4970d5953cb27a8472752e3bbc",
-          wrongSignature   = "sdfafds";
+    it('validates a valid signature', () => {
 
-    assert.ok(
-      validateWebhookSignature(respBody, correctSignature, secret) &&
-      !validateWebhookSignature(respBody, wrongSignature, secret),
-      'Validates webhook signature'
-    );
+      const respBody = '{"a":1,"b":2,"c":{"d":3}}';
+      const secret = '123456';
+      const correctSignature = '2fe04e22977002e6c7cb553adab8b460cb9e2a4970d5953cb27a8472752e3bbc';
+
+      assert.ok(
+        validateWebhookSignature(respBody, correctSignature, secret)
+      );
+
+    });
+
+    it('errors out on invalid parameters', () => {
+
+      assert.throw(() => {
+        validateWebhookSignature();
+      }, TypeError);
+
+      assert.throw(() => {
+        validateWebhookSignature('');
+      }, TypeError);
+
+      assert.throw(() => {
+        validateWebhookSignature('', '');
+      }, TypeError);
+
+    });
+
   });
-})
+
+});
