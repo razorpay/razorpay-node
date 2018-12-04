@@ -1,62 +1,137 @@
-'use strict'
-
-const chai = require('chai')
-const assert = chai.assert
-const equal = require('deep-equal')
+const { assert } = require('chai');
+const equal = require('deep-equal');
 
 const {
-  normalizeDate,
-  isNumber,
-  normalizeBoolean,
   normalizeNotes,
+  normalizeDate,
+  normalizeBoolean,
+  isNumber,
   getDateInSecs,
-  isDefined,
+  isNonNullObject,
   getTestError,
   validateWebhookSignature
 } = require('../../lib/utils/razorpay-utils')
 
-describe('Razorpay Utils', () => {
-  it('normalizeDate', () => {
-    let date = 'Aug 25, 2016'
-    assert.equal(
-      normalizeDate(date),
-      getDateInSecs(date),
-      'Returns date in secs'
-    )
+describe('#Utilities', () => {
+
+  describe('normalizeDate()', () => {
+
+    describe('normalizes the date correctly', () => {
+
+      const testCases = [
+        'Aug 25, 2016',
+        'August 25, 2016',
+        '2016-08-25'
+      ];
+
+      testCases.forEach((testCase, i) => {
+
+        it(`validates correctly, case ${i}`, () =>{
+
+          assert.equal(
+            normalizeDate(testCase),
+            getDateInSecs(testCase)
+          );
+
+        });
+
+      });
+
+    });
+
+    it('throws an error on invalid date formats', () =>{
+
+      assert.throw(() => {
+        normalizeDate('1111-1-1111');
+      }, TypeError);
+
+      assert.throw(() => {
+        normalizeDate('abcde-1-1111');
+      }, TypeError);
+
+      assert.throw(() => {
+        normalizeDate();
+      }, TypeError);
+
+      assert.throw(() => {
+        normalizeDate(void 0);
+      }, TypeError);
+
+    });
+
   });
 
-  it('isNumber', () => {
-    assert.equal(
-      isNumber('0.3'),
-      true,
-      'Number check'
-    )
+  describe('isNumber()', () => {
 
-    assert.equal(
-      isNumber('abc'),
-      false,
-      'Number check with alphabets'
-    )
-  });
+    const testCases = [
+      {
+        input: '0.3',
+        output: true
+      },
+      {
+        input: '3',
+        output: true
+      },
+      {
+        input: '3.14',
+        output: true
+      },
+      {
+        input: 'abc',
+        output: false
+      },
+      {
+        input: '',
+        output: false
+      },
+      {
+        input: null,
+        output: false
+      },
+      {
+        input: void 0,
+        output: false
+      },
+      {
+        input: 0.3,
+        output: true
+      },
+      {
+        input: 3,
+        output: true
+      },
+      {
+        input: 3.14,
+        output: true
+      },
+      {
+        input: () => {},
+        output: false
+      },
+      {
+        input: {},
+        output: false
+      },
+      ,
+      {
+        input: [],
+        output: false
+      }
+    ];
 
-  it('normalizeBoolean', () => {
-    assert.equal(
-      normalizeBoolean(undefined),
-      undefined,
-      'When undefined is passed, just return it'
-    )
+    testCases.forEach((testCase, i) => {
 
-    assert.equal(
-      normalizeBoolean(true),
-      1,
-      'Boolean check with true'
-    )
+      it(`parses case ${i} correctly`, () =>{
 
-    assert.equal(
-      normalizeBoolean(false),
-      0,
-      'Boolean check with false'
-    )
+        assert.equal(
+          isNumber(testCase.input),
+          testCase.output
+        );
+
+      });
+
+    });
+
   });
 
   it('normalizeNotes', () => {
