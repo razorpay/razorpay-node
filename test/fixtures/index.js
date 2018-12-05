@@ -26,5 +26,21 @@ module.exports = {
       'notes[note1]': 'This is note1',
       'notes[note2]': 'This is note2'
     }
+  },
+  invoices: {
+    parameters: {
+      param1: 'something',
+      param2: 'something else',
+      notes: {
+        'note1': 'example1',
+        'note2': 'example2'
+      }
+    },
+    expectedParameters: {
+      param1: 'something',
+      param2: 'something else',
+      'notes[note1]': 'example1',
+      'notes[note2]': 'example2'
+    }
   }
 };
