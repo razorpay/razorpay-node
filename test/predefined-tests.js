@@ -69,9 +69,9 @@ const urlCheck = params => {
 
 }
 
-const runParamsCheckTest = (params) => {
+const checkParameters = params => {
 
-  let {
+  const {
     apiObj,
     methodName,
     methodArgs,
@@ -80,70 +80,53 @@ const runParamsCheckTest = (params) => {
     testTitle
   } = params;
 
-  testTitle = testTitle || "Validates URL and Params";
+  testTitle = testTitle || 'has the correct URL and parameters';
 
-  it (testTitle, (done) => {
+  it(testTitle, async () => {
 
     mocker.mock(mockerParams);
 
-    apiObj[methodName](...methodArgs).then((resp) => {
+    try {
 
-      const respData = resp.__JUST_FOR_TESTS__,
-            respParams = respData[respData.method === "GET"
-                                    ? "requestQueryParams"
-                                    : "requestBody"];
+      const response = await apiObj[methodName](...methodArgs);
+      const responseData = response['__MOCKED_RESPONSE_DATA__'];
+      const parameterKey = (responseData.method === 'GET')
+       ? 'requestQueryParams' : 'requestBody';
 
-        if (equal(respParams, expectedParams)) {
+      const responseDataParams = responseData[parameterKey];
 
-          assert.ok(true, "Params Matched");
-        } else {
+      assert.ok(equal(responseDataParams, expectedParams));
 
-          return getTestError(
-            "Params Mismatch",
-            expectedParams,
-            respParams
-          );
-        }
-    }, (err) => {
+    } catch (error) {
+      throw error;
+    }
 
-      return new Error(prettify(err));
-    }).then((err) => {
-
-      done(err);
-    });
   });
 }
 
-const runCommonTests = (params) => {
-
-  let {
-    apiObj,
-    methodName,
-    methodArgs,
-    expectedUrl,
-    expectedParams,
-    mockerParams
-  } = params;
+const commonTests = params => {
 
   urlCheck({
     ...params
   });
 
-  if (expectedParams) {
+  callbackCheck({
+   ...params
+  });
 
-    runParamsCheckTest({
+  if (params.expectedParams) {
+
+    checkParameters({
       ...params
     });
 
   }
 
-  callbackCheck({
-   ...params
-  });
 }
 
 module.exports = {
   urlCheck,
   callbackCheck,
-  runCommonTests
+  checkParameters,
+  commonTests
 };
