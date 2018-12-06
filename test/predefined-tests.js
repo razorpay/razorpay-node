@@ -6,7 +6,7 @@ const mocker = require('./mocker');
 
 const callbackCheck = params => {
 
-  let { apiObj, methodName, methodArgs, mockerParams } = params;
+  const { apiObj, methodName, methodArgs, mockerParams } = params;
 
   describe('Common Tests - Callback Tests', () => {
 
@@ -76,11 +76,10 @@ const checkParameters = params => {
     methodName,
     methodArgs,
     expectedParams,
-    mockerParams,
-    testTitle
+    mockerParams
   } = params;
 
-  testTitle = testTitle || 'has the correct URL and parameters';
+  const testTitle = params.testTitle || 'has the correct URL and parameters';
 
   it(testTitle, async () => {
 

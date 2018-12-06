@@ -1,9 +1,13 @@
 sudo: false
 language: node_js
 node_js:
-  - "4"
-  - "5"
-  - "6"
+  - "7"
+  - "8"
+  - "9"
+  - "10"
+  - "11"
+  - "lts/Carbon"
+  - "lts/Dubnium"
   - stable
 script:
   - npm test
