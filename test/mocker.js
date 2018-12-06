@@ -3,6 +3,17 @@ const equal = require('deep-equal');
 
 const Fixtures = require('./fixtures');
 
+const parseComponent = value => {
+
+  const regEx = /^\d+$/g;
+  if (regEx.exec(value)) {
+    return new Number(value);
+  }
+
+  return value;
+
+};
+
 class Mocker {
 
   constructor() {
@@ -30,7 +41,10 @@ class Mocker {
     return nock(this.host)
       .intercept(normalizeUrl(`/${this.version}/${mockingParameters.url}`), mockingParameters.method)
       .query(q => {
-        requestQueryParams = q;
+        requestQueryParams = Object.keys(q).reduce((acc, current) => {
+          acc[current] = parseComponent(q[current]);
+          return acc;
+        }, {});
         return true;
       })
       .reply(statusCode, (url, requestBody) => {
@@ -68,7 +82,7 @@ const parseRequestBody = raw => {
 
   return raw.split('&').reduce((acc, current) => {
     const [key, value] = current.split('=');
-    acc[decodeURIComponent(key)] = decodeURIComponent(value);
+    acc[decodeURIComponent(key)] = parseComponent(decodeURIComponent(value));
     return acc;
   }, {});
 
