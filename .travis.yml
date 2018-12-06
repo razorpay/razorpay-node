@@ -9,5 +9,7 @@ node_js:
   - "lts/Carbon"
   - "lts/Dubnium"
   - stable
+before_script:
+  - chmod a+x ./test/bootstrap.js
 script:
   - npm test

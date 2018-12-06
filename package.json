@@ -6,7 +6,7 @@
   "typings": "lib/razorpay",
   "scripts": {
     "prepublish": "npm test",
-    "test": "mocha --compilers js:babel-core/register"
+    "test": "$(./test/bootstrap.js)"
   },
   "repository": {
     "type": "git",
