@@ -23,16 +23,9 @@ module.exports = {
 
     mocker.mock(mockerParams);
 
-    it (`throws an error when no ID parameter is provided (${methodName})`, async () => {
+    it (`throws an error when no ID parameter is provided (${methodName})`, () => {
 
-      try {
-        await apiObj[methodName](...methodArgs);
-        throw new Error(
-          `API method '${methodName}' did not throw an error on undefined variable value`
-        );
-      } catch (error) {
-        assert.ok(error);
-      }
+      assert.throw(() => apiObj[methodName](...methodArgs), TypeError);
 
     });
 
