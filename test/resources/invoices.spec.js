@@ -30,9 +30,9 @@ describe('#Invoices', () => {
     commonTests({
       apiObj: invoices,
       methodName: 'create', // ambiguous with create
-      methodArgs: [Fixtures.invoices.parameters],
+      methodArgs: [Fixtures.common.parameters],
       expectedUrl: FULL_PATH,
-      expectedParams: Fixtures.invoices.expectedParameters,
+      expectedParams: Fixtures.common.expectedParameters,
       mockerParams: {
        url: `${SUB_PATH}`,
        method: 'POST'
@@ -58,9 +58,9 @@ describe('#Invoices', () => {
     commonTests({
       apiObj: invoices,
       methodName,
-      methodArgs: [TEST_INVOICE_ID, Fixtures.invoices.parameters],
+      methodArgs: [TEST_INVOICE_ID, Fixtures.common.parameters],
       expectedUrl: `${FULL_PATH}/${TEST_INVOICE_ID}`,
-      expectedParams: Fixtures.invoices.expectedParameters,
+      expectedParams: Fixtures.common.expectedParameters,
       mockerParams: {
         url: `${SUB_PATH}/${TEST_INVOICE_ID}`,
         method: 'PATCH'
@@ -189,9 +189,7 @@ describe('#Invoices', () => {
       'count': 10
     };
     let methodArgs = [params];
-    let expectedParams = {
-      ...params
-    }
+    let expectedParams = Object.assign({}, params);
 
     checkParameters({
       apiObj: invoices,

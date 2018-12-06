@@ -27,7 +27,7 @@ module.exports = {
       'notes[note2]': 'This is note2'
     }
   },
-  invoices: {
+  common: {
     parameters: {
       param1: 'something',
       param2: 'something else',
