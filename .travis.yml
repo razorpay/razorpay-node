@@ -15,7 +15,8 @@ node_js:
   - "lts/Dubnium"
   - stable
 before_script:
-  - rm package-lock.json
+  - chmod a+x ./test/clean.js
   - chmod a+x ./test/bootstrap.js
+  - ./test/clean.js
 script:
   - npm test
