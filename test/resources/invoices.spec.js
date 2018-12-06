@@ -205,8 +205,8 @@ describe('#Invoices', () => {
       methodName,
       methodArgs: [{}],
       mockerParams,
-      expectedParams: {'skip': 0, 'count': 10},
-      testTitle: 'Check if skip and count are automatically populated'
+      expectedParams: { skip: 0, count: 10 },
+      testTitle: 'populates "skip" and "count" variables automatically'
     });
 
     params = {
