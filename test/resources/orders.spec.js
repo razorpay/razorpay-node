@@ -6,9 +6,9 @@ const { getDateInSecs } = require('../../lib/utils/razorpay-utils');
 
 describe('#Orders', () => {
 
-  describe('Fetch Orders', () => {
+  describe('Fetch - <All>', () => {
 
-    it('fetches orders with the default skip and count parameters', async () => {
+    it('fetches orders with the default query parameters', async () => {
 
       mocker.mock({
         url: '/orders'
@@ -75,7 +75,7 @@ describe('#Orders', () => {
 
   });
 
-  describe('Fetch Order', () => {
+  describe('Fetch - <Single>', () => {
 
     it('throws an error when the orderId is not provided', () => {
 
