@@ -6,7 +6,7 @@
   "typings": "lib/razorpay",
   "scripts": {
     "prepublish": "npm test",
-    "test": "mocha"
+    "test": "$(./test/bootstrap.js)"
   },
   "repository": {
     "type": "git",
@@ -19,9 +19,6 @@
     "nodejs",
     "razorpay-node"
   ],
-  "engines": {
-    "node": ">=7.0.0"
-  },
   "license": "MIT",
   "devDependencies": {
     "chai": "^4.1.2",
@@ -32,5 +29,12 @@
   "dependencies": {
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5"
+  },
+  "optionalDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0"
   }
 }
