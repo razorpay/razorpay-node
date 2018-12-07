@@ -4,6 +4,19 @@ node_js:
   - "4"
   - "5"
   - "6"
+  - "7"
+  - "8"
+  - "9"
+  - "10"
+  - "11"
+  - "lts/Argon"
+  - "lts/Boron"
+  - "lts/Carbon"
+  - "lts/Dubnium"
   - stable
+before_script:
+  - chmod a+x ./test/clean.js
+  - chmod a+x ./test/bootstrap.js
+  - ./test/clean.js
 script:
   - npm test

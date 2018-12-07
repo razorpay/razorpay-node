@@ -1,33 +1,52 @@
-'use strict'
+const { assert } = require('chai');
 
-const chai = require('chai')
-const assert = chai.assert
-const Razorpay = require('../dist/razorpay')
+const Razorpay = require('../lib');
 
-describe('Razorpay is initialized properly', () => {
-  it('Validation for key_id & key_secret', () => {
-    try {
-      new Razorpay()
-    } catch (e) {
-      assert.equal(e.message, '`key_id` is mandatory')
-    }
+describe('#Razorpay', () => {
 
-    try {
-      new Razorpay({
-        key_id: 'XXX'
-      })
-    } catch (e) {
-      assert.equal(e.message, '`key_secret` is mandatory')
-    }
-  })
+  it('validates configuration parameters envelope', () => {
 
-  it('instance should initialize', () => {
-    let instance = new Razorpay({
-      key_id: 'XXX',
-      key_secret: 'YYY'
-    })
+    assert.throws(() => {
+      new Razorpay();
+    }, TypeError, 'The configuration argument should be an object; got undefined');
 
-    assert.equal(instance.key_id, 'XXX')
-    assert.equal(instance.key_secret, 'YYY')
-  })
-})
+    assert.throws(() => {
+      new Razorpay('test');
+    }, TypeError, 'The configuration argument should be an object; got string');
+
+  });
+
+  it('validates child properties', () => {
+
+    assert.throws(() => {
+      new Razorpay( {} );
+    }, TypeError, 'The property \'keyId\' should be of type string; got undefined');
+
+    assert.throws(() => {
+      new Razorpay( { keyId: 'test' } );
+    }, TypeError, 'The property \'keySecret\' should be of type string; got undefined');
+
+  });
+
+  it('initializes correctly on correct parameter description', () => {
+
+    const razorpayClient = new Razorpay({
+      keyId: 'test',
+      keySecret: 'test'
+    });
+
+    assert.isOk(razorpayClient.api);
+    assert.isOk(razorpayClient.payments);
+    assert.isOk(razorpayClient.refunds);
+    assert.isOk(razorpayClient.orders);
+    assert.isOk(razorpayClient.customers);
+    assert.isOk(razorpayClient.transfers);
+    assert.isOk(razorpayClient.virtualAccounts);
+    assert.isOk(razorpayClient.invoices);
+    assert.isOk(razorpayClient.plans);
+    assert.isOk(razorpayClient.subscriptions);
+    assert.isOk(razorpayClient.addons);
+
+  });
+
+});

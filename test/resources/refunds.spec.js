@@ -1,135 +1,166 @@
-'use strict'
+const { assert } = require('chai');
 
-const chai = require('chai')
-const { assert } = chai
-const rzpInstance = require('../razorpay')
-const mocker = require('../mocker')
-const equal = require('deep-equal')
-const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
+const mocker = require('../mocker');
+const equal = require('deep-equal');
+const { getDateInSecs } = require('../../lib/utils/razorpay-utils');
+const { refunds } = require('../razorpay');
 
-describe('REFUNDS', () => {
-  describe('Fetch Refunds', () => {
-    it('Default params', (done) => {
-      let expectedParams = {
-        skip: 0,
-        count: 10
-      }
+describe('#Refunds', () => {
+
+  describe('Fetch <All>', () => {
+
+    it('passes the default parameters correctly in the request', async () => {
 
       mocker.mock({
         url: '/refunds'
-      })
+      });
 
-      rzpInstance.refunds.all().then((response) => {
-        assert.ok(equal(
-          response.__JUST_FOR_TESTS__.requestQueryParams,
-          expectedParams
-        ), 'skip & count are passed as default queryparams')
-        done()
-      })
-    })
+      try {
 
-    it('`From` & `To` date are converted to ms', (done) => {
-      let fromDate = 'Aug 25, 2016'
-      let toDate = 'Aug 30, 2016'
-      let fromDateInSecs = getDateInSecs(fromDate)
-      let toDateInSecs = getDateInSecs(toDate)
-      let expectedParams = {
+        const response = await refunds.all();
+
+        assert.deepEqual(
+          response['__MOCKED_RESPONSE_DATA__'].requestQueryParams,
+          {
+            skip: 0,
+            count: 10
+          }
+        );
+
+      } catch (error) {
+        throw error;
+      }
+
+    });
+
+    it('converts "to" and "from" parameters to milliseconds', async () => {
+
+      const from = 'Aug 25, 2016';
+      const to = 'Aug 30, 2016';
+      const fromDateInSecs = getDateInSecs(from);
+      const toDateInSecs = getDateInSecs(to);
+      const expectedParams = {
         from: fromDateInSecs,
         to: toDateInSecs,
         count: 25,
         skip: 5
-      }
+      };
 
       mocker.mock({
         url: '/refunds'
       })
 
-      rzpInstance.refunds.all({
-        from: fromDate,
-        to: toDate,
-        count: 25,
-        skip: 5
-      }).then((response) => {
-        assert.ok(equal(
-          response.__JUST_FOR_TESTS__.requestQueryParams,
+      try {
+
+        const response = await refunds.all(Object.assign({}, expectedParams, {
+          to,
+          from
+        }));
+
+        const responseData = response['__MOCKED_RESPONSE_DATA__'];
+
+        assert.deepEqual(
+          responseData.requestQueryParams,
           expectedParams
-        ), 'from & to dates are converted to ms')
+        );
 
         assert.equal(
-          response.__JUST_FOR_TESTS__.url,
+          responseData.url,
           `/v1/refunds?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5`,
-          'Params are appended as part of request'
-        )
-        done()
-      })
-    })
+        );
 
-    it('Form `/payments/id/refunds` url when paymentId is provided', (done) => {
-      let paymentId = 'pay_sometestId'
-      let params = {
-        payment_id: paymentId
+      } catch (error) {
+        throw error;
       }
+
+    });
+
+    it('forms the correct URL to fetch a specific refund based on ID', async () => {
+
+      const paymentId = 'pay_sometestId';
 
       mocker.mock({
         url: `/payments/${paymentId}/refunds`
       })
 
-      rzpInstance.refunds.all(params).then((response) => {
+      try {
+
+        const response = await refunds.all({ payment_id: paymentId });
+
         assert.equal(
-          response.__JUST_FOR_TESTS__.url,
-          `/v1/payments/${paymentId}/refunds?count=10&skip=0`,
-          'Url is formed'
-        )
-        done()
-      })
-    })
-  })
+          response['__MOCKED_RESPONSE_DATA__'].url,
+          `/v1/payments/${paymentId}/refunds?count=10&skip=0`
+        );
 
-  describe('Refund fetch', () => {
-    it('Throw error when refundId is provided', () => {
-      assert.throws(
-        rzpInstance.refunds.fetch,
-        '`refund_id` is mandatory',
-        'Should throw exception when refundId is not provided'
-      )
-    })
+      } catch (error) {
+        throw error;
+      }
 
-    it('Forms the refund fetch request', (done) => {
-      let refundId = 'rfn_sometestId'
+    });
+
+  });
+
+  describe('Fetch <Single>', () => {
+
+    it('throws an error when the refundId is not provided', () => {
+
+      assert.throw(
+        refunds.fetch,
+        TypeError
+      );
+
+    });
+
+    it('correctly forms the refund GET request', async () => {
+
+      const refundId = 'rfn_sometestId';
 
       mocker.mock({
         url: `/refunds/${refundId}`
-      })
+      });
 
-      rzpInstance.refunds.fetch(refundId).then((response) => {
+      try {
+
+        const response = await refunds.fetch(refundId);
+
         assert.equal(
-          response.__JUST_FOR_TESTS__.url,
-          `/v1/refunds/${refundId}`,
-          'Fetch refund url formed correctly'
-        )
-        done()
-      })
-    })
+          response['__MOCKED_RESPONSE_DATA__'].url,
+          `/v1/refunds/${refundId}`
+        );
 
-    it('Form `/payments/id/refunds/id` url when paymentId is provided', (done) => {
-      let paymentId = 'pay_sometestId'
-      let refundId = 'rfn_sometestId'
-      let params = {
-        payment_id: paymentId
+      } catch (error) {
+        throw error;
       }
+
+    });
+
+    it('correctly forms the refund GET request for the payments subpath', async () => {
+
+      const paymentId = 'pay_sometestId';
+      const refundId = 'rfn_sometestId';
+      const params = {
+        payment_id: paymentId
+      };
 
       mocker.mock({
         url: `/payments/${paymentId}/refunds/${refundId}`
-      })
+      });
 
-      rzpInstance.refunds.fetch(refundId, params).then((response) => {
+      try {
+
+        const response = await refunds.fetch(refundId, params);
+
         assert.equal(
-          response.__JUST_FOR_TESTS__.url,
-          `/v1/payments/${paymentId}/refunds/${refundId}`,
-          'Url is formed'
+          response['__MOCKED_RESPONSE_DATA__'].url,
+          `/v1/payments/${paymentId}/refunds/${refundId}`
         )
-        done()
-      })
-    })
-  })
-})
+
+      } catch (error) {
+        throw error;
+      }
+
+    });
+
+  });
+
+});

@@ -2,16 +2,11 @@
   "name": "razorpay",
   "version": "2.0.3",
   "description": "Official Node SDK for Razorpay API",
-  "main": "dist/razorpay",
-  "typings": "dist/razorpay",
+  "main": "lib/index.js",
+  "typings": "lib/razorpay",
   "scripts": {
     "prepublish": "npm test",
-    "clean": "rm -rf dist && mkdir dist",
-    "cp-ts": "cp lib/razorpay.d.ts dist/",
-    "build:commonjs": "babel lib -d dist",
-    "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
-    "debug": "npm run build && node-debug examples/index.js",
-    "test": "npm run build && mocha --require babel-register"
+    "test": "$(./test/bootstrap.js)"
   },
   "repository": {
     "type": "git",
@@ -24,23 +19,22 @@
     "nodejs",
     "razorpay-node"
   ],
-  "files": [
-    "dist"
-  ],
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.14.0",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "babel-register": "^6.18.0",
     "chai": "^4.1.2",
     "deep-equal": "^1.0.1",
     "mocha": "^5.2.0",
     "nock": "^9.3.3"
   },
   "dependencies": {
-    "promise": "^8.0.1",
     "request": "^2.87.0",
-    "request-promise": "^4.2.2"
+    "request-promise-native": "^1.0.5"
+  },
+  "optionalDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0"
   }
 }

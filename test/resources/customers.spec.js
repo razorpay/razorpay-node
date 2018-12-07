@@ -1,164 +1,166 @@
-'use strict'
+// TODO: There is a lot of redundancy in the code base. Refractor it again.
 
-const chai = require('chai')
-const { assert } = chai
-const rzpInstance = require('../razorpay')
-const mocker = require('../mocker')
-const equal = require('deep-equal')
-const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
+const equal = require('deep-equal');
 
-describe('CUSTOMERS', () => {
-  it('Create Customer', (done) => {
-    let params = {
-      name: 'test',
-      email: 'test@razorpay.com',
-      contact: '123456789',
-      notes: {
-        note1: 'This is note1',
-        note2: 'This is note2'
-      }
-    }
+const { assert } = require('chai');
+const { customers } = require('../razorpay');
+const { getDateInSecs } = require('../../lib/utils/razorpay-utils');
+const mocker = require('../mocker');
+const Fixtures = require('../fixtures');
 
-    let expectedParams = {
-      name: 'test',
-      email: 'test@razorpay.com',
-      contact: '123456789',
-      'notes[note1]': 'This is note1',
-      'notes[note2]': 'This is note2'
-    }
+describe('#Customers', () => {
+
+  it('creates a customer', async () => {
 
     mocker.mock({
       url: '/customers',
       method: 'POST'
     })
 
-    rzpInstance.customers.create(params).then((response) => {
+    try {
+
+      const response = await customers.create(Fixtures.customer.parameters);
+      const responseData = response['__MOCKED_RESPONSE_DATA__'];
+
       assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        '/v1/customers',
-        'Create customer request url formed'
-      )
+        responseData.url,
+        '/v1/customers'
+      );
 
       assert.ok(
         equal(
-          response.__JUST_FOR_TESTS__.requestBody,
-          expectedParams
-        ),
-        'All params are passed in request body'
-      )
-      done()
-    })
-  })
+          responseData.requestBody,
+          Fixtures.customer.expectedParameters
+        )
+      );
 
-  it('Edit Customer', (done) => {
+    } catch (error) {
+      throw error;
+    }
+
+  });
+
+  it('edits customer data based on ID', async () => {
+
     const TEST_CUSTOMER_ID = 'cust_6fqBqgrfTSuj5v'
-    let params = {
-      name: 'test',
-      email: 'test@razorpay.com',
-      contact: '123456789',
-      notes: {
-        note1: 'This is note1'
-      }
-    }
-
-    let expectedParams = {
-      name: 'test',
-      email: 'test@razorpay.com',
-      contact: '123456789',
-      'notes[note1]': 'This is note1'
-    }
 
     mocker.mock({
       url: `/customers/${TEST_CUSTOMER_ID}`,
       method: 'PUT'
-    })
+    });
 
-    rzpInstance.customers.edit(TEST_CUSTOMER_ID, params).then((response) => {
+    try {
+
+      const response = await customers.edit(TEST_CUSTOMER_ID, Fixtures.customer.parameters);
+      const responseData = response['__MOCKED_RESPONSE_DATA__'];
+
       assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `/v1/customers/${TEST_CUSTOMER_ID}`,
-        'Edit customer request url formed'
-      )
+        responseData.url,
+        `/v1/customers/${TEST_CUSTOMER_ID}`
+      );
 
       assert.ok(
         equal(
-          response.__JUST_FOR_TESTS__.requestBody,
-          expectedParams
-        ),
-        'All params are passed in request body'
-      )
-      done()
-    })
-  })
+          responseData.requestBody,
+          Fixtures.customer.expectedParameters
+        )
+      );
 
-  it('Customer fetch', (done) => {
+    } catch (error) {
+      throw error;
+    }
+
+  });
+
+  it('fetches the customer', async () => {
+
     const TEST_CUSTOMER_ID = 'cust_6fqBqgrfTSuj5v'
 
     mocker.mock({
       url: `/customers/${TEST_CUSTOMER_ID}`
-    })
+    });
 
-    rzpInstance.customers.fetch(TEST_CUSTOMER_ID).then((response) => {
+    try {
+
+      const response = await customers.fetch(TEST_CUSTOMER_ID);
       assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `/v1/customers/${TEST_CUSTOMER_ID}`,
-        'Fetch customer url formed correctly'
-      )
-      done()
-    })
+        response['__MOCKED_RESPONSE_DATA__'].url,
+        `/v1/customers/${TEST_CUSTOMER_ID}`
+      );
+
+    } catch (error) {
+      throw error;
+    }
+
   })
 
-  it('Tokens fetch', (done) => {
-    const TEST_CUSTOMER_ID = 'cust_6fqBqgrfTSuj5v'
+  describe('Customer Tokens', () => {
 
-    mocker.mock({
-      url: `/customers/${TEST_CUSTOMER_ID}/tokens`
-    })
+    it('fetches all the tokens for a customer', async function() {
 
-    rzpInstance.customers.fetchTokens(TEST_CUSTOMER_ID).then((response) => {
-      assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `/v1/customers/${TEST_CUSTOMER_ID}/tokens`,
-        'Fetch customer tokens url formed correctly'
-      )
-      done()
-    })
-  })
+      const TEST_CUSTOMER_ID = 'cust_6fqBqgrfTSuj5v';
 
-  it('Token fetch', (done) => {
-    const TEST_CUSTOMER_ID = 'cust_6fqBqgrfTSuj5v'
-    const TEST_TOKEN_ID = 'tkn_YDovP0Tg6fpsp'
+      mocker.mock({
+        url: `/customers/${TEST_CUSTOMER_ID}/tokens`
+      });
 
-    mocker.mock({
-      url: `/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}`
-    })
+      try {
 
-    rzpInstance.customers.fetchToken(TEST_CUSTOMER_ID, TEST_TOKEN_ID).then((response) => {
-      assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `/v1/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}`,
-        'Fetch customer token url formed correctly'
-      )
-      done()
-    })
-  })
+        const response = await customers.fetchTokens(TEST_CUSTOMER_ID);
+        assert.equal(
+          response['__MOCKED_RESPONSE_DATA__'].url,
+          `/v1/customers/${TEST_CUSTOMER_ID}/tokens`
+        );
 
-  it('Token delete', (done) => {
-    const TEST_CUSTOMER_ID = 'cust_6fqBqgrfTSuj5v'
-    const TEST_TOKEN_ID = 'tkn_YDovP0Tg6fpsp'
+      } catch (error) {
+        throw error;
+      }
 
-    mocker.mock({
-      url: `/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}`,
-      method: 'DELETE'
-    })
+    });
 
-    rzpInstance.customers.deleteToken(TEST_CUSTOMER_ID, TEST_TOKEN_ID).then((response) => {
-      assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `/v1/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}`,
-        'Delete customer token url formed correctly'
-      )
-      done()
-    })
-  })
-})
+    it('fetches a single token by ID', async function() {
+
+      const TEST_CUSTOMER_ID = 'cust_6fqBqgrfTSuj5v'
+      const TEST_TOKEN_ID = 'tkn_YDovP0Tg6fpsp'
+
+      mocker.mock({
+        url: `/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}`
+      });
+
+      try {
+        const response = await customers.fetchToken(TEST_CUSTOMER_ID, TEST_TOKEN_ID);
+        assert.equal(
+          response['__MOCKED_RESPONSE_DATA__'].url,
+          `/v1/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}`
+        );
+      } catch (error) {
+        throw error;
+      }
+
+    });
+
+    it('deletes a token by ID', async function() {
+
+      const TEST_CUSTOMER_ID = 'cust_6fqBqgrfTSuj5v'
+      const TEST_TOKEN_ID = 'tkn_YDovP0Tg6fpsp'
+
+      mocker.mock({
+        url: `/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}`,
+        method: 'DELETE'
+      })
+
+      try {
+        const response = await customers.deleteToken(TEST_CUSTOMER_ID, TEST_TOKEN_ID);
+        assert.equal(
+          response['__MOCKED_RESPONSE_DATA__'].url,
+          `/v1/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}`
+        );
+      } catch (error) {
+        throw error;
+      }
+
+    });
+
+  });
+
+});
