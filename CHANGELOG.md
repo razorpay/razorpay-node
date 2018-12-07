@@ -31,7 +31,7 @@ Dependencies have been pruned:
 
 **`dependencies`**
 - `promise` -- NodeJS provides native promise support;
-- `request-promise` -- changed to `request-native-promise`.
+- `request-promise` -- changed to `request-promise-native`.
 
 And finally, some redundant build scripts have been removed.
 
