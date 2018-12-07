@@ -1,5 +1,4 @@
 const { assert } = require('chai');
-const equal = require('deep-equal');
 
 const {
   normalizeNotes,
@@ -162,34 +161,28 @@ describe('#Utilities', () => {
     it('normalizes a standard object', () => {
 
       assert.ok(
-        equal(
-          normalizeNotes({
-            note1: 'example1',
-            note2: 'example2'
-          }),
-          {
-            'notes[note1]': 'example1',
-            'notes[note2]': 'example2'
-          }
-        )
+        normalizeNotes({
+          note1: 'example1',
+          note2: 'example2'
+        }),
+        {
+          'notes[note1]': 'example1',
+          'notes[note2]': 'example2'
+        }
       );
 
     });
 
     it('normalizes an empty object', () => {
 
-      assert.ok(
-        equal(
-          normalizeNotes({}),
-          {}
-        )
+      assert.deepEqual(
+        normalizeNotes({}),
+        {}
       );
 
-      assert.ok(
-        equal(
-          normalizeNotes(['test']),
-          {'notes[0]': 'test'}
-        )
+      assert.deepEqual(
+        normalizeNotes(['test']),
+        {'notes[0]': 'test'}
       );
 
     });

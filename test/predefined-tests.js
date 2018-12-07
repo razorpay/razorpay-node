@@ -1,5 +1,4 @@
 const { assert } = require('chai');
-const equal = require('deep-equal');
 
 const { getTestError } = require('./common');
 const mocker = require('./mocker');
@@ -94,7 +93,7 @@ const checkParameters = params => {
 
       const responseDataParams = responseData[parameterKey];
 
-      assert.ok(equal(responseDataParams, expectedParams));
+      assert.deepEqual(responseDataParams, expectedParams);
 
     } catch (error) {
       throw error;
