@@ -1,5 +1,4 @@
 const nock = require('nock');
-const equal = require('deep-equal');
 
 const Fixtures = require('./fixtures');
 
