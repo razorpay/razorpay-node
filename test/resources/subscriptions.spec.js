@@ -1,5 +1,4 @@
 const { assert } = require('chai');
-const equal = require('deep-equal');
 
 const {
   getDateInSecs,

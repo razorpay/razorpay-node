@@ -1,7 +1,7 @@
 const commonCustomerParameters = {
   name: 'test',
   email: 'test@razorpay.com',
-  contact: '123456789'
+  contact: 123456789
 };
 
 module.exports = {
