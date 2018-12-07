@@ -15,11 +15,15 @@ which remain and they will be fixed in an upcoming release (\*).
 - some parts of the library were not tested; tests have been added to cover them. However, it is in
 no way complete or absolute and more will be added in the future.
 - some tests were using a `try`/`catch` block to test for errors; this has been changed to `assert.throw()`
-- some functions have been rewritten to conform to ES6 and above.
+- some functions have been rewritten to conform to ES6 and above;
+- all resource instances now have immutability via `Object.freeze()`.
 
 Apart from that, some new testing beds have been added:
 - NodeJS v4-11;
 - specific LTS releases.
+
+Miscellaneous changes:
+- overhauled the README file
 
 Dependencies have been pruned:
 
