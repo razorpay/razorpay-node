@@ -5,19 +5,18 @@
  */
 
 const { assert } = require('chai');
-const equal = require('deep-equal');
 
-const Fixtures = require('../fixtures');
-const { checkForID } = require('../common');
-const { invoices } = require('../razorpay');
-const mocker = require('../mocker');
-const { getDateInSecs, normalizeDate, normalizeNotes } = require('../../lib/utils/razorpay-utils');
 const {
   callbackCheck,
   checkParameters,
   urlCheck,
   commonTests
 } = require('../predefined-tests.js');
+const { getDateInSecs, normalizeDate, normalizeNotes } = require('../../lib/utils/razorpay-utils');
+const { checkForID } = require('../common');
+const { invoices } = require('../razorpay');
+const Fixtures = require('../fixtures');
+const mocker = require('../mocker');
 
 const SUB_PATH  = '/invoices';
 const FULL_PATH = `/v1${SUB_PATH}`;
@@ -261,10 +260,7 @@ describe('#Invoices', () => {
         method: 'POST'
       });
 
-      try {
-        await apiObj[methodName](TEST_INVOICE_ID, void 0);
-        assert.fail('The "notify" method did not check for a valid medium of transport.');
-      } catch (error) {}
+      assert.throw(() => invoices[methodName](TEST_INVOICE_ID, void 0), TypeError);
 
     });
 

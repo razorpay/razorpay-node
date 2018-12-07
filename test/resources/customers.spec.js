@@ -1,7 +1,5 @@
 // TODO: There is a lot of redundancy in the code base. Refractor it again.
 
-const equal = require('deep-equal');
-
 const { assert } = require('chai');
 const { customers } = require('../razorpay');
 const { getDateInSecs } = require('../../lib/utils/razorpay-utils');
@@ -27,11 +25,9 @@ describe('#Customers', () => {
         '/v1/customers'
       );
 
-      assert.ok(
-        equal(
-          responseData.requestBody,
-          Fixtures.customer.expectedParameters
-        )
+      assert.deepEqual(
+        responseData.requestBody,
+        Fixtures.customer.expectedParameters
       );
 
     } catch (error) {
@@ -59,11 +55,9 @@ describe('#Customers', () => {
         `/v1/customers/${TEST_CUSTOMER_ID}`
       );
 
-      assert.ok(
-        equal(
-          responseData.requestBody,
-          Fixtures.customer.expectedParameters
-        )
+      assert.deepEqual(
+        responseData.requestBody,
+        Fixtures.customer.expectedParameters
       );
 
     } catch (error) {

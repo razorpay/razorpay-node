@@ -1,8 +1,7 @@
 const { assert } = require('chai');
 const { orders } = require('../razorpay');
-const mocker = require('../mocker');
-const equal = require('deep-equal');
 const { getDateInSecs } = require('../../lib/utils/razorpay-utils');
+const mocker = require('../mocker');
 
 describe('#Orders', () => {
 

@@ -2,121 +2,125 @@
 [![npm](https://img.shields.io/npm/v/razorpay.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/razorpay)
 [![Build Status](https://travis-ci.org/razorpay/razorpay-node.svg?branch=master)](https://travis-ci.org/razorpay/razorpay-node)
 
-Official nodejs library for [Razorpay API](https://docs.razorpay.com/docs/payments).
+### Official NodeJS wrapper for the [Razorpay API](https://docs.razorpay.com/docs/payments).
 
-Read up here for getting started and understanding the payment flow with Razorpay: <https://docs.razorpay.com/docs/getting-started>
+Be sure to read the official [getting started](https://docs.razorpay.com/docs/getting-started) documentation to understand the payment flow implemented by Razorpay.
+
+---
 
 ## Installation
 
+Getting started with the Razorpay SDK is a piece of cake. For the sake of backwards compatibility, the SDK supports NodeJS versions 8 and below via the Babel suite for on-the-flow transpilation.
+
 ```bash
-npm i razorpay
+npm i --save razorpay
 ```
 
-## Documentation
+After that, if you are using NodeJS v7.0.0 or below, you can also install the optional dependencies via:
 
+```bash
+npm i babel-core babel-polyfill babel-preset-es2015 babel-preset-stage-0 babel-register
+```
 
-Documentation of Razorpay's API and their usage is available at <https://docs.razorpay.com>
+You might get a deprecation warning about `preset-es2015`, but do not worry. It's perfectly fine.
 
+The library has an inbuilt bootstrapper to make all of this work absolutely flawlessly with any version of Node, so you do not need to manually implement the bootstrapping code.
 
-### Basic Usage
+## API Documentation
 
-Instantiate the razorpay instance with `keyId` & `keySecret`. You can obtain the keys from the dashboard app ([https://dashboard.razorpay.com/#/app/keys](https://dashboard.razorpay.com/#/app/keys))
+Since this SDK is based on the official Razorpay API, you can should refer to the [API Documentation](https://docs.razorpay.com) to make sense of what is happening.
+
+## Basic Usage
+
+In order to begin working with the SDK, you need to get hold of an API object; to do that, you can do the following:
 
 ```js
-var instance = new Razorpay({
+const apiObject = new Razorpay({
   keyId: 'YOUR_KEY_ID',
   keySecret: 'YOUR_KEY_SECRET'
-})
+});
+```
+Where the `keyId` and `keySecret` can be obtained from [your dashboard](https://dashboard.razorpay.com/#/app/keys). With this API factory approach, you have the flexibility of using multiple accounts in one application.
+
+### Accessing Resources
+The resources use pseudo namespacing for encapsulation. In general, the following is the namespace convention for a method:
+
+```
+{instance}.{resourceName}.{method}([identifier, [...parameters, [callback]]])
 ```
 
-The resources can be accessed via the instance. All the methods invocations follows the namespaced signature
+All the methods in the library support asynchronous duality which very simply means that all functions have a callback-last as well as a Promise style.
+
+For example, consider we have to call the `all()` method for the `payments` resource, we can do:
 
 ```js
-// API signature
-// {razorpayInstance}.{resourceName}.{methodName}(resourceId [, params])
-
-// example
-instance.payments.fetch(paymentId)
-```
-
-Every resource method returns a promise.
-
-```js
-instance.payments.all({
+apiObject.payments.all( {
   from: '2016-08-01',
   to: '2016-08-20'
-}).then((response) => {
-  // handle success
-}).catch((error) => {
-  // handle error
-})
+} ).then( response => {
+  // Do something with response.
+} ).catch( error => {
+  // Do something with the error.
+} );
 ```
 
-If you want to use callbacks instead of promises, every resource method will accept a callback function as a last parameter. The callback functions will behave as [Error First Callbacks ](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/)
+This also means that we can use `async/await`:
 
 ```js
-instance.payments.all({
-  from: '2016-08-01',
-  to: '2016-08-20'
-}, (error, response) => {
-  if (error) {
-    // handle error
-  } else {
-    // handle success
+const fetchPayments = async () => {
+  try {
+    const response = await apiObject.payments.all( { ... } );
+    console.log(response);
+  } catch (error) {
+    console.error(`Oops! ${error.toString()}`);
   }
-})
+}
 ```
+However, if you still prefer using callbacks, that's also an option:
+```js
+apiObject.payments.all( { ... }, (err, data) => {
+  // Do something with err and data.
+} );
+```
+The callbacks conform to the NodeJS convention on error-first callbacks.
 
-## Supported Resources
+### Supported Resources
 
 - [Payments](https://github.com/razorpay/razorpay-node/wiki#payments)
-
 - [Refunds](https://github.com/razorpay/razorpay-node/wiki#refunds)
-
 - [Orders](https://github.com/razorpay/razorpay-node/wiki#orders)
-
 - [Customers](https://github.com/razorpay/razorpay-node/wiki#customers)
-
 - [Transfers](https://github.com/razorpay/razorpay-node/wiki#transfers)
-
 - [Virtual Accounts](https://github.com/razorpay/razorpay-node/wiki#virtual-accounts)
-
 - [Invoices](https://github.com/razorpay/razorpay-node/wiki#invoices)
-
 - [Plans](https://github.com/razorpay/razorpay-node/wiki#plans)
-
 - [Subscriptions](https://github.com/razorpay/razorpay-node/wiki#subscriptions)
-
 - [Addons](https://github.com/razorpay/razorpay-node/wiki#addons)
-
 - [Webhooks](https://github.com/razorpay/razorpay-node/wiki#webhooks)
-
 - [Partner Auth](https://github.com/razorpay/razorpay-node/wiki#partner-auth)
----
 
+---
 
 ## Development
 
-```bash
-npm install
-```
+If you want to extend the SDK further, you are more than welcome to; there are just a couple of things you need to keep in mind.
+
+- Use ES6 features [supported by NodeJS](https://node.green);
+- Write test cases for **all possible** outcomes and logical branches;
+- If there is a breaking change, be sure to document it in the Readme (this file);
+- Do **not** write clever short-circuits like `!!bool` or `+Date()`;
+- Follow [semantic versioning](https://semver.org/).
+
+You can fork this repository and then work on your feature. After you're happy with it, run all the tests and submit a pull request! :)
+
+### NodeJS Versions
+
+Since the library targets more than one version of the NodeJS runtime, it's preferred to use [`nvm`](https://github.com/creationix/nvm) in your development cycle. With `nvm`, you have the power and the flexibility to quickly change the target version and rerun your tests against it.
 
 ## Testing
 
-```bash
-npm test
-```
-
-## Release
-
-1. Switch to `master` branch. Make sure you have the latest changes in the local master
-2. Update the `CHANGELOG.md` & bump the version in `package.json`
-3. Commit
-4. Tag the release & push to Github
-5. Create a release on GitHub using the website with more details about the release
-6. Publish to npm with `npm publish` command
-
+The Razorpay SDK uses [`mocha`](https://mochajs.org) with the [`chai`](https://chaijs.com) assertion library (with [`assert`](https://www.chaijs.com/api/assert/)) and [`nock`](https://github.com/nock/nock) to mock RESTful API responses. You can read up on them and once you are comfortable, start hacking!
 
 ## Licence
 
-MIT Licensed. LICENSE file added to repo.
+MIT Licensed. You can view the full license in the `LICENSE.md` file in the repository.

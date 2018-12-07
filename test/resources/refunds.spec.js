@@ -1,7 +1,6 @@
 const { assert } = require('chai');
 
 const mocker = require('../mocker');
-const equal = require('deep-equal');
 const { getDateInSecs } = require('../../lib/utils/razorpay-utils');
 const { refunds } = require('../razorpay');
 

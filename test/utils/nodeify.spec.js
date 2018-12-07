@@ -14,7 +14,7 @@ describe('#Nodeify', () => {
 
   it('resolves on completion', done => {
 
-    let resolveMsg = 'test';
+    const resolveMsg = 'test';
 
     nodeify(Promise.resolve(resolveMsg), (err, data) => {
       assert.equal(resolveMsg, data);
@@ -24,9 +24,9 @@ describe('#Nodeify', () => {
 
   });
 
-  it('rejects on error', (done) => {
+  it('rejects on error', done => {
 
-    let errorMsg = 'error';
+    const errorMsg = 'error';
 
     nodeify(Promise.reject(errorMsg), (err, data) => {
       assert.equal(err, errorMsg);
