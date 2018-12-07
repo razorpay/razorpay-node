@@ -6,6 +6,3 @@ node_modules/
 *.swo
 *.swn
 *.swm
-
-# This is bad practice, but Travis CI seems to error out because of optDeps
-package-lock.json
