@@ -59,7 +59,7 @@ const urlCheck = params => {
         const data = await apiObj[methodName](...methodArgs);
         const responseData = data['__MOCKED_RESPONSE_DATA__'];
 
-        assert.ok( responseData.url === expectedUrl );
+        assert.equal( responseData.url, expectedUrl );
 
       } catch (e) { throw e; }
 
