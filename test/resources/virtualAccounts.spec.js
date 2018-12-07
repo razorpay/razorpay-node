@@ -1,234 +1,205 @@
-'use strict'
+const { assert } = require('chai');
 
-const chai = require('chai')
-const { assert } = chai
-const rzpInstance = require('../razorpay')
-const mocker = require('../mocker')
-const equal = require('deep-equal')
-const { getDateInSecs,
-        normalizeDate,
-        normalizeNotes
-      } = require('../../dist/utils/razorpay-utils')
-const { runCommonTests }  = require("../../dist/utils/predefined-tests.js");
+const {
+  getDateInSecs,
+  normalizeDate,
+  normalizeNotes
+} = require('../../lib/utils/razorpay-utils');
 
+const { commonTests }  = require('../predefined-tests.js');
+const { checkForID } = require('../common');
+const { virtualAccounts } = require('../razorpay');
+const mocker = require('../mocker');
+const Fixtures = require('../fixtures');
 
-const SUB_PATH  = "/virtual_accounts",
-      FULL_PATH = `/v1${SUB_PATH}`,
-      TEST_VIRTUAL_ACCOUNT = "12345566",
-      apiObj = rzpInstance.virtualAccounts;
+const SUB_PATH  = '/virtual_accounts';
+const FULL_PATH = `/v1${SUB_PATH}`;
+const TEST_VIRTUAL_ACCOUNT = '12345566';
 
-const runIDRequiredTest = (params) => {
+describe("#Virtual Accounts", () => {
 
-  let {apiObj, methodName, methodArgs, mockerParams} = params;
+  describe('Fetch <All>', () => {
 
-  mocker.mock(mockerParams);
+    it('passes the default parameters correctly in the request', async () => {
 
-  it (`method ${methodName} checks for Virtual Account ID as param`,
-      (done) => {
+      mocker.mock({
+        url: '/virtual_accounts'
+      });
 
-    apiObj[methodName](...methodArgs).then(() => {
+      try {
 
-      done(new Error(`method ${methodName} does not`+
-                     ` check for Virtual Account ID`));
-    },(err) => {
+        const response = await virtualAccounts.all();
 
-      done();
+        assert.deepEqual(
+          response['__MOCKED_RESPONSE_DATA__'].requestQueryParams,
+          {
+            skip: 0,
+            count: 10
+          }
+        );
+
+      } catch (error) {
+        throw error;
+      }
+
     });
-  });
-}
 
-describe("VIRTUAL_ACCOUNTS", () => {
+    it('converts "to" and "from" parameters to milliseconds', async () => {
 
-  describe('Fetch Virtual Accounts', () => {
-  
-    it('Default params', (done) => {
-    
-      let expectedParams = {
-        skip : 0,
-        count: 10
+      const from = 'Aug 25, 2016';
+      const to = 'Aug 30, 2016';
+      const fromDateInSecs = getDateInSecs(from);
+      const toDateInSecs = getDateInSecs(to);
+      const expectedParams = {
+        from: fromDateInSecs,
+        to: toDateInSecs,
+        count: 25,
+        skip: 5
       };
 
       mocker.mock({
-        url: `${SUB_PATH}`
-      });
+        url: '/virtual_accounts'
+      })
 
-      rzpInstance.virtualAccounts.all().then((response) => {
-      
-        assert.ok(equal(
-          response.__JUST_FOR_TESTS__.requestQueryParams,
-          expectedParams),
-          "skip & count are passed as default transfers queryparams"
+      try {
+
+        const response = await virtualAccounts.all(Object.assign({}, expectedParams, {
+          to,
+          from
+        }));
+
+        const responseData = response['__MOCKED_RESPONSE_DATA__'];
+
+        assert.deepEqual(
+          responseData.requestQueryParams,
+          expectedParams
         );
 
-        done();
-      });
+        assert.equal(
+          responseData.url,
+          `/v1/virtual_accounts?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5`,
+        );
+
+      } catch (error) {
+        throw error;
+      }
+
     });
 
-    it('`From` & `To` are converted to ms', (done) => {
-
-      let fromDate       = 'Aug 25, 2016',
-          toDate         = 'Aug 30, 2016',
-          fromDateInSecs = getDateInSecs(fromDate),
-          toDateInSecs   = getDateInSecs(toDate),
-          expectedParams = {
-            from : fromDateInSecs,
-            to   : toDateInSecs,
-            count: 25,
-            skip : 5
-          };
-
-      mocker.mock({
-        url: `${SUB_PATH}`
-      });
-
-      rzpInstance.virtualAccounts.all({
-        from : fromDate,
-        to   : toDate,
-        count: 25,
-        skip : 5
-      }).then((response) => {
-      
-        assert.ok(equal(
-          response.__JUST_FOR_TESTS__.requestQueryParams,
-          expectedParams),
-          'from & to dates are converted to ms'
-        )
-
-        assert.equal( 
-          response.__JUST_FOR_TESTS__.url,
-          `${FULL_PATH}?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5`,
-          'Params are appended as part of request'
-        )
-
-        done();
-      });
-    });
   });
 
-  describe('Fetch Virtual Account', () => {
- 
-    it ('Validation', (done) => {
+  describe('Fetch <Single>', () => {
 
-      mocker.mock({
-        url: `${SUB_PATH}/${undefined}`
-      });
+    it('throws an error when virtualAccountId is not provided', () => {
 
-      rzpInstance.virtualAccounts.fetch().then(() => {
-     
-        done(new Error("`rzpInstance.virtualAccounts.fetch` doesn't"+
-                       " check for account id"));
-      }).catch((err) => {
-     
-        done();
-      });
+      assert.throw(virtualAccounts.fetch, TypeError);
+
     });
 
-    it ("Url Check", (done) => {
-    
+    it('forms the correct GET request to fetch a specific virtual account', async () => {
+
       mocker.mock({
         url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}`
       });
 
-      rzpInstance.virtualAccounts.fetch(TEST_VIRTUAL_ACCOUNT).then((response) => {
-      
+      try {
+
+        const response = await virtualAccounts.fetch(TEST_VIRTUAL_ACCOUNT);
+
         assert.equal(
-          response.__JUST_FOR_TESTS__.url,
+          response['__MOCKED_RESPONSE_DATA__'].url,
           `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
-          "Fetch Virtual Account URL Match"
         );
 
-        done();
-      });
+      } catch (error) {
+        throw error;
+      }
+
     });
+
   });
 
-  it ("Create Virtual Account", (done) => {
-  
-    const params = {
-    
-      notes : {"comment": "My notes"},
-      param1: "param1",
-      param2: "param2"
-    }, {notes, ...rest} = params;
+  describe('Create', () => {
 
-    mocker.mock({
-      url   : `${SUB_PATH}`,
-      method: "POST"
-    });
-
-    rzpInstance.virtualAccounts.create(params).then((response) => {
- 
-      assert.ok(equal(
-        response.__JUST_FOR_TESTS__.requestBody,
-        Object.assign(rest, normalizeNotes(notes))),
-        "Params matched, and notes normalized"
-      );
-
-      done();
-    });
-  });
-
-  describe("Virtual Accounts close", () => {
-  
-    it("Validation", (done) => {
+    it('forms a proper POST request to create a new virtual account', async () => {
 
       mocker.mock({
-        url: `${SUB_PATH}/${undefined}`
+        url: `${SUB_PATH}`,
+        method: 'POST'
       });
 
-      rzpInstance.virtualAccounts.close().then(() => {
-    
-        done(new Error("virtualAccounts.close doesn't check for account id"));  
-      }).catch(() => {
-      
-        done();
-      });
+      try {
+
+        const response = await virtualAccounts.create(Fixtures.common.parameters);
+
+        assert.deepEqual(
+          response['__MOCKED_RESPONSE_DATA__'].requestBody,
+          Fixtures.common.expectedParameters
+        );
+
+      } catch (error) {
+        throw error;
+      }
+
     });
 
-    it("Url Match", (done) => {
-    
+  });
+
+  describe('Close', () => {
+
+    it('throws an error when virtualAccountId is not provided', () => {
+
+      assert.throw(virtualAccounts.close, TypeError);
+
+    });
+
+    it('forms the correct GET request to fetch a specific virtual account', async () => {
+
       mocker.mock({
         url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
-        method: "PATCH"
+        method: 'PATCH'
       });
 
-      rzpInstance.virtualAccounts.close(TEST_VIRTUAL_ACCOUNT).then((response) => {
-     
+      try {
+
+        const response = await virtualAccounts.close(TEST_VIRTUAL_ACCOUNT);
+
         assert.equal(
-          response.__JUST_FOR_TESTS__.url,
+          response['__MOCKED_RESPONSE_DATA__'].url,
           `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
-          "Url is formed correctly"       
         );
 
-        done();
-      });
+      } catch (error) {
+        throw error;
+      }
+
     });
+
   });
 
-  describe("Virtual Accounts get Payments", () => {
-  
-    let expectedUrl  = `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}/payments`,
-        methodName   = "fetchPayments",
-        methodArgs   = [TEST_VIRTUAL_ACCOUNT],
-        mockerParams = {
-          url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}/payments`
-        };
+  describe('Get Payments', () => {
 
-    runIDRequiredTest({
-      apiObj,
+    const methodName = 'fetchPayments';
+
+    checkForID({
+      apiObj: virtualAccounts,
       methodName,
-      methodArgs: [undefined],
+      methodArgs: [void 0],
       mockerParams: {
-        url: `${SUB_PATH}/${undefined}/payments`
+        url: `${SUB_PATH}/${void 0}/payments`
       }
     });
 
-    runCommonTests({
-      apiObj,
+    commonTests({
+      apiObj: virtualAccounts,
       methodName,
-      methodArgs,
-      mockerParams,
-      expectedUrl
+      methodArgs: [TEST_VIRTUAL_ACCOUNT],
+      mockerParams: {
+        url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}/payments`
+      },
+      expectedUrl: `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}/payments`
     });
+
   });
+
 });
