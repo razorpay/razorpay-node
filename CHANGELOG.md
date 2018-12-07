@@ -1,5 +1,42 @@
 # Changelog
 
+## 3.0.0 - 2018-12-07
+This release marks a total refractor of the entire code base; from the tests to the actual library.
+Further, some inconsistencies in the API have been fixed such as:
+
+- some API paths were returning a Promise rejection whilst some were throwing an error; this has been
+standardized to make sure that an error is thrown (\*).
+- the entire library was bootstrapped by Babel; this works, however, it adds a redundant overhead for applications written in NodeJS 8 or above.  The bootstrapping is now done only for NodeJS versions <= 7.
+- the logic to convert string types to number were inconsistent; this has been resolved.
+- the coding style of the library was all over the place: semicolons, no semicolons; object destructing,
+object callbacks, etc. These inconsistencies have been standardized.
+- inconsistent casings like `key_id` have been to changed to `keyId`, etc. However, there are some
+which remain and they will be fixed in an upcoming release (\*).
+- some parts of the library were not tested; tests have been added to cover them. However, it is in
+no way complete or absolute and more will be added in the future.
+- some tests were using a `try`/`catch` block to test for errors; this has been changed to `assert.throw()`
+- some functions have been rewritten to conform to ES6 and above.
+
+Apart from that, some new testing beds have been added:
+- NodeJS v4-11;
+- specific LTS releases.
+
+Dependencies have been pruned:
+
+**`devDependencies`**
+- `babel-cli` -- on-the-fly transpilation is more than enough;
+- `babel-preset-es2015` -- moved to `optionalDependencies`; this will be updated to `preset-env` in the future;
+- `babel-preset-stage-0` -- moved to `optionalDependencies`;
+- `deep-equal` -- `chai`'s `assert` provides a `.deepEqual()` implementation.
+
+**`dependencies`**
+- `promise` -- NodeJS provides native promise support;
+- `request-promise` -- changed to `request-native-promise`.
+
+And finally, some redundant build scripts have been removed.
+
+(\*) -- possible breaking changes in existing code bases
+
 ## 2.0.3 - 2018-11-13
 - Added support for Partner Auth.
 
