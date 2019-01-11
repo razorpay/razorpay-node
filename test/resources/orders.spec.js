@@ -1,126 +1,143 @@
-'use strict'
+const { assert } = require('chai');
+const { orders } = require('../razorpay');
+const { getDateInSecs } = require('../../lib/utils/razorpay-utils');
+const mocker = require('../mocker');
 
-const chai = require('chai')
-const { assert } = chai
-const rzpInstance = require('../razorpay')
-const mocker = require('../mocker')
-const equal = require('deep-equal')
-const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
+describe('#Orders', () => {
 
-describe('ORDERS', () => {
-  describe('Fetch Orders', () => {
-    it('Default params', (done) => {
-      let expectedParams = {
-        skip: 0,
-        count: 10
-      }
+  describe('Fetch - <All>', () => {
+
+    it('fetches orders with the default query parameters', async () => {
 
       mocker.mock({
         url: '/orders'
-      })
+      });
 
-      rzpInstance.orders.all().then((response) => {
-        assert.ok(equal(
-          response.__JUST_FOR_TESTS__.requestQueryParams,
-          expectedParams
-        ), 'skip & count are passed as default order queryparams')
-        done()
-      })
+      try {
+
+        const response = await orders.all();
+
+        assert.containsAllKeys(
+          response['__MOCKED_RESPONSE_DATA__'].requestQueryParams,
+          { skip: 0, count: 10 }
+        );
+
+      } catch (error) {
+        throw error;
+      }
+
     })
 
-    it('`From` & `To` date are converted to ms', (done) => {
-      let fromDate = 'Aug 25, 2016'
-      let toDate = 'Aug 30, 2016'
-      let fromDateInSecs = getDateInSecs(fromDate)
-      let toDateInSecs = getDateInSecs(toDate)
-      let expectedParams = {
+    it('converts "to" and "from" parameters to milliseconds', async () => {
+
+      const from = 'Aug 25, 2016';
+      const to = 'Aug 30, 2016';
+      const fromDateInSecs = getDateInSecs(from);
+      const toDateInSecs = getDateInSecs(to);
+      const expectedParams = {
         from: fromDateInSecs,
         to: toDateInSecs,
         authorized: 1,
         receipt: 'testreceiptid',
         count: 25,
         skip: 5
-      }
+      };
 
       mocker.mock({
         url: '/orders'
       })
 
-      rzpInstance.orders.all({
-        from: fromDate,
-        to: toDate,
-        authorized: true,
-        receipt: 'testreceiptid',
-        count: 25,
-        skip: 5
-      }).then((response) => {
-        assert.ok(equal(
-          response.__JUST_FOR_TESTS__.requestQueryParams,
+      try {
+
+        const response = await orders.all(Object.assign({}, expectedParams, {
+          to,
+          from
+        }));
+
+        const responseData = response['__MOCKED_RESPONSE_DATA__'];
+
+        assert.deepEqual(
+          responseData.requestQueryParams,
           expectedParams
-        ), 'from & to dates are converted to ms & authorized to binary')
+        );
 
         assert.equal(
-          response.__JUST_FOR_TESTS__.url,
-          `/v1/orders?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5&authorized=1&receipt=testreceiptid`,
-          'Params are appended as part of request'
-        )
-        done()
-      })
-    })
-  })
+          responseData.url,
+          `/v1/orders?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5&authorized=1&receipt=testreceiptid`
+        );
 
-  describe('Order fetch', () => {
-    it('Throw error when orderId is provided', () => {
-      assert.throws(
-        rzpInstance.orders.fetch,
-        '`order_id` is mandatory',
-        'Should throw exception when orderId is not provided'
-      )
-    })
+      } catch (error) {
+        throw error;
+      }
 
-    it('Forms the order fetch request', (done) => {
-      let orderId = 'order_sometestId'
+    });
+
+  });
+
+  describe('Fetch - <Single>', () => {
+
+    it('throws an error when the orderId is not provided', () => {
+
+      assert.throw(
+        orders.fetch,
+        TypeError
+      );
+
+    });
+
+    it('correctly forms the order fetch request', async () => {
+
+      const orderId = 'order_sometestId';
 
       mocker.mock({
         url: `/orders/${orderId}`
       })
 
-      rzpInstance.orders.fetch(orderId).then((response) => {
-        assert.equal(
-          response.__JUST_FOR_TESTS__.url,
-          `/v1/orders/${orderId}`,
-          'Fetch order url formed correctly'
-        )
-        done()
-      })
-    })
-  })
+      try {
 
-  describe('Order create', () => {
-    it('Throws error when mandatory fields are not provided', () => {
-      assert.throws(
-        rzpInstance.orders.create,
-        '`amount` is mandatory',
-        'Should throw exception when amount is not provided'
+        const response = await orders.fetch(orderId);
+
+        assert.equal(
+          response['__MOCKED_RESPONSE_DATA__'].url,
+          `/v1/orders/${orderId}`
+        );
+
+      } catch (error) {
+        throw error;
+      }
+
+    });
+
+  });
+
+  describe('Create Order', () => {
+
+    it('should throw an error when required parameters are not provided', () => {
+
+      assert.throw(
+        orders.create,
+        TypeError
       )
 
-      try {
-        rzpInstance.orders.create({
+      assert.throw(() => {
+        orders.create({
           amount: 100
-        })
-      } catch (e) {
-        assert.equal(
-          e.message,
-          '`receipt` is mandatory',
-          'Should throw exception when receipt is not provided'
-        )
-      }
-    })
+        });
+      }, TypeError);
 
-    it('Order create request', (done) => {
-      let orderAmount = 100
-      let receipt = 'testreceiptid'
-      let params = {
+      assert.throw(() => {
+        orders.create({
+          receipt: ''
+        });
+      }, TypeError);
+
+    });
+
+    it('creates a correctly formatted and formed POST request', async () => {
+
+      const orderAmount = 100;
+      const receipt = 'testreceiptid';
+      const params = {
         amount: orderAmount,
         receipt: receipt,
         currency: 'INR',
@@ -136,56 +153,66 @@ describe('ORDERS', () => {
         method: 'POST'
       })
 
-      rzpInstance.orders.create(params).then((response) => {
+      try {
+
+        const response = await orders.create(params);
+        const responseData = response['__MOCKED_RESPONSE_DATA__'];
+
+        // This is a pretty redundant test.
         assert.equal(
-          response.__JUST_FOR_TESTS__.url,
-          '/v1/orders',
-          'Create request url formed'
-        )
+          responseData.url,
+          '/v1/orders'
+        );
 
-        assert.ok(
-          equal(
-            response.__JUST_FOR_TESTS__.requestBody,
-            {
-              amount: orderAmount,
-              receipt: receipt,
-              currency: 'INR',
-              payment_capture: 1,
-              'notes[note1]': 'This is note1',
-              'notes[note2]': 'This is note2'
-            }
-          ),
-          'All params are passed in request body'
-        )
-        done()
-      })
-    })
-  })
+        assert.deepEqual(
+          responseData.requestBody,
+          {
+            amount: orderAmount,
+            receipt: receipt,
+            currency: 'INR',
+            payment_capture: 1,
+            'notes[note1]': 'This is note1',
+            'notes[note2]': 'This is note2'
+          }
+        );
 
-  describe('Fetch order\'s payments', () => {
-    it('Throw error when orderId is not provided', () => {
+      } catch (error) {
+        throw error;
+      }
+
+    });
+
+  });
+
+  describe('Fetch Order - #Payments', () => {
+
+    it('throws an error when orderId is not provided', () => {
       assert.throws(
-        rzpInstance.orders.fetchPayments,
-        '`order_id` is mandatory',
-        'Throw exception when order_id is not provided'
-      )
-    })
+        orders.fetchPayments,
+        TypeError
+      );
+    });
 
-    it('Fetch order\'s payments', (done) => {
-      let orderId = 'order_sometestId'
+    it('fetches the order\'s associated payment records', async () => {
+
+      const orderId = 'order_sometestId';
 
       mocker.mock({
         url: `/orders/${orderId}/payments`
-      })
+      });
 
-      rzpInstance.orders.fetchPayments(orderId).then((response) => {
+      try {
+        const response = await orders.fetchPayments(orderId);
         assert.equal(
-          response.__JUST_FOR_TESTS__.url,
-          '/v1/orders/order_sometestId/payments',
-          'Request url formed correctly'
-        )
-        done()
-      })
-    })
-  })
-})
+          response['__MOCKED_RESPONSE_DATA__'].url,
+          '/v1/orders/order_sometestId/payments'
+        );
+      } catch (error) {
+        throw error;
+      }
+
+    });
+
+  });
+
+});

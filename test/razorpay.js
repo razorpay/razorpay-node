@@ -1,8 +1,6 @@
-'use strict';
-
-const Razorpay = require("../dist/razorpay");
+const Razorpay = require("../lib");
 
 module.exports = new Razorpay({
-  key_id: "XXX",
-  key_secret: "YYY"
+  keyId: "XXX",
+  keySecret: "YYY"
 });
