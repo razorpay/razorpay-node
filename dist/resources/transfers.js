@@ -16,7 +16,8 @@ module.exports = function (api) {
           to = params.to,
           count = params.count,
           skip = params.skip,
-          payment_id = params.payment_id;
+          payment_id = params.payment_id,
+          recipient_settlement_id = params.recipient_settlement_id;
 
       var url = '/transfers';
 
@@ -41,7 +42,8 @@ module.exports = function (api) {
           from: from,
           to: to,
           count: count,
-          skip: skip
+          skip: skip,
+          recipient_settlement_id: recipient_settlement_id
         }
       }, callback);
     },
