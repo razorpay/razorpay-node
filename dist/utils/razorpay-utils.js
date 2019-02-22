@@ -82,7 +82,7 @@ function validateWebhookSignature(body, signature, secret) {
 
   if (!isDefined(body) || !isDefined(signature) || !isDefined(secret)) {
 
-    throw Error("Invalid Parameters: Please give request body," + "signature sent in X-Razorpay-Header and " + "webhook secret from dashboard as parameters");
+    throw Error("Invalid Parameters: Please give request body," + "signature sent in X-Razorpay-Signature header and " + "webhook secret from dashboard as parameters");
   }
 
   body = body.toString();
