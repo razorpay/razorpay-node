@@ -124,7 +124,7 @@ describe('PAYMENTS', () => {
         method: 'POST'
       })
 
-      rzpInstance.payments.capture(paymentId, captureAmount, currency).then((response) => {
+      rzpInstance.payments.capture(paymentId, captureAmount, undefined, currency).then((response) => {
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
           '/v1/payments/pay_sometestId/capture',

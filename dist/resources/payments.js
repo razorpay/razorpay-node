@@ -52,9 +52,8 @@ module.exports = function (api) {
         url: '/payments/' + paymentId
       }, callback);
     },
-    capture: function capture(paymentId, amount) {
-      var currency = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'INR';
-      var callback = arguments[3];
+    capture: function capture(paymentId, amount, callback) {
+      var currency = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'INR';
 
       if (!paymentId) {
         throw new Error('`payment_id` is mandatory');
