@@ -53,8 +53,6 @@ module.exports = function (api) {
       }, callback);
     },
     capture: function capture(paymentId, amount, callback) {
-      var currency = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'INR';
-
       if (!paymentId) {
         throw new Error('`payment_id` is mandatory');
       }
@@ -62,12 +60,19 @@ module.exports = function (api) {
       if (!amount) {
         throw new Error('`amount` is mandatory');
       }
-
+      if (callback && typeof callback === 'string') {
+        return api.post({
+          url: '/payments/' + paymentId + '/capture',
+          data: {
+            amount: amount,
+            currency: callback
+          }
+        });
+      }
       return api.post({
         url: '/payments/' + paymentId + '/capture',
         data: {
-          amount: amount,
-          currency: currency
+          amount: amount
         }
       }, callback);
     },
