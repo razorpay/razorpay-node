@@ -52,7 +52,7 @@ module.exports = function (api) {
         url: '/payments/' + paymentId
       }, callback);
     },
-    capture: function capture(paymentId, amount, callback) {
+    capture: function capture(paymentId, amount, currency, callback) {
       if (!paymentId) {
         throw new Error('`payment_id` is mandatory');
       }
@@ -61,11 +61,26 @@ module.exports = function (api) {
         throw new Error('`amount` is mandatory');
       }
 
+      var payload = {
+        amount: amount
+      };
+
+      /**
+       * For backward compatibility,
+       * the third argument can be a callback
+       * instead of currency.
+       * Set accordingly.
+       */
+      if (typeof currency === 'function' && !callback) {
+        callback = currency;
+        currency = undefined;
+      } else if (typeof currency === 'string') {
+        payload.currency = currency;
+      }
+
       return api.post({
         url: '/payments/' + paymentId + '/capture',
-        data: {
-          amount: amount
-        }
+        data: payload
       }, callback);
     },
     refund: function refund(paymentId) {

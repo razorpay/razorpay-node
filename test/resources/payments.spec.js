@@ -118,13 +118,13 @@ describe('PAYMENTS', () => {
     it('Payment capture request', (done) => {
       let paymentId = 'pay_sometestId'
       let captureAmount = 100
-
+      let currency = 'INR'
       mocker.mock({
         url: `/payments/${paymentId}/capture`,
         method: 'POST'
       })
 
-      rzpInstance.payments.capture(paymentId, captureAmount).then((response) => {
+      rzpInstance.payments.capture(paymentId, captureAmount, currency).then((response) => {
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
           '/v1/payments/pay_sometestId/capture',
@@ -134,7 +134,7 @@ describe('PAYMENTS', () => {
         assert.ok(
           equal(
             response.__JUST_FOR_TESTS__.requestBody,
-            { amount: captureAmount }
+            { amount: captureAmount, currency }
           ),
           'Amount is passed in request body'
         )
