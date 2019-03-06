@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.4 - 2019-03-06
+- Added `recipient_settlement_id` parameter for Transfers.
+- Renamed "X-Razorpay-Header" to "X-Razorpay-Signature header" in the error message in `validateWebhookSignature`.
+- Added support for `currency` in `capture` method for Payments.
+
 ## 2.0.3 - 2018-11-13
 - Added support for Partner Auth.
 
