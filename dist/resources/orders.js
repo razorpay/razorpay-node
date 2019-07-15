@@ -64,11 +64,12 @@ module.exports = function (api) {
           receipt = params.receipt,
           payment_capture = params.payment_capture,
           notes = params.notes,
-          otherParams = _objectWithoutProperties(params, ['amount', 'currency', 'receipt', 'payment_capture', 'notes']);
+          method = params.method,
+          otherParams = _objectWithoutProperties(params, ['amount', 'currency', 'receipt', 'payment_capture', 'notes', 'method']);
 
       currency = currency || 'INR';
 
-      if (!amount) {
+      if (!(amount || method === 'emandate' && amount === 0)) {
         throw new Error('`amount` is mandatory');
       }
 
@@ -80,6 +81,7 @@ module.exports = function (api) {
         amount: amount,
         currency: currency,
         receipt: receipt,
+        method: method,
         payment_capture: normalizeBoolean(payment_capture)
       }, otherParams), normalizeNotes(notes));
 
