@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.5 - 2019-08-12
+- Added support for Order creation amount=0 + method=emandate.
+- Dependency updates.
+
 ## 2.0.4 - 2019-03-06
 - Added `recipient_settlement_id` parameter for Transfers.
 - Renamed "X-Razorpay-Header" to "X-Razorpay-Signature header" in the error message in `validateWebhookSignature`.
