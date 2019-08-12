@@ -106,6 +106,18 @@ describe('ORDERS', () => {
 
       try {
         rzpInstance.orders.create({
+          method: 'emandate',
+        })
+      } catch (e) {
+        assert.equal(
+          e.message,
+          '`amount` is mandatory',
+          'Should throw exception when amount is not provided with emandate method'
+        )
+      }
+
+      try {
+        rzpInstance.orders.create({
           amount: 100
         })
       } catch (e) {
