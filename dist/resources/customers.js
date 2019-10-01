@@ -3,10 +3,41 @@
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var _require = require('../utils/razorpay-utils'),
-    normalizeNotes = _require.normalizeNotes;
+    normalizeNotes = _require.normalizeNotes,
+    normalizeDate = _require.normalizeDate;
 
 module.exports = function (api) {
   return {
+    all: function all() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+      var from = params.from,
+          to = params.to,
+          count = params.count,
+          skip = params.skip;
+
+
+      if (from) {
+        from = normalizeDate(from);
+      }
+
+      if (to) {
+        to = normalizeDate(to);
+      }
+
+      count = Number(count) || 10;
+      skip = Number(skip) || 0;
+
+      return api.get({
+        url: '/customers',
+        data: {
+          from: from,
+          to: to,
+          count: count,
+          skip: skip
+        }
+      }, callback);
+    },
     create: function create(params, callback) {
       var notes = params.notes,
           rest = _objectWithoutProperties(params, ['notes']);

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.6 - 2019-10-01
+- Added support for fetching all customers
+- Pacakges updated
+
 ## 2.0.5 - 2019-08-12
 - Added support for Order creation amount=0 + method=emandate.
 - Dependency updates.
