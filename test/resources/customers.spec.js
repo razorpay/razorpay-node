@@ -20,10 +20,10 @@ describe('CUSTOMERS', () => {
       })
 
       rzpInstance.customers.all().then((response) => {
-        assert.ok(equal(
+        assert.deepEqual(
           response.__JUST_FOR_TESTS__.requestQueryParams,
-          expectedParams
-        ), 'skip & count are passed as default payments queryparams')
+          expectedParams,
+          'skip & count are passed as default payments queryparams')
         done()
       })
     })
@@ -50,10 +50,10 @@ describe('CUSTOMERS', () => {
         count: 25,
         skip: 5
       }).then((response) => {
-        assert.ok(equal(
+        assert.deepEqual(
           response.__JUST_FOR_TESTS__.requestQueryParams,
-          expectedParams
-        ), 'from & to dates are converted to ms')
+          expectedParams,
+          'from & to dates are converted to ms')
 
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
@@ -96,11 +96,9 @@ describe('CUSTOMERS', () => {
         'Create customer request url formed'
       )
 
-      assert.ok(
-        equal(
-          response.__JUST_FOR_TESTS__.requestBody,
-          expectedParams
-        ),
+      assert.deepEqual(
+        response.__JUST_FOR_TESTS__.requestBody,
+        expectedParams,
         'All params are passed in request body'
       )
       done()
@@ -137,11 +135,9 @@ describe('CUSTOMERS', () => {
         'Edit customer request url formed'
       )
 
-      assert.ok(
-        equal(
-          response.__JUST_FOR_TESTS__.requestBody,
-          expectedParams
-        ),
+      assert.deepEqual(
+        response.__JUST_FOR_TESTS__.requestBody,
+        expectedParams,
         'All params are passed in request body'
       )
       done()
