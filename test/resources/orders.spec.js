@@ -115,18 +115,6 @@ describe('ORDERS', () => {
           'Should throw exception when amount is not provided with emandate method'
         )
       }
-
-      try {
-        rzpInstance.orders.create({
-          amount: 100
-        })
-      } catch (e) {
-        assert.equal(
-          e.message,
-          '`receipt` is mandatory',
-          'Should throw exception when receipt is not provided'
-        )
-      }
     })
 
     it('Order create request', (done) => {
