@@ -73,10 +73,6 @@ module.exports = function (api) {
         throw new Error('`amount` is mandatory');
       }
 
-      if (!receipt) {
-        throw new Error('`receipt` is mandatory');
-      }
-
       var data = Object.assign(_extends({
         amount: amount,
         currency: currency,

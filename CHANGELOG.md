@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.6 - 2020-01-28
+- fix: receipt is an optional param when creating orders (#118).
+- Updated dependencies.
+
 ## 2.0.5 - 2019-08-12
 - Added support for Order creation amount=0 + method=emandate.
 - Dependency updates.
