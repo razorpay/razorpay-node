@@ -8,6 +8,63 @@ const equal = require('deep-equal')
 const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
 
 describe('CUSTOMERS', () => {
+  describe('Fetch cutomers', () => {
+    it('Default params', (done) => {
+      let expectedParams = {
+        skip: 0,
+        count: 10
+      }
+
+      mocker.mock({
+        url: '/customers'
+      })
+
+      rzpInstance.customers.all().then((response) => {
+        assert.deepEqual(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          expectedParams,
+          'skip & count are passed as default payments queryparams')
+        done()
+      })
+    })
+
+    it('`From` & `To` date are converted to ms', (done) => {
+      let fromDate = 'Aug 25, 2016'
+      let toDate = 'Aug 30, 2016'
+      let fromDateInSecs = getDateInSecs(fromDate)
+      let toDateInSecs = getDateInSecs(toDate)
+      let expectedParams = {
+        from: fromDateInSecs,
+        to: toDateInSecs,
+        count: 25,
+        skip: 5
+      }
+
+      mocker.mock({
+        url: '/customers'
+      })
+
+      rzpInstance.customers.all({
+        from: fromDate,
+        to: toDate,
+        count: 25,
+        skip: 5
+      }).then((response) => {
+        assert.deepEqual(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          expectedParams,
+          'from & to dates are converted to ms')
+
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/customers?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5`,
+          'Params are appended as part of request'
+        )
+        done()
+      })
+    })
+  })
+
   it('Create Customer', (done) => {
     let params = {
       name: 'test',
@@ -39,11 +96,9 @@ describe('CUSTOMERS', () => {
         'Create customer request url formed'
       )
 
-      assert.ok(
-        equal(
-          response.__JUST_FOR_TESTS__.requestBody,
-          expectedParams
-        ),
+      assert.deepEqual(
+        response.__JUST_FOR_TESTS__.requestBody,
+        expectedParams,
         'All params are passed in request body'
       )
       done()
@@ -80,11 +135,9 @@ describe('CUSTOMERS', () => {
         'Edit customer request url formed'
       )
 
-      assert.ok(
-        equal(
-          response.__JUST_FOR_TESTS__.requestBody,
-          expectedParams
-        ),
+      assert.deepEqual(
+        response.__JUST_FOR_TESTS__.requestBody,
+        expectedParams,
         'All params are passed in request body'
       )
       done()
