@@ -4,8 +4,6 @@
  * DOCS: https://razorpay.com/docs/subscriptions/api/
  */
 
-const Promise = require("promise");
-
 module.exports = function (api) {
 
   const BASE_URL = "/addons",

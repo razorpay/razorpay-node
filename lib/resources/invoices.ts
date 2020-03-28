@@ -4,8 +4,7 @@
  * DOCS: https://razorpay.com/docs/invoices/
  */
 
-const Promise = require("promise"),
-      { normalizeDate, normalizeNotes } = require('../utils/razorpay-utils');
+const { normalizeDate, normalizeNotes } = require('../utils/razorpay-utils');
 
 module.exports = function invoicesApi (api) {
 

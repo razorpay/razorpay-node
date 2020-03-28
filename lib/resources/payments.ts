@@ -1,7 +1,5 @@
 'use strict'
 
-const Promise = require("promise");
-
 const { normalizeDate, normalizeBoolean, normalizeNotes } = require('../utils/razorpay-utils')
 
 const ID_REQUIRED_MSG = '`payment_id` is mandatory';
