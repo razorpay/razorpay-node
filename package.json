@@ -41,6 +41,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@types/mocha": "^7.0.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
   }
