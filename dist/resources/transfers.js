@@ -10,21 +10,22 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var _a = require('../utils/razorpay-utils'), normalizeDate = _a.normalizeDate, normalizeBoolean = _a.normalizeBoolean, normalizeNotes = _a.normalizeNotes;
-module.exports = function (api) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var razorpay_utils_1 = require("../utils/razorpay-utils");
+;
+function default_1(api) {
     return {
         all: function (params, callback) {
-            if (params === void 0) { params = {}; }
-            var from = params.from, to = params.to, count = params.count, skip = params.skip, payment_id = params.payment_id, recipient_settlement_id = params.recipient_settlement_id;
+            var _a = params || {}, from = _a.from, to = _a.to, count = _a.count, skip = _a.skip, payment_id = _a.payment_id, recipient_settlement_id = _a.recipient_settlement_id;
             var url = '/transfers';
             if (payment_id) {
                 url = "/payments/" + payment_id + "/transfers";
             }
             if (from) {
-                from = normalizeDate(from);
+                from = razorpay_utils_1.normalizeDate(from);
             }
             if (to) {
-                to = normalizeDate(to);
+                to = razorpay_utils_1.normalizeDate(to);
             }
             count = Number(count) || 10;
             skip = Number(skip) || 0;
@@ -39,9 +40,7 @@ module.exports = function (api) {
                 }
             }, callback);
         },
-        fetch: function (transferId, params, callback) {
-            if (params === void 0) { params = {}; }
-            var payment_id = params.payment_id;
+        fetch: function (transferId, callback) {
             if (!transferId) {
                 throw new Error('`transfer_id` is mandatory');
             }
@@ -52,9 +51,9 @@ module.exports = function (api) {
         },
         create: function (params, callback) {
             var notes = params.notes, rest = __rest(params, ["notes"]);
-            var data = Object.assign(rest, normalizeNotes(notes));
-            if (data.on_hold) {
-                data.on_hold = normalizeBoolean(data.on_hold);
+            var data = Object.assign(rest, razorpay_utils_1.normalizeNotes(notes));
+            if (typeof data.on_hold !== "undefined") {
+                data.on_hold = razorpay_utils_1.normalizeBoolean(data.on_hold);
             }
             return api.post({
                 url: '/transfers',
@@ -63,9 +62,9 @@ module.exports = function (api) {
         },
         edit: function (transferId, params, callback) {
             var notes = params.notes, rest = __rest(params, ["notes"]);
-            var data = Object.assign(rest, normalizeNotes(notes));
+            var data = Object.assign(rest, razorpay_utils_1.normalizeNotes(notes));
             if (typeof data.on_hold !== "undefined") {
-                data.on_hold = normalizeBoolean(data.on_hold);
+                data.on_hold = razorpay_utils_1.normalizeBoolean(data.on_hold);
             }
             return api.patch({
                 url: "/transfers/" + transferId,
@@ -77,7 +76,7 @@ module.exports = function (api) {
                 throw new Error('`transfer_id` is mandatory');
             }
             var notes = params.notes, rest = __rest(params, ["notes"]);
-            var data = Object.assign(rest, normalizeNotes(notes));
+            var data = Object.assign(rest, razorpay_utils_1.normalizeNotes(notes));
             var url = "/transfers/" + transferId + "/reversals";
             return api.post({
                 url: url,
@@ -85,4 +84,5 @@ module.exports = function (api) {
             }, callback);
         },
     };
-};
+}
+exports.default = default_1;

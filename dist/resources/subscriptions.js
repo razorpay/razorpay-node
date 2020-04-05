@@ -21,11 +21,12 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * DOCS: https://razorpay.com/docs/subscriptions/api/
  */
-var _a = require('../utils/razorpay-utils'), normalizeDate = _a.normalizeDate, normalizeNotes = _a.normalizeNotes;
-module.exports = function subscriptionsApi(api) {
+var razorpay_utils_1 = require("../utils/razorpay-utils");
+function subscriptionsApi(api) {
     var BASE_URL = "/subscriptions", MISSING_ID_ERROR = "Subscription ID is mandatory";
     return {
         create: function (params, callback) {
@@ -37,11 +38,10 @@ module.exports = function subscriptionsApi(api) {
              *
              * @return {Promise}
              */
-            if (params === void 0) { params = {}; }
-            var url = BASE_URL, notes = params.notes, rest = __rest(params, ["notes"]), data = Object.assign(rest, normalizeNotes(notes));
+            var url = BASE_URL, _a = params || {}, notes = _a.notes, rest = __rest(_a, ["notes"]), data = Object.assign(rest, razorpay_utils_1.normalizeNotes(notes));
             return api.post({
                 url: url,
-                data: data
+                data: data,
             }, callback);
         },
         fetch: function (subscriptionId, callback) {
@@ -68,13 +68,12 @@ module.exports = function subscriptionsApi(api) {
              *
              * @return {Promise}
              */
-            if (params === void 0) { params = {}; }
             var from = params.from, to = params.to, count = params.count, skip = params.skip, url = BASE_URL;
             if (from) {
-                from = normalizeDate(from);
+                from = razorpay_utils_1.normalizeDate(from);
             }
             if (to) {
-                to = normalizeDate(to);
+                to = razorpay_utils_1.normalizeDate(to);
             }
             count = Number(count) || 10;
             skip = Number(skip) || 0;
@@ -83,7 +82,7 @@ module.exports = function subscriptionsApi(api) {
                 data: __assign(__assign({}, params), { from: from,
                     to: to,
                     count: count,
-                    skip: skip })
+                    skip: skip }),
             }, callback);
         },
         cancel: function (subscriptionId, cancelAtCycleEnd, callback) {
@@ -123,8 +122,9 @@ module.exports = function subscriptionsApi(api) {
             }
             return api.post({
                 url: url,
-                data: __assign({}, params)
+                data: __assign({}, params),
             }, callback);
-        }
+        },
     };
-};
+}
+exports.default = subscriptionsApi;

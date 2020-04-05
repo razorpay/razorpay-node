@@ -1,4 +1,5 @@
 'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
 var nodeify = function (promise, cb) {
     if (!cb) {
         return promise;
@@ -9,4 +10,4 @@ var nodeify = function (promise, cb) {
         cb(error, null);
     });
 };
-module.exports = nodeify;
+exports.default = nodeify;

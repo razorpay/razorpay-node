@@ -10,12 +10,13 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var normalizeNotes = require('../utils/razorpay-utils').normalizeNotes;
-module.exports = function (api) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var razorpay_utils_1 = require("../utils/razorpay-utils");
+function default_1(api) {
     return {
         create: function (params, callback) {
             var notes = params.notes, rest = __rest(params, ["notes"]);
-            var data = Object.assign(rest, normalizeNotes(notes));
+            var data = Object.assign(rest, razorpay_utils_1.normalizeNotes(notes));
             return api.post({
                 url: '/customers',
                 data: data
@@ -23,7 +24,7 @@ module.exports = function (api) {
         },
         edit: function (customerId, params, callback) {
             var notes = params.notes, rest = __rest(params, ["notes"]);
-            var data = Object.assign(rest, normalizeNotes(notes));
+            var data = Object.assign(rest, razorpay_utils_1.normalizeNotes(notes));
             return api.put({
                 url: "/customers/" + customerId,
                 data: data
@@ -50,4 +51,5 @@ module.exports = function (api) {
             }, callback);
         }
     };
-};
+}
+exports.default = default_1;

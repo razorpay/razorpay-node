@@ -1,26 +1,37 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function getDateInSecs(date) {
     return (+new Date(date)) / 1000;
 }
+exports.getDateInSecs = getDateInSecs;
 function normalizeDate(date) {
-    return isNumber(date) ? date : getDateInSecs(date);
+    if (isNumber(date)) {
+        return date;
+    }
+    return getDateInSecs(date);
 }
+exports.normalizeDate = normalizeDate;
 function isNumber(num) {
     return !isNaN(Number(num));
 }
+exports.isNumber = isNumber;
 function isNonNullObject(input) {
     return !!input &&
         typeof input === "object" &&
         !Array.isArray(input);
 }
+exports.isNonNullObject = isNonNullObject;
 function normalizeBoolean(bool) {
     if (bool === undefined) {
         return bool;
     }
     return bool ? 1 : 0;
 }
+exports.normalizeBoolean = normalizeBoolean;
 function isDefined(value) {
     return typeof value !== "undefined";
 }
+exports.isDefined = isDefined;
 function normalizeNotes(notes) {
     if (notes === void 0) { notes = {}; }
     var normalizedNotes = {};
@@ -29,6 +40,7 @@ function normalizeNotes(notes) {
     }
     return normalizedNotes;
 }
+exports.normalizeNotes = normalizeNotes;
 function prettify(val) {
     /*
      * given an object , returns prettified string
@@ -38,6 +50,7 @@ function prettify(val) {
      */
     return JSON.stringify(val, null, 2);
 }
+exports.prettify = prettify;
 function getTestError(summary, expectedVal, gotVal) {
     /*
      * @param {String} summary
@@ -50,6 +63,7 @@ function getTestError(summary, expectedVal, gotVal) {
         ("Expected(" + typeof expectedVal + ")\n" + prettify(expectedVal) + "\n\n") +
         ("Got(" + typeof gotVal + ")\n" + prettify(gotVal)));
 }
+exports.getTestError = getTestError;
 function validateWebhookSignature(body, signature, secret) {
     /*
      * Verifies webhook signature
@@ -74,16 +88,5 @@ function validateWebhookSignature(body, signature, secret) {
         .digest('hex');
     return expectedSignature === signature;
 }
+exports.validateWebhookSignature = validateWebhookSignature;
 ;
-module.exports = {
-    normalizeNotes: normalizeNotes,
-    normalizeDate: normalizeDate,
-    normalizeBoolean: normalizeBoolean,
-    isNumber: isNumber,
-    getDateInSecs: getDateInSecs,
-    prettify: prettify,
-    isDefined: isDefined,
-    isNonNullObject: isNonNullObject,
-    getTestError: getTestError,
-    validateWebhookSignature: validateWebhookSignature
-};

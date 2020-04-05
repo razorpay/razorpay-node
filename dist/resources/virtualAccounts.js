@@ -21,19 +21,19 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var _a = require('../utils/razorpay-utils'), normalizeDate = _a.normalizeDate, normalizeNotes = _a.normalizeNotes;
+Object.defineProperty(exports, "__esModule", { value: true });
+var razorpay_utils_1 = require("../utils/razorpay-utils");
 var BASE_URL = '/virtual_accounts', ID_REQUIRED_MSG = "`virtual_account_id` is mandatory";
-module.exports = function (api) {
+function default_1(api) {
     return {
         all: function (params, callback) {
-            if (params === void 0) { params = {}; }
-            var from = params.from, to = params.to, count = params.count, skip = params.skip, otherParams = __rest(params, ["from", "to", "count", "skip"]);
+            var _a = params || {}, from = _a.from, to = _a.to, count = _a.count, skip = _a.skip, otherParams = __rest(_a, ["from", "to", "count", "skip"]);
             var url = BASE_URL;
             if (from) {
-                from = normalizeDate(from);
+                from = razorpay_utils_1.normalizeDate(from);
             }
             if (to) {
-                to = normalizeDate(to);
+                to = razorpay_utils_1.normalizeDate(to);
             }
             count = Number(count) || 10;
             skip = Number(skip) || 0;
@@ -55,9 +55,8 @@ module.exports = function (api) {
             }, callback);
         },
         create: function (params, callback) {
-            if (params === void 0) { params = {}; }
-            var notes = params.notes, rest = __rest(params, ["notes"]);
-            var data = Object.assign(rest, normalizeNotes(notes));
+            var _a = params || {}, notes = _a.notes, rest = __rest(_a, ["notes"]);
+            var data = Object.assign(rest, razorpay_utils_1.normalizeNotes(notes));
             return api.post({
                 url: BASE_URL,
                 data: data
@@ -85,4 +84,5 @@ module.exports = function (api) {
             }, callback);
         }
     };
-};
+}
+exports.default = default_1;

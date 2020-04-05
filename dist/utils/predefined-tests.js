@@ -17,8 +17,9 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
             r[k] = a[j];
     return r;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var mocker = require('../../test/mocker'), equal = require('deep-equal'), chai = require('chai'), assert = chai.assert, _a = require("../../dist/utils/razorpay-utils"), prettify = _a.prettify, getTestError = _a.getTestError;
-var runCallbackCheckTest = function (params) {
+exports.runCallbackCheckTest = function (params) {
     var apiObj = params.apiObj, methodName = params.methodName, methodArgs = params.methodArgs, mockerParams = params.mockerParams;
     it("Checks if the passed api callback gets called", function (done) {
         mocker.mock(mockerParams);
@@ -41,7 +42,7 @@ var runCallbackCheckTest = function (params) {
             : done(getTestError("Invalid Return Value", String("Promise"), retVal));
     });
 };
-var runURLCheckTest = function (params) {
+exports.runURLCheckTest = function (params) {
     var apiObj = params.apiObj, methodName = params.methodName, methodArgs = params.methodArgs, expectedUrl = params.expectedUrl, mockerParams = params.mockerParams;
     it("Checks if the URL is formed correctly", function (done) {
         mocker.mock(mockerParams);
@@ -57,7 +58,7 @@ var runURLCheckTest = function (params) {
             }]));
     });
 };
-var runParamsCheckTest = function (params) {
+exports.runParamsCheckTest = function (params) {
     var apiObj = params.apiObj, methodName = params.methodName, methodArgs = params.methodArgs, expectedParams = params.expectedParams, mockerParams = params.mockerParams, testTitle = params.testTitle;
     testTitle = testTitle || "Validates URL and Params";
     it(testTitle, function (done) {
@@ -79,17 +80,11 @@ var runParamsCheckTest = function (params) {
         });
     });
 };
-var runCommonTests = function (params) {
+exports.runCommonTests = function (params) {
     var apiObj = params.apiObj, methodName = params.methodName, methodArgs = params.methodArgs, expectedUrl = params.expectedUrl, expectedParams = params.expectedParams, mockerParams = params.mockerParams;
-    runURLCheckTest(__assign({}, params));
+    exports.runURLCheckTest(__assign({}, params));
     if (expectedParams) {
-        runParamsCheckTest(__assign({}, params));
+        exports.runParamsCheckTest(__assign({}, params));
     }
-    runCallbackCheckTest(__assign({}, params));
-};
-module.exports = {
-    runCallbackCheckTest: runCallbackCheckTest,
-    runParamsCheckTest: runParamsCheckTest,
-    runURLCheckTest: runURLCheckTest,
-    runCommonTests: runCommonTests
+    exports.runCallbackCheckTest(__assign({}, params));
 };

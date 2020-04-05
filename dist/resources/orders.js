@@ -21,21 +21,21 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var _a = require('../utils/razorpay-utils'), normalizeDate = _a.normalizeDate, normalizeBoolean = _a.normalizeBoolean, normalizeNotes = _a.normalizeNotes;
-module.exports = function (api) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var razorpay_utils_1 = require("../utils/razorpay-utils");
+function default_1(api) {
     return {
         all: function (params, callback) {
-            if (params === void 0) { params = {}; }
-            var from = params.from, to = params.to, count = params.count, skip = params.skip, authorized = params.authorized, receipt = params.receipt;
+            var _a = params || {}, from = _a.from, to = _a.to, count = _a.count, skip = _a.skip, authorized = _a.authorized, receipt = _a.receipt;
             if (from) {
-                from = normalizeDate(from);
+                from = razorpay_utils_1.normalizeDate(from);
             }
             if (to) {
-                to = normalizeDate(to);
+                to = razorpay_utils_1.normalizeDate(to);
             }
             count = Number(count) || 10;
             skip = Number(skip) || 0;
-            authorized = normalizeBoolean(authorized);
+            authorized = razorpay_utils_1.normalizeBoolean(authorized);
             return api.get({
                 url: '/orders',
                 data: {
@@ -57,8 +57,7 @@ module.exports = function (api) {
             }, callback);
         },
         create: function (params, callback) {
-            if (params === void 0) { params = {}; }
-            var amount = params.amount, currency = params.currency, receipt = params.receipt, payment_capture = params.payment_capture, notes = params.notes, method = params.method, otherParams = __rest(params, ["amount", "currency", "receipt", "payment_capture", "notes", "method"]);
+            var _a = params || {}, amount = _a.amount, currency = _a.currency, receipt = _a.receipt, payment_capture = _a.payment_capture, notes = _a.notes, method = _a.method, otherParams = __rest(_a, ["amount", "currency", "receipt", "payment_capture", "notes", "method"]);
             currency = currency || 'INR';
             if (!(amount || (method === 'emandate' && amount === 0))) {
                 throw new Error('`amount` is mandatory');
@@ -66,7 +65,7 @@ module.exports = function (api) {
             var data = Object.assign(__assign({ amount: amount,
                 currency: currency,
                 receipt: receipt,
-                method: method, payment_capture: normalizeBoolean(payment_capture) }, otherParams), normalizeNotes(notes));
+                method: method, payment_capture: razorpay_utils_1.normalizeBoolean(payment_capture) }, otherParams), razorpay_utils_1.normalizeNotes(notes));
             return api.post({
                 url: '/orders',
                 data: data
@@ -81,4 +80,5 @@ module.exports = function (api) {
             }, callback);
         }
     };
-};
+}
+exports.default = default_1;

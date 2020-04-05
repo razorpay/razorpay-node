@@ -1,13 +1,17 @@
 'use strict';
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 var request = require('request-promise');
-var nodeify = require('./utils/nodeify');
-var isNonNullObject = require('./utils/razorpay-utils').isNonNullObject;
+var nodeify_1 = __importDefault(require("./utils/nodeify"));
+var razorpay_utils_1 = require("./utils/razorpay-utils");
 var allowedHeaders = {
     "X-Razorpay-Account": ""
 };
 function getValidHeaders(headers) {
     var result = {};
-    if (!isNonNullObject(headers)) {
+    if (!razorpay_utils_1.isNonNullObject(headers)) {
         return result;
     }
     return Object.keys(headers).reduce(function (result, headerName) {
@@ -36,34 +40,34 @@ var API = /** @class */ (function () {
         });
     }
     API.prototype.get = function (params, cb) {
-        return nodeify(this.rq.get({
+        return nodeify_1.default(this.rq.get({
             url: params.url,
             qs: params.data,
         }).catch(normalizeError), cb);
     };
     API.prototype.post = function (params, cb) {
-        return nodeify(this.rq.post({
+        return nodeify_1.default(this.rq.post({
             url: params.url,
             form: params.data
         }).catch(normalizeError), cb);
     };
     API.prototype.put = function (params, cb) {
-        return nodeify(this.rq.put({
+        return nodeify_1.default(this.rq.put({
             url: params.url,
             form: params.data
         }).catch(normalizeError), cb);
     };
     API.prototype.patch = function (params, cb) {
-        return nodeify(this.rq.patch({
+        return nodeify_1.default(this.rq.patch({
             url: params.url,
             form: params.data
         }).catch(normalizeError), cb);
     };
     API.prototype.delete = function (params, cb) {
-        return nodeify(this.rq.delete({
+        return nodeify_1.default(this.rq.delete({
             url: params.url
         }).catch(normalizeError), cb);
     };
     return API;
 }());
-module.exports = API;
+exports.default = API;

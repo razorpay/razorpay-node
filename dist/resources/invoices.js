@@ -21,11 +21,12 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * DOCS: https://razorpay.com/docs/invoices/
  */
-var _a = require('../utils/razorpay-utils'), normalizeDate = _a.normalizeDate, normalizeNotes = _a.normalizeNotes;
-module.exports = function invoicesApi(api) {
+var razorpay_utils_1 = require("../utils/razorpay-utils");
+function invoicesApi(api) {
     var BASE_URL = "/invoices", MISSING_ID_ERROR = "Invoice ID is mandatory";
     /**
      * Invoice entity gets used for both Payment Links and Invoices system.
@@ -43,8 +44,7 @@ module.exports = function invoicesApi(api) {
              *
              * @return {Promise}
              */
-            if (params === void 0) { params = {}; }
-            var url = BASE_URL, notes = params.notes, rest = __rest(params, ["notes"]), data = Object.assign(rest, normalizeNotes(notes));
+            var url = BASE_URL, _a = params || {}, notes = _a.notes, rest = __rest(_a, ["notes"]), data = Object.assign(rest, razorpay_utils_1.normalizeNotes(notes));
             return api.post({
                 url: url,
                 data: data
@@ -60,8 +60,7 @@ module.exports = function invoicesApi(api) {
              *
              * @return {Promise}
              */
-            if (params === void 0) { params = {}; }
-            var url = BASE_URL + "/" + invoiceId, notes = params.notes, rest = __rest(params, ["notes"]), data = Object.assign(rest, normalizeNotes(notes));
+            var url = BASE_URL + "/" + invoiceId, _a = params || {}, notes = _a.notes, rest = __rest(_a, ["notes"]), data = Object.assign(rest, razorpay_utils_1.normalizeNotes(notes));
             if (!invoiceId) {
                 return Promise.reject("Invoice ID is mandatory");
             }
@@ -147,13 +146,12 @@ module.exports = function invoicesApi(api) {
              *
              * @return {Promise}
              */
-            if (params === void 0) { params = {}; }
-            var from = params.from, to = params.to, count = params.count, skip = params.skip, url = BASE_URL;
+            var _a = params || {}, from = _a.from, to = _a.to, count = _a.count, skip = _a.skip, url = BASE_URL;
             if (from) {
-                from = normalizeDate(from);
+                from = razorpay_utils_1.normalizeDate(from);
             }
             if (to) {
-                to = normalizeDate(to);
+                to = razorpay_utils_1.normalizeDate(to);
             }
             count = Number(count) || 10;
             skip = Number(skip) || 0;
@@ -187,4 +185,6 @@ module.exports = function invoicesApi(api) {
             }, callback);
         }
     };
-};
+}
+exports.default = invoicesApi;
+;

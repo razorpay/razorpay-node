@@ -1,8 +1,9 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * DOCS: https://razorpay.com/docs/subscriptions/api/
  */
-module.exports = function (api) {
+function default_1(api) {
     var BASE_URL = "/addons", MISSING_ID_ERROR = "Addon ID is mandatory";
     return {
         fetch: function (addonId, callback) {
@@ -38,4 +39,6 @@ module.exports = function (api) {
             }, callback);
         }
     };
-};
+}
+exports.default = default_1;
+;
