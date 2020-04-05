@@ -1,11 +1,17 @@
 'use strict'
 
-const { normalizeDate } = require('../utils/razorpay-utils')
+import { NormalizableDate, Notes, PaginatedRequestWithExtraKeys } from "../types";
 
-module.exports = function (api) {
+import { normalizeDate } from '../utils/razorpay-utils';
+
+interface AllRequest extends PaginatedRequestWithExtraKeys {
+  payment_id?: string;
+}
+
+export default function (api) {
   return {
-    all(params = {}, callback) {
-      let { from, to, count, skip, payment_id } = params
+    all(params: AllRequest, callback) {
+      let { from, to, count, skip, payment_id } = params || {}
       let url = '/refunds'
 
       if (payment_id) {
@@ -34,8 +40,9 @@ module.exports = function (api) {
       }, callback)
     },
 
-    fetch(refundId, params = {}, callback) {
-      let { payment_id } = params
+    fetch(refundId: string, params: { payment_id?: string; } | undefined, callback) {
+      let { payment_id } = params || {}
+
       if (!refundId) {
         throw new Error('`refund_id` is mandatory')
       }

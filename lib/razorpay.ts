@@ -1,21 +1,37 @@
-'use strict'
+'use strict';
 
-const API = require('./api')
+import API from './api';
 const pkg = require('../package.json')
-const {
+import {
   validateWebhookSignature
-} = require('./utils/razorpay-utils');
+} from './utils/razorpay-utils';
+
+import { Headers } from './types';
+
+import Payments from './resources/payments';
+import Refunds from './resources/refunds';
+import Orders from './resources/orders';
+import Customers from './resources/customers';
+import Transfers from './resources/transfers';
+import VirtualAccounts from './resources/virtualAccounts';
+import Invoices from './resources/invoices';
+import Plans from './resources/plans';
+import Subscriptions from './resources/subscriptions';
+import Addons from './resources/addons';
 
 class Razorpay {
   static VERSION = pkg.version
 
-  static validateWebhookSignature (...args) {
-  
-    return validateWebhookSignature(...args);
+  key_id: string;
+  key_secret: string;
+  api: InstanceType<typeof API>;
+
+  static validateWebhookSignature (body, signature, secret) {
+    return validateWebhookSignature(body, signature, secret);
   }
 
-  constructor(options = {}) {
-    let { key_id, key_secret, headers } = options
+  constructor(options: {key_id: string, key_secret: string, headers?: Headers}) {
+    let { key_id, key_secret, headers } = options || {};
 
     if (!key_id) {
       throw new Error('`key_id` is mandatory')
@@ -40,16 +56,16 @@ class Razorpay {
 
   addResources() {
     Object.assign(this, {
-      payments       : require('./resources/payments')(this.api),
-      refunds        : require('./resources/refunds')(this.api),
-      orders         : require('./resources/orders')(this.api),
-      customers      : require('./resources/customers')(this.api),
-      transfers      : require('./resources/transfers')(this.api),
-      virtualAccounts: require('./resources/virtualAccounts')(this.api),
-      invoices       : require('./resources/invoices')(this.api),
-      plans          : require('./resources/plans')(this.api),
-      subscriptions  : require('./resources/subscriptions')(this.api),
-      addons         : require('./resources/addons')(this.api)
+      payments       : Payments(this.api),
+      refunds        : Refunds(this.api),
+      orders         : Orders(this.api),
+      customers      : Customers(this.api),
+      transfers      : Transfers(this.api),
+      virtualAccounts: VirtualAccounts(this.api),
+      invoices       : Invoices(this.api),
+      plans          : Plans(this.api),
+      subscriptions  : Subscriptions(this.api),
+      addons         : Addons(this.api)
     })
   }
 }

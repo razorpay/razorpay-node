@@ -1,11 +1,18 @@
 "use strict";
 
-const { normalizeDate, normalizeBoolean, normalizeNotes } = require('../utils/razorpay-utils');
+import { TransferRequest, ObjectWithNotes, PaginatedRequestWithExtraKeys } from '../types';
 
-module.exports = function (api) {
+import { normalizeDate, normalizeBoolean, normalizeNotes } from '../utils/razorpay-utils';
+
+interface AllRequest extends PaginatedRequestWithExtraKeys {
+  payment_id?: string;
+  recipient_settlement_id?: string;
+};
+
+export default function (api) {
   return {
-    all(params = {}, callback) {
-      let { from, to, count, skip, payment_id, recipient_settlement_id } = params
+    all(params: AllRequest, callback) {
+      let { from, to, count, skip, payment_id, recipient_settlement_id } = params || {};
       let url = '/transfers'
 
       if (payment_id) {
@@ -35,8 +42,7 @@ module.exports = function (api) {
       }, callback)
     },
 
-    fetch(transferId, params = {}, callback) {
-      let { payment_id } = params
+    fetch(transferId: string, callback) {
       if (!transferId) {
         throw new Error('`transfer_id` is mandatory')
       }
@@ -48,12 +54,12 @@ module.exports = function (api) {
       }, callback)
     },
 
-    create(params, callback) {
+    create(params: TransferRequest, callback) {
       let { notes, ...rest } = params
       let data = Object.assign(rest, normalizeNotes(notes))
 
-      if (data.on_hold) {
-        data.on_hold = normalizeBoolean(data.on_hold)
+      if (typeof data.on_hold !== "undefined") {
+        data.on_hold = normalizeBoolean(data.on_hold);
       }
 
       return api.post({
@@ -62,7 +68,7 @@ module.exports = function (api) {
       }, callback)
     },
 
-    edit(transferId, params, callback) {
+    edit(transferId: string, params: TransferRequest, callback) {
       let { notes, ...rest } = params
       let data = Object.assign(rest, normalizeNotes(notes))
 
@@ -76,7 +82,7 @@ module.exports = function (api) {
       }, callback)
     },
 
-    reverse(transferId, params, callback) {
+    reverse(transferId: string, params: ObjectWithNotes, callback) {
       if (!transferId) {
         throw new Error('`transfer_id` is mandatory')
       }

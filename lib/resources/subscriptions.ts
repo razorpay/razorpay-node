@@ -1,20 +1,20 @@
 "use strict";
 
+import { NormalizableDate, Notes, AnyPrimitiveObject, PaginatedRequestWithExtraKeys, ObjectWithNotes } from "../types";
+
 /*
  * DOCS: https://razorpay.com/docs/subscriptions/api/
  */
 
-const { normalizeDate, normalizeNotes } = require('../utils/razorpay-utils');
+import { normalizeDate, normalizeNotes } from '../utils/razorpay-utils';
 
-module.exports = function subscriptionsApi (api) {
-
+export default function subscriptionsApi (api) {
+  
   const BASE_URL = "/subscriptions",
         MISSING_ID_ERROR = "Subscription ID is mandatory";
 
   return {
-  
-    create (params={}, callback) {
-
+    create(params: ObjectWithNotes, callback) {
       /*
        * Creates a Subscription
        *
@@ -25,17 +25,19 @@ module.exports = function subscriptionsApi (api) {
        */
 
       let url = BASE_URL,
-          {notes, ...rest} = params,
-          data = Object.assign(rest, normalizeNotes(notes));
+        { notes, ...rest } = params || {},
+        data = Object.assign(rest, normalizeNotes(notes));
 
-      return api.post({
-        url,
-        data        
-      }, callback);
+      return api.post(
+        {
+          url,
+          data,
+        },
+        callback
+      );
     },
 
-    fetch (subscriptionId, callback) {
-    
+    fetch(subscriptionId: string, callback) {
       /*
        * Fetch a Subscription given Subcription ID
        *
@@ -46,17 +48,15 @@ module.exports = function subscriptionsApi (api) {
        */
 
       if (!subscriptionId) {
-      
         return Promise.reject(MISSING_ID_ERROR);
       }
 
       let url = `${BASE_URL}/${subscriptionId}`;
 
-      return api.get({url}, callback);
+      return api.get({ url }, callback);
     },
 
-    all (params={}, callback) {
-    
+    all(params: PaginatedRequestWithExtraKeys, callback) {
       /*
        * Get all Subscriptions
        *
@@ -67,33 +67,35 @@ module.exports = function subscriptionsApi (api) {
        */
 
       let { from, to, count, skip } = params,
-          url = BASE_URL;
+        url = BASE_URL;
 
       if (from) {
-        from = normalizeDate(from)
+        from = normalizeDate(from);
       }
 
       if (to) {
-        to = normalizeDate(to)
+        to = normalizeDate(to);
       }
 
-      count = Number(count) || 10
-      skip = Number(skip) || 0
+      count = Number(count) || 10;
+      skip = Number(skip) || 0;
 
-      return api.get({
-        url,
-        data: {
-          ...params,
-          from,
-          to,
-          count,
-          skip
-        }
-      }, callback);
+      return api.get(
+        {
+          url,
+          data: {
+            ...params,
+            from,
+            to,
+            count,
+            skip,
+          },
+        },
+        callback
+      );
     },
 
-    cancel (subscriptionId, cancelAtCycleEnd=false, callback) {
-    
+    cancel(subscriptionId: string, cancelAtCycleEnd = false, callback) {
       /*
        * Cancel a subscription given id and optional cancelAtCycleEnd
        *
@@ -107,24 +109,26 @@ module.exports = function subscriptionsApi (api) {
       const url = `${BASE_URL}/${subscriptionId}/cancel`;
 
       if (!subscriptionId) {
-      
         return Promise.reject(MISSING_ID_ERROR);
       }
 
       if (typeof cancelAtCycleEnd !== "boolean") {
-      
-        return Promise.reject("The second parameter, Cancel at the end of cycle" +
-                              " should be a Boolean");
+        return Promise.reject(
+          "The second parameter, Cancel at the end of cycle" +
+            " should be a Boolean"
+        );
       }
 
-      return api.post({
-        url,
-        ...(cancelAtCycleEnd && {data: {cancel_at_cycle_end: 1}})
-      }, callback);
+      return api.post(
+        {
+          url,
+          ...(cancelAtCycleEnd && { data: { cancel_at_cycle_end: 1 } }),
+        },
+        callback
+      );
     },
 
-    createAddon (subscriptionId, params, callback) {
-    
+    createAddon(subscriptionId: string, params: AnyPrimitiveObject, callback) {
       /*
        * Creates addOn for a given subscription
        *
@@ -138,14 +142,16 @@ module.exports = function subscriptionsApi (api) {
       const url = `${BASE_URL}/${subscriptionId}/addons`;
 
       if (!subscriptionId) {
-      
         return Promise.reject(MISSING_ID_ERROR);
       }
 
-      return api.post({
-        url,
-        data: {...params}
-      }, callback);
-    }
+      return api.post(
+        {
+          url,
+          data: { ...params },
+        },
+        callback
+      );
+    },
   };
 }

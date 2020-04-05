@@ -1,8 +1,8 @@
 'use strict'
 
-const { normalizeNotes } = require('../utils/razorpay-utils')
+import { normalizeNotes } from '../utils/razorpay-utils';
 
-module.exports = function (api) {
+export default function (api) {
   return {
     create(params, callback) {
       let { notes, ...rest } = params

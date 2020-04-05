@@ -1,20 +1,20 @@
 "use strict";
 
+import { NormalizableDate, Notes, AnyPrimitiveObject, PaginatedRequestWithExtraKeys, ObjectWithNotes } from "../types";
+
 /*
  * DOCS: https://razorpay.com/docs/subscriptions/api/
  */
 
-const { normalizeDate, normalizeNotes } = require('../utils/razorpay-utils');
+import { normalizeDate, normalizeNotes } from '../utils/razorpay-utils';
 
-module.exports = function plansApi (api) {
+export default function plansApi (api) {
 
   const BASE_URL = "/plans",
         MISSING_ID_ERROR = "Plan ID is mandatory";
 
   return {
-  
-    create (params={}, callback)  {
-    
+    create(params: ObjectWithNotes, callback) {
       /*
        * Creates a plan
        *
@@ -24,18 +24,20 @@ module.exports = function plansApi (api) {
        * @return {Promise}
        */
 
-       let url = BASE_URL,
-           {notes, ...rest} = params,
-           data = Object.assign(rest, normalizeNotes(notes));
+      let url = BASE_URL,
+        { notes, ...rest } = params || {},
+        data = Object.assign(rest, normalizeNotes(notes));
 
-       return api.post({
-         url,
-         data
-       }, callback);
+      return api.post(
+        {
+          url,
+          data,
+        },
+        callback
+      );
     },
 
-    fetch (planId, callback) {
-    
+    fetch(planId: string, callback) {
       /*
        * Fetches a plan given Plan ID
        *
@@ -46,17 +48,15 @@ module.exports = function plansApi (api) {
        */
 
       if (!planId) {
-
-        return Promise.reject(MISSING_ID_ERROR);        
+        return Promise.reject(MISSING_ID_ERROR);
       }
 
       let url = `${BASE_URL}/${planId}`;
 
-      return api.get({url}, callback);
+      return api.get({ url }, callback);
     },
 
-    all (params={}, callback) {
-    
+    all(params: PaginatedRequestWithExtraKeys, callback) {
       /*
        * Get all Plans
        *
@@ -66,30 +66,33 @@ module.exports = function plansApi (api) {
        * @return {Promise}
        */
 
-      let { from, to, count, skip } = params,
-          url = BASE_URL;
+      let { from, to, count, skip } = params || {},
+        url = BASE_URL;
 
       if (from) {
-        from = normalizeDate(from)
+        from = normalizeDate(from);
       }
 
       if (to) {
-        to = normalizeDate(to)
+        to = normalizeDate(to);
       }
 
-      count = Number(count) || 10
-      skip = Number(skip) || 0
+      count = Number(count) || 10;
+      skip = Number(skip) || 0;
 
-      return api.get({
-        url,
-        data: {
-          ...params,
-          from,
-          to,
-          count,
-          skip
-        }
-      }, callback);
-    }
+      return api.get(
+        {
+          url,
+          data: {
+            ...params,
+            from,
+            to,
+            count,
+            skip,
+          },
+        },
+        callback
+      );
+    },
   };
 }

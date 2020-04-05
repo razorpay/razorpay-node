@@ -3,7 +3,7 @@
 const chai = require('chai')
 const assert = chai.assert
 
-const nodeify = require('../../dist/utils/nodeify')
+import nodeify from '../../dist/utils/nodeify';
 
 describe('Nodeify should invoke the callback', () => {
   it('Resolve', (done) => {

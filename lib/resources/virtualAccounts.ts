@@ -1,26 +1,28 @@
 "use strict";
 
-const { normalizeDate, normalizeNotes } = require('../utils/razorpay-utils');
+import { PaginatedRequestWithExtraKeys, ObjectWithNotes } from '../types';
+
+import { normalizeDate, normalizeNotes } from '../utils/razorpay-utils';
 
 const BASE_URL = '/virtual_accounts',
       ID_REQUIRED_MSG = "`virtual_account_id` is mandatory";
 
-module.exports = function (api) {
+export default function (api) {
   return {
-    all(params = {}, callback) {
-      let { from, to, count, skip, ...otherParams } = params
-      let url = BASE_URL
+    all(params: PaginatedRequestWithExtraKeys, callback) {
+      let { from, to, count, skip, ...otherParams } = params || {};
+      let url = BASE_URL;
 
       if (from) {
-        from = normalizeDate(from)
+        from = normalizeDate(from);
       }
 
       if (to) {
-        to = normalizeDate(to)
+        to = normalizeDate(to);
       }
 
-      count = Number(count) || 10
-      skip = Number(skip) || 0
+      count = Number(count) || 10;
+      skip = Number(skip) || 0;
 
       return api.get({
         url,
@@ -34,10 +36,8 @@ module.exports = function (api) {
       }, callback)
     },
 
-    fetch(virtualAccountId, callback) {
-
+    fetch(virtualAccountId: string, callback) {
       if (!virtualAccountId) {
-
         return Promise.reject(ID_REQUIRED_MSG);
       }
 
@@ -48,8 +48,9 @@ module.exports = function (api) {
       }, callback)
     },
 
-    create(params={}, callback) {
-      let { notes, ...rest } = params
+    create(params: ObjectWithNotes, callback) {
+      let { notes, ...rest } = params || {};
+
       let data = Object.assign(rest, normalizeNotes(notes))
 
       return api.post({
@@ -58,16 +59,14 @@ module.exports = function (api) {
       }, callback)
     },
 
-    close(virtualAccountId, callback) {
-
+    close(virtualAccountId: string, callback) {
       if (!virtualAccountId) {
-
         return Promise.reject(ID_REQUIRED_MSG);
       }
 
       let data = {
         status: 'closed'
-      }
+      };
 
       return api.patch({
         url: `${BASE_URL}/${virtualAccountId}`,
@@ -75,10 +74,8 @@ module.exports = function (api) {
       }, callback)
     },
 
-    fetchPayments (virtualAccountId, callback) {
-
+    fetchPayments (virtualAccountId: string, callback) {
       if (!virtualAccountId) {
-
         return Promise.reject(ID_REQUIRED_MSG);
       }
 

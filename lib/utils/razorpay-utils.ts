@@ -1,22 +1,28 @@
-function getDateInSecs(date) {
+import { NormalizableDate } from '../types';
+
+export function getDateInSecs(date: string): number {
   return (+new Date(date))/1000
 }
 
-function normalizeDate(date) {
-  return isNumber(date)? date : getDateInSecs(date)
+export function normalizeDate(date: NormalizableDate): number {
+  if (isNumber(date)) {
+    return date;
+  }
+
+  return getDateInSecs(date);
 }
 
-function isNumber(num) {
-  return !isNaN(Number(num))
+export function isNumber(num: any): num is number {
+  return !isNaN(Number(num));
 }
 
-function isNonNullObject(input) {
+export function isNonNullObject(input) {
   return !!input &&
          typeof input === "object" &&
          !Array.isArray(input);
 }
 
-function normalizeBoolean(bool) {
+export function normalizeBoolean(bool) {
   if (bool === undefined) {
     return bool
   }
@@ -24,12 +30,12 @@ function normalizeBoolean(bool) {
   return bool ? 1 : 0
 }
 
-function isDefined (value) {
+export function isDefined (value) {
 
   return typeof value !== "undefined";
 }
 
-function normalizeNotes(notes = {}) {
+export function normalizeNotes(notes = {}) {
   let normalizedNotes = {}
   for (let key in notes) {
     normalizedNotes[`notes[${key}]`] = notes[key]
@@ -37,7 +43,7 @@ function normalizeNotes(notes = {}) {
   return normalizedNotes
 }
 
-function prettify (val) {
+export function prettify (val) {
 
   /*
    * given an object , returns prettified string
@@ -49,7 +55,7 @@ function prettify (val) {
   return JSON.stringify(val, null, 2);
 }
 
-function getTestError (summary, expectedVal, gotVal) {
+export function getTestError (summary, expectedVal, gotVal) {
 
   /*
    * @param {String} summary
@@ -66,7 +72,7 @@ function getTestError (summary, expectedVal, gotVal) {
   );
 }
 
-function validateWebhookSignature (body, signature, secret) {
+export function validateWebhookSignature (body, signature, secret) {
 
   /*
    * Verifies webhook signature
@@ -99,16 +105,3 @@ function validateWebhookSignature (body, signature, secret) {
 
   return expectedSignature === signature;
 };
-
-module.exports = {
-  normalizeNotes,
-  normalizeDate,
-  normalizeBoolean,
-  isNumber,
-  getDateInSecs,
-  prettify,
-  isDefined,
-  isNonNullObject,
-  getTestError,
-  validateWebhookSignature
-}

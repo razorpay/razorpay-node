@@ -1,11 +1,13 @@
 'use strict'
 
-const { normalizeDate, normalizeBoolean, normalizeNotes } = require('../utils/razorpay-utils')
+import { PaginatedOrdersRequest, OrderCreateRequest } from "../types";
 
-module.exports = function (api) {
+import { normalizeDate, normalizeBoolean, normalizeNotes } from '../utils/razorpay-utils';
+
+export default function (api) {
   return {
-    all(params = {}, callback) {
-      let { from, to, count, skip, authorized, receipt } = params
+    all(params: PaginatedOrdersRequest, callback) {
+      let { from, to, count, skip, authorized, receipt } = params || {}
 
       if (from) {
         from = normalizeDate(from)
@@ -32,7 +34,7 @@ module.exports = function (api) {
       }, callback)
     },
 
-    fetch(orderId, callback) {
+    fetch(orderId: string, callback) {
       if (!orderId) {
         throw new Error('`order_id` is mandatory')
       }
@@ -42,9 +44,9 @@ module.exports = function (api) {
       }, callback)
     },
 
-    create(params = {}, callback) {
+    create(params: OrderCreateRequest, callback) {
       let { amount, currency, receipt, payment_capture, notes, method,
-            ...otherParams } = params
+            ...otherParams } = params || {}
       currency = currency || 'INR'
 
       if (!(amount || (method === 'emandate' && amount === 0))) {
@@ -66,7 +68,7 @@ module.exports = function (api) {
       }, callback)
     },
 
-    fetchPayments(orderId, callback) {
+    fetchPayments(orderId: string, callback) {
       if (!orderId) {
         throw new Error('`order_id` is mandatory')
       }

@@ -1,123 +1,130 @@
 'use strict'
 
-const { normalizeDate, normalizeBoolean, normalizeNotes } = require('../utils/razorpay-utils')
+
+import { ObjectWithNotes, PaginatedRequestWithExtraKeys } from "../types";
+
+import { normalizeDate, normalizeBoolean, normalizeNotes } from '../utils/razorpay-utils';
 
 const ID_REQUIRED_MSG = '`payment_id` is mandatory';
 
-module.exports = function (api) {
+export default function (api) {
   return {
-    all(params = {}, callback) {
-      let { from, to, count, skip } = params
+    all(params: PaginatedRequestWithExtraKeys, callback) {
+      let { from, to, count, skip } = params || {};
 
       if (from) {
-        from = normalizeDate(from)
+        from = normalizeDate(from);
       }
 
       if (to) {
-        to = normalizeDate(to)
+        to = normalizeDate(to);
       }
 
-      count = Number(count) || 10
-      skip = Number(skip) || 0
+      count = Number(count) || 10;
+      skip = Number(skip) || 0;
 
-      return api.get({
-        url: '/payments',
-        data: {
-          from,
-          to,
-          count,
-          skip
-        }
-      }, callback)
+      return api.get(
+        {
+          url: "/payments",
+          data: {
+            from,
+            to,
+            count,
+            skip,
+          },
+        },
+        callback
+      );
     },
 
-    fetch(paymentId, callback) {
+    fetch(paymentId: string, callback) {
       if (!paymentId) {
-        throw new Error('`payment_id` is mandatory')
+        throw new Error("`payment_id` is mandatory");
       }
 
-      return api.get({
-        url: `/payments/${paymentId}`
-      }, callback)
+      return api.get(
+        {
+          url: `/payments/${paymentId}`,
+        },
+        callback
+      );
     },
 
-    capture(paymentId, amount, currency, callback) {
+    capture(paymentId: string, amount: number, currency: string, callback) {
       if (!paymentId) {
-        throw new Error('`payment_id` is mandatory')
+        throw new Error("`payment_id` is mandatory");
       }
 
       if (!amount) {
-        throw new Error('`amount` is mandatory')
+        throw new Error("`amount` is mandatory");
       }
 
       const payload = {
         amount,
+        currency,
       };
 
-      /**
-       * For backward compatibility,
-       * the third argument can be a callback
-       * instead of currency.
-       * Set accordingly.
-       */
-      if (typeof currency === 'function' && !callback) {
-        callback = currency;
-        currency = undefined;
-      } else if (typeof currency === 'string') {
-        payload.currency = currency;
-      }
-
-      return api.post({
-        url: `/payments/${paymentId}/capture`,
-        data: payload
-      }, callback)
+      return api.post(
+        {
+          url: `/payments/${paymentId}/capture`,
+          data: payload,
+        },
+        callback
+      );
     },
 
-    refund(paymentId, params = {}, callback) {
-      let { notes, ...otherParams } = params
+    refund(paymentId: string, params: ObjectWithNotes, callback) {
+      let { notes, ...otherParams } = params || {};
 
       if (!paymentId) {
-        throw new Error('`payment_id` is mandatory')
+        throw new Error("`payment_id` is mandatory");
       }
 
-      let data = Object.assign(otherParams, normalizeNotes(notes))
-      return api.post({
-        url: `/payments/${paymentId}/refund`,
-        data
-      }, callback)
+      let data = Object.assign(otherParams, normalizeNotes(notes));
+      return api.post(
+        {
+          url: `/payments/${paymentId}/refund`,
+          data,
+        },
+        callback
+      );
     },
 
-    transfer(paymentId, params = {}, callback) {
+    transfer(paymentId: string, params: ObjectWithNotes, callback) {
       if (!paymentId) {
-        throw new Error('`payment_id` is mandatory')
+        throw new Error("`payment_id` is mandatory");
       }
 
-      let { notes, ...otherParams } = params
+      let { notes, ...otherParams } = params || {};
 
-      let data = Object.assign(otherParams, normalizeNotes(notes))
+      let data = Object.assign(otherParams, normalizeNotes(notes));
 
       if (data.transfers) {
-        let transfers = data.transfers
+        let transfers = data.transfers;
         transfers.forEach(function (transfer) {
           transfer.on_hold = normalizeBoolean(!!transfer.on_hold);
-        })
+        });
       }
-      return api.post({
-        url: `/payments/${paymentId}/transfers`,
-        data
-      }, callback)
+      return api.post(
+        {
+          url: `/payments/${paymentId}/transfers`,
+          data,
+        },
+        callback
+      );
     },
 
-    bankTransfer(paymentId, callback) {
-
+    bankTransfer(paymentId: string, callback) {
       if (!paymentId) {
-
         return Promise.reject(ID_REQUIRED_MSG);
       }
 
-      return api.get({
-        url: `/payments/${paymentId}/bank_transfer`
-      }, callback);
-    }
-  }
+      return api.get(
+        {
+          url: `/payments/${paymentId}/bank_transfer`,
+        },
+        callback
+      );
+    },
+  };
 }
