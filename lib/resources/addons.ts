@@ -4,9 +4,7 @@
  * DOCS: https://razorpay.com/docs/subscriptions/api/
  */
 
-const Promise = require("promise");
-
-module.exports = function (api) {
+export default function (api) {
 
   const BASE_URL = "/addons",
         MISSING_ID_ERROR = "Addon ID is mandatory";
@@ -58,4 +56,3 @@ module.exports = function (api) {
     }
   }
 };
-

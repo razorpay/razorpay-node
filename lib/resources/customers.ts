@@ -1,10 +1,11 @@
 'use strict'
 
-const { normalizeNotes } = require('../utils/razorpay-utils')
+import { normalizeNotes } from '../utils/razorpay-utils';
+import { ObjectWithNotes } from '../types';
 
-module.exports = function (api) {
+export default function (api) {
   return {
-    create(params, callback) {
+    create(params: ObjectWithNotes, callback) {
       let { notes, ...rest } = params
       let data = Object.assign(rest, normalizeNotes(notes))
 
@@ -14,7 +15,7 @@ module.exports = function (api) {
       }, callback)
     },
 
-    edit(customerId, params, callback) {
+    edit(customerId: string, params: ObjectWithNotes, callback) {
       let { notes, ...rest } = params
       let data = Object.assign(rest, normalizeNotes(notes))
 
@@ -24,25 +25,25 @@ module.exports = function (api) {
       }, callback)
     },
 
-    fetch(customerId, callback) {
+    fetch(customerId: string, callback) {
       return api.get({
         url: `/customers/${customerId}`
       }, callback)
     },
 
-    fetchTokens(customerId, callback) {
+    fetchTokens(customerId: string, callback) {
       return api.get({
         url: `/customers/${customerId}/tokens`,
       }, callback)
     },
 
-    fetchToken(customerId, tokenId, callback) {
+    fetchToken(customerId: string, tokenId: string, callback) {
       return api.get({
         url: `/customers/${customerId}/tokens/${tokenId}`,
       }, callback)
     },
 
-    deleteToken(customerId, tokenId, callback) {
+    deleteToken(customerId: string, tokenId: string, callback) {
       return api.delete({
         url: `/customers/${customerId}/tokens/${tokenId}`
       }, callback)

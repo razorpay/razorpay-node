@@ -1,64 +1,45 @@
 'use strict';
-
-var _require = require('../utils/razorpay-utils'),
-    normalizeDate = _require.normalizeDate;
-
-module.exports = function (api) {
-  return {
-    all: function all() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          payment_id = params.payment_id;
-
-      var url = '/refunds';
-
-      if (payment_id) {
-        url = '/payments/' + payment_id + '/refunds';
-      }
-
-      if (from) {
-        from = normalizeDate(from);
-      }
-
-      if (to) {
-        to = normalizeDate(to);
-      }
-
-      count = Number(count) || 10;
-      skip = Number(skip) || 0;
-
-      return api.get({
-        url: url,
-        data: {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip
+Object.defineProperty(exports, "__esModule", { value: true });
+var razorpay_utils_1 = require("../utils/razorpay-utils");
+function default_1(api) {
+    return {
+        all: function (params, callback) {
+            var _a = params || {}, from = _a.from, to = _a.to, count = _a.count, skip = _a.skip, payment_id = _a.payment_id;
+            var url = '/refunds';
+            if (payment_id) {
+                url = "/payments/" + payment_id + "/refunds";
+            }
+            if (from) {
+                from = razorpay_utils_1.normalizeDate(from);
+            }
+            if (to) {
+                to = razorpay_utils_1.normalizeDate(to);
+            }
+            count = Number(count) || 10;
+            skip = Number(skip) || 0;
+            return api.get({
+                url: url,
+                data: {
+                    from: from,
+                    to: to,
+                    count: count,
+                    skip: skip
+                }
+            }, callback);
+        },
+        fetch: function (refundId, params, callback) {
+            var payment_id = (params || {}).payment_id;
+            if (!refundId) {
+                throw new Error('`refund_id` is mandatory');
+            }
+            var url = "/refunds/" + refundId;
+            if (payment_id) {
+                url = "/payments/" + payment_id + url;
+            }
+            return api.get({
+                url: url
+            }, callback);
         }
-      }, callback);
-    },
-    fetch: function fetch(refundId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-      var payment_id = params.payment_id;
-
-      if (!refundId) {
-        throw new Error('`refund_id` is mandatory');
-      }
-
-      var url = '/refunds/' + refundId;
-
-      if (payment_id) {
-        url = '/payments/' + payment_id + url;
-      }
-
-      return api.get({
-        url: url
-      }, callback);
-    }
-  };
-};
+    };
+}
+exports.default = default_1;

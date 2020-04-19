@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
 const request = require('request-promise')
-const nodeify = require('./utils/nodeify')
-const {
+import nodeify from './utils/nodeify';
+import {
   isNonNullObject
-} = require('./utils/razorpay-utils');
+} from './utils/razorpay-utils';
 
 const allowedHeaders = {
   "X-Razorpay-Account": ""
@@ -37,7 +37,9 @@ function normalizeError(err) {
   }
 }
 
-class API {
+export default class API {
+  rq: any;
+
   constructor(options) {
     this.rq = request.defaults({
       baseUrl: options.hostUrl,
@@ -87,5 +89,3 @@ class API {
     }).catch(normalizeError), cb)
   }
 }
-
-module.exports = API

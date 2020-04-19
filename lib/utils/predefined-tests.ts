@@ -7,7 +7,7 @@ const mocker = require('../../test/mocker'),
       { prettify,
        getTestError} = require("../../dist/utils/razorpay-utils");
 
-const runCallbackCheckTest = (params) => {
+export const runCallbackCheckTest = (params) => {
 
   let {
     apiObj,
@@ -48,7 +48,7 @@ const runCallbackCheckTest = (params) => {
   });
 }
 
-const runURLCheckTest = (params) => {
+export const runURLCheckTest = (params) => {
 
   let {
     apiObj,
@@ -82,7 +82,7 @@ const runURLCheckTest = (params) => {
   });
 }
 
-const runParamsCheckTest = (params) => {
+export const runParamsCheckTest = (params) => {
 
   let {
     apiObj,
@@ -127,7 +127,7 @@ const runParamsCheckTest = (params) => {
   });
 }
 
-const runCommonTests = (params) => {
+export const runCommonTests = (params) => {
 
   let {
     apiObj,
@@ -153,10 +153,3 @@ const runCommonTests = (params) => {
    ...params       
   });
 }
-
-module.exports = {
-  runCallbackCheckTest,
-  runParamsCheckTest,
-  runURLCheckTest,
-  runCommonTests
-};

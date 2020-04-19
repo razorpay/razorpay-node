@@ -8,7 +8,7 @@
     "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
     "cp-ts": "cp lib/razorpay.d.ts dist/",
-    "build:commonjs": "babel lib -d dist",
+    "build:commonjs": "tsc",
     "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
     "debug": "npm run build && node-debug examples/index.js",
     "test": "npm run build && mocha --require babel-register"
@@ -29,6 +29,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^13.9.5",
     "babel-cli": "^6.14.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
@@ -36,10 +37,11 @@
     "chai": "^4.1.2",
     "deep-equal": "^1.0.1",
     "mocha": "^5.2.0",
-    "nock": "^9.3.3"
+    "nock": "^9.3.3",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
-    "promise": "^8.0.1",
+    "@types/mocha": "^7.0.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
   }

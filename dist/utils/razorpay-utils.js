@@ -1,106 +1,92 @@
 "use strict";
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
+Object.defineProperty(exports, "__esModule", { value: true });
 function getDateInSecs(date) {
-  return +new Date(date) / 1000;
+    return (+new Date(date)) / 1000;
 }
-
+exports.getDateInSecs = getDateInSecs;
 function normalizeDate(date) {
-  return isNumber(date) ? date : getDateInSecs(date);
+    if (isNumber(date)) {
+        return date;
+    }
+    return getDateInSecs(date);
 }
-
+exports.normalizeDate = normalizeDate;
 function isNumber(num) {
-  return !isNaN(Number(num));
+    return !isNaN(Number(num));
 }
-
+exports.isNumber = isNumber;
 function isNonNullObject(input) {
-  return !!input && (typeof input === "undefined" ? "undefined" : _typeof(input)) === "object" && !Array.isArray(input);
+    return !!input &&
+        typeof input === "object" &&
+        !Array.isArray(input);
 }
-
+exports.isNonNullObject = isNonNullObject;
 function normalizeBoolean(bool) {
-  if (bool === undefined) {
-    return bool;
-  }
-
-  return bool ? 1 : 0;
+    if (bool === undefined) {
+        return bool;
+    }
+    return bool ? 1 : 0;
 }
-
+exports.normalizeBoolean = normalizeBoolean;
 function isDefined(value) {
-
-  return typeof value !== "undefined";
+    return typeof value !== "undefined";
 }
-
-function normalizeNotes() {
-  var notes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var normalizedNotes = {};
-  for (var key in notes) {
-    normalizedNotes["notes[" + key + "]"] = notes[key];
-  }
-  return normalizedNotes;
+exports.isDefined = isDefined;
+function normalizeNotes(notes) {
+    if (notes === void 0) { notes = {}; }
+    var normalizedNotes = {};
+    for (var key in notes) {
+        normalizedNotes["notes[" + key + "]"] = notes[key];
+    }
+    return normalizedNotes;
 }
-
+exports.normalizeNotes = normalizeNotes;
 function prettify(val) {
-
-  /*
-   * given an object , returns prettified string
-   *
-   * @param {Object} val
-   * @return {String}
-   */
-
-  return JSON.stringify(val, null, 2);
+    /*
+     * given an object , returns prettified string
+     *
+     * @param {Object} val
+     * @return {String}
+     */
+    return JSON.stringify(val, null, 2);
 }
-
+exports.prettify = prettify;
 function getTestError(summary, expectedVal, gotVal) {
-
-  /*
-   * @param {String} summary
-   * @param {*} expectedVal
-   * @param {*} gotVal
-   *
-   * @return {Error}
-   */
-
-  return new Error("\n" + summary + "\n" + ("Expected(" + (typeof expectedVal === "undefined" ? "undefined" : _typeof(expectedVal)) + ")\n" + prettify(expectedVal) + "\n\n") + ("Got(" + (typeof gotVal === "undefined" ? "undefined" : _typeof(gotVal)) + ")\n" + prettify(gotVal)));
+    /*
+     * @param {String} summary
+     * @param {*} expectedVal
+     * @param {*} gotVal
+     *
+     * @return {Error}
+     */
+    return new Error("\n" + summary + "\n" +
+        ("Expected(" + typeof expectedVal + ")\n" + prettify(expectedVal) + "\n\n") +
+        ("Got(" + typeof gotVal + ")\n" + prettify(gotVal)));
 }
-
+exports.getTestError = getTestError;
 function validateWebhookSignature(body, signature, secret) {
-
-  /*
-   * Verifies webhook signature
-   *
-   * @param {String} summary
-   * @param {String} signature
-   * @param {String} secret
-   *
-   * @return {Boolean}
-   */
-
-  var crypto = require("crypto");
-
-  if (!isDefined(body) || !isDefined(signature) || !isDefined(secret)) {
-
-    throw Error("Invalid Parameters: Please give request body," + "signature sent in X-Razorpay-Signature header and " + "webhook secret from dashboard as parameters");
-  }
-
-  body = body.toString();
-
-  var expectedSignature = crypto.createHmac('sha256', secret).update(body).digest('hex');
-
-  return expectedSignature === signature;
-};
-
-module.exports = {
-  normalizeNotes: normalizeNotes,
-  normalizeDate: normalizeDate,
-  normalizeBoolean: normalizeBoolean,
-  isNumber: isNumber,
-  getDateInSecs: getDateInSecs,
-  prettify: prettify,
-  isDefined: isDefined,
-  isNonNullObject: isNonNullObject,
-  getTestError: getTestError,
-  validateWebhookSignature: validateWebhookSignature
-};
+    /*
+     * Verifies webhook signature
+     *
+     * @param {String} summary
+     * @param {String} signature
+     * @param {String} secret
+     *
+     * @return {Boolean}
+     */
+    var crypto = require("crypto");
+    if (!isDefined(body) ||
+        !isDefined(signature) ||
+        !isDefined(secret)) {
+        throw Error("Invalid Parameters: Please give request body," +
+            "signature sent in X-Razorpay-Signature header and " +
+            "webhook secret from dashboard as parameters");
+    }
+    body = body.toString();
+    var expectedSignature = crypto.createHmac('sha256', secret)
+        .update(body)
+        .digest('hex');
+    return expectedSignature === signature;
+}
+exports.validateWebhookSignature = validateWebhookSignature;
+;

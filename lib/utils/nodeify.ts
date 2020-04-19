@@ -12,4 +12,4 @@ const nodeify = (promise, cb) => {
   })
 }
 
-module.exports = nodeify
+export default nodeify;

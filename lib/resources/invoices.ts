@@ -1,13 +1,14 @@
 "use strict";
 
+import { ObjectWithNotes, PaginatedRequestWithExtraKeys } from "../types";
+
 /*
  * DOCS: https://razorpay.com/docs/invoices/
  */
 
-const Promise = require("promise"),
-      { normalizeDate, normalizeNotes } = require('../utils/razorpay-utils');
+import { normalizeDate, normalizeNotes } from '../utils/razorpay-utils';
 
-module.exports = function invoicesApi (api) {
+export default function invoicesApi (api) {
 
   const BASE_URL = "/invoices",
         MISSING_ID_ERROR = "Invoice ID is mandatory";
@@ -21,7 +22,7 @@ module.exports = function invoicesApi (api) {
 
   return {
 
-    create (params={}, callback) {
+    create (params: ObjectWithNotes, callback) {
 
       /*
        * Creates invoice of any type(invoice|link|ecod).
@@ -33,7 +34,7 @@ module.exports = function invoicesApi (api) {
        */
 
       let url = BASE_URL,
-          { notes, ...rest } = params,
+          { notes, ...rest } = params || {},
           data = Object.assign(rest, normalizeNotes(notes));
 
       return api.post({
@@ -42,7 +43,7 @@ module.exports = function invoicesApi (api) {
       }, callback)
     },
 
-    edit (invoiceId, params={}, callback) {
+    edit (invoiceId: string, params: ObjectWithNotes, callback) {
 
       /*
        * Patches given invoice with new attributes
@@ -55,7 +56,7 @@ module.exports = function invoicesApi (api) {
        */
 
       let url = `${BASE_URL}/${invoiceId}`,
-          { notes, ...rest } = params,
+          { notes, ...rest } = params || {},
           data = Object.assign(rest, normalizeNotes(notes));
 
       if (!invoiceId) {
@@ -69,7 +70,7 @@ module.exports = function invoicesApi (api) {
       }, callback);
     },
 
-    issue (invoiceId, callback) {
+    issue (invoiceId: string, callback) {
 
       /*
        * Issues drafted invoice
@@ -92,7 +93,7 @@ module.exports = function invoicesApi (api) {
       }, callback);
     },
 
-    delete (invoiceId, callback) {
+    delete (invoiceId: string, callback) {
 
       /*
        * Deletes drafted invoice
@@ -115,7 +116,7 @@ module.exports = function invoicesApi (api) {
       }, callback);
     },
 
-    cancel (invoiceId, callback) {
+    cancel (invoiceId: string, callback) {
 
       /*
        * Cancels issued invoice
@@ -138,7 +139,7 @@ module.exports = function invoicesApi (api) {
       }, callback);
     },
 
-    fetch (invoiceId, callback) {
+    fetch (invoiceId: string, callback) {
 
       /*
        * Fetches invoice entity with given id
@@ -161,7 +162,7 @@ module.exports = function invoicesApi (api) {
       }, callback);
     },
 
-    all (params={}, callback) {
+    all (params: PaginatedRequestWithExtraKeys, callback) {
 
       /*
        * Fetches multiple invoices with given query options
@@ -172,7 +173,7 @@ module.exports = function invoicesApi (api) {
        * @return {Promise}
        */
 
-      let { from, to, count, skip } = params,
+      let { from, to, count, skip } = params || {},
           url = BASE_URL;
 
       if (from) {
