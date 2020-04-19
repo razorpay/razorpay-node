@@ -1,6 +1,7 @@
 'use strict';
 
-const request = require('request-promise')
+const axios = require('axios');
+const QS = require('qs');
 import nodeify from './utils/nodeify';
 import {
   isNonNullObject
@@ -30,62 +31,86 @@ function getValidHeaders (headers) {
   }, result);
 }
 
-function normalizeError(err) {
-  throw {
-    statusCode: err.statusCode,
-    error: err.error.error
-  }
+function normalizeError(error) {
+  const {
+    status,
+    data,
+  } = error.response;
+
+  return {
+    statusCode: status,
+    error: typeof data.error !== "undefined" ? data.error : data,
+  };
 }
 
 export default class API {
   rq: any;
 
   constructor(options) {
-    this.rq = request.defaults({
-      baseUrl: options.hostUrl,
-      json: true,
+    this.rq = axios.create({
+      baseURL: options.hostUrl,
       auth: {
-        user: options.key_id,
-        pass: options.key_secret
+        username: options.key_id,
+        password: options.key_secret
       },
-      headers: Object.assign(
-        {'User-Agent': options.ua},
-        getValidHeaders(options.headers)
-      )
-    })
+      headers: {
+        'User-Agent': options.ua,
+        ...(getValidHeaders(options.headers))
+      },
+    });
   }
 
   get(params, cb) {
-    return nodeify(this.rq.get({
-      url: params.url,
-      qs: params.data,
-    }).catch(normalizeError), cb)
+    return nodeify(
+      this.rq
+        .get(params.url, {
+          params: params.data
+        })
+        .then((response) => {
+          return response.data;
+        })
+        .catch(error => normalizeError(error)),
+      cb
+    );
   }
 
   post(params, cb) {
-    return nodeify(this.rq.post({
-      url: params.url,
-      form: params.data
-    }).catch(normalizeError), cb)
+    return nodeify(
+      this.rq
+        .post(params.url, QS.stringify(params.data))
+        .then((response) => response.data)
+        .catch(error => normalizeError(error)),
+      cb
+    );
   }
 
   put(params, cb) {
-    return nodeify(this.rq.put({
-      url: params.url,
-      form: params.data
-    }).catch(normalizeError), cb)
+    return nodeify(
+      this.rq
+        .put(params.url, QS.stringify(params.data))
+        .then((response) => response.data)
+        .catch((error) => normalizeError(error)),
+      cb
+    );
   }
 
   patch(params, cb) {
-    return nodeify(this.rq.patch({
-      url: params.url,
-      form: params.data
-    }).catch(normalizeError), cb)
+    return nodeify(
+      this.rq
+        .patch(params.url, QS.stringify(params.data))
+        .then((response) => response.data)
+        .catch((error) => normalizeError(error)),
+      cb
+    );
   }
 
   delete(params, cb) {
-    return nodeify(this.rq.delete({
-      url: params.url
-    }).catch(normalizeError), cb)
+    return nodeify(
+      this.rq
+        .delete(params.url)
+        .then((response) => response.data)
+        .catch(error => normalizeError(error)),
+      cb
+    );
   }
 }
