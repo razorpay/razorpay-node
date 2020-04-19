@@ -40,18 +40,16 @@ var Razorpay = /** @class */ (function () {
         return razorpay_utils_1.validateWebhookSignature(body, signature, secret);
     };
     Razorpay.prototype.addResources = function () {
-        Object.assign(this, {
-            payments: payments_1.default(this.api),
-            refunds: refunds_1.default(this.api),
-            orders: orders_1.default(this.api),
-            customers: customers_1.default(this.api),
-            transfers: transfers_1.default(this.api),
-            virtualAccounts: virtualAccounts_1.default(this.api),
-            invoices: invoices_1.default(this.api),
-            plans: plans_1.default(this.api),
-            subscriptions: subscriptions_1.default(this.api),
-            addons: addons_1.default(this.api)
-        });
+        this.payments = payments_1.default(this.api);
+        this.refunds = refunds_1.default(this.api);
+        this.orders = orders_1.default(this.api);
+        this.customers = customers_1.default(this.api);
+        this.transfers = transfers_1.default(this.api);
+        this.virtualAccounts = virtualAccounts_1.default(this.api);
+        this.invoices = invoices_1.default(this.api);
+        this.plans = plans_1.default(this.api);
+        this.subscriptions = subscriptions_1.default(this.api);
+        this.addons = addons_1.default(this.api);
     };
     Razorpay.VERSION = pkg.version;
     return Razorpay;

@@ -26,6 +26,17 @@ class Razorpay {
   key_secret: string;
   api: InstanceType<typeof API>;
 
+  payments;
+  refunds;
+  orders;
+  customers;
+  transfers;
+  virtualAccounts;
+  invoices;
+  plans;
+  subscriptions;
+  addons;
+
   static validateWebhookSignature (body, signature, secret) {
     return validateWebhookSignature(body, signature, secret);
   }
@@ -55,18 +66,16 @@ class Razorpay {
   }
 
   addResources() {
-    Object.assign(this, {
-      payments       : Payments(this.api),
-      refunds        : Refunds(this.api),
-      orders         : Orders(this.api),
-      customers      : Customers(this.api),
-      transfers      : Transfers(this.api),
-      virtualAccounts: VirtualAccounts(this.api),
-      invoices       : Invoices(this.api),
-      plans          : Plans(this.api),
-      subscriptions  : Subscriptions(this.api),
-      addons         : Addons(this.api)
-    })
+    this.payments = Payments(this.api);
+    this.refunds = Refunds(this.api);
+    this.orders = Orders(this.api);
+    this.customers = Customers(this.api);
+    this.transfers = Transfers(this.api);
+    this.virtualAccounts = VirtualAccounts(this.api);
+    this.invoices = Invoices(this.api);
+    this.plans = Plans(this.api);
+    this.subscriptions = Subscriptions(this.api);
+    this.addons = Addons(this.api);
   }
 }
 
