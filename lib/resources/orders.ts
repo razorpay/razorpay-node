@@ -3,6 +3,7 @@
 import { PaginatedOrdersRequest, OrderCreateRequest } from "../types";
 
 import { normalizeDate, normalizeBoolean, normalizeNotes } from '../utils/razorpay-utils';
+import { OrderRequest } from "../types/requests";
 
 export default function (api) {
   return {
@@ -44,28 +45,29 @@ export default function (api) {
       }, callback)
     },
 
-    create(params: OrderCreateRequest, callback) {
-      let { amount, currency, receipt, payment_capture, notes, method,
-            ...otherParams } = params || {}
-      currency = currency || 'INR'
+    create(order: OrderRequest) {
+      if (!order) {
+        throw new Error('order is required');
+      }
+
+      const { amount, payment_capture, method } = order;
 
       if (!(amount || (method === 'emandate' && amount === 0))) {
         throw new Error('`amount` is mandatory')
       }
 
-      let data = Object.assign({
-        amount,
-        currency,
-        receipt,
-        method,
+      const payload: OrderRequest = {
+        ...order,
+        ...normalizeNotes(order.notes),
+        
+        currency: order.currency || "INR",
         payment_capture: normalizeBoolean(payment_capture),
-        ...otherParams
-      }, normalizeNotes(notes))
+      };
 
-      return api.post({
+      return api.postPromise({
         url: '/orders',
-        data
-      }, callback)
+        data: payload
+      });
     },
 
     fetchPayments(orderId: string, callback) {

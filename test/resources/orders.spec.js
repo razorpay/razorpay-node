@@ -99,7 +99,13 @@ describe('ORDERS', () => {
   describe('Order create', () => {
     it('Throws error when mandatory fields are not provided', () => {
       assert.throws(
-        rzpInstance.orders.create,
+        () => rzpInstance.orders.create(),
+        "order is required",
+        "Should throw exception when order is not provided"
+      );
+
+      assert.throws(
+        () => rzpInstance.orders.create({}),
         '`amount` is mandatory',
         'Should throw exception when amount is not provided'
       )

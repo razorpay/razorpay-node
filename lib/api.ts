@@ -6,6 +6,7 @@ import nodeify from './utils/nodeify';
 import {
   isNonNullObject
 } from './utils/razorpay-utils';
+import { AnyObject } from './types';
 
 const allowedHeaders = {
   "X-Razorpay-Account": ""
@@ -82,6 +83,13 @@ export default class API {
         .catch(error => normalizeError(error)),
       cb
     );
+  }
+
+  postPromise ({url, data}: { url: string; data: AnyObject}) {
+    return this.rq
+      .post(url, QS.stringify(data))
+      .then((response) => response.data)
+      .catch((error) => normalizeError(error));
   }
 
   put(params, cb) {
