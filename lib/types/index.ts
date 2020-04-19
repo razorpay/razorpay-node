@@ -4,6 +4,11 @@ export interface Headers {
 
 export type NormalizableDate = number|string;
 
+export interface AnyObject {
+  [key: string]: any;
+  [key: number]: any;
+}
+
 export interface AnyPrimitiveObject {
   [key: string]: string | number | boolean;
   [key: number]: string | number | boolean;
