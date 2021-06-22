@@ -107,31 +107,14 @@ module.exports = function subscriptionsApi(api) {
         })
       }, callback);
     },
-    cancel: function cancel(subscriptionId) {
-      var cancelAtCycleEnd = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var callback = arguments[2];
+    cancel: function cancel(data, callback) {
 
-
-      /*
-       * Cancel a subscription given id and optional cancelAtCycleEnd
-       *
-       * @param {String} subscription
-       * @param {Boolean} cancelAtCycleEnd
-       * @param {Function} callback
-       *
-       * @return {Promise}
-       */
-
+      let subscriptionId = data.id;
+      let cancelAtCycleEnd = data.cancelAtCycleEnd;
       var url = BASE_URL + "/" + subscriptionId + "/cancel";
 
       if (!subscriptionId) {
-
         return Promise.reject(MISSING_ID_ERROR);
-      }
-
-      if (typeof cancelAtCycleEnd !== "boolean") {
-
-        return Promise.reject("The second parameter, Cancel at the end of cycle" + " should be a Boolean");
       }
 
       return api.post(_extends({
@@ -161,6 +144,79 @@ module.exports = function subscriptionsApi(api) {
         url: url,
         data: _extends({}, params)
       }, callback);
+    },
+
+    //custom created
+    update: function update(subscriptionId, data, callback) {
+      /*
+       * Update a Subscription for a given Subcription ID
+       *
+       * @subscriptionId {string} subscriptionId
+       * @data {Object} object
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      if (!subscriptionId) {
+        return Promise.reject(MISSING_ID_ERROR);
+      }
+
+      var url = BASE_URL + "/" + subscriptionId;
+      console.log("url is ", url);
+      
+      return api.patch({ url: url, data: data }, callback);
+    },
+    pause: function pause(subscriptionId, callback) {
+      /*
+       * Update a Subscription for a given Subcription ID
+       *
+       * @subscriptionId {string} subscriptionId
+       * @data {Object} object
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      if (!subscriptionId) {
+        return Promise.reject(MISSING_ID_ERROR);
+      }
+
+      var url = BASE_URL + "/" + subscriptionId + "/pause";
+      console.log("url is ", url);
+      
+      return api.post({ url: url }, callback);
+    },
+    resume: function resume(subscriptionId, callback) {
+      /*
+       * Update a Subscription for a given Subcription ID
+       *
+       * @subscriptionId {string} subscriptionId
+       * @data {Object} object
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      if (!subscriptionId) {
+        return Promise.reject(MISSING_ID_ERROR);
+      }
+
+      var url = BASE_URL + "/" + subscriptionId + "/resume";
+      console.log("url is ", url);
+      
+      return api.post({ url: url }, callback);
+    },
+    getInvoice: function getInvoice(subscriptionId, callback) {
+      
+      if (!subscriptionId) {
+        return Promise.reject(MISSING_ID_ERROR);
+      }
+
+      var url = "/invoices?subscription_id=" + subscriptionId;
+      console.log("url is ", url);
+      
+      return api.get({ url: url }, callback);
     }
   };
 };

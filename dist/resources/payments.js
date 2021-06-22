@@ -83,18 +83,13 @@ module.exports = function (api) {
         data: payload
       }, callback);
     },
-    refund: function refund(paymentId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    refund: function refund(paymentId, data) {
       var callback = arguments[2];
-
-      var notes = params.notes,
-          otherParams = _objectWithoutProperties(params, ['notes']);
 
       if (!paymentId) {
         throw new Error('`payment_id` is mandatory');
       }
-
-      var data = Object.assign(otherParams, normalizeNotes(notes));
+      
       return api.post({
         url: '/payments/' + paymentId + '/refund',
         data: data
