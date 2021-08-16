@@ -19,7 +19,7 @@ function Mocker({ host, version }) {
 }
 
 Mocker.prototype.mock = function(params) {
-  let { url, method = 'GET', requestBody, replyWithError } = params
+  let { url, method = 'GET', requestBody, replyWithError, ignoreParseBody } = params
   let status = replyWithError ? 400 : 200
   let requestQueryParams
 
@@ -40,7 +40,7 @@ Mocker.prototype.mock = function(params) {
           url,
           method,
           requestQueryParams,
-          requestBody: parseReqBody(requestBody),
+          requestBody: parseReqBody(requestBody, ignoreParseBody),
           headers: this.req.headers
         }
       }
@@ -51,7 +51,11 @@ const normalizeUrl = function(url) {
   return url.replace(/\/{2,}/g, '/')
 }
 
-const parseReqBody = function(raw) {
+const parseReqBody = function(raw, ignoreParseBody) {
+
+  if (ignoreParseBody){
+    return raw;
+  }
 
   if (raw.length === 0) {
     return {};
