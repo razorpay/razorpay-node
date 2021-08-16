@@ -61,6 +61,7 @@ var Razorpay = function () {
         transfers: require('./resources/transfers')(this.api),
         virtualAccounts: require('./resources/virtualAccounts')(this.api),
         invoices: require('./resources/invoices')(this.api),
+        paymentLink: require('./resources/paymentLink')(this.api),
         plans: require('./resources/plans')(this.api),
         subscriptions: require('./resources/subscriptions')(this.api),
         addons: require('./resources/addons')(this.api)

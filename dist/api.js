@@ -11,7 +11,8 @@ var _require = require('./utils/razorpay-utils'),
     isNonNullObject = _require.isNonNullObject;
 
 var allowedHeaders = {
-  "X-Razorpay-Account": ""
+  "X-Razorpay-Account": "",
+  "Content-Type": "application/json"
 };
 
 function getValidHeaders(headers) {
@@ -66,11 +67,18 @@ var API = function () {
     }
   }, {
     key: 'post',
-    value: function post(params, cb) {
-      return nodeify(this.rq.post({
+    value: function post(params, cb, isNotForm = false) {
+      var request = {
         url: params.url,
         form: params.data
-      }).catch(normalizeError), cb);
+      };
+
+      if (isNotForm) {
+        delete request['form'];
+        request.body = params.data;
+      }
+
+      return nodeify(this.rq.post(request).catch(normalizeError), cb);
     }
   }, {
     key: 'put',
