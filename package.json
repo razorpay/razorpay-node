@@ -11,7 +11,7 @@
     "build:commonjs": "babel lib -d dist",
     "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
     "debug": "npm run build && node-debug examples/index.js",
-    "test": "npm run build && mocha --require babel-register"
+    "test": "npm run build && mocha --recursive --require babel-register test/"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,10 @@
   "files": [
     "dist"
   ],
+  "mocha": {
+    "recursive": true,
+    "full-trace": true
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -35,7 +39,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.3.4",
     "deep-equal": "^2.0.5",
-    "mocha": "^5.2.0",
+    "mocha": "^9.0.0",
     "nock": "^9.3.3"
   },
   "dependencies": {
