@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.7 - 2021-08-20
+- Added new payment link end point in Api (#203).
+- Updated dependencies.
+
 ## 2.0.6 - 2020-01-28
 - fix: receipt is an optional param when creating orders (#118).
 - Updated dependencies.
