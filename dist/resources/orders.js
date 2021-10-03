@@ -46,13 +46,17 @@ module.exports = function (api) {
         }
       }, callback);
     },
-    fetch: function fetch(orderId, callback) {
+    fetch: function fetch(orderId,params,callback) {
+      //var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      //var callback = arguments[1];
+     console.log(orderId,params);
       if (!orderId) {
         throw new Error('`order_id` is mandatory');
       }
 
       return api.get({
-        url: '/orders/' + orderId
+        url: '/orders/' + orderId,
+        data : params,
       }, callback);
     },
     create: function create() {

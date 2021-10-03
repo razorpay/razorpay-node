@@ -65,11 +65,157 @@ module.exports = function subscriptionsApi(api) {
 
       return api.get({ url: url }, callback);
     },
+    update: function update(subscriptionId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+
+
+      /*
+       * Update a subscription
+       *
+       * @param {String} subscriptionId
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId,
+          notes = params.notes,
+          rest = _objectWithoutProperties(params, ["notes"]),
+          data = Object.assign(rest, normalizeNotes(notes));
+
+
+      if (!subscriptionId) {
+
+        return Promise.reject("Subscription ID is mandatory");
+      }
+
+      return api.patch({
+        url: url,
+        data: data
+      }, callback);
+    },
+    pendingUpdate: function pendingUpdate(subscriptionId, callback) {
+  
+
+      /*
+       * Cancel a subscription given id and optional cancelAtCycleEnd
+       *
+       * @param {String} subscription
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId + "/retrieve_scheduled_changes";
+
+      if (!subscriptionId) {
+
+        return Promise.reject(MISSING_ID_ERROR);
+      }
+
+      return api.get({ url: url }, callback);
+    },
+    cancelScheduledChanges: function cancelScheduledChanges (subscriptionId, callback) {
+      
+      /*
+       * Cancel Schedule  
+       *
+       * @param {String} subscription
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId + "/cancel_scheduled_changes";
+
+      if (!subscriptionId) {
+
+        return Promise.reject("Subscription Id is mandatory");
+      }
+      
+      return api.post({
+        url: url
+      }, callback);
+    },
+    pause: function pause(subscriptionId, params, callback) {
+
+      /*
+       * Pause a subscription 
+       *
+       * @param {String} subscription
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId + "/pause";
+
+      if (!subscriptionId) {
+
+        return Promise.reject("Subscription Id is mandatory");
+      }
+      
+      return api.post({
+        url: url,
+        data: params
+      }, callback);
+    },
+    resume: function resume(subscriptionId, params, callback) {
+
+      /*
+       * Pause a subscription 
+       *
+       * @param {String} subscription
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId + "/resume";
+
+      if (!subscriptionId) {
+
+        return Promise.reject("Subscription Id is mandatory");
+      }
+      
+      return api.post({
+        url: url,
+        data: params
+      }, callback);
+    },
+    deleteOffer: function deleteOffer(subscriptionId, offerId, callback) {
+      
+      /*
+      * Delete an Offer Linked to a Subscription
+      *
+      * @param {String} subscription
+      * @param {String} offerId
+      * @param {Function} callback
+      *
+      * @return {Promise}
+      */
+
+      var url = BASE_URL + "/" + subscriptionId + "/" + offerId;
+
+      if (!subscriptionId) {
+
+        return Promise.reject("Subscription Id is mandatory");
+      }
+      
+      return api.delete({
+        url: url
+      }, callback);
+    }, 
     all: function all() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
-
+      
       /*
        * Get all Subscriptions
        *
