@@ -435,4 +435,34 @@ describe("SUBSCRIPTIONS", () => {
       mockerParams
     });
   });
+
+  describe("Create Registration Link", () => {
+  
+    let expectedUrl = `/v1/subscription_registration/auth_links`,
+        params = {
+          param1: "something",
+          param2: "something else",
+          notes: {"something": "something else"}
+        },
+        expectedParams = {
+          param1: params.param1,
+          param2: params.param2,
+          ...(normalizeNotes(params.notes))
+        },
+        methodArgs = [params],
+        methodName = "createRegistrationLink",
+        mockerParams = {
+         url: `/subscription_registration/auth_links`,
+         method: "POST"
+        };
+    
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      expectedUrl,
+      expectedParams,
+      mockerParams
+    });
+  });
 });

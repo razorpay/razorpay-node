@@ -11,7 +11,8 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 var Promise = require("promise"),
     _require = require('../utils/razorpay-utils'),
     normalizeDate = _require.normalizeDate,
-    normalizeNotes = _require.normalizeNotes;
+    normalizeNotes = _require.normalizeNotes,
+    normalizeBoolean = _require.normalizeBoolean;
 
 
 module.exports = function subscriptionsApi(api) {
@@ -303,6 +304,37 @@ module.exports = function subscriptionsApi(api) {
       return api.post({
         url: url,
         data: _extends({}, params)
+      }, callback);
+    },
+
+    createRegistrationLink: function createRegistrationLink() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
+      var email_notify = params.email_notify,
+          sms_notify = params.sms_notify,
+          receipt = params.receipt,
+          notes = params.notes,
+          otherParams = _objectWithoutProperties(params, ["email_notify", "sms_notify", "receipt", "notes"]);
+
+      /*
+       * Creates a Registration Link
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var data = Object.assign(_extends({
+        email_notify: normalizeBoolean(email_notify),
+        sms_notify: normalizeBoolean(sms_notify),
+        receipt: receipt
+      }, otherParams), normalizeNotes(notes));
+
+      return api.post({
+        url: 'subscription_registration/auth_links',
+        data: data
       }, callback);
     }
   };
