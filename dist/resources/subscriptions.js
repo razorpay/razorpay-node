@@ -65,42 +65,33 @@ module.exports = function subscriptionsApi(api) {
 
       return api.get({ url: url }, callback);
     },
-    update: function update(subscriptionId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
+    update: function update(subscriptionId, params, callback) {
 
       /*
-       * Update a subscription
+       * Update Subscription
        *
-       * @param {String} subscriptionId
        * @param {Object} params
        * @param {Function} callback
        *
        * @return {Promise}
        */
 
-      var url = BASE_URL + "/" + subscriptionId,
-          notes = params.notes,
-          rest = _objectWithoutProperties(params, ["notes"]),
-          data = Object.assign(rest, normalizeNotes(notes));
-
+      var url = BASE_URL + "/" + subscriptionId;
 
       if (!subscriptionId) {
 
-        return Promise.reject("Subscription ID is mandatory");
+        return Promise.reject(MISSING_ID_ERROR);
       }
 
       return api.patch({
         url: url,
-        data: data
+        data: params
       }, callback);
     },
     pendingUpdate: function pendingUpdate(subscriptionId, callback) {
-  
 
       /*
-       * Cancel a subscription given id and optional cancelAtCycleEnd
+       * Update a Subscription
        *
        * @param {String} subscription
        * @param {Function} callback
@@ -117,8 +108,8 @@ module.exports = function subscriptionsApi(api) {
 
       return api.get({ url: url }, callback);
     },
-    cancelScheduledChanges: function cancelScheduledChanges (subscriptionId, callback) {
-      
+    cancelScheduledChanges: function cancelScheduledChanges(subscriptionId, callback) {
+
       /*
        * Cancel Schedule  
        *
@@ -135,12 +126,15 @@ module.exports = function subscriptionsApi(api) {
 
         return Promise.reject("Subscription Id is mandatory");
       }
-      
+
       return api.post({
         url: url
       }, callback);
     },
-    pause: function pause(subscriptionId, params, callback) {
+    pause: function pause(subscriptionId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+
 
       /*
        * Pause a subscription 
@@ -158,16 +152,19 @@ module.exports = function subscriptionsApi(api) {
 
         return Promise.reject("Subscription Id is mandatory");
       }
-      
+
       return api.post({
         url: url,
         data: params
       }, callback);
     },
-    resume: function resume(subscriptionId, params, callback) {
+    resume: function resume(subscriptionId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+
 
       /*
-       * Pause a subscription 
+       * resume a subscription 
        *
        * @param {String} subscription
        * @param {Object} params
@@ -182,14 +179,14 @@ module.exports = function subscriptionsApi(api) {
 
         return Promise.reject("Subscription Id is mandatory");
       }
-      
+
       return api.post({
         url: url,
         data: params
       }, callback);
     },
     deleteOffer: function deleteOffer(subscriptionId, offerId, callback) {
-      
+
       /*
       * Delete an Offer Linked to a Subscription
       *
@@ -206,16 +203,16 @@ module.exports = function subscriptionsApi(api) {
 
         return Promise.reject("Subscription Id is mandatory");
       }
-      
+
       return api.delete({
         url: url
       }, callback);
-    }, 
+    },
     all: function all() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
-      
+
       /*
        * Get all Subscriptions
        *

@@ -18,23 +18,23 @@ const { runCallbackCheckTest,
 const SUB_PATH = "/subscriptions",
       FULL_PATH = `/v1${SUB_PATH}`,
       TEST_SUBSCRIPTION_ID = "sub_sometestid",
-      apiObj = rzpInstance.subscriptions;
+      TEST_OFFER_ID = "offer_sometestid",
+      apiObj = rzpInstance.subscriptions; 
 
 const runIDRequiredTest = (params) => {
-
+  
   let {apiObj, methodName, methodArgs, mockerParams} = params;
 
   mocker.mock(mockerParams);
-
+  
   it (`method ${methodName} checks for Subscription ID as param`,
       (done) => {
 
     apiObj[methodName](...methodArgs).then(() => {
-
+ 
       done(new Error(`method ${methodName} does not`+
                      ` check for Subscription ID`));
     },(err) => {
-
       done();
     });
   });
@@ -61,7 +61,7 @@ describe("SUBSCRIPTIONS", () => {
          url: `${SUB_PATH}`,
          method: "POST"
         };
-
+    
     runCommonTests({
       apiObj,
       methodName,
@@ -69,6 +69,74 @@ describe("SUBSCRIPTIONS", () => {
       expectedUrl,
       expectedParams,
       mockerParams
+    });
+  });
+  
+  describe("Update Subscription", () => {
+  
+    let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}`,
+        methodName = "update",
+        params = {
+          "plan_id":"plan_00000000000002",
+          "quantity": 1,
+          "remaining_count": 5,
+          "schedule_change_at": "now"
+        },
+        expectedParams = {
+          ...params
+        },
+        methodArgs = [TEST_SUBSCRIPTION_ID, params],
+        mockerParams = {
+         url: `${SUB_PATH}/${TEST_SUBSCRIPTION_ID}`,
+         method: "PATCH"
+        };
+
+
+      runIDRequiredTest({
+        apiObj,
+        methodName,
+        methodArgs: [undefined],
+        mockerParams: {
+          url: `${SUB_PATH}/${undefined}`,
+          method: "PATCH"
+        }
+      });
+  
+      runCommonTests({
+        apiObj,
+        methodName,
+        methodArgs,
+        expectedUrl,
+        mockerParams
+      });
+  });
+  
+  describe('Delete Offer', () => {
+  
+    let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/${TEST_OFFER_ID}`,
+          methodName  = "deleteOffer",
+          methodArgs  = [TEST_SUBSCRIPTION_ID, TEST_OFFER_ID],
+          mockerParams = {
+            url: `${SUB_PATH}/${TEST_SUBSCRIPTION_ID}/${TEST_OFFER_ID}`,
+            method: "DELETE"
+          }; 
+
+    runIDRequiredTest({
+      apiObj,
+      methodName,
+      methodArgs: [undefined, undefined],
+      mockerParams: {
+        url: `${SUB_PATH}/${undefined}/${undefined}`,
+        method: "DELETE"
+      }
+    });
+
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedUrl
     });
   });
 
@@ -163,7 +231,122 @@ describe("SUBSCRIPTIONS", () => {
       methodArgs
     });
   });
+  describe("Fetch Pending Updates", () => {
+  
+    let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/retrieve_scheduled_changes`,
+        methodName = "pendingUpdate",
+        methodArgs = [TEST_SUBSCRIPTION_ID],
+        mockerParams = {
+          url: `${SUB_PATH}/${TEST_SUBSCRIPTION_ID}/retrieve_scheduled_changes`
+        };
 
+    runIDRequiredTest({
+      apiObj,
+      methodName,
+      methodArgs: [undefined],
+      mockerParams: {
+        url: `${SUB_PATH}/${undefined}/retrieve_scheduled_changes`
+      }
+    });
+
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedUrl
+    });
+  });
+  describe("Cancel Update", () => {
+  
+    let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/cancel_scheduled_changes`,
+        methodName = "cancelScheduledChanges",
+        methodArgs = [TEST_SUBSCRIPTION_ID],
+        mockerParams = {
+          url: `${SUB_PATH}/${TEST_SUBSCRIPTION_ID}/cancel_scheduled_changes`,
+          method : 'POST'
+        };
+
+    runIDRequiredTest({
+      apiObj,
+      methodName,
+      methodArgs: [undefined],
+      mockerParams: {
+        url: `${SUB_PATH}/${undefined}/cancel_scheduled_changes`,
+        method : 'POST'
+      }
+    });
+
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedUrl
+    });
+  });
+  describe("Pause Subscription", () => {
+  
+    let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/pause`,
+        methodName = "pause",
+        params = { 
+          "pause_at": "now"
+        },
+        methodArgs = [TEST_SUBSCRIPTION_ID, params],
+        mockerParams = {
+          url: `${SUB_PATH}/${TEST_SUBSCRIPTION_ID}/pause`,
+          method : 'POST'
+        };
+
+    runIDRequiredTest({
+      apiObj,
+      methodName,
+      methodArgs: [undefined],
+      mockerParams: {
+        url: `${SUB_PATH}/${undefined}/pause`,
+        method : 'POST'
+      }
+    });
+
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedUrl
+    });
+  });
+  describe("Resume Subscription", () => {
+  
+    let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/resume`,
+        methodName = "resume",
+        params = { 
+          "resume_at": "now"
+        },
+        methodArgs = [TEST_SUBSCRIPTION_ID, params],
+        mockerParams = {
+          url: `${SUB_PATH}/${TEST_SUBSCRIPTION_ID}/resume`,
+          method : 'POST'
+        };
+            
+    runIDRequiredTest({
+      apiObj,
+      methodName,
+      methodArgs: [undefined],
+      mockerParams: {
+        url: `${SUB_PATH}/${undefined}/resume`,
+        method : 'POST'
+      }
+    });
+
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedUrl
+    });
+  });
   describe("Cancel Subscription", () => {
   
     let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/cancel`,
