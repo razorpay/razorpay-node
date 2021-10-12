@@ -61,48 +61,6 @@ module.exports = function (api) {
         url: url
       }, callback);
     },
-    all: function all() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-      
-      /*
-       * Fetch All Virtual Accounts
-       *
-       * @param {Object} params
-       * @param {Funtion} callback
-       *
-       * @return {Promise}
-       */
-
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          url = BASE_URL;
-
-
-      if (from) {
-        from = normalizeDate(from);
-      }
-
-      if (to) {
-        to = normalizeDate(to);
-      }
-
-      count = Number(count) || 10;
-      skip = Number(skip) || 0;
-
-      return api.get({
-        url: url,
-        data: _extends({}, params, {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip
-        })
-      }, callback);
-    },
     create: function create() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
@@ -144,36 +102,6 @@ module.exports = function (api) {
 
       return api.get({
         url: url
-      }, callback);
-    },
-    addReceiver: function addReceiver(virtualAccountId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
-      /*
-       * Add receiver to Existing virtual account
-       *
-       * @param {String} virtualAccountId
-       * @param {Object} params
-       * @param {Function} callback
-       *
-       * @return {Promise}
-       */
-
-      var url = BASE_URL + "/" + virtualAccountId + "/receivers",
-          notes = params.notes,
-          rest = _objectWithoutProperties(params, ["notes"]),
-          data = Object.assign(rest, normalizeNotes(notes));
-
-
-      if (!virtualAccountId) {
-
-        return Promise.reject("virtualAccount ID is mandatory");
-      }
-
-      return api.post({
-        url: url,
-        data: data
       }, callback);
     }
   };
