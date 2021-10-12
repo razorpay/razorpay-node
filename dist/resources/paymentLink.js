@@ -130,9 +130,6 @@ module.exports = function paymentLinkApi(api) {
           skip: skip
         })
       }, callback);
-    },
-    bank_transfer: function bank_transfer() {
-      
     }
   };
 };
