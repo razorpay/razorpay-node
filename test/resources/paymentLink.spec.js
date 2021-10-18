@@ -198,4 +198,51 @@ describe("PAYMENTLINK", () => {
         methodArgs
       });
   });
+
+  describe("Notify", () => {
+
+    let medium = "email",
+        expectedUrl = `${FULL_PATH}/${TEST_PAYMENTLINK_ID}/notify_by/${medium}`,
+        methodName = "notifyBy",
+        methodArgs = [TEST_PAYMENTLINK_ID, medium],
+        mockerParams = {
+          "url": `${SUB_PATH}/${TEST_PAYMENTLINK_ID}/notify_by/${medium}`,
+          "method": "POST"
+        };
+
+    runIDRequiredTest({
+      apiObj,
+      methodName,
+      methodArgs: [undefined, medium],
+      mockerParams: {
+        "url": `${SUB_PATH}/${undefined}/notify_by/${medium}`,
+        "method": "POST"
+      }
+    });
+
+    it ("notify method checks for `medium` parameter", (done) => {
+
+      mocker.mock({
+        url: `${SUB_PATH}/${TEST_PAYMENTLINK_ID}/notify_by/${undefined}`,
+        method: "POST"
+      });
+
+      apiObj[methodName](TEST_PAYMENTLINK_ID, undefined).then(() => {
+
+        done(new Error("medium parameter is not checked for"));
+      }).catch(() => {
+
+        assert.ok("medium parameter is checked");
+        done();
+      });
+    });
+
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedUrl
+    });
+  });
 });
