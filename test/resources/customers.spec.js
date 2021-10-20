@@ -108,6 +108,26 @@ describe('CUSTOMERS', () => {
     })
   })
 
+  it('Fetch all customer ', (done) => {
+    
+    let expectedParams = {
+      skip: 0,
+      count: 10
+    }
+
+    mocker.mock({
+      url: `/customers`
+    })
+
+    rzpInstance.customers.all({skip:0,count:10}).then((response) => {
+      assert.ok(equal(
+        response.__JUST_FOR_TESTS__.requestQueryParams,
+        expectedParams
+      ), 'skip & count are passed as default queryparams')
+      done()
+    })
+  })
+
   it('Tokens fetch', (done) => {
     const TEST_CUSTOMER_ID = 'cust_6fqBqgrfTSuj5v'
 
