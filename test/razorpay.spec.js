@@ -29,5 +29,18 @@ describe('Razorpay is initialized properly', () => {
 
     assert.equal(instance.key_id, 'XXX')
     assert.equal(instance.key_secret, 'YYY')
+    assert.equal(instance.hostUrl, 'https://api.razorpay.com/v1/')
+  })
+
+  it('instance should initialize with custom host url', () => {
+    let instance = new Razorpay({
+      key_id: 'XXX',
+      key_secret: 'YYY',
+      host_url: 'https://stage-api.razorpay.com/v1/'
+    })
+
+    assert.equal(instance.key_id, 'XXX')
+    assert.equal(instance.key_secret, 'YYY')
+    assert.equal(instance.hostUrl, 'https://stage-api.razorpay.com/v1/')
   })
 })
