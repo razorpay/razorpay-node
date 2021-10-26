@@ -20,7 +20,7 @@ module.exports = function paymentLinkApi(api) {
       MISSING_ID_ERROR = "Payment Link ID is mandatory";
 
   return {
-    create: function() {
+    create: function create() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
@@ -45,7 +45,7 @@ module.exports = function paymentLinkApi(api) {
         data: data
       }, callback, true);
     },
-    cancel: function(paymentLinkId, callback) {
+    cancel: function cancel(paymentLinkId, callback) {
 
       /*
        * Cancels issued paymentLink
@@ -61,13 +61,13 @@ module.exports = function paymentLinkApi(api) {
         return Promise.reject(MISSING_ID_ERROR);
       }
 
-      var url = `${BASE_URL}/${paymentLinkId}/cancel`;
+      var url = BASE_URL + "/" + paymentLinkId + "/cancel";
 
       return api.post({
         url: url
       }, callback);
     },
-    fetch: function(paymentLinkId, callback) {
+    fetch: function fetch(paymentLinkId, callback) {
 
       /*
        * Fetches paymentLink entity with given id
@@ -83,13 +83,13 @@ module.exports = function paymentLinkApi(api) {
         return Promise.reject(MISSING_ID_ERROR);
       }
 
-      var url = `${BASE_URL}/${paymentLinkId}`;
+      var url = BASE_URL + "/" + paymentLinkId;
 
       return api.get({
         url: url
       }, callback);
     },
-    all: function() {
+    all: function all() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 

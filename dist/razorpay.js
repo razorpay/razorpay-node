@@ -26,7 +26,8 @@ var Razorpay = function () {
 
     var key_id = options.key_id,
         key_secret = options.key_secret,
-        headers = options.headers;
+        headers = options.headers,
+        host_url = options.host_url;
 
 
     if (!key_id) {
@@ -39,9 +40,10 @@ var Razorpay = function () {
 
     this.key_id = key_id;
     this.key_secret = key_secret;
+    this.hostUrl = host_url || 'https://api.razorpay.com/v1/';
 
     this.api = new API({
-      hostUrl: 'https://api.razorpay.com/v1/',
+      hostUrl: this.hostUrl,
       ua: 'razorpay-node@' + Razorpay.VERSION,
       key_id: key_id,
       key_secret: key_secret,
