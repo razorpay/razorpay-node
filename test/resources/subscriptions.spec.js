@@ -101,6 +101,17 @@ describe("SUBSCRIPTIONS", () => {
           method: "PATCH"
         }
       });
+      
+
+      runParamsCheckTest({
+        apiObj,
+        methodName,
+        methodArgs: [TEST_SUBSCRIPTION_ID, params],
+        mockerParams,
+        expectedParams,
+        testTitle: "Check params is being sent or not"
+      });
+      
   
       runCommonTests({
         apiObj,
@@ -231,6 +242,7 @@ describe("SUBSCRIPTIONS", () => {
       methodArgs
     });
   });
+
   describe("Fetch Pending Updates", () => {
   
     let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/retrieve_scheduled_changes`,
@@ -257,6 +269,7 @@ describe("SUBSCRIPTIONS", () => {
       expectedUrl
     });
   });
+  
   describe("Cancel Update", () => {
   
     let expectedUrl = `${FULL_PATH}/${TEST_SUBSCRIPTION_ID}/cancel_scheduled_changes`,
@@ -308,6 +321,17 @@ describe("SUBSCRIPTIONS", () => {
       }
     });
 
+    let expectedParams = {pause_at: 'now'};
+
+    runParamsCheckTest({
+      apiObj,
+      methodName,
+      methodArgs: [TEST_SUBSCRIPTION_ID, params],
+      mockerParams,
+      expectedParams,
+      testTitle: "Check if pause at is being sent or not"
+    });
+
     runCommonTests({
       apiObj,
       methodName,
@@ -337,6 +361,17 @@ describe("SUBSCRIPTIONS", () => {
         url: `${SUB_PATH}/${undefined}/resume`,
         method : 'POST'
       }
+    });
+
+    let expectedParams = {resume_at: 'now'};
+
+    runParamsCheckTest({
+      apiObj,
+      methodName,
+      methodArgs: [TEST_SUBSCRIPTION_ID, params],
+      mockerParams,
+      expectedParams,
+      testTitle: "Check if resume at is being sent or not"
     });
 
     runCommonTests({
@@ -455,7 +490,16 @@ describe("SUBSCRIPTIONS", () => {
          url: `/subscription_registration/auth_links`,
          method: "POST"
         };
-    
+
+    runParamsCheckTest({
+      apiObj,
+      methodName,
+      methodArgs: [params],
+      mockerParams,
+      expectedParams,
+      testTitle: "Check if params is being sent or not"
+    })
+
     runCommonTests({
       apiObj,
       methodName,
