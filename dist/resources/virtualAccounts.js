@@ -103,6 +103,78 @@ module.exports = function (api) {
       return api.get({
         url: url
       }, callback);
+    },
+    addReceiver: function addReceiver(virtualAccountId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+
+
+      /*
+       * Add Receiver to an Existing Virtual Account
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      if (!virtualAccountId) {
+
+        return Promise.reject(ID_REQUIRED_MSG);
+      }
+
+      return api.post({
+        url: BASE_URL + "/" + virtualAccountId + "/receivers",
+        data: params
+      }, callback);
+    },
+    allowedPayer: function allowedPayer(virtualAccountId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+
+
+      /*
+       * Add an Allowed Payer Account
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      if (!virtualAccountId) {
+
+        return Promise.reject(ID_REQUIRED_MSG);
+      }
+
+      return api.post({
+        url: BASE_URL + "/" + virtualAccountId + "/allowed_payers",
+        data: params
+      }, callback);
+    },
+    deleteAllowedPayer: function deleteAllowedPayer(virtualAccountId, allowedPayerId, callback) {
+
+      /*
+      * Delete an Allowed Payer Account
+      * @param {String} virtualAccountId
+      * @param {String} allowedPayerId
+      * @param {Function} callback
+      *
+      * @return {Promise}
+      */
+
+      if (!virtualAccountId) {
+
+        return Promise.reject(ID_REQUIRED_MSG);
+      }
+
+      if (!allowedPayerId) {
+
+        return Promise.reject("allowed payer id is mandatory");
+      }
+
+      return api.delete({
+        url: BASE_URL + "/" + virtualAccountId + "/allowed_payers/" + allowedPayerId
+      }, callback);
     }
   };
 };
