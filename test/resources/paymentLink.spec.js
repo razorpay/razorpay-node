@@ -76,7 +76,9 @@ describe("PAYMENTLINK", () => {
         done()
       })
     })
+  });
 
+  describe("Update PaymentLink",() => {
     it('Update Payment Link', (done) => {
      
       let params= {
@@ -98,7 +100,7 @@ describe("PAYMENTLINK", () => {
         done()
       })
     })
-  });
+  })
 
   describe("Cancel PaymentLink", () => {
 
