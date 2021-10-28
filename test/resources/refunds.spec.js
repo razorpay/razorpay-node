@@ -132,4 +132,32 @@ describe('REFUNDS', () => {
       })
     })
   })
+ 
+  describe('edit refund', () => {
+    it('edit refund', (done) => {
+      
+      let refundId = 'rfnd_sometestId'
+
+      let params = {
+        notes: {
+          note1: 'This is note1',
+          note2: 'This is note2'
+        }
+      }
+      
+      mocker.mock({
+        url: `/refunds/${refundId}`,
+        method : 'PATCH'
+      })
+
+      rzpInstance.refunds.edit(refundId, params).then((response) => {
+         assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/refunds/${refundId}`,
+          'Request url formed correctly'
+        )
+        done()
+      })
+    })
+  })
 })
