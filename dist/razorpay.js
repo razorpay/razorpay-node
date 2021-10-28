@@ -64,7 +64,8 @@ var Razorpay = function () {
         paymentLink: require('./resources/paymentLink')(this.api),
         plans: require('./resources/plans')(this.api),
         subscriptions: require('./resources/subscriptions')(this.api),
-        addons: require('./resources/addons')(this.api)
+        addons: require('./resources/addons')(this.api),
+        qrCode: require('./resources/qrCode')(this.api)
       });
     }
   }]);
