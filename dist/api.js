@@ -67,7 +67,9 @@ var API = function () {
     }
   }, {
     key: 'post',
-    value: function post(params, cb, isNotForm = false) {
+    value: function post(params, cb) {
+      var isNotForm = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
       var request = {
         url: params.url,
         form: params.data
