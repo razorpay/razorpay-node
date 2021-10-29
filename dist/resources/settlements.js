@@ -12,7 +12,7 @@ module.exports = function (api) {
   var BASE_URL = "/settlements";
 
   return {
-    create: function create() {
+    createOndemandSettlement: function createOndemandSettlement() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 

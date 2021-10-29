@@ -29,7 +29,7 @@ describe('Settlements ', () => {
       method: 'POST'
     })
 
-    rzpInstance.settlements.create(params).then((response) => {
+    rzpInstance.settlements.createOndemandSettlement(params).then((response) => {
       assert.equal(
         response.__JUST_FOR_TESTS__.url,
         '/v1/settlements/ondemand',
