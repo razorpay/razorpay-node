@@ -74,29 +74,44 @@ instance.payments.all(
 
 ## Supported Resources
 
-- [Payments](https://github.com/razorpay/razorpay-node/wiki#payments)
+## Supported Resources
+- [Addon](documents/addon.md)
 
-- [Refunds](https://github.com/razorpay/razorpay-node/wiki#refunds)
+- [Customer](documents/customer.md)
 
-- [Orders](https://github.com/razorpay/razorpay-node/wiki#orders)
+- [Token](documents/token.md)
 
-- [Customers](https://github.com/razorpay/razorpay-node/wiki#customers)
+- [Order](documents/order.md)
 
-- [Transfers](https://github.com/razorpay/razorpay-node/wiki#transfers)
+- [Payments](documents/payment.md)
 
-- [Virtual Accounts](https://github.com/razorpay/razorpay-node/wiki#virtual-accounts)
+- [Settlements](documents/settlement.md)
 
-- [Invoices](https://github.com/razorpay/razorpay-node/wiki#invoices)
+- [Refunds](documents/refund.md)
 
-- [Plans](https://github.com/razorpay/razorpay-node/wiki#plans)
+- [Invoice](documents/invoice.md)
 
-- [Subscriptions](https://github.com/razorpay/razorpay-node/wiki#subscriptions)
+- [Subscriptions](documents/subscription.md)
 
-- [Addons](https://github.com/razorpay/razorpay-node/wiki#addons)
+- [Payment Links](documents/paymentLink.md)
 
-- [Webhooks](https://github.com/razorpay/razorpay-node/wiki#webhooks)
+- [Smart Collect](documents/virtualAccount.md)
 
-- [Partner Auth](https://github.com/razorpay/razorpay-node/wiki#partner-auth)
+- [Route](documents/transfer.md)
+
+- [QR Code](documents/qrcode.md)
+
+- [Emandate](documents/emandate.md)
+
+- [Cards](documents/card.md)
+
+- [Paper NACH](documents/papernach.md)
+
+- [UPI](documents/upi.md)
+
+- [Register Emandate and Charge First Payment Together](documents/registerEmandate.md)
+
+- [Register NACH and Charge First Payment Together](documents/registerNach.md)
 
 ---
 
