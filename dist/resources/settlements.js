@@ -43,7 +43,7 @@ module.exports = function (api) {
 
 
       /*
-       * Fetch all fund accounts
+       * Fetch all settlements
        *
        * @param {Object} params
        * @param {Function} callback
@@ -68,38 +68,7 @@ module.exports = function (api) {
         })
       }, callback);
     },
-    fetchAllPayments: function fetchAllPayments(qrCodeId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
-
-      /*
-       * Fetch all payment for a qrCode
-       *
-       * @param {Object} params
-       * @param {Function} callback
-       *
-       * @return {Promise}
-       */
-
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          url = BASE_URL + '/' + qrCodeId + '/payments';
-
-
-      return api.get({
-        url: url,
-        data: _extends({}, params, {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip
-        })
-      }, callback);
-    },
-    fetch: function fetch(qrCodeId, callback) {
+    fetch: function fetch(settlementId, callback) {
 
       /*
        * Fetch a settlement
@@ -110,13 +79,13 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      if (!qrCodeId) {
+      if (!settlementId) {
 
-        return Promise.reject("qrCode Id is mandatroy");
+        return Promise.reject("settlement Id is mandatroy");
       }
 
       return api.get({
-        url: BASE_URL + '/' + qrCodeId
+        url: BASE_URL + '/' + settlementId
       }, callback);
     },
 
@@ -223,19 +192,6 @@ module.exports = function (api) {
         data: _extends({}, params, {
           day: day
         })
-      }, callback);
-    },
-    close: function close(qrCodeId, callback) {
-
-      if (!qrCodeId) {
-
-        return Promise.reject("qrCode Id is mandatroy");
-      }
-
-      var url = BASE_URL + '/' + qrCodeId + '/close';
-
-      return api.post({
-        url: url
       }, callback);
     }
   };
