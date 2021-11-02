@@ -12,63 +12,75 @@ const SUB_PATH  = "/settlements",
       TEST_SETTLEMENT_ID = "setlod_sometestid",
       apiObj = rzpInstance.settlements;
 
-describe('Settlements ', () => {
-  it('Create on-demand settlement', (done) => {
-    let params = {
-        amount: 1000,
-        settle_full_balance: 0,
-        description: "Need this to make vendor payments.",
-        notes: {
-          notes_key_1: "Tea, Earl Grey, Hot",
-          notes_key_2: "Tea, Earl Grey… decaf."
-        }
-      }
+describe('SETTLEMENTS ', () => {
 
-    mocker.mock({
-      url:  `${SUB_PATH}/ondemand`,
-      method: 'POST'
-    })
+  describe('Create on-demand settlement', (done) => {
 
-    rzpInstance.settlements.createOndemandSettlement(params).then((response) => {
-      assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        '/v1/settlements/ondemand',
-        'Create settlements request url formed'
-      )
-      done()
-    })
+    let methodName = "createOndemandSettlement",
+    params = {
+      amount: 1000,
+      settle_full_balance: 0,
+      description: "Need this to make vendor payments."
+    },
+    methodArgs = [params],
+    expectedParams = {
+      ...params
+    },
+
+    mockerParams = {
+      url: `${SUB_PATH}/ondemand`,
+      method : 'POST'
+    };
+
+    runParamsCheckTest({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedParams,
+      testTitle: "Check if all params passed are being sent"
+    });
+
+    methodArgs = [{}];
+
+    runCallbackCheckTest({
+      apiObj,
+      methodName,
+      mockerParams,
+      methodArgs
+    });
   })
 
-  it('Fetch a settlement', (done) => {
+  describe('Fetch a settlement', (done) => {
 
-    mocker.mock({
-      url: `${SUB_PATH}/${TEST_SETTLEMENT_ID}`
-    })
+      let methodName = "fetch",
+      methodArgs = [TEST_SETTLEMENT_ID],
+      mockerParams = {
+        url: `${SUB_PATH}/${TEST_SETTLEMENT_ID}`
+      };
 
-    rzpInstance.settlements.fetch(TEST_SETTLEMENT_ID).then((response) => {
-      assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `${FULL_PATH}/${TEST_SETTLEMENT_ID}`,
-        'Fetch settlement url formed correctly'
-      )
-      done()
-    })
+      runCallbackCheckTest({
+        apiObj,
+        methodName,
+        mockerParams,
+        methodArgs
+      });
   })
 
-  it('Fetch On-demand Settlements by ID', (done) => {
+  describe('Fetch On-demand Settlements by ID', (done) => {
 
-    mocker.mock({
-      url: `${SUB_PATH}/ondemand/${TEST_SETTLEMENT_ID}`
-    })
+    let methodName = "fetchOndemandSettlementById",
+      methodArgs = [TEST_SETTLEMENT_ID],
+      mockerParams = {
+        url: `${SUB_PATH}/ondemand/${TEST_SETTLEMENT_ID}`
+      };
 
-    rzpInstance.settlements.fetchOndemandSettlementById(TEST_SETTLEMENT_ID).then((response) => {
-      assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `${FULL_PATH}/ondemand/${TEST_SETTLEMENT_ID}`,
-        'Fetch settlement url formed correctly'
-      )
-      done()
-    })
+      runCallbackCheckTest({
+        apiObj,
+        methodName,
+        mockerParams,
+        methodArgs
+      });
   })
 
 describe("Fetch all settlements", () => {
