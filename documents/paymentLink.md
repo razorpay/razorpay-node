@@ -141,8 +141,8 @@ For updating payment link response please click [here](https://razorpay.com/docs
 
 ### Cancel a payment link
 
-```php
-$api->paymentLink->fetch($paymentLinkId)->cancel();
+```js
+instance.paymentLink->cancel(paymentLinkId)
 ```
 
 **Parameters:**
@@ -157,8 +157,8 @@ For canceling payment link response please click [here](https://razorpay.com/doc
 
 ### Send notification
 
-```php
-$api->paymentLink->fetch($paymentLinkId)->notifyBy($medium));
+```js
+instance.paymentLink.notifyBy(paymentLinkId, medium)
 ```
 
 **Parameters:**

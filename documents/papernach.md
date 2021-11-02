@@ -310,8 +310,8 @@ instance.invoices.notifyBy(invoiceId, medium)
 
 ### Cancel a registration link
 
-```php
-$api->invoice->fetch($invoiceId)->cancel();
+```js
+$instance.invoices.cancel(invoiceId);
 ```
 
 **Parameters:**
@@ -414,8 +414,8 @@ $api->invoice->fetch($invoiceId)->cancel();
 
 ### Fetch Payment ID using Order ID
 
-```php
-$api->order->fetch($orderId)->payments()
+```js
+instance.orders.fetchPayments(orderId)
 ```
 
 **Parameters:**
@@ -469,8 +469,8 @@ $api->order->fetch($orderId)->payments()
 
 ### Fetch token by payment ID
 
-```php
-$api->payment->fetch($paymentId);
+```js
+instance.payments.fetch(paymentId)
 ```
 
 **Parameters:**
