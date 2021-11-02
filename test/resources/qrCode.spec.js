@@ -184,6 +184,125 @@ describe('QRCODE ', () => {
       });
   });
 
+  describe("Fetch all QrCode", () => {
+
+    let methodName = "all",
+        params = {
+          "skip": 0,
+          "count": 10
+        },
+        methodArgs = [params],
+        expectedParams = {
+          ...params
+        },
+        expectedUrl = FULL_PATH,
+        mockerParams = {
+          url: SUB_PATH
+        };
+
+      runParamsCheckTest({
+        apiObj,
+        methodName,
+        methodArgs,
+        mockerParams,
+        expectedParams,
+        testTitle: "Check if all params passed are being sent"
+      });
+
+    params = {"from": 1472063400, "to": 1472495400 };
+    methodArgs = [params];
+    expectedParams = {
+                      "from": params.from,
+                      "to": params.to,
+                     };
+
+      runParamsCheckTest({
+        apiObj,
+        methodName,
+        methodArgs,
+        mockerParams,
+        expectedParams,
+        testTitle: "Check if dates are converted to ms"
+      });
+
+      methodArgs = [{}];
+
+      runCallbackCheckTest({
+        apiObj,
+        methodName,
+        mockerParams,
+        methodArgs
+      });
+  });
+
+  describe("Fetch QR Code for a Customer ID", () => {
+
+    let methodName = "all",
+        params = {
+          "customer_id": 'cust_IDyPCCMDyHvypc'
+        },
+        methodArgs = [params],
+        expectedParams = {
+          ...params
+        },
+        
+        mockerParams = {
+          url: SUB_PATH
+        };
+
+      runParamsCheckTest({
+        apiObj,
+        methodName,
+        methodArgs,
+        mockerParams,
+        expectedParams,
+        testTitle: "Check if all params passed are being sent"
+      });
+
+      methodArgs = [{}];
+
+      runCallbackCheckTest({
+        apiObj,
+        methodName,
+        mockerParams,
+        methodArgs
+      });
+  });
+  
+  describe("Fetch QR Code for a Payment ID", () => {
+
+    let methodName = "all",
+        params = {
+          "payment_id": 'pay_Di5iqCqA1WEHq6'
+        },
+        methodArgs = [params],
+        expectedParams = {
+          ...params
+        },
+        
+        mockerParams = {
+          url: SUB_PATH
+        };
+
+      runParamsCheckTest({
+        apiObj,
+        methodName,
+        methodArgs,
+        mockerParams,
+        expectedParams,
+        testTitle: "Check if all params passed are being sent"
+      });
+
+      methodArgs = [{}];
+
+      runCallbackCheckTest({
+        apiObj,
+        methodName,
+        mockerParams,
+        methodArgs
+      });
+  });
+
   describe("Fetch all payment for a QrCode", () => {
 
 
