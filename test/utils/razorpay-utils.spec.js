@@ -12,7 +12,8 @@ const {
   getDateInSecs,
   isDefined,
   getTestError,
-  validateWebhookSignature
+  validateWebhookSignature,
+  validatePaymentVerification
 } = require('../../dist/utils/razorpay-utils')
 
 describe('Razorpay Utils', () => {
@@ -105,4 +106,21 @@ describe('Razorpay Utils', () => {
       'Validates webhook signature'
     );
   });
+
+  it('Payment Verfication', () => {
+      
+    const respBody = {
+              'subscription_id':'sub_ID6MOhgkcoHj9I',
+              'payment_id':'pay_IDZNwZZFtnjyym',
+          },
+          correctSignature = '601f383334975c714c91a7d97dd723eb56520318355863dcf3821c0d07a17693',
+          wrongSignature = 'sddsfdsfs',
+          secret = 'EnLs21M47BllR3X8PSFtjtbd';
+
+       assert.ok(
+        validatePaymentVerification(respBody, correctSignature, secret) &&
+        !validatePaymentVerification(respBody, wrongSignature, secret),
+        'Validates payment'
+      );
+     })
 })

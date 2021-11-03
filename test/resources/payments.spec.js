@@ -535,23 +535,4 @@ describe('PAYMENTS', () => {
       done()
     })
   })
-
-  describe('Payment Verfication', () => {
-    it('Payment Verfication', (done) => {
-      
-      let params = {
-           'subscription_id':'sub_ID6MOhgkcoHj9I',
-           'payment_id':'pay_IDZNwZZFtnjyym',
-           'signature':'601f383334975c714c91a7d97dd723eb56520318355863dcf3821c0d07a17693'
-      }
-
-       let secret = 'EnLs21M47BllR3X8PSFtjtbd';
-
-       const verify = rzpInstance.payments.paymentVerification(params,secret);
-
-        if(verify){
-          done();
-        }
-     })
-  })
 })

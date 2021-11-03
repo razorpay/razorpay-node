@@ -9,9 +9,7 @@ var Promise = require("promise");
 var _require = require('../utils/razorpay-utils'),
     normalizeDate = _require.normalizeDate,
     normalizeBoolean = _require.normalizeBoolean,
-    normalizeNotes = _require.normalizeNotes,
-    isDefined = _require.isDefined,
-    validateWebhookSignature = _require.validateWebhookSignature;
+    normalizeNotes = _require.normalizeNotes;
 
 var ID_REQUIRED_MSG = '`payment_id` is mandatory';
 
@@ -303,42 +301,6 @@ module.exports = function (api) {
         url: '/payments/' + paymentId + '/otp/submit',
         data: params
       }, callback);
-    },
-
-    paymentVerification: function paymentVerification() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var secret = arguments[1];
-
-
-      /*
-       * Payment verfication
-       *
-       * @param {String} secret
-       * @param {Object} params
-       *
-       * @return {Boolean}
-       */
-
-      var signature = params.signature,
-          paymentId = params.payment_id;
-
-      if (!secret) {
-
-        throw new Error("secret is mandatory");
-      }
-
-      if (isDefined(params.order_id) === true) {
-
-        var orderId = params.order_id;
-        var payload = orderId + '|' + paymentId;
-      } else if (isDefined(params.subscription_id) === true) {
-
-        var subscriptionId = params.subscription_id;
-        var payload = paymentId + '|' + subscriptionId;
-      } else {
-        throw new Error('Either order_id or subscription_id is mandatory');
-      }
-      return validateWebhookSignature(payload, signature, secret);
     }
   };
 };
