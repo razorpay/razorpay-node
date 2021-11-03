@@ -120,7 +120,7 @@ describe('Razorpay Utils', () => {
        assert.ok(
         validatePaymentVerification(respBody, correctSignature, secret) &&
         !validatePaymentVerification(respBody, wrongSignature, secret),
-        'Validates payment'
+        'Validates subscription'
       );
   })
 
@@ -139,7 +139,7 @@ describe('Razorpay Utils', () => {
        assert.ok(
         validatePaymentVerification(respBody, correctSignature, secret) &&
         !validatePaymentVerification(respBody, wrongSignature, secret),
-        'Validates payment'
+        'Validates paymentlink'
       );
   })
 
