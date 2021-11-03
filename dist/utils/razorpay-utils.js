@@ -122,6 +122,13 @@ function validatePaymentVerification() {
 
     var subscriptionId = params.subscription_id;
     var payload = paymentId + '|' + subscriptionId;
+  } else if (isDefined(params.payment_link_id) === true) {
+
+    var paymentLinkId = params.payment_link_id;
+    var paymentLinkRefId = params.payment_link_reference_id;
+    var paymentLinkStatus = params.payment_link_status;
+
+    var payload = paymentLinkId + '|' + paymentLinkRefId + '|' + paymentLinkStatus + '|' + paymentId;
   } else {
     throw new Error('Either order_id or subscription_id is mandatory');
   }
