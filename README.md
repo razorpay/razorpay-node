@@ -73,8 +73,6 @@ instance.payments.all(
 ```
 
 ## Supported Resources
-
-## Supported Resources
 - [Addon](documents/addon.md)
 
 - [Customer](documents/customer.md)
