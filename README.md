@@ -111,6 +111,7 @@ instance.payments.all(
 
 - [Register NACH and Charge First Payment Together](documents/registerNach.md)
 
+- [Payment Verification](documents/paymentVerfication.md)
 ---
 
 ## Development
