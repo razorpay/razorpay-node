@@ -16,12 +16,21 @@ instance.Items.create({
 | Name            | Type    | Description                                                                  |
 |-----------------|---------|------------------------------------------------------------------------------|
 | name*          | string | Name of the item.                    |
-| desciprition        | string  | A brief description of the item.  |
+| description        | string  | A brief description of the item.  |
 | amount         | integer  | Amount of the order to be paid     |
 | currency           | string  | Currency of the order. Currently only `INR` is supported.    |
 
 **Response:**
-For create item response please click [here](https://razorpay.com/docs/api/items/#create-an-item)
+```json
+{
+  "id": "item_7Oxp4hmm6T4SCn",
+  "active": true,
+  "name": "Book / English August",
+  "description": "An indian story, Booker prize winner.",
+  "amount": 20000,
+  "currency": "INR"
+}
+```
 
 -------------------------------------------------------------------------------------------------------
 
@@ -38,6 +47,11 @@ instance.Items.all(options)
 | to    | timestamp | timestamp before which the item were created |
 | count | integer   | number of item to fetch (default: 10)        |
 | skip  | integer   | number of item to be skipped (default: 0)    |
+| name        | string | Name of the item.                    |
+| description        | string  | A brief description of the item.  |
+| amount         | integer  | Amount of the order to be paid     |
+| currency           | string  | Currency of the order. Currently only `INR` is supported.    |
+| active   | boolean  | Possible values is `0` or `1` |
 
 **Response:**
 ```json
@@ -115,7 +129,7 @@ instance.Items.edit({
 |----------|--------|-------------------------------------|
 | itemId* | string | The id of the item to be fetched |
 | name       | string | Name of the item.                    |
-| desciprition  | string  | A brief description of the item.  |
+| description  | string  | A brief description of the item.  |
 | amount         | integer  | Amount of the order to be paid     |
 | currency           | string  | Currency of the order. Currently only `INR` is supported.    |
 | active   | boolean  | Possible values is `0` or `1` |
