@@ -75,6 +75,8 @@ instance.payments.all(
 ## Supported Resources
 - [Addon](documents/addon.md)
 
+- [Item](documents/items.md)
+
 - [Customer](documents/customer.md)
 
 - [Token](documents/token.md)
