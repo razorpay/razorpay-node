@@ -21,7 +21,7 @@ validatePaymentVerification({"order_id": razorpayOrderId, "payment_id": razorpay
 | secret* | string   | your api secret as secret |
 
 -------------------------------------------------------------------------------------------------------
-### Verify subsciption verification
+### Verify subscription verification
 
 ```js
 validatePaymentVerification({"subscription_i": subscriptionId, "payment_id": razorpayPaymentId }, signature, secret)
