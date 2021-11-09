@@ -45,7 +45,7 @@ module.exports = function paymentLinkApi(api) {
         data: data
       }, callback, true);
     },
-    cancel: function cancel(paymentLinkId, callback) {
+    cancel: function(paymentLinkId, callback) {
 
       /*
        * Cancels issued paymentLink
@@ -61,13 +61,13 @@ module.exports = function paymentLinkApi(api) {
         return Promise.reject(MISSING_ID_ERROR);
       }
 
-      var url = BASE_URL + "/" + paymentLinkId + "/cancel";
+      var url = `${BASE_URL}/${paymentLinkId}/cancel`;
 
       return api.post({
         url: url
       }, callback);
     },
-    fetch: function fetch(paymentLinkId, callback) {
+    fetch: function(paymentLinkId, callback) {
 
       /*
        * Fetches paymentLink entity with given id
@@ -83,13 +83,13 @@ module.exports = function paymentLinkApi(api) {
         return Promise.reject(MISSING_ID_ERROR);
       }
 
-      var url = BASE_URL + "/" + paymentLinkId;
+      var url = `${BASE_URL}/${paymentLinkId}`;
 
       return api.get({
         url: url
       }, callback);
     },
-    all: function all() {
+    all: function() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
