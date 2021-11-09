@@ -142,7 +142,7 @@ For updating payment link response please click [here](https://razorpay.com/docs
 ### Cancel a payment link
 
 ```js
-instance.paymentLink->cancel(paymentLinkId)
+instance.paymentLink.cancel(paymentLinkId)
 ```
 
 **Parameters:**
@@ -264,29 +264,31 @@ instance.paymentLink.create({
 ### Offers on payment links
 
 ```js
-$api->payment_link->create({
-  amount: 20000,
-  currency: "INR",
-  accept_partial: false,
-  description: "For XYZ purpose",
-  customer: {
-    name: "Gaurav Kumar",
-    email: "gaurav.kumar@example.com",
-    contact: 919999999999
+instance.paymentLink.create({
+  "amount": 3400,
+  "currency": "INR",
+  "accept_partial": false,
+  "reference_id": "#425",
+  "description": "Payment for policy no #23456",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "contact": "+919999999999",
+    "email": "gaurav.kumar@example.com"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: false,
-  options: {
-    order: {
-      offers: [
-        "offer_I0PqexIiTmMRnA"
+  "reminder_enable": false,
+  "options": {
+    "order": {
+      "offers": [
+        "offer_F4WMTC3pwFKnzq",
+        "offer_F4WJHqvGzw8dWF"
       ]
     }
   }
-});
+})
 ```
 
 **Parameters:**
@@ -340,7 +342,7 @@ $api->payment_link->create({
 ### Managing reminders for payment links
 
 ```js
-instance,paymentLink.create({
+instance.paymentLink.create({
   amount: 1000,
   currency: "INR",
   accept_partial: true,
