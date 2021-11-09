@@ -24,7 +24,7 @@ validatePaymentVerification({"order_id": razorpayOrderId, "payment_id": razorpay
 ### Verify subscription verification
 
 ```js
-validatePaymentVerification({"subscription_i": subscriptionId, "payment_id": razorpayPaymentId }, signature, secret)
+validatePaymentVerification({"subscription_id": subscriptionId, "payment_id": razorpayPaymentId }, signature, secret)
 ```
 
 **Parameters:**
@@ -41,11 +41,11 @@ validatePaymentVerification({"subscription_i": subscriptionId, "payment_id": raz
 ### Verify paymentlink verification
 
 ```js
-verifyPaymentSignature({
-  "razorpay_payment_link_id": razorpayPaymentlinkId,
-  "razorpay_payment_id": razorpayPaymentId,
-  "razorpay_payment_link_reference_id": razorpayPaymentLinkReferenceId,
-  "razorpay_payment_link_status": razorpayPaymentLinkStatus,
+validatePaymentVerification({
+  "payment_link_id": PaymentlinkId,
+  "payment_id": PaymentId,
+  "payment_link_reference_id": PaymentLinkReferenceId,
+  "payment_link_status": PaymentLinkStatus,
 }, signature , secret);
 ```
 

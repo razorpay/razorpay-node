@@ -48,7 +48,7 @@ instance.payments.fetch(paymentId{
 ### Create an instant refund
 
 ```js
-isntance.payments.refund(paymentId,{
+instance.payments.refund(paymentId,{
   "amount": "100",
   "speed": "optimum",
   "receipt": "Receipt No. 31"

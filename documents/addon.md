@@ -115,9 +115,10 @@ instance.addons.fetch(addonId)
 
 **Parameters:**
 
-| Name            | Type    | Description                                                                  |
-|-----------------|---------|------------------------------------------------------------------------------|
-| addonId*          | string | addon id to be fetched                                               |
+| Name            | Type    | Description     |
+|-----------------|---------|------------------------------------|
+| addonId*          | string | addon id to be fetched            |
+
 **Response:**
 ```json
 {

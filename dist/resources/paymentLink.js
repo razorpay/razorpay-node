@@ -20,7 +20,7 @@ module.exports = function paymentLinkApi(api) {
       MISSING_ID_ERROR = "Payment Link ID is mandatory";
 
   return {
-    create: function create() {
+    create: function() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
