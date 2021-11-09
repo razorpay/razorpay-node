@@ -90,7 +90,10 @@ instance.virtualAccounts.create({
 | Name          | Type        | Description                                 |
 |---------------|-------------|---------------------------------------------|
 | receivers*    | object      | Array that defines what receivers are available for this Virtual Account                        |
-| allowed_payers*  | object      | All parameters listed [here](https://razorpay.com/docs/api/smart-collect-tpv/#create-virtual-account) are supported
+| allowed_payers*  | object      | All parameters listed [here](https://razorpay.com/docs/api/smart-collect-tpv/#create-virtual-account) are supported |
+| description  | string      | A brief description of the virtual account.                    |
+| customer_id  | string      | Unique identifier of the customer to whom the virtual account must be tagged.                    |
+| notes  | integer      | Any custom notes you might want to add to the virtual account can be entered here.                  |
 
 **Response:**
 ```json
@@ -382,7 +385,15 @@ instance.payments.bankTransfer(paymentId)
 
 ### Refund payments made to a virtual account
 ```js
-instance.payments.refund(paymentId)
+instance.payments.refund(paymentId,{
+  "amount": "100",
+  "speed": "normal",
+  "notes": {
+    "notes_key_1": "Beam me up Scotty.",
+    "notes_key_2": "Engage"
+  },
+  "receipt": "Receipt No. 31"
+})
 ```
 
 **Parameters:**
@@ -390,6 +401,10 @@ instance.payments.refund(paymentId)
 | Name  | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
 | paymentId*  | string    | The id of the payment to be updated  |
+|  amount       | integer      | The amount to be captured (should be equal to the authorized amount, in paise) |                       |
+|  speed        | string      | Here, it must be normal                |
+|  notes        | array       | A key-value pair                |
+|  receipt      | string      | A unique identifier provided by you for your internal reference. |
 
 **Response:**
 ```json
@@ -414,7 +429,7 @@ instance.payments.refund(paymentId)
 
 ### Add receiver to an existing virtual account
 ```js
-instance.virtualAccounts.add({
+instance.virtualAccounts.addReceiver(virtualId,{
   types: [
     "vpa"
   ],
@@ -439,7 +454,7 @@ For add receiver to an existing virtual account response please click [here](htt
 
 ### Add an Allowed Payer Account
 ```js
-instance.virtualAccounts.allowedPayer({
+instance.virtualAccounts.allowedPayer(virtualId,{
   types: "bank_account",
   bank_account: {
     ifsc: "UTIB0000013",
@@ -453,6 +468,7 @@ instance.virtualAccounts.allowedPayer({
 | Name  | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
 | virtualId*  | string    | The id of the virtual to be updated  |
+| types*  | object | The receiver type to be added to the virtual account. Possible values are `vpa` or `bank_account`  |
 | bank_account*    | object | Indicates the bank account details such as `ifsc` and `account_number` |
 
 **Response:**

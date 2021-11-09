@@ -311,7 +311,7 @@ instance.invoices.notifyBy(invoiceId, medium)
 ### Cancel a registration link
 
 ```js
-$instance.invoices.cancel(invoiceId);
+instance.invoices.cancel(invoiceId);
 ```
 
 **Parameters:**
