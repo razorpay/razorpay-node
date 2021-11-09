@@ -72,6 +72,7 @@ instance.invoice.create({
 
 **Response:**
 For create invoice response please click [here](https://razorpay.com/docs/api/invoices/#create-an-invoice)
+
 -------------------------------------------------------------------------------------------------------
 
 ### Fetch all invoices
@@ -237,6 +238,7 @@ instance.invoices.edit(invoiceId,{
 
 **Response:**
 For update invoice response please click [here](https://razorpay.com/docs/api/invoices/#update-an-invoice)
+
 -------------------------------------------------------------------------------------------------------
 
 ### Issue an invoice

@@ -274,7 +274,7 @@ instance.qrCode.fetch(qrCodeId)
 
 | Name            | Type    | Description                                                                  |
 |-----------------|---------|------------------------------------------------------------------------------|
-| paymentID*  | string | The id of the payment to which qr code need to be fetched  |
+| paymentId*  | string | The id of the payment to which qr code need to be fetched  |
 
 **Response:**
 ```json
@@ -316,7 +316,7 @@ instance.qrCode.fetchAllPayments(qrCodeId, options)
 
 | Name            | Type    | Description                                                                  |
 |-----------------|---------|------------------------------------------------------------------------------|
-| qrCodeID*  | string | The id of the qr code to which payment where made |
+| qrCodeId*  | string | The id of the qr code to which payment where made |
 | from  | timestamp | timestamp after which the payments were created  |
 | to    | timestamp | timestamp before which the payments were created |
 | count | integer   | number of payments to fetch (default: 10)        |
@@ -377,7 +377,7 @@ instance.qrCode.close(qrCodeId);
 
 | Name            | Type    | Description                                                                  |
 |-----------------|---------|------------------------------------------------------------------------------|
-| qrCodeID*  | string | The id of the qr code to be closed |
+| qrCodeId*  | string | The id of the qr code to be closed |
 
 **Response:**
 ```json

@@ -48,7 +48,7 @@ instance.settlements.fetch(settlementId)
 
 | Name          | Type        | Description                                 |
 |---------------|-------------|---------------------------------------------|
-| $settlementId* | string      | The id of the settlement to be fetched  |
+| settlementId* | string      | The id of the settlement to be fetched  |
 
 **Response:**
 ```json
@@ -441,9 +441,9 @@ instance.settlements.fetchOndemandSettlementById(settlementId);
 
 | Name       | Type   | Description                       |
 |------------|--------|-----------------------------------|
-| $settlementId* | string | Settlement Id of the On-demand settlement|
+| settlementId* | string | Settlement Id of the On-demand settlement|
 
-**Response:**<br>
+**Response:**
 For on-demand settlement by ID response please click [here](https://razorpay.com/docs/api/settlements/#fetch-on-demand-settlements-by-id)
 
 -------------------------------------------------------------------------------------------------------
@@ -458,7 +458,7 @@ instance.settlements.all({'customer_id':'cust_HKsR5se84c5LTO'});
 
 | Name       | Type   | Description                       |
 |------------|--------|-----------------------------------|
-| $customer_id* | string | The id of the customer to be updated |
+| customer_id* | string | The id of the customer to be updated |
 
 **Response:**<br>
 ```json
@@ -502,7 +502,7 @@ instance.settlements.all({'payment_id':'pay_Di5iqCqA1WEHq6'});
 
 | Name       | Type   | Description                       |
 |------------|--------|-----------------------------------|
-| $customer_id* | string | The id of the customer to be updated |
+| customer_id* | string | The id of the customer to be updated |
 
 **Response:**<br>
 ```json

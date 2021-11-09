@@ -345,7 +345,7 @@ instance.payments.fetchPaymentDowntimeById(downtimeId)
 |-------------|---------|--------------------------------------|
 | downtimeId* | string  | Id to fetch payment downtime         |
 
-**Response:** <br>
+**Response:**
 For payment downtime by id response please click [here](https://razorpay.com/docs/api/payments/downtime/#fetch-payment-downtime-details-by-id)
 -------------------------------------------------------------------------------------------------------
 
