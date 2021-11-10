@@ -188,4 +188,31 @@ describe('ORDERS', () => {
       })
     })
   })
+
+  describe('edit order', () => {
+    it('edit order', (done) => {
+      let orderId = 'order_sometestId'
+
+      let params = {
+        notes: {
+          note1: 'This is note1',
+          note2: 'This is note2'
+        }
+      }
+
+      mocker.mock({
+        url: `/orders/${orderId}`,
+        method : 'PATCH'
+      })
+
+      rzpInstance.orders.edit(orderId, params).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/orders/${orderId}`,
+          'Request url formed correctly'
+        )
+        done()
+      })
+    })
+  })
 })
