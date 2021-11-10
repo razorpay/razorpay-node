@@ -90,6 +90,49 @@ function validateWebhookSignature(body, signature, secret) {
   var expectedSignature = crypto.createHmac('sha256', secret).update(body).digest('hex');
 
   return expectedSignature === signature;
+}
+
+function validatePaymentVerification() {
+  var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var signature = arguments[1];
+  var secret = arguments[2];
+
+
+  /*
+   * Payment verfication
+   *
+   * @param {Object} params
+   * @param {String} signature
+   * @param {String} secret
+   * @return {Boolean}
+   */
+
+  var paymentId = params.payment_id;
+
+  if (!secret) {
+
+    throw new Error("secret is mandatory");
+  }
+
+  if (isDefined(params.order_id) === true) {
+
+    var orderId = params.order_id;
+    var payload = orderId + '|' + paymentId;
+  } else if (isDefined(params.subscription_id) === true) {
+
+    var subscriptionId = params.subscription_id;
+    var payload = paymentId + '|' + subscriptionId;
+  } else if (isDefined(params.payment_link_id) === true) {
+
+    var paymentLinkId = params.payment_link_id;
+    var paymentLinkRefId = params.payment_link_reference_id;
+    var paymentLinkStatus = params.payment_link_status;
+
+    var payload = paymentLinkId + '|' + paymentLinkRefId + '|' + paymentLinkStatus + '|' + paymentId;
+  } else {
+    throw new Error('Either order_id or subscription_id is mandatory');
+  }
+  return validateWebhookSignature(payload, signature, secret);
 };
 
 module.exports = {
@@ -102,5 +145,6 @@ module.exports = {
   isDefined: isDefined,
   isNonNullObject: isNonNullObject,
   getTestError: getTestError,
-  validateWebhookSignature: validateWebhookSignature
+  validateWebhookSignature: validateWebhookSignature,
+  validatePaymentVerification: validatePaymentVerification
 };
