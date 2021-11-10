@@ -11,7 +11,8 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 var Promise = require("promise"),
     _require = require('../utils/razorpay-utils'),
     normalizeDate = _require.normalizeDate,
-    normalizeNotes = _require.normalizeNotes;
+    normalizeNotes = _require.normalizeNotes,
+    normalizeBoolean = _require.normalizeBoolean;
 
 
 module.exports = function subscriptionsApi(api) {
@@ -64,6 +65,149 @@ module.exports = function subscriptionsApi(api) {
       var url = BASE_URL + "/" + subscriptionId;
 
       return api.get({ url: url }, callback);
+    },
+    update: function update(subscriptionId, params, callback) {
+
+      /*
+       * Update Subscription
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId;
+
+      if (!subscriptionId) {
+
+        return Promise.reject(MISSING_ID_ERROR);
+      }
+
+      return api.patch({
+        url: url,
+        data: params
+      }, callback);
+    },
+    pendingUpdate: function pendingUpdate(subscriptionId, callback) {
+
+      /*
+       * Update a Subscription
+       *
+       * @param {String} subscription
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId + "/retrieve_scheduled_changes";
+
+      if (!subscriptionId) {
+
+        return Promise.reject(MISSING_ID_ERROR);
+      }
+
+      return api.get({ url: url }, callback);
+    },
+    cancelScheduledChanges: function cancelScheduledChanges(subscriptionId, callback) {
+
+      /*
+       * Cancel Schedule  
+       *
+       * @param {String} subscription
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId + "/cancel_scheduled_changes";
+
+      if (!subscriptionId) {
+
+        return Promise.reject("Subscription Id is mandatory");
+      }
+
+      return api.post({
+        url: url
+      }, callback);
+    },
+    pause: function pause(subscriptionId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+
+
+      /*
+       * Pause a subscription 
+       *
+       * @param {String} subscription
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId + "/pause";
+
+      if (!subscriptionId) {
+
+        return Promise.reject("Subscription Id is mandatory");
+      }
+
+      return api.post({
+        url: url,
+        data: params
+      }, callback);
+    },
+    resume: function resume(subscriptionId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+
+
+      /*
+       * resume a subscription 
+       *
+       * @param {String} subscription
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = BASE_URL + "/" + subscriptionId + "/resume";
+
+      if (!subscriptionId) {
+
+        return Promise.reject("Subscription Id is mandatory");
+      }
+
+      return api.post({
+        url: url,
+        data: params
+      }, callback);
+    },
+    deleteOffer: function deleteOffer(subscriptionId, offerId, callback) {
+
+      /*
+      * Delete an Offer Linked to a Subscription
+      *
+      * @param {String} subscription
+      * @param {String} offerId
+      * @param {Function} callback
+      *
+      * @return {Promise}
+      */
+
+      var url = BASE_URL + "/" + subscriptionId + "/" + offerId;
+
+      if (!subscriptionId) {
+
+        return Promise.reject("Subscription Id is mandatory");
+      }
+
+      return api.delete({
+        url: url
+      }, callback);
     },
     all: function all() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -160,6 +304,37 @@ module.exports = function subscriptionsApi(api) {
       return api.post({
         url: url,
         data: _extends({}, params)
+      }, callback);
+    },
+
+    createRegistrationLink: function createRegistrationLink() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
+      var email_notify = params.email_notify,
+          sms_notify = params.sms_notify,
+          receipt = params.receipt,
+          notes = params.notes,
+          otherParams = _objectWithoutProperties(params, ["email_notify", "sms_notify", "receipt", "notes"]);
+
+      /*
+       * Creates a Registration Link
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var data = Object.assign(_extends({
+        email_notify: normalizeBoolean(email_notify),
+        sms_notify: normalizeBoolean(sms_notify),
+        receipt: receipt
+      }, otherParams), normalizeNotes(notes));
+
+      return api.post({
+        url: 'subscription_registration/auth_links',
+        data: data
       }, callback);
     }
   };

@@ -12,7 +12,8 @@ const {
   getDateInSecs,
   isDefined,
   getTestError,
-  validateWebhookSignature
+  validateWebhookSignature,
+  validatePaymentVerification
 } = require('../../dist/utils/razorpay-utils')
 
 describe('Razorpay Utils', () => {
@@ -105,4 +106,57 @@ describe('Razorpay Utils', () => {
       'Validates webhook signature'
     );
   });
+
+  it('Subscription Verfication', () => {
+      
+    const respBody = {
+              'subscription_id':'sub_ID6MOhgkcoHj9I',
+              'payment_id':'pay_IDZNwZZFtnjyym',
+          },
+          correctSignature = '601f383334975c714c91a7d97dd723eb56520318355863dcf3821c0d07a17693',
+          wrongSignature = 'sddsfdsfs',
+          secret = 'EnLs21M47BllR3X8PSFtjtbd';
+
+       assert.ok(
+        validatePaymentVerification(respBody, correctSignature, secret) &&
+        !validatePaymentVerification(respBody, wrongSignature, secret),
+        'Validates subscription'
+      );
+  })
+
+  it('PaymentLink Verfication', () => {
+      
+    const respBody = {
+              'payment_link_id':'plink_IH3cNucfVEgV68',
+              'payment_id':'pay_IH3d0ara9bSsjQ',
+              'payment_link_reference_id':'TSsd1989',
+              'payment_link_status':'paid'
+          },
+          correctSignature = '07ae18789e35093e51d0a491eb9922646f3f82773547e5b0f67ee3f2d3bf7d5b',
+          wrongSignature = 'sddsfdsfs',
+          secret = 'EnLs21M47BllR3X8PSFtjtbd';
+
+       assert.ok(
+        validatePaymentVerification(respBody, correctSignature, secret) &&
+        !validatePaymentVerification(respBody, wrongSignature, secret),
+        'Validates paymentlink'
+      );
+  })
+
+  it('Payment Verfication', () => {
+      
+          const respBody = {
+            'order_id':'order_IEIaMR65cu6nz3',
+            'payment_id':'pay_IH4NVgf4Dreq1l',
+          },
+          correctSignature = '0d4e745a1838664ad6c9c9902212a32d627d68e917290b0ad5f08ff4561bc50f',
+          wrongSignature = 'sddsfdsfs',
+          secret = 'EnLs21M47BllR3X8PSFtjtbd';
+
+       assert.ok(
+        validatePaymentVerification(respBody, correctSignature, secret) &&
+        !validatePaymentVerification(respBody, wrongSignature, secret),
+        'Validates payment'
+      );
+  })
 })

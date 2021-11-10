@@ -65,7 +65,8 @@ var Razorpay = function () {
         plans: require('./resources/plans')(this.api),
         subscriptions: require('./resources/subscriptions')(this.api),
         addons: require('./resources/addons')(this.api),
-        fundAccount: require('./resources/fundAccount')(this.api)
+        fundAccount: require('./resources/fundAccount')(this.api),
+        items: require('./resources/items')(this.api)
       });
     }
   }]);
