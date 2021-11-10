@@ -14,7 +14,7 @@ const { runCommonTests }  = require("../../dist/utils/predefined-tests.js");
 
 const SUB_PATH  = "/virtual_accounts",
       FULL_PATH = `/v1${SUB_PATH}`,
-      TEST_VIRTUAL_ACCOUNT = "12345566",
+      TEST_VIRTUAL_ACCOUNT = "va_sometestid",
       apiObj = rzpInstance.virtualAccounts;
 
 const runIDRequiredTest = (params) => {
@@ -27,11 +27,10 @@ const runIDRequiredTest = (params) => {
       (done) => {
 
     apiObj[methodName](...methodArgs).then(() => {
-
+    
       done(new Error(`method ${methodName} does not`+
                      ` check for Virtual Account ID`));
     },(err) => {
-
       done();
     });
   });
@@ -53,7 +52,6 @@ describe("VIRTUAL_ACCOUNTS", () => {
       });
 
       rzpInstance.virtualAccounts.all().then((response) => {
-      
         assert.ok(equal(
           response.__JUST_FOR_TESTS__.requestQueryParams,
           expectedParams),
@@ -230,5 +228,86 @@ describe("VIRTUAL_ACCOUNTS", () => {
       mockerParams,
       expectedUrl
     });
+  });
+
+  describe("Add Receiver", () => {
+   
+    it("Add Receiver to an Existing Virtual Account", (done) => {
+    
+      mocker.mock({
+        url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}/receivers`,
+        method: "POST"
+      });
+
+      let params = {
+        types: [
+          "vpa"
+        ],
+        vpa: {
+          descriptor: "gaurikumar"
+        }
+      }
+
+      rzpInstance.virtualAccounts.addReceiver(TEST_VIRTUAL_ACCOUNT,params).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}/receivers`,
+          "Url is formed correctly"       
+        );
+
+        done();
+      });
+    });
+
+  });
+
+  describe("Allowed Payer", () => {
+   
+    it("Add an Allowed Payer Account", (done) => {
+    
+      mocker.mock({
+        url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}/allowed_payers`,
+        method: "POST"
+      });
+
+      let params = {
+        "type":"bank_account",
+        "bank_account":{
+           "ifsc":"UTIB0000013",
+           "account_number":"914010012345679"
+        }
+     }
+
+      rzpInstance.virtualAccounts.allowedPayer(TEST_VIRTUAL_ACCOUNT,params).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}/allowed_payers`,
+          "Url is formed correctly"       
+        );
+
+        done();
+      });
+    });
+
+    it("Delete an Allowed Payer Account", (done) => {
+      
+      let allowedPayerId = 'ba_sometestid';
+
+      mocker.mock({
+        url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}/allowed_payers/${allowedPayerId}`,
+        method : 'DELETE'
+      });
+
+      rzpInstance.virtualAccounts.deleteAllowedPayer(TEST_VIRTUAL_ACCOUNT,allowedPayerId).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}/allowed_payers/${allowedPayerId}`,
+          "Url is formed correctly"       
+        );
+
+        done();
+      });
+    });
+
   });
 });
