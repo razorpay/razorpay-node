@@ -78,6 +78,30 @@ describe("PAYMENTLINK", () => {
     })
   });
 
+  describe("Update PaymentLink",() => {
+    it('Update Payment Link', (done) => {
+     
+      let params= {
+        "param1": "something",
+        "param2": "something else",
+        "notes[something]": "something else"
+      };
+      mocker.mock({
+        url: `/payment_links/${TEST_PAYMENTLINK_ID}`,
+        method: 'PATCH',
+      })
+
+      rzpInstance.paymentLink.edit(TEST_PAYMENTLINK_ID,params).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/payment_links/${TEST_PAYMENTLINK_ID}`,
+          'edit request url formed'
+        )
+        done()
+      })
+    })
+  })
+
   describe("Cancel PaymentLink", () => {
 
     let expectedUrl = `${FULL_PATH}/${TEST_PAYMENTLINK_ID}/cancel`,
@@ -197,5 +221,52 @@ describe("PAYMENTLINK", () => {
         mockerParams,
         methodArgs
       });
+  });
+
+  describe("Notify By", () => {
+
+    let medium = "email",
+        expectedUrl = `${FULL_PATH}/${TEST_PAYMENTLINK_ID}/notify_by/${medium}`,
+        methodName = "notifyBy",
+        methodArgs = [TEST_PAYMENTLINK_ID, medium],
+        mockerParams = {
+          "url": `${SUB_PATH}/${TEST_PAYMENTLINK_ID}/notify_by/${medium}`,
+          "method": "POST"
+        };
+
+    runIDRequiredTest({
+      apiObj,
+      methodName,
+      methodArgs: [undefined, medium],
+      mockerParams: {
+        "url": `${SUB_PATH}/${undefined}/notify_by/${medium}`,
+        "method": "POST"
+      }
+    });
+
+    it ("notify method checks for `medium` parameter", (done) => {
+
+      mocker.mock({
+        url: `${SUB_PATH}/${TEST_PAYMENTLINK_ID}/notify_by/${undefined}`,
+        method: "POST"
+      });
+
+      apiObj[methodName](TEST_PAYMENTLINK_ID, undefined).then(() => {
+
+        done(new Error("medium parameter is not checked for"));
+      }).catch(() => {
+
+        assert.ok("medium parameter is checked");
+        done();
+      });
+    });
+
+    runCommonTests({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedUrl
+    });
   });
 });
