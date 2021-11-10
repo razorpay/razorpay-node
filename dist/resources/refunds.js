@@ -1,7 +1,8 @@
 'use strict';
 
 var _require = require('../utils/razorpay-utils'),
-    normalizeDate = _require.normalizeDate;
+    normalizeDate = _require.normalizeDate,
+    normalizeNotes = _require.normalizeNotes;
 
 module.exports = function (api) {
   return {
@@ -39,6 +40,21 @@ module.exports = function (api) {
           count: count,
           skip: skip
         }
+      }, callback);
+    },
+    edit: function edit(refundId, params, callback) {
+      var notes = params.notes;
+
+
+      if (!refundId) {
+        throw new Error('refund Id is mandatory');
+      }
+
+      var data = Object.assign(normalizeNotes(notes));
+
+      return api.patch({
+        url: '/refunds/' + refundId,
+        data: data
       }, callback);
     },
     fetch: function fetch(refundId) {
