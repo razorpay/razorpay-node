@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.8.0 - 2021-11-21
+- Items end point API [[#235](https://github.com/razorpay/razorpay-node/pull/235)]
+- QR code end point API [[#228](https://github.com/razorpay/razorpay-node/pull/228)]
+- Update, create registration link,fetch details of a Pending Update, deleteOffer, cancel, pause and resume subscription API [[#214](https://github.com/razorpay/razorpay-node/pull/214)]
+- addReceiver, allowedPayer and deleteAllowedPayer (Virtual Account) TPV API'S [[#231](https://github.com/razorpay/razorpay-node/pull/231)]
+- paymentVerification ,fetchPaymentDowntimeById, fetchPaymentDowntime,fetchCardDetails, transfer,fetchTransfer, fetchRefund,fetchMultipleRefund,createPaymentJson ,createRecurringPayment & edit function (Payment) [[#232](https://github.com/razorpay/razorpay-node/pull/232)]
+- Fetch all Addons [[#219](https://github.com/razorpay/razorpay-node/pull/219)]
+- Fetch all Customers [[#221](https://github.com/razorpay/razorpay-node/pull/221)]
+- Fund account end point API [[#222](https://github.com/razorpay/razorpay-node/pull/222)]
+- Edit orders [[#223](https://github.com/razorpay/razorpay-node/pull/223)]
+- Added edit, notifyBy (PaymentLink) [[#225](https://github.com/razorpay/razorpay-node/pull/225)]  
+- qrCode end point API [[#228](https://github.com/razorpay/razorpay-node/pull/228)]
+- Edit refund [[#229](https://github.com/razorpay/razorpay-node/pull/229)]
+- Settlements end point API [[#230](https://github.com/razorpay/razorpay-node/pull/230)]
+
+- Added Signature verficiation [[#232](https://github.com/razorpay/razorpay-node/pull/232)]
+- Update readme file [[#233](https://github.com/razorpay/razorpay-node/pull/233)]
+
+
+
 ## 2.0.7 - 2021-08-20
 - Added new payment link end point in Api (#203).
 - Updated dependencies.
