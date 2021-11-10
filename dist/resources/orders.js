@@ -86,6 +86,23 @@ module.exports = function (api) {
         data: data
       }, callback);
     },
+    edit: function edit(orderId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+      var notes = params.notes;
+
+
+      if (!orderId) {
+        throw new Error('`order_id` is mandatory');
+      }
+
+      var data = Object.assign(normalizeNotes(notes));
+
+      return api.patch({
+        url: '/orders/' + orderId,
+        data: data
+      }, callback);
+    },
     fetchPayments: function fetchPayments(orderId, callback) {
       if (!orderId) {
         throw new Error('`order_id` is mandatory');
