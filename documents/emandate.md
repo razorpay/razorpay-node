@@ -2,7 +2,7 @@
 
 ### Create customer
 ```js
-instance.customer.create({
+instance.customers.create({
   name: "Gaurav Kumar",
   contact: 9123456780,
   email: "gaurav.kumar@example.com",
@@ -366,7 +366,7 @@ instance.customers.deleteToken(customerId, tokenId)
 ### Create an order to charge the customer
 
 ```js
-instance.order.create({
+instance.orders.create({
   "amount":1000,
   "currency":"INR",
   "receipt":"Receipt No. 1",
@@ -411,7 +411,7 @@ instance.order.create({
 ### Create a Recurring Payment
 
 ```js
-instance.payment.createRecurringPayment({
+instance.payments.createRecurringPayment({
   "email": "gaurav.kumar@example.com",
   "contact": "9123456789",
   "amount": 1000,

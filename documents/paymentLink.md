@@ -7,26 +7,26 @@ Standard Payment Link
 
 ```js
 instance.paymentLink.create({
-  amount: 500,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  description: "For XYZ purpose",
-  customer: {
-    name: "Gaurav Kumar",
-    email: "gaurav.kumar@example.com",
-    contact: 919999999999
+  "amount": 500,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "description": "For XYZ purpose",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "email": "gaurav.kumar@example.com",
+    "contact": "+919999999999"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  notes: {
-    policy_name: "Jeevan Bima"
+  "reminder_enable": true,
+  "notes": {
+    "policy_name": "Jeevan Bima"
   },
-  callback_url: "https://example-callback-url.com/",
-  callback_method: "get"
+  "callback_url": "https://example-callback-url.com/",
+  "callback_method": "get"
 })
 ```
 
@@ -35,24 +35,24 @@ UPI Payment Link
 
 ```js
 instance.paymentLink.create({
-  upi_link: true,
-  amount: 500,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  description: "For XYZ purpose",
-  customer: {
-    name: "Gaurav Kumar",
-    email: "gaurav.kumar@example.com",
-    contact: 919999999999
+  "upi_link": true,
+  "amount": 500,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "description": "For XYZ purpose",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "email": "gaurav.kumar@example.com",
+    "contact": "+919999999999"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  notes: {
-    policy_name: "Jeevan Bima"
+  "reminder_enable": true,
+  "notes": {
+    "policy_name": "Jeevan Bima"
   }
 })
 ```
@@ -180,30 +180,30 @@ instance.paymentLink.notifyBy(paymentLinkId, medium)
 
 ```js
 instance.paymentLink.create({
-  amount: 20000,
-  currency: "INR",
-  accept_partial: false,
-  description: "For XYZ purpose",
-  customer: {
-    name: "Gaurav Kumar",
-    email: "gaurav.kumar@example.com",
-    contact: 919999999999
+  "amount": 20000,
+  "currency": "INR",
+  "accept_partial": false,
+  "description": "For XYZ purpose",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "email": "gaurav.kumar@example.com",
+    "contact": "+919999999999"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  options: {
-    order: [
+  "reminder_enable": true,
+  "options": {
+    "order": [
       {
-        account: "acc_CNo3jSI8OkFJJJ",
-        amount: 500,
-        currency: "INR",
-        notes: {
-          branch: "Acme Corp Bangalore North",
-          name: "Saurav Kumar",
-          linked_account_notes: [
+        "account": "acc_CNo3jSI8OkFJJJ",
+        "amount": 500,
+        "currency": "INR",
+        "notes": {
+          "branch": "Acme Corp Bangalore North",
+          "name": "Saurav Kumar",
+          "linked_account_notes": [
             "branch"
           ]
         }
@@ -343,22 +343,22 @@ instance.paymentLink.create({
 
 ```js
 instance.paymentLink.create({
-  amount: 1000,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  reference_id: "#425",
-  description: "Payment for policy no #23456",
-  customer: {
-    name: "Gaurav Kumar",
-    contact: 919999999999,
-    email: "gaurav.kumar@example.com"
+  "amount": 1000,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "reference_id": "#425",
+  "description": "Payment for policy no #23456",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "contact": "+919999999999",
+    "email": "gaurav.kumar@example.com"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: false
+  "reminder_enable": false
 })
 ```
 
@@ -438,38 +438,28 @@ instance.paymentLink.create({
 
 ```js
 instance.paymentLink.create({
-  amount: 1000,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  reference_id: "#412232",
-  description: "Payment for policy no #23456",
-  expire_by: 1599193801,
-  customer: {
-    name: "Gaurav Kumar",
-    contact: 919999999999,
-    email: "gaurav.kumar@example.com"
+  "amount": 500,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "description": "For XYZ purpose",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "email": "gaurav.kumar@example.com",
+    "contact": "+919999999999"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  options: {
-    hosted_page: {
-      label: {
-        receipt: "Ref No.",
-        description: "Course Name",
-        amount_payable: "Course Fee Payable",
-        amount_paid: "Course Fee Paid",
-        partial_amount_due: "Fee Installment Due",
-        partial_amount_paid: "Fee Installment Paid",
-        expire_by: "Pay Before",
-        expired_on: "Link Expired. Please contact Admin",
-        amount_due: "Course Fee Due"
-      },
-      show_preferences: {
-        issued_to: false
+  "reminder_enable": true,
+  "options": {
+    "checkout": {
+      "partial_payment": {
+        "min_amount_label": "Minimum Money to be paid",
+        "partial_amount_label": "Pay in parts",
+        "partial_amount_description": "Pay at least ₹100",
+        "full_amount_label": "Pay the entire amount"
       }
     }
   }
@@ -535,25 +525,25 @@ instance.paymentLink.create({
 
 ```js
 instance.paymentLink.create({
-  amount: 1000,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  reference_id: "#2234542",
-  description: "Payment for policy no #23456",
-  customer: {
-    name: "Gaurav Kumar",
-    contact: 919999999999,
-    email: "gaurav.kumar@example.com"
+  "amount": 1000,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "reference_id": "#2234542",
+  "description": "Payment for policy no #23456",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "contact": "+919999999999",
+    "email": "gaurav.kumar@example.com"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  options: {
-    checkout: {
-      name: "Lacme Corp"
+  "reminder_enable": true,
+  "options": {
+    "checkout": {
+      "name": "Lacme Corp"
     }
   }
 })
@@ -617,30 +607,30 @@ instance.paymentLink.create({
 
 ```js
 instance.paymentLink.create({
-  amount: 1000,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  reference_id: "#417",
-  description: "Payment for policy no #23456",
-  customer: {
-    name: "Gaurav Kumar",
-    contact: "919999999999",
-    email: "gaurav.kumar@example.com"
+  "amount": 1000,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "reference_id": "#417",
+  "description": "Payment for policy no #23456",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "contact": "+919999999999",
+    "email": "gaurav.kumar@example.com"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  options: {
-    checkout: {
-      prefill: {
-        method: "card",
+  "reminder_enable": true,
+  "options": {
+    "checkout": {
+      "prefill": {
+        "method": "card",
         "card[name]": "Gaurav Kumar",
-        "card[number]": 4111111111111111,
+        "card[number]": "4111111111111111",
         "card[expiry]": "12/21",
-        "card[cvv]": 123
+        "card[cvv]": "123"
       }
     }
   }
@@ -670,28 +660,28 @@ For prefill checkout fields response please click [here](https://razorpay.com/do
 
 ```js
 instance.paymentLink.create({
-  amount: 500,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  description: "For XYZ purpose",
-  customer: {
-    name: "Gaurav Kumar",
-    email: "gaurav.kumar@example.com",
-    contact: 919999999999
+  "amount": 500,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "description": "For XYZ purpose",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "email": "gaurav.kumar@example.com",
+    "contact": "+919999999999"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  options: {
-    checkout: {
-      method: {
-        netbanking: 1,
-        card: 1,
-        upi: 0,
-        wallet: 0
+  "reminder_enable": true,
+  "options": {
+    "checkout": {
+      "method": {
+        "netbanking": "1",
+        "card": "1",
+        "upi": "0",
+        "wallet": "0"
       }
     }
   }
@@ -757,27 +747,27 @@ instance.paymentLink.create({
 
 ```js
 instance.paymentLink.create({
-  amount: 1000,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  reference_id: "#20",
-  description: "Payment for policy no #23456",
-  customer: {
-    name: "Gaurav Kumar",
-    contact: 919999999999,
-    email: "gaurav.kumar@example.com"
+  "amount": 1000,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "reference_id": "#20",
+  "description": "Payment for policy no #23456",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "contact": "+919999999999",
+    "email": "gaurav.kumar@example.com"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  options: {
-    checkout: {
-      readonly: {
-        email: 1,
-        contact: 1
+  "reminder_enable": true,
+  "options": {
+    "checkout": {
+      "readonly": {
+        "email": "1",
+        "contact": "1"
       }
     }
   }
@@ -843,26 +833,26 @@ instance.paymentLink.create({
 
 ```js
 instance.paymentLink.create({
-  amount: 1000,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  reference_id: "#423212",
-  description: "Payment for policy no #23456",
-  customer: {
-    name: "Gaurav Kumar",
-    contact: 919999999999,
-    email: "gaurav.kumar@example.com"
+  "amount": 1000,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "reference_id": "#423212",
+  "description": "Payment for policy no #23456",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "contact": "+919999999999",
+    "email": "gaurav.kumar@example.com"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  options: {
-    checkout: {
-      theme: {
-        hide_topbar: true
+  "reminder_enable": true,
+  "options": {
+    "checkout": {
+      "theme": {
+        "hide_topbar": true
       }
     }
   }
@@ -927,29 +917,29 @@ instance.paymentLink.create({
 
 ```js
 instance.paymentLink.create({
-  amount: 1000,
-  currency: "INR",
-  accept_partial: true,
-  first_min_partial_amount: 100,
-  reference_id: "#421",
-  description: "Payment for policy no #23456",
-  customer: {
-    name: "Gaurav Kumar",
-    contact: 919999999999,
-    email: "gaurav.kumar@example.com"
+  "amount": 1000,
+  "currency": "INR",
+  "accept_partial": true,
+  "first_min_partial_amount": 100,
+  "reference_id": "#421",
+  "description": "Payment for policy no #23456",
+  "customer": {
+    "name": "Gaurav Kumar",
+    "contact": "+919999999999",
+    "email": "gaurav.kumar@example.com"
   },
-  notify: {
-    sms: true,
-    email: true
+  "notify": {
+    "sms": true,
+    "email": true
   },
-  reminder_enable: true,
-  options: {
-    checkout: {
-      partial_payment: {
-        min_amount_label: "Minimum Money to be paid",
-        partial_amount_label: "Pay in parts",
-        partial_amount_description: "Pay at least ₹100",
-        full_amount_label: "Pay the entire amount"
+  "reminder_enable": true,
+  "options": {
+    "checkout": {
+      "partial_payment": {
+        "min_amount_label": "Minimum Money to be paid",
+        "partial_amount_label": "Pay in parts",
+        "partial_amount_description": "Pay at least ₹100",
+        "full_amount_label": "Pay the entire amount"
       }
     }
   }

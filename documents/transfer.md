@@ -198,7 +198,7 @@ instance.transfers.create({
 ### Fetch transfer for a payment
 
 ```js
-instance.payment.fetchTransfer(paymentId)
+instance.payments.fetchTransfer(paymentId)
 ```
 
 **Parameters:**
