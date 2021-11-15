@@ -2,7 +2,7 @@
 
 ### Create customer
 ```js
-instance.customer.create({
+instance.customers.create({
   name: "Gaurav Kumar",
   contact: 9123456780,
   email: "gaurav.kumar@example.com",
@@ -155,7 +155,7 @@ Please refer this [doc](https://razorpay.com/docs/api/recurring-payments/paper-n
 ### Create registration link
 
 ```js
-instance.subscription.createRecurringPayment({
+instance.payments.createRecurringPayment({
   customer: {
     name: "Gaurav Kumar",
     email: "gaurav.kumar@example.com",

@@ -49,10 +49,10 @@ instance.orders.create({
 Request #2
 In this example, an invoice is created using existing `customer_id` and `item_id`
 ```js
-instance.invoice.create({
+instance.invoices.create({
   type: "invoice",
   date: 1589994898,
-  customer_id: "cust_E7q0trFqXgExmT"
+  customer_id: "cust_E7q0trFqXgExmT",
   line_items: [
     {
       "item_id": "item_DRt61i2NnL8oy6"
@@ -368,7 +368,7 @@ instance.invoices.issue(invoiceId)
 ### Delete an invoice
 
 ```js
-instance.invoice.delete(invoiceId)
+instance.invoices.delete(invoiceId)
 ```
 
 **Parameters:**

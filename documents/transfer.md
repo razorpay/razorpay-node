@@ -198,7 +198,7 @@ instance.transfers.create({
 ### Fetch transfer for a payment
 
 ```js
-instance.payment.fetchTransfer(paymentId)
+instance.payments.fetchTransfer(paymentId)
 ```
 
 **Parameters:**
@@ -239,7 +239,7 @@ instance.payment.fetchTransfer(paymentId)
 ### Fetch transfer for an order
 
 ```js
-instance.ordes.transfers({
+instance.orders.transfers({
   "expand[]": "transfers"
 })
 ```
@@ -382,7 +382,7 @@ instance.transfers.all({
 
 ```js
 instance.transfers.all({
-  expand[] = 'recipient_settlement'  
+  'expand[]':'recipient_settlement'  
 })
 ```
 

@@ -275,7 +275,7 @@ instance.orders.create({
 ## Create a recurring payment
 
 ```js
-instance.payment.createRecurring({
+instance.payments.createRecurring({
   email: "gaurav.kumar@example.com",
   contact: 9123456789,
   amount: 1000,
@@ -470,7 +470,7 @@ instance.payments.fetch(paymentId)
 ## Fetch tokens by customer id
 
 ```js
-instance.customer.fetchTokens(customerId)
+instance.customers.fetchTokens(customerId)
 ```
 **Parameters:**
 

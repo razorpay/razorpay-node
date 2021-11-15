@@ -152,7 +152,7 @@ instance.subscriptions.create({
 ### Fetch all subscriptions
 
 ```js
-instance.subscription.all(options)
+instance.subscriptions.all(options)
 ```
 
 **Parameters:**
@@ -257,7 +257,7 @@ instance.subscriptions.fetch(subscriptionId)
 ### Cancel particular subscription
 
 ```js
-instance.subsciptions.cancel(subscriptionId,options)
+instance.subscriptions.cancel(subscriptionId,options)
 ```
 
 **Parameters:**
@@ -354,7 +354,7 @@ instance.subscriptions.update(subscriptionId,options)
 ### Fetch details of pending update
 
 ```js
-instance.subscription.pendingUpdate(subscriptionId)
+instance.subscriptions.pendingUpdate(subscriptionId)
 ```
 
 **Parameters:**
@@ -401,7 +401,7 @@ instance.subscription.pendingUpdate(subscriptionId)
 ### Cancel a update
 
 ```js
-instance.subscription.cancelScheduledChanges(subscriptionId)
+instance.subscriptions.cancelScheduledChanges(subscriptionId)
 ```
 
 **Parameters:**
@@ -448,7 +448,7 @@ instance.subscription.cancelScheduledChanges(subscriptionId)
 ### Pause a subscription
 
 ```js
-instance.subscription.pause(subscriptionId,{
+instance.subscriptions.pause(subscriptionId,{
   pause_at : 'now'
 })
 ```
@@ -499,7 +499,7 @@ instance.subscription.pause(subscriptionId,{
 ### Resume a subscription
 
 ```js
-instance.subscription.resume(subscriptionId,{
+instance.subscriptions.resume(subscriptionId,{
   resume_at : 'now'
 })
 ```
