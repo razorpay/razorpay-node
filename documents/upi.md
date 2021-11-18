@@ -119,7 +119,7 @@ instance.subscriptions.createRegistrationLink({
   currency: "INR",
   description: "Registration Link for Gaurav Kumar",
   subscription_registration: {
-    method: "card",
+    method: "upi",
     max_amount: 500,
     expire_at: 1634215992
   },

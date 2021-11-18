@@ -3,7 +3,7 @@
 ### Create a normal refund
 
 ```js
-instance.payments.fetch(paymentId{
+instance.payments.refund(paymentId,{
   "amount": "100",
   "speed": "normal",
   "notes": {
