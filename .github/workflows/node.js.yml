@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # nosemgrep : semgrep.dev/s/swati31196:github_provided_runner
 
     strategy:
       matrix:
