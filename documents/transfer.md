@@ -3,20 +3,14 @@
 ### Create transfers from payment
 
 ```js
-instance.payments.fetch({
-  transfers: {
-    amount: 1000,
-    currency: "INR",
-    notes: {
-      name: "Gaurav Kumar",
-      roll_no: "IEC2011025"
-    },
-    linked_account_notes: [
-      "branch"
-    ],
-    on_hold: 1,
-    on_hold_until: 1671222870
-  }
+instance.payments.transfer('pay_6CnVGA5eq4D7Ce', {
+  transfers: [
+    {
+      account: 'acc_7HGyrafdeQDGfX',
+      amount: 100,
+      currency: 'INR'
+    }
+  ]
 })
 ```
 
