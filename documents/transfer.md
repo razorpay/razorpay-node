@@ -3,21 +3,23 @@
 ### Create transfers from payment
 
 ```js
-instance.payments.fetch({
-  transfers: {
-    amount: 1000,
-    currency: "INR",
-    notes: {
-      name: "Gaurav Kumar",
-      roll_no: "IEC2011025"
-    },
-    linked_account_notes: [
-      "branch"
-    ],
-    on_hold: 1,
-    on_hold_until: 1671222870
-  }
-})
+instance.payments.transfer(paymentId,{
+   "transfers": [
+    {
+      "amount": 100,
+      "currency": "INR",
+      "notes": {
+        "name": "Gaurav Kumar",
+        "roll_no": "IEC2011025"
+      },
+      "linked_account_notes": [
+        "branch"
+      ],
+      "on_hold": 1,
+      "on_hold_until": 1671222870
+    }
+  ]
+ })
 ```
 
 **Parameters:**
@@ -30,31 +32,37 @@ instance.payments.fetch({
 **Response:**
 ```json
 {
-  "entity": "collection",
-  "count": 1,
-  "items": [
-    {
-      "id": "trf_E9uhYLFLLZ2pks",
-      "entity": "transfer",
-      "source": "pay_E8JR8E0XyjUSZd",
-      "recipient": "acc_CPRsN1LkFccllA",
-      "amount": 100,
-      "currency": "INR",
-      "amount_reversed": 0,
-      "notes": {
-        "name": "Gaurav Kumar",
-        "roll_no": "IEC2011025"
-      },
-      "on_hold": true,
-      "on_hold_until": 1671222870,
-      "recipient_settlement_id": null,
-      "created_at": 1580218356,
-      "linked_account_notes": [
-        "roll_no"
-      ],
-      "processed_at": 1580218357
-    }
-  ]
+  "id": "pay_DJiaO3iqUZaZrO",
+  "entity": "payment",
+  "amount": 5000,
+  "currency": "INR",
+  "status": "captured",
+  "order_id": null,
+  "invoice_id": null,
+  "international": false,
+  "method": "netbanking",
+  "amount_refunded": 0,
+  "refund_status": null,
+  "captured": true,
+  "description": "Credits towards consultation",
+  "card_id": null,
+  "bank": "UTIB",
+  "wallet": null,
+  "vpa": null,
+  "email": "void@razorpay.com",
+  "contact": "+919191919191",
+  "notes": [],
+  "fee": 171,
+  "tax": 26,
+  "error_code": null,
+  "error_description": null,
+  "error_source": null,
+  "error_step": null,
+  "error_reason": null,
+  "acquirer_data": {
+    "bank_transaction_id": "7909502"
+  },
+  "created_at": 1568822005
 }
 ```
 -------------------------------------------------------------------------------------------------------
