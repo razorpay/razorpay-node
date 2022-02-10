@@ -107,6 +107,11 @@ module.exports = function (api) {
         url: url,
         data: data
       }, callback);
+    },
+    fetchSettlements: function fetchSettlements(callback) {
+      return api.get({
+        url: 'transfers?expand[]=recipient_settlement'
+      }, callback);
     }
   };
 };

@@ -53,7 +53,8 @@ module.exports = function (api) {
     create: function create() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
-      var amount = params.amount,
+      var name = params.name,
+          amount = params.amount,
           currency = params.currency,
           description = params.description;
 
@@ -64,6 +65,7 @@ module.exports = function (api) {
       }
 
       var data = Object.assign({
+        name: name,
         amount: amount,
         currency: currency,
         description: description

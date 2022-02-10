@@ -3,21 +3,24 @@
 ### Create transfers from payment
 
 ```js
-instance.payments.fetch({
-  transfers: {
-    amount: 1000,
-    currency: "INR",
-    notes: {
-      name: "Gaurav Kumar",
-      roll_no: "IEC2011025"
-    },
-    linked_account_notes: [
-      "branch"
-    ],
-    on_hold: 1,
-    on_hold_until: 1671222870
-  }
-})
+instance.payments.transfer(paymentId,{
+   "transfers": [
+    {
+      "account": 'acc_HgzcrXeSLfNP9U',
+      "amount": 100,
+      "currency": "INR",
+      "notes": {
+        "name": "Gaurav Kumar",
+        "roll_no": "IEC2011025"
+      },
+      "linked_account_notes": [
+        "branch"
+      ],
+      "on_hold": 1,
+      "on_hold_until": 1671222870
+    }
+  ]
+ })
 ```
 
 **Parameters:**
@@ -239,9 +242,7 @@ instance.payments.fetchTransfer(paymentId)
 ### Fetch transfer for an order
 
 ```js
-instance.orders.transfers({
-  "expand[]": "transfers"
-})
+instance.orders.fetchTransferOrder(orderId)
 ```
 
 **Parameters:**
@@ -249,7 +250,6 @@ instance.orders.transfers({
 | Name          | Type        | Description                                 |
 |---------------|-------------|---------------------------------------------|
 | orderId*   | string      | The id of the order to be fetched  |
-| expand*   | string    | Supported value is `transfer`  |
 
 **Response:**
 ```json
@@ -381,16 +381,8 @@ instance.transfers.all({
 ### Fetch settlement details
 
 ```js
-instance.transfers.all({
-  'expand[]':'recipient_settlement'  
-})
+instance.transfers.fetchSettlements()
 ```
-
-**Parameters:**
-
-| Name          | Type        | Description                                 |
-|---------------|-------------|---------------------------------------------|
-| expand*   | string    | Supported value is `recipient_settlement`  |
 
 **Response:**
 ```json

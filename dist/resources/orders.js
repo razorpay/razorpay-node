@@ -111,6 +111,15 @@ module.exports = function (api) {
       return api.get({
         url: '/orders/' + orderId + '/payments'
       }, callback);
+    },
+    fetchTransferOrder: function fetchTransferOrder(orderId, callback) {
+      if (!orderId) {
+        throw new Error('`order_id` is mandatory');
+      }
+
+      return api.get({
+        url: '/orders/' + orderId + '/?expand[]=transfers&status'
+      }, callback);
     }
   };
 };
