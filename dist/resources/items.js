@@ -53,10 +53,11 @@ module.exports = function (api) {
     create: function create() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
-      var name = params.name,
-          amount = params.amount,
-          currency = params.currency,
-          description = params.description;
+
+      var name = params.name;
+      var amount = params.amount;
+      var currency = params.currency;
+      var description = params.description;
 
       currency = currency || 'INR';
 
