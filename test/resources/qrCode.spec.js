@@ -319,8 +319,6 @@ describe('QRCODE ', () => {
           url: SUB_PATH + '/' + TEST_QRCODE_ID + '/payments'
         };
        
-        console.log(mockerParams.url)
-
       runParamsCheckTest({
         apiObj,
         methodName,
