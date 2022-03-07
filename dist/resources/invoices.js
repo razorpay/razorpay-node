@@ -11,7 +11,8 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 var Promise = require("promise"),
     _require = require('../utils/razorpay-utils'),
     normalizeDate = _require.normalizeDate,
-    normalizeNotes = _require.normalizeNotes;
+    normalizeNotes = _require.normalizeNotes,
+    normalizeBoolean = _require.normalizeBoolean;
 
 
 module.exports = function invoicesApi(api) {
@@ -43,10 +44,13 @@ module.exports = function invoicesApi(api) {
 
       var url = BASE_URL,
           notes = params.notes,
-          rest = _objectWithoutProperties(params, ["notes"]),
-          data = Object.assign(rest, normalizeNotes(notes));
+          partial_payment = params.partial_payment,
+          rest = _objectWithoutProperties(params, ["notes", "partial_payment"]);
 
 
+      var data = Object.assign(_extends({
+        partial_payment: normalizeBoolean(partial_payment)
+      }, rest), normalizeNotes(notes));
       return api.post({
         url: url,
         data: data
