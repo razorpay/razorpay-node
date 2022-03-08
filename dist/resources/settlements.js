@@ -175,31 +175,6 @@ module.exports = function (api) {
           skip: skip
         })
       }, callback);
-    },
-    settlementRecon: function settlementRecon() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
-      /*
-       * Settlement Recon
-       *
-       * @param {Object} params
-       * @param {Function} callback
-       *
-       * @return {Promise}
-       */
-
-      var day = params.day,
-          url = BASE_URL + '/recon/combined';
-
-
-      return api.get({
-        url: url,
-        data: _extends({}, params, {
-          day: day
-        })
-      }, callback);
     }
   };
 };
