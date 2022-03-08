@@ -4,13 +4,13 @@
 
 ```js
 instance.subscriptions.createAddon('sub_I55auG9GnbsR8u',{
-  item:{
-    name:"Extra appala (papadum)",
-    amount:30000,
-    currency:"INR",
-    description:"1 extra oil fried appala with meals"
+  "item":{
+    "name":"Extra appala (papadum)",
+    "amount":30000,
+    "currency":"INR",
+    "description":"1 extra oil fried appala with meals"
   },
-  quantity:2
+  "quantity":2
 })
 ```
 

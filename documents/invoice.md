@@ -6,43 +6,43 @@ Request #1
 In this example, an invoice is created using the customer and item details. Here, the customer and item are created while creating the invoice.
 ```js
 instance.orders.create({
-  type: "invoice",
-  description: "Invoice for the month of January 2020",
-  partial_payment: true,
-  customer: {
-    name: "Gaurav Kumar",
-    contact: 9999999999,
-    email: "gaurav.kumar@example.com",
-    billing_address: {
-      line1: "Ground & 1st Floor, SJR Cyber Laskar",
-      line2: "Hosur Road",
-      zipcode: 560068,
-      city: "Bengaluru",
-      state: "Karnataka",
-      country: "in"
+  "type": "invoice",
+  "description": "Invoice for the month of January 2020",
+  "partial_payment": true,
+  "customer": {
+    "name": "Gaurav Kumar",
+    "contact": 9999999999,
+    "email": "gaurav.kumar@example.com",
+    "billing_address": {
+      "line1": "Ground & 1st Floor, SJR Cyber Laskar",
+      "line2": "Hosur Road",
+      "zipcode": 560068,
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "country": "in"
     },
-    shipping_address: {
-      line1: "Ground & 1st Floor, SJR Cyber Laskar",
-      line2: "Hosur Road",
-      zipcode: 560068,
-      city: "Bengaluru",
-      state: "Karnataka",
-      country: "in"
+    "shipping_address": {
+      "line1": "Ground & 1st Floor, SJR Cyber Laskar",
+      "line2": "Hosur Road",
+      "zipcode": 560068,
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "country": "in"
     }
   },
-  line_items: [
+  "line_items": [
     {
-      name: "Master Cloud Computing in 30 Days",
-      description: "Book by Ravena Ravenclaw",
-      amount: 399,
-      currency: "USD",
-      quantity: 1
+      "name": "Master Cloud Computing in 30 Days",
+      "description": "Book by Ravena Ravenclaw",
+      "amount": 399,
+      "currency": "USD",
+      "quantity": 1
     }
   ],
-  sms_notify: 1,
-  email_notify: 1,
-  currency: "USD",
-  expire_by: 1589765167
+  "sms_notify": 1,
+  "email_notify": 1,
+  "currency": "USD",
+  "expire_by": 1589765167
 })
 ```
 
@@ -50,10 +50,10 @@ Request #2
 In this example, an invoice is created using existing `customer_id` and `item_id`
 ```js
 instance.invoices.create({
-  type: "invoice",
-  date: 1589994898,
-  customer_id: "cust_E7q0trFqXgExmT",
-  line_items: [
+  "type": "invoice",
+  "date": 1589994898,
+  "customer_id": "cust_E7q0trFqXgExmT",
+  "line_items": [
     {
       "item_id": "item_DRt61i2NnL8oy6"
     }
@@ -211,20 +211,20 @@ instance.invoices.fetch(invoiceId)
 
 ```js
 instance.invoices.edit(invoiceId,{
-  line_items: [
+  "line_items": [
     {
-      id: "li_DAweOizsysoJU6",
-      name: "Book / English August - Updated name and quantity",
-      quantity: 1
+      "id": "li_DAweOizsysoJU6",
+      "name": "Book / English August - Updated name and quantity",
+      "quantity": 1
     },
     {
-      name: "Book / A Wild Sheep Chase",
-      amount: 200,
-      currency: "INR",
-      quantity: 1
+      "name": "Book / A Wild Sheep Chase",
+      "amount": 200,
+      "currency": "INR",
+      "quantity": 1
     }
   ],
-  notes: {
+  "notes": {
     "updated-key": "An updated note."
   }
 })

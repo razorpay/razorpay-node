@@ -3,7 +3,7 @@
 ### Create item
 
 ```js
-instance.Items.create({
+instance.items.create({
   "name": "Book / English August",
   "description": "An indian story, Booker prize winner.",
   "amount": 20000,
@@ -37,7 +37,7 @@ instance.Items.create({
 ### Fetch all items
 
 ```js
-instance.Items.all(options)
+instance.items.all(options)
 ```
 **Parameters:**
 
@@ -90,7 +90,7 @@ instance.Items.all(options)
 ### Fetch particular item
 
 ```js
-instance.Items.fetch(itemId)
+instance.items.fetch(itemId)
 ```
 **Parameters**
 
@@ -115,7 +115,7 @@ instance.Items.fetch(itemId)
 ### Update item
 
 ```js
-instance.Items.edit({
+instance.items.edit(itemId,{
   "name": "Book / Ignited Minds - Updated name!",
   "description": "New descirption too. :).",
   "amount": 20000,
@@ -149,7 +149,7 @@ instance.Items.edit({
 ### Delete item
 
 ```js
-instance.Items.delete(itemId)
+instance.items.delete(itemId)
 ```
 **Parameters**
 

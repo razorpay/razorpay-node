@@ -69,8 +69,8 @@ instance.settlements.fetch(settlementId)
 
 ```js
 instance.settlements.reports({
-  year: 2020,
-  month: 9
+  "year": 2020,
+  "month": 9
 })
 ```
 
@@ -209,10 +209,10 @@ instance.settlements.reports({
 ### Settlement recon
 
 ```js
-instance.settlements.settlementRecon({
-  year: 2020,
-  month: 9,
-  day:11
+instance.settlements.reports({
+  "year": 2020,
+  "month": 9,
+  "day":11
 })
 ```
 **Parameters:**

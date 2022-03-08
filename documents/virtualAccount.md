@@ -3,16 +3,16 @@
 ### Create a virtual account
 ```js
 instance.virtualAccounts.create({
-  receivers: {
-    types: [
+  "receivers": {
+    "types": [
       "bank_account"
     ]
   },
-  description: "Virtual Account created for Raftar Soft",
-  customer_id: "cust_CaVDm8eDRSXYME",
-  close_by: 1681615838,
-  notes: {
-    project_name: "Banking Software"
+  "description": "Virtual Account created for Raftar Soft",
+  "customer_id": "cust_CaVDm8eDRSXYME",
+  "close_by": 1681615838,
+  "notes": {
+    "project_name": "Banking Software"
   }
 })
 ```
@@ -63,24 +63,24 @@ instance.virtualAccounts.create({
 ### Create a virtual account with TPV
 ```js
 instance.virtualAccounts.create({
-  receivers: {
-    types: [
+  "receivers": {
+    "types": [
       "bank_account"
     ]
   },
-  allowed_payers: [
+  "allowed_payers": [
     {
-      type: "bank_account",
-      bank_account: {
-        ifsc: "RATN0VAAPIS",
-        account_number: 2223330027558515
+      "type": "bank_account",
+      "bank_account": {
+        "ifsc": "RATN0VAAPIS",
+        "account_number": 2223330027558515
       }
     }
   ],
-  description: "Virtual Account created for Raftar Soft",
-  customer_id: "cust_HssUOFiOd2b1TJ",
-  notes: {
-    project_name: "Banking Software"
+  "description": "Virtual Account created for Raftar Soft",
+  "customer_id": "cust_HssUOFiOd2b1TJ",
+  "notes": {
+    "project_name": "Banking Software"
   }
 })
 ```
@@ -149,15 +149,15 @@ instance.virtualAccounts.create({
 ### Create static/dynamic qr
 ```js
 instance.virtualAccounts.create({
-  receivers: {
-    types: [
+  "receivers": {
+    "types": [
       "qr_code"
     ]
   },
-  description: "First QR code",
-  amount_expected: 100,
-  notes: {
-    receiver_key: "receiver_value"
+  "description": "First QR code",
+  "amount_expected": 100,
+  "notes": {
+    "receiver_key": "receiver_value"
   }
 })
 ```
@@ -331,7 +331,7 @@ instance.payments.bankTransfer(paymentId)
 
 | Name  | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
-| virtualId*  | string    | The id of the virtual to be updated  |
+| paymentId*  | string    | The id of the paymentId to be updated  |
 
 **Response:**
 ```json
@@ -430,11 +430,11 @@ instance.payments.refund(paymentId,{
 ### Add receiver to an existing virtual account
 ```js
 instance.virtualAccounts.addReceiver(virtualId,{
-  types: [
+  "types": [
     "vpa"
   ],
-  vpa: {
-    descriptor: "gauravkumar"
+  "vpa": {
+    "descriptor": "gauravkumar"
   }
 })
 ```
@@ -455,10 +455,10 @@ For add receiver to an existing virtual account response please click [here](htt
 ### Add an Allowed Payer Account
 ```js
 instance.virtualAccounts.allowedPayer(virtualId,{
-  types: "bank_account",
-  bank_account: {
-    ifsc: "UTIB0000013",
-    account_number: 914010012345679
+  "types": "bank_account",
+  "bank_account": {
+    "ifsc": "UTIB0000013",
+    "account_number": 914010012345679
   }
 })
 ```

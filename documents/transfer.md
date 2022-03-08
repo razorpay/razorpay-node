@@ -66,35 +66,35 @@ instance.payments.transfer(paymentId,{
 
 ```js
 instance.orders.create({
-  amount: 2000,
-  currency: "INR",
-  transfers: [
+  "amount": 2000,
+  "currency": "INR",
+  "transfers": [
     {
-      account: "acc_CPRsN1LkFccllA",
-      amount: 1000,
-      currency: "INR",
-      notes: {
-        branch: "Acme Corp Bangalore North",
-        name: "Gaurav Kumar"
+      "account": "acc_CPRsN1LkFccllA",
+      "amount": 1000,
+      "currency": "INR",
+      "notes": {
+        "branch": "Acme Corp Bangalore North",
+        "name": "Gaurav Kumar"
       },
-      linked_account_notes: [
+      "linked_account_notes": [
         "branch"
       ],
-      on_hold: 1,
-      on_hold_until: 1671222870
+      "on_hold": 1,
+      "on_hold_until": 1671222870
     },
     {
-      account: "acc_CNo3jSI8OkFJJJ",
-      amount: 1000,
-      currency: "INR",
-      notes: {
-        branch: "Acme Corp Bangalore South",
-        name: "Saurav Kumar"
+      "account": "acc_CNo3jSI8OkFJJJ",
+      "amount": 1000,
+      "currency": "INR",
+      "notes": {
+        "branch": "Acme Corp Bangalore South",
+        "name": "Saurav Kumar"
       },
-      linked_account_notes: [
+      "linked_account_notes": [
         "branch"
       ],
-      on_hold: 0
+      "on_hold": 0
     }
   ]
 })
@@ -162,6 +162,7 @@ instance.orders.create({
 
 ```js
 instance.transfers.create({
+  "account": accountId,
   "amount": 500,
   "currency": "INR"
 })
@@ -339,7 +340,7 @@ instance.transfers.fetch(transferId)
 
 ```js
 instance.transfers.all({
-   recipient_settlement_id :  recipientSettlementId
+   "recipient_settlement_id":  recipientSettlementId
 })
 ```
 
@@ -427,8 +428,8 @@ instance.transfers.fetchSettlements()
 
 ```js
 instance.payments.refund(paymentId,{
-    amount : 100,
-    reverse_all : 1
+    "amount" : 100,
+    "reverse_all" : 1
 })
 ```
 
@@ -514,7 +515,7 @@ instance.payments.all({
 
 ```js
 instance.transfers.reverse(transferId,{
-    amount:100
+    "amount":100
 })
 ```
 
@@ -546,9 +547,14 @@ instance.transfers.reverse(transferId,{
 ### Hold settlements for transfers
 ```js
 instance.payments.transfer(paymentId,{
-  "amount": 500,
-  "currency": "INR",
-  "on_hold": "1"
+  "transfers": [
+    {
+      "amount": 100,
+      "account": "acc_I0QRP7PpvaHhpB",
+      "currency": "INR",
+      "on_hold": 1
+    }
+  ]
 })
 ```
 
