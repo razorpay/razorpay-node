@@ -115,7 +115,7 @@ module.exports = function (api) {
 
 
       /*
-       * Fetch all fund accounts
+       * Fetch all demand settlements
        *
        * @param {Object} params
        * @param {Function} callback

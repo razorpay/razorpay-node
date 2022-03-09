@@ -68,7 +68,8 @@ var Razorpay = function () {
         settlements: require('./resources/settlements')(this.api),
         qrCode: require('./resources/qrCode')(this.api),
         fundAccount: require('./resources/fundAccount')(this.api),
-        items: require('./resources/items')(this.api)
+        items: require('./resources/items')(this.api),
+        cards: require('./resources/cards')(this.api)
       });
     }
   }]);
