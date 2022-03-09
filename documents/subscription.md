@@ -4,23 +4,23 @@
 
 ```js
 instance.subscriptions.create({
-  plan_id: "plan_7wAosPWtrkhqZw",
-  customer_notify: 1,
-  quantity: 5,
-  total_count: 6,
-  start_at: 1495995837,
-  addons: [
+  "plan_id": "plan_7wAosPWtrkhqZw",
+  "customer_notify": 1,
+  "quantity": 5,
+  "total_count": 6,
+  "start_at": 1495995837,
+  "addons": [
     {
-      item: {
-        name: "Delivery charges",
-        amount: 30000,
-        currency: "INR"
+      "item": {
+        "name": "Delivery charges",
+        "amount": 30000,
+        "currency": "INR"
       }
     }
   ],
-  notes: {
-    key1: "value3",
-    key2: "value2"
+  "notes": {
+    "key1": "value3",
+    "key2": "value2"
   }
 })
 ```
@@ -76,27 +76,27 @@ instance.subscriptions.create({
 
 ```js
 instance.subscriptions.create({
-  plan_id: "plan_HoYg68p5kmuvzD",
-  total_count: 12,
-  quantity: 1,
-  expire_by: 1633237807,
-  customer_notify: 1,
-  addons: [
+  "plan_id": "plan_HoYg68p5kmuvzD",
+  "total_count": 12,
+  "quantity": 1,
+  "expire_by": 1633237807,
+  "customer_notify": 1,
+  "addons": [
     {
-      item: {
-        name: "Delivery charges",
-        amount: 30000,
-        currency: "INR"
+      "item": {
+        "name": "Delivery charges",
+        "amount": 30000,
+        "currency": "INR"
       }
     }
   ],
-  notes: {
-    notes_key_1: "Tea, Earl Grey, Hot",
-    notes_key_2: "Tea, Earl Grey… decaf."
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey… decaf."
   },
-  notify_info: {
-    notify_phone: 9123456789,
-    notify_email: "gaurav.kumar@example.com"
+  "notify_info": {
+    "notify_phone": 9123456789,
+    "notify_email": "gaurav.kumar@example.com"
   }
 })
 ```
@@ -449,7 +449,7 @@ instance.subscriptions.cancelScheduledChanges(subscriptionId)
 
 ```js
 instance.subscriptions.pause(subscriptionId,{
-  pause_at : 'now'
+  "pause_at" : 'now'
 })
 ```
 
@@ -500,7 +500,7 @@ instance.subscriptions.pause(subscriptionId,{
 
 ```js
 instance.subscriptions.resume(subscriptionId,{
-  resume_at : 'now'
+  "resume_at" : 'now'
 })
 ```
 
@@ -551,7 +551,7 @@ instance.subscriptions.resume(subscriptionId,{
 
 ```js
 instance.invoices.all({
-  'subscription_id':subscriptionId
+  "subscription_id":subscriptionId
 })
 ```
 

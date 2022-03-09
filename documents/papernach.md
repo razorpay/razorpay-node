@@ -3,14 +3,14 @@
 ### Create customer
 ```js
 instance.customers.create({
-  name: "Gaurav Kumar",
-  contact: 9123456780,
-  email: "gaurav.kumar@example.com",
-  fail_existing: 0,
-  gstin: "29XAbbA4369J1PA",
-  notes: {
-    notes_key_1: "Tea, Earl Grey, Hot",
-    notes_key_2: "Tea, Earl Grey… decaf."
+  "name": "Gaurav Kumar",
+  "contact": 9123456780,
+  "email": "gaurav.kumar@example.com",
+  "fail_existing": 0,
+  "gstin": "29XAbbA4369J1PA",
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey… decaf."
   }
 })
 ```
@@ -46,28 +46,28 @@ instance.customers.create({
 
 ```js
 instance.orders.create({
-  amount: 0,
-  currency: "INR",
-  method: "emandate",
-  customer_id: "cust_1Aa00000000001",
-  receipt: "Receipt No. 1",
-  notes: {
-    notes_key_1: "Beam me up Scotty",
-    notes_key_2: "Engage"
+  "amount": 0,
+  "currency": "INR",
+  "method": "emandate",
+  "customer_id": "cust_1Aa00000000001",
+  "receipt": "Receipt No. 1",
+  "notes": {
+    "notes_key_1": "Beam me up Scotty",
+    "notes_key_2": "Engage"
   },
-  token: {
-    auth_type: "netbanking",
-    max_amount: 9999900,
-    expire_at: 4102444799,
-    notes: {
-      notes_key_1: "Tea, Earl Grey, Hot",
-      notes_key_2: "Tea, Earl Grey… decaf."
+  "token": {
+    "auth_type": "netbanking",
+    "max_amount": 9999900,
+    "expire_at": 4102444799,
+    "notes": {
+      "notes_key_1": "Tea, Earl Grey, Hot",
+      "notes_key_2": "Tea, Earl Grey… decaf."
     },
-    bank_account: {
-      beneficiary_name: "Gaurav Kumar",
-      account_number: 1121431121541121,
-      account_type: "savings",
-      ifsc_code: "HDFC0000001"
+    "bank_account": {
+      "beneficiary_name": "Gaurav Kumar",
+      "account_number": 1121431121541121,
+      "account_type": "savings",
+      "ifsc_code": "HDFC0000001"
     }
   }
 })
@@ -155,37 +155,37 @@ Please refer this [doc](https://razorpay.com/docs/api/recurring-payments/paper-n
 ### Create registration link
 
 ```js
-instance.payments.createRecurringPayment({
-  customer: {
-    name: "Gaurav Kumar",
-    email: "gaurav.kumar@example.com",
-    contact: 9123456780
+instance.payments.createRegistrationLink({
+  "customer": {
+    "name": "Gaurav Kumar",
+    "email": "gaurav.kumar@example.com",
+    "contact": 9123456780
   },
-  amount: 0,
-  currency: "INR",
-  type: "link",
-  description: "12 p.m. Meals",
-  subscription_registration: {
-    method: "nach",
-    auth_type: "physical",
-    bank_account: {
-      beneficiary_name: "Gaurav Kumar",
-      account_number: 11214311215411,
-      account_type: "savings",
-      ifsc_code: "HDFC0001233"
+  "amount": 0,
+  "currency": "INR",
+  "type": "link",
+  "description": "12 p.m. Meals",
+  "subscription_registration": {
+    "method": "nach",
+    "auth_type": "physical",
+    "bank_account": {
+      "beneficiary_name": "Gaurav Kumar",
+      "account_number": 11214311215411,
+      "account_type": "savings",
+      "ifsc_code": "HDFC0001233"
     },
-    nach: {
-      form_reference1: "Recurring Payment for Gaurav Kumar",
-      form_reference2: "Method Paper NACH"
+    "nach": {
+      "form_reference1": "Recurring Payment for Gaurav Kumar",
+      "form_reference2": "Method Paper NACH"
     },
-    expire_at: 1947483647,
-    max_amount: 50000
+    "expire_at": 1947483647,
+    "max_amount": 50000
   },
-  receipt: "Receipt No. 1",
-  sms_notify: 1,
-  email_notify: 1,
-  expire_by: 1647483647,
-  notes: {
+  "receipt": "Receipt No. 1",
+  "sms_notify": 1,
+  "email_notify": 1,
+  "expire_by": 1647483647,
+  "notes": {
     "note_key 1": "Beam me up Scotty",
     "note_key 2": "Tea. Earl Gray. Hot."
   }
@@ -587,12 +587,12 @@ instance.customers.deleteToken(customerId, tokenId)
 
 ```js
 instance.orders.create({
-  amount: 1000,
-  currency: "INR",
-  receipt: "Receipt No. 1",
-  notes: {
-    notes_key_1: "Tea, Earl Grey, Hot",
-    notes_key_2: "Tea, Earl Grey… decaf."
+  "amount": 1000,
+  "currency": "INR",
+  "receipt": "Receipt No. 1",
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey… decaf."
   }
 })
 ```

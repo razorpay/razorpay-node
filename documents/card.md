@@ -3,13 +3,13 @@
 ### Create customer
 ```js
 instance.customers.create({
-  name: "Gaurav Kumar",
-  email: "gaurav.kumar@example.com",
-  contact: "9123456780",
-  fail_existing: "0",
-  notes:{
-    note_key_1: "September",
-    note_key_2: "Make it so."
+  "name": "Gaurav Kumar",
+  "email": "gaurav.kumar@example.com",
+  "contact": "9123456780",
+  "fail_existing": "0",
+  "notes":{
+    "note_key_1": "September",
+    "note_key_2": "Make it so."
   }
 })
 ```
@@ -109,27 +109,27 @@ instance.orders.create({
 
 ```js
 instance.subscriptions.createRegistrationLink({
-  customer: {
-    name: "Gaurav Kumar",
-    email: "gaurav.kumar@example.com",
-    contact: 9123456780
+  "customer": {
+    "name": "Gaurav Kumar",
+    "email": "gaurav.kumar@example.com",
+    "contact": 9123456780
   },
-  type: "link",
-  amount: 100,
-  currency: "INR",
-  description: "Registration Link for Gaurav Kumar",
-  subscription_registration: {
-    method: "card",
-    max_amount: 500,
-    expire_at: 1609423824
+  "type": "link",
+  "amount": 100,
+  "currency": "INR",
+  "description": "Registration Link for Gaurav Kumar",
+  "subscription_registration": {
+    "method": "card",
+    "max_amount": 500,
+    "expire_at": 1609423824
   },
-  receipt: "Receipt No. 1",
-  email_notify: 1,
-  sms_notify: 1,
-  expire_by: 1580479824,
-  notes: {
-    notes_key_1: "Tea, Earl Grey, Hot",
-    notes_key_2: "Tea, Earl Grey... decaf."
+  "receipt": "Receipt No. 1",
+  "email_notify": 1,
+  "sms_notify": 1,
+  "expire_by": 1580479824,
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey... decaf."
   }
 })
 ```
@@ -214,19 +214,19 @@ instance.subscriptions.createRegistrationLink({
 
 ```js
 instance.orders.create({
-  amount: 100,
-  currency: "INR",
-  customer_id: "cust_4xbQrmEoA5WJ01",
-  method: "card",
-  token: {
-    max_amount: 5000,
-    expire_at: 2709971120,
-    frequency: "monthly"
+  "amount": 100,
+  "currency": "INR",
+  "customer_id": "cust_4xbQrmEoA5WJ01",
+  "method": "card",
+  "token": {
+    "max_amount": 5000,
+    "expire_at": 2709971120,
+    "frequency": "monthly"
   },
-  receipt: "Receipt No. 1",
-  notes: {
-    notes_key_1: "Tea, Earl Grey, Hot",
-    notes_key_2: "Tea, Earl Grey... decaf."
+  "receipt": "Receipt No. 1",
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey... decaf."
   }
 })
 ```
@@ -275,17 +275,17 @@ instance.orders.create({
 ## Create a recurring payment
 
 ```js
-instance.payments.createRecurring({
-  email: "gaurav.kumar@example.com",
-  contact: 9123456789,
-  amount: 1000,
-  currency: "INR",
-  order_id: "order_IDts8IQBJT40aQ",
-  customer_id: "cust_Hwq7Ba6TDXl1ga",
-  token: "token_1Aa00000000001",
-  recurring: 1,
-  description: "Creating recurring payment for Gaurav Kumar",
-  notes: {
+instance.payments.createRecurringPayment({
+  "email": "gaurav.kumar@example.com",
+  "contact": 9123456789,
+  "amount": 1000,
+  "currency": "INR",
+  "order_id": "order_IDts8IQBJT40aQ",
+  "customer_id": "cust_Hwq7Ba6TDXl1ga",
+  "token": "token_1Aa00000000001",
+  "recurring": 1,
+  "description": "Creating recurring payment for Gaurav Kumar",
+  "notes": {
     "note_key 1": "Beam me up Scotty",
     "note_key 2": "Tea. Earl Gray. Hot."
   }

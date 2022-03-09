@@ -4,16 +4,16 @@
 
 ```js
 instance.qrCode.create({
-  type: "upi_qr",
-  name: "Store_1",
-  usage: "single_use",
-  fixed_amount: true,
-  payment_amount: 300,
-  description: "For Store 1",
-  customer_id: "cust_HKsR5se84c5LTO",
-  close_by: 1681615838,
-  notes: {
-    purpose: "Test UPI QR code notes"
+  "type": "upi_qr",
+  "name": "Store_1",
+  "usage": "single_use",
+  "fixed_amount": true,
+  "payment_amount": 300,
+  "description": "For Store 1",
+  "customer_id": "cust_HKsR5se84c5LTO",
+  "close_by": 1681615838,
+  "notes": {
+    "purpose": "Test UPI QR code notes"
   }
 })
 ```
@@ -61,25 +61,25 @@ instance.qrCode.create({
 
 ```js
 instance.qrCode.create({
-  type: "upi_qr",
-  name: "Store_1",
-  usage: "single_use",
-  fixed_amount: true,
-  payment_amount: 300,
-  description: "For Store 1",
-  customer_id: "cust_HKsR5se84c5LTO",
-  close_by: 1681615838,
-  notes: {
-    purpose: "Test UPI QR code notes"
+  "type": "upi_qr",
+  "name": "Store_1",
+  "usage": "single_use",
+  "fixed_amount": true,
+  "payment_amount": 300,
+  "description": "For Store 1",
+  "customer_id": "cust_HKsR5se84c5LTO",
+  "close_by": 1681615838,
+  "notes": {
+    "purpose": "Test UPI QR code notes"
   },
-  tax_invoice: {
-    number: "INV001",
-    date: 1589994898,
-    customer_name: "Gaurav Kumar",
-    business_gstin: "06AABCU9605R1ZR",
-    gst_amount: 4000,
-    cess_amount: 0,
-    supply_type: "interstate"
+  "tax_invoice": {
+    "number": "INV001",
+    "date": 1589994898,
+    "customer_name": "Gaurav Kumar",
+    "business_gstin": "06AABCU9605R1ZR",
+    "gst_amount": 4000,
+    "cess_amount": 0,
+    "supply_type": "interstate"
   }
 })
 ```
