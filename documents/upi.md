@@ -3,12 +3,12 @@
 ### Create customer
 ```js
 instance.customers.create({
-  name: "Razorpay User",
-  email: "customer@razorpay.com",
-  contact: 9123456780,
-  notes: {
-    notes_key_1: "Tea, Earl Grey, Hot",
-    notes_key_2: "Tea, Earl Grey… decaf"
+  "name": "Razorpay User",
+  "email": "customer@razorpay.com",
+  "contact": 9123456780,
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey… decaf"
   }
 })
 ```
@@ -45,22 +45,22 @@ instance.customers.create({
 
 ```js
 instance.orders.create({
-  amount: 0,
-  currency: "INR",
-  method: "upi",
-  customer_id: "cust_1Aa00000000001",
-  receipt: "Receipt No. 1",
-  notes: {
-    notes_key_1: "Beam me up Scotty",
-    notes_key_2: "Engage"
+  "amount": 0,
+  "currency": "INR",
+  "method": "upi",
+  "customer_id": "cust_1Aa00000000001",
+  "receipt": "Receipt No. 1",
+  "notes": {
+    "notes_key_1": "Beam me up Scotty",
+    "notes_key_2": "Engage"
   },
-  token: {
-    auth_type: "netbanking",
-    max_amount: 9999900,
-    expire_at: 4102444799,
-    notes: {
-      notes_key_1: "Tea, Earl Grey, Hot",
-      notes_key_2: "Tea, Earl Grey… decaf."
+  "token": {
+    "auth_type": "netbanking",
+    "max_amount": 9999900,
+    "expire_at": 4102444799,
+    "notes": {
+      "notes_key_1": "Tea, Earl Grey, Hot",
+      "notes_key_2": "Tea, Earl Grey… decaf."
     }
   }
 })
@@ -109,25 +109,25 @@ Please refer this [doc](https://razorpay.com/docs/api/recurring-payments/upi/aut
 
 ```js
 instance.subscriptions.createRegistrationLink({
-  customer: {
-    name: "Gaurav Kumar",
-    email: "gaurav.kumar@example.com",
-    contact: 9123456780
+  "customer": {
+    "name": "Gaurav Kumar",
+    "email": "gaurav.kumar@example.com",
+    "contact": 9123456780
   },
-  type: "link",
-  amount: 100,
-  currency: "INR",
-  description: "Registration Link for Gaurav Kumar",
-  subscription_registration: {
-    method: "upi",
-    max_amount: 500,
-    expire_at: 1634215992
+  "type": "link",
+  "amount": 100,
+  "currency": "INR",
+  "description": "Registration Link for Gaurav Kumar",
+  "subscription_registration": {
+    "method": "upi",
+    "max_amount": 500,
+    "expire_at": 1634215992
   },
-  receipt: "Receipt No. 5",
-  email_notify: 1,
-  sms_notify: 1,
-  expire_by: 1634215992,
-  notes: {
+  "receipt": "Receipt No. 5",
+  "email_notify": 1,
+  "sms_notify": 1,
+  "expire_by": 1634215992,
+  "notes": {
     "note_key 1": "Beam me up Scotty",
     "note_key 2": "Tea. Earl Gray. Hot."
   }
@@ -427,12 +427,12 @@ instance.customers.deleteToken(customerId,tokenId)
 
 ```js
 instance.orders.create({
-  receipt: 123,
-  amount: 100,
-  currency: "INR",
-  notes: {
-    key1: "value3",
-    key2: "value2"
+  "receipt": 123,
+  "amount": 100,
+  "currency": "INR",
+  "notes": {
+    "key1": "value3",
+    "key2": "value2"
   }
 })
 ```
@@ -472,15 +472,15 @@ instance.orders.create({
 
 ```js
 instance.payments.createRecurringPayment({
-  email: "gaurav.kumar@example.com",
-  contact: 9123456789,
-  amount: 100,
-  currency: "INR",
-  order_id: "order_1Aa00000000002",
-  customer_id: "cust_1Aa00000000001",
-  token: "token_1Aa00000000001",
-  recurring: 1,
-  description: "Creating recurring payment for Gaurav Kumar"
+  "email": "gaurav.kumar@example.com",
+  "contact": 9123456789,
+  "amount": 100,
+  "currency": "INR",
+  "order_id": "order_1Aa00000000002",
+  "customer_id": "cust_1Aa00000000001",
+  "token": "token_1Aa00000000001",
+  "recurring": 1,
+  "description": "Creating recurring payment for Gaurav Kumar"
 })
 ```
 

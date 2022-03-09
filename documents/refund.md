@@ -249,7 +249,7 @@ instance.refunds.fetch(refundId)
 
 ### Update the refund
 ```js
-instance.refunds.edit({
+instance.refunds.edit(refundId,{
   "notes": {
     "notes_key_1": "Beam me up Scotty.",
     "notes_key_2": "Engage"

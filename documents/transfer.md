@@ -3,21 +3,24 @@
 ### Create transfers from payment
 
 ```js
-instance.payments.fetch({
-  transfers: {
-    amount: 1000,
-    currency: "INR",
-    notes: {
-      name: "Gaurav Kumar",
-      roll_no: "IEC2011025"
-    },
-    linked_account_notes: [
-      "branch"
-    ],
-    on_hold: 1,
-    on_hold_until: 1671222870
-  }
-})
+instance.payments.transfer(paymentId,{
+   "transfers": [
+    {
+      "account": 'acc_HgzcrXeSLfNP9U',
+      "amount": 100,
+      "currency": "INR",
+      "notes": {
+        "name": "Gaurav Kumar",
+        "roll_no": "IEC2011025"
+      },
+      "linked_account_notes": [
+        "branch"
+      ],
+      "on_hold": 1,
+      "on_hold_until": 1671222870
+    }
+  ]
+ })
 ```
 
 **Parameters:**
@@ -63,35 +66,35 @@ instance.payments.fetch({
 
 ```js
 instance.orders.create({
-  amount: 2000,
-  currency: "INR",
-  transfers: [
+  "amount": 2000,
+  "currency": "INR",
+  "transfers": [
     {
-      account: "acc_CPRsN1LkFccllA",
-      amount: 1000,
-      currency: "INR",
-      notes: {
-        branch: "Acme Corp Bangalore North",
-        name: "Gaurav Kumar"
+      "account": "acc_CPRsN1LkFccllA",
+      "amount": 1000,
+      "currency": "INR",
+      "notes": {
+        "branch": "Acme Corp Bangalore North",
+        "name": "Gaurav Kumar"
       },
-      linked_account_notes: [
+      "linked_account_notes": [
         "branch"
       ],
-      on_hold: 1,
-      on_hold_until: 1671222870
+      "on_hold": 1,
+      "on_hold_until": 1671222870
     },
     {
-      account: "acc_CNo3jSI8OkFJJJ",
-      amount: 1000,
-      currency: "INR",
-      notes: {
-        branch: "Acme Corp Bangalore South",
-        name: "Saurav Kumar"
+      "account": "acc_CNo3jSI8OkFJJJ",
+      "amount": 1000,
+      "currency": "INR",
+      "notes": {
+        "branch": "Acme Corp Bangalore South",
+        "name": "Saurav Kumar"
       },
-      linked_account_notes: [
+      "linked_account_notes": [
         "branch"
       ],
-      on_hold: 0
+      "on_hold": 0
     }
   ]
 })
@@ -159,6 +162,7 @@ instance.orders.create({
 
 ```js
 instance.transfers.create({
+  "account": accountId,
   "amount": 500,
   "currency": "INR"
 })
@@ -239,9 +243,7 @@ instance.payments.fetchTransfer(paymentId)
 ### Fetch transfer for an order
 
 ```js
-instance.orders.transfers({
-  "expand[]": "transfers"
-})
+instance.orders.fetchTransferOrder(orderId)
 ```
 
 **Parameters:**
@@ -249,7 +251,6 @@ instance.orders.transfers({
 | Name          | Type        | Description                                 |
 |---------------|-------------|---------------------------------------------|
 | orderId*   | string      | The id of the order to be fetched  |
-| expand*   | string    | Supported value is `transfer`  |
 
 **Response:**
 ```json
@@ -339,7 +340,7 @@ instance.transfers.fetch(transferId)
 
 ```js
 instance.transfers.all({
-   recipient_settlement_id :  recipientSettlementId
+   "recipient_settlement_id":  recipientSettlementId
 })
 ```
 
@@ -381,16 +382,8 @@ instance.transfers.all({
 ### Fetch settlement details
 
 ```js
-instance.transfers.all({
-  'expand[]':'recipient_settlement'  
-})
+instance.transfers.fetchSettlements()
 ```
-
-**Parameters:**
-
-| Name          | Type        | Description                                 |
-|---------------|-------------|---------------------------------------------|
-| expand*   | string    | Supported value is `recipient_settlement`  |
 
 **Response:**
 ```json
@@ -435,8 +428,8 @@ instance.transfers.all({
 
 ```js
 instance.payments.refund(paymentId,{
-    amount : 100,
-    reverse_all : 1
+    "amount" : 100,
+    "reverse_all" : 1
 })
 ```
 
@@ -522,7 +515,7 @@ instance.payments.all({
 
 ```js
 instance.transfers.reverse(transferId,{
-    amount:100
+    "amount":100
 })
 ```
 
@@ -554,9 +547,14 @@ instance.transfers.reverse(transferId,{
 ### Hold settlements for transfers
 ```js
 instance.payments.transfer(paymentId,{
-  "amount": 500,
-  "currency": "INR",
-  "on_hold": "1"
+  "transfers": [
+    {
+      "amount": 100,
+      "account": "acc_I0QRP7PpvaHhpB",
+      "currency": "INR",
+      "on_hold": 1
+    }
+  ]
 })
 ```
 

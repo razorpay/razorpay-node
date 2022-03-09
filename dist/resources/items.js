@@ -1,5 +1,9 @@
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 var _require = require('../utils/razorpay-utils'),
     normalizeDate = _require.normalizeDate,
     normalizeBoolean = _require.normalizeBoolean;
@@ -53,9 +57,11 @@ module.exports = function (api) {
     create: function create() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
-      var amount = params.amount,
-          currency = params.currency,
-          description = params.description;
+
+      var name = params.name;
+      var amount = params.amount;
+      var currency = params.currency;
+      var description = params.description;
 
       currency = currency || 'INR';
 
@@ -64,6 +70,7 @@ module.exports = function (api) {
       }
 
       var data = Object.assign({
+        name: name,
         amount: amount,
         currency: currency,
         description: description
@@ -83,9 +90,18 @@ module.exports = function (api) {
         throw new Error('`item_id` is mandatory');
       }
 
+      var url = '/items/' + itemId,
+          active = params.active,
+          rest = _objectWithoutProperties(params, ['active']);
+
+
+      var data = Object.assign(_extends({
+        active: normalizeBoolean(active)
+      }, rest));
+
       return api.patch({
-        url: '/items/' + itemId,
-        data: params
+        url: url,
+        data: data
       }, callback);
     },
 

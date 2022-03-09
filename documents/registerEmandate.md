@@ -3,14 +3,14 @@
 ### Create customer
 ```js
 instance.customers.create({
-  name: "Gaurav Kumar",
-  contact: 9123456780,
-  email: "gaurav.kumar@example.com",
-  fail_existing: 0,
-  gstin: "29XAbbA4369J1PA",
-  notes: {
-    notes_key_1: "Tea, Earl Grey, Hot",
-    notes_key_2: "Tea, Earl Grey… decaf."
+  "name": "Gaurav Kumar",
+  "contact": 9123456780,
+  "email": "gaurav.kumar@example.com",
+  "fail_existing": 0,
+  "gstin": "29XAbbA4369J1PA",
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey… decaf."
   }
 })
 ```
@@ -46,28 +46,28 @@ instance.customers.create({
 
 ```js
 instance.orders.create({
-  amount: 100,
-  currency: "INR",
-  method: "emandate",
-  receipt: "Receipt No. 5",
-  notes: {
+  "amount": 100,
+  "currency": "INR",
+  "method": "emandate",
+  "receipt": "Receipt No. 5",
+  "notes": {
     "note_key 1": "Beam me up Scotty",
     "note_key 2": "Engage"
   },
-  token: {
-    first_payment_amount: 10000,
-    auth_type: "netbanking",
-    max_amount: 9999900,
-    expire_at: 4102444799,
-    notes: {
+  "token": {
+    "first_payment_amount": 10000,
+    "auth_type": "netbanking",
+    "max_amount": 9999900,
+    "expire_at": 4102444799,
+    "notes": {
       "note_key 1": "Tea, Earl Grey… decaf.",
       "note_key 2": "Tea. Earl Gray. Hot."
     },
-    bank_account: {
-      beneficiary_name: "Gaurav Kumar",
-      account_number: 11214311215411,
-      account_type: "savings",
-      ifsc_code: "HDFC0001233"
+    "bank_account": {
+      "beneficiary_name": "Gaurav Kumar",
+      "account_number": 11214311215411,
+      "account_type": "savings",
+      "ifsc_code": "HDFC0001233"
     }
   }
 })
@@ -99,34 +99,34 @@ Please refer this [doc](https://razorpay.com/docs/api/recurring-payments/emandat
 ### Create registration link
 
 ```js
-instance.payments.createRecurringPayment({
-  customer: {
-    name: "Gaurav Kumar",
-    email: "gaurav.kumar@example.com",
-    contact: 9123456780
+instance.payments.createRegistrationLink({
+  "customer": {
+    "name": "Gaurav Kumar",
+    "email": "gaurav.kumar@example.com",
+    "contact": 9123456780
   },
-  type: "link",
-  amount: 100,
-  currency: "INR",
-  description: "Registration Link for Gaurav Kumar",
-  subscription_registration: {
-    first_payment_amount: 100,
-    method: "emandate",
-    auth_type: "netbanking",
-    max_amount: 50000,
-    expire_at: 1634215992,
-    bank_account: {
-      beneficiary_name: "Gaurav Kumar",
-      account_number: 11214311215411,
-      account_type: "savings",
-      ifsc_code: "HDFC0001233"
+  "type": "link",
+  "amount": 100,
+  "currency": "INR",
+  "description": "Registration Link for Gaurav Kumar",
+  "subscription_registration": {
+    "first_payment_amount": 100,
+    "method": "emandate",
+    "auth_type": "netbanking",
+    "max_amount": 50000,
+    "expire_at": 1634215992,
+    "bank_account": {
+      "beneficiary_name": "Gaurav Kumar",
+      "account_number": 11214311215411,
+      "account_type": "savings",
+      "ifsc_code": "HDFC0001233"
     }
   },
-  receipt: "Receipt No. 5",
-  email_notify: 1,
-  sms_notify: 1,
-  expire_by: 1634215992,
-  notes: {
+  "receipt": "Receipt No. 5",
+  "email_notify": 1,
+  "sms_notify": 1,
+  "expire_by": 1634215992,
+  "notes": {
     "note_key 1": "Beam me up Scotty",
     "note_key 2": "Tea. Earl Gray. Hot."
   }
@@ -201,15 +201,15 @@ instance.orders.create({
 
 ```js
 instance.payments.createRecurringPayment({
-  email: "gaurav.kumar@example.com",
-  contact: 9123456789,
-  amount: 1000,
-  currency: "INR",
-  recurring: 1,
-  description: "Creating recurring payment for Gaurav Kumar",
-  notes: {
-    key1: "value3",
-    key2: "value2"
+  "email": "gaurav.kumar@example.com",
+  "contact": 9123456789,
+  "amount": 1000,
+  "currency": "INR",
+  "recurring": 1,
+  "description": "Creating recurring payment for Gaurav Kumar",
+  "notes": {
+    "key1": "value3",
+    "key2": "value2"
   }
 })
 ```

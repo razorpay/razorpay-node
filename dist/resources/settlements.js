@@ -4,8 +4,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-var _require = require('../utils/razorpay-utils'),
-    normalizeNotes = _require.normalizeNotes;
+var _require = require('../../dist/utils/razorpay-utils'),
+    normalizeBoolean = _require.normalizeBoolean;
+
+var _require2 = require('../utils/razorpay-utils'),
+    normalizeNotes = _require2.normalizeNotes;
 
 module.exports = function (api) {
 
@@ -28,9 +31,13 @@ module.exports = function (api) {
 
       var url = BASE_URL + '/ondemand',
           notes = params.notes,
-          rest = _objectWithoutProperties(params, ['notes']),
-          data = Object.assign(rest, normalizeNotes(notes));
+          settle_full_balance = params.settle_full_balance,
+          rest = _objectWithoutProperties(params, ['notes', 'settle_full_balance']);
 
+
+      var data = Object.assign(_extends({
+        settle_full_balance: normalizeBoolean(settle_full_balance)
+      }, rest), normalizeNotes(notes));
 
       return api.post({
         url: url,
@@ -115,7 +122,7 @@ module.exports = function (api) {
 
 
       /*
-       * Fetch all fund accounts
+       * Fetch all demand settlements
        *
        * @param {Object} params
        * @param {Function} callback
@@ -166,31 +173,6 @@ module.exports = function (api) {
           day: day,
           count: count,
           skip: skip
-        })
-      }, callback);
-    },
-    settlementRecon: function settlementRecon() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
-      /*
-       * Settlement Recon
-       *
-       * @param {Object} params
-       * @param {Function} callback
-       *
-       * @return {Promise}
-       */
-
-      var day = params.day,
-          url = BASE_URL + '/recon/combined';
-
-
-      return api.get({
-        url: url,
-        data: _extends({}, params, {
-          day: day
         })
       }, callback);
     }

@@ -42,7 +42,7 @@ describe('QRCODE ', () => {
           type: 'upi_qr',
           name: 'Store Front Display',
           usage : 'single_use',
-          fixed_amount : 'true',
+          fixed_amount : true,
           customer_id:"cust_Aa000000000001",
           payment_amount : 300,
           account_type:"bank_account",
@@ -319,8 +319,6 @@ describe('QRCODE ', () => {
           url: SUB_PATH + '/' + TEST_QRCODE_ID + '/payments'
         };
        
-        console.log(mockerParams.url)
-
       runParamsCheckTest({
         apiObj,
         methodName,

@@ -3,14 +3,14 @@
 ### Create customer
 ```js
 instance.customers.create({
-  name: "Gaurav Kumar",
-  contact: 9123456780,
-  email: "gaurav.kumar@example.com",
-  fail_existing: 0,
-  gstin: "29XAbbA4369J1PA",
-  notes: {
-    notes_key_1: "Tea, Earl Grey, Hot",
-    notes_key_2: "Tea, Earl Grey… decaf."
+  "name": "Gaurav Kumar",
+  "contact": 9123456780,
+  "email": "gaurav.kumar@example.com",
+  "fail_existing": 0,
+  "gstin": "29XAbbA4369J1PA",
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey… decaf."
   }
 })
 ```
@@ -46,9 +46,9 @@ instance.customers.create({
 ### Edit customer
 ```js
 instance.customers.edit(customerId,{
-  name: "Gaurav Kumar",
-  email: "Gaurav.Kumar@example.com",
-  contact: 9000000000
+  "name": "Gaurav Kumar",
+  "email": "Gaurav.Kumar@example.com",
+  "contact": 9000000000
 })
 ```
 

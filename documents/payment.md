@@ -353,15 +353,15 @@ For payment downtime by id response please click [here](https://razorpay.com/doc
 
 ```js
 instance.orders.create({
-  amount:50000,
-  currency: 'INR',
-  receipt: 'rcptid_11',
-  payment: {
-    capture : 'automatic',
-    capture_options : {
-      automatic_expiry_period : 12,
-      manual_expiry_period : 7200,
-      refund_speed : 'optimum'
+  "amount":50000,
+  "currency": "INR",
+  "receipt": "rcptid_11",
+  "payment": {
+    "capture ": "automatic",
+    "capture_options ": {
+      "automatic_expiry_period ": 12,
+      "manual_expiry_period ": 7200,
+      "refund_speed": "optimum"
     }  
   }
 })
@@ -398,18 +398,18 @@ instance.orders.create({
 
 ```js
 instance.payments.createPaymentJson({
-  amount: 100,
-  currency: "INR",
-  order_id: "order_EAkbvXiCJlwhHR",
-  email: "gaurav.kumar@example.com",
-  contact: 9090909090,
-  method: "card",
-  card:{
-    number: 4111111111111111,
-    name: "Gaurav",
-    expiry_month: 11,
-    expiry_year: 23,
-    cvv: 100
+  "amount": 100,
+  "currency": "INR",
+  "order_id": "order_EAkbvXiCJlwhHR",
+  "email": "gaurav.kumar@example.com",
+  "contact": 9090909090,
+  "method": "card",
+  "card":{
+    "number": 4111111111111111,
+    "name": "Gaurav",
+    "expiry_month": 11,
+    "expiry_year": 23,
+    "cvv": 100
   }
 })
 ```

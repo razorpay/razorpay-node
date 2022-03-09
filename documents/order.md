@@ -4,12 +4,12 @@
 
 ```js
 instance.orders.create({
-  amount: 50000,
-  currency: "INR",
-  receipt: "receipt#1",
-  notes: {
-    key1: "value3",
-    key2: "value2"
+  "amount": 50000,
+  "currency": "INR",
+  "receipt": "receipt#1",
+  "notes": {
+    "key1": "value3",
+    "key2": "value2"
   }
 })
 ```
@@ -169,7 +169,7 @@ instance.orders.fetchPayments(orderId)
 ### Update order
 
 ```js
-instance.orders.edit({
+instance.orders.edit(orderId,{
   "notes": {
     "key1": "value3",
     "key2": "value2"

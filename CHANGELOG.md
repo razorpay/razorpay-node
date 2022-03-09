@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.8.1 - 2022-03-09
+
+- fix: passing `fixed_amount` boolean issue when creating qrcode
+- fix: passing `partial_payment` boolean issue when creating qrcode
+- fix: passing `settle_full_balance` boolean issue when creating settlments
+- fix: item create api 
+- Added Card api
+- Updated Documention.
+
 ## 2.8.0 - 2021-11-21
 - Items end point API [[#235](https://github.com/razorpay/razorpay-node/pull/235)]
 - QR code end point API [[#228](https://github.com/razorpay/razorpay-node/pull/228)]

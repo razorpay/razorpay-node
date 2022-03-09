@@ -4,17 +4,17 @@
 
 ```js
 instance.plans.create({
-  period: "weekly",
-  interval: 1,
-  item: {
-    name: "Test plan - Weekly",
-    amount: 69900,
-    currency: "INR",
-    description: "Description for the test plan"
+  "period": "weekly",
+  "interval": 1,
+  "item": {
+    "name": "Test plan - Weekly",
+    "amount": 69900,
+    "currency": "INR",
+    "description": "Description for the test plan"
   },
-  notes: {
-    notes_key_1: "Tea, Earl Grey, Hot",
-    notes_key_2: "Tea, Earl Grey… decaf."
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey… decaf."
   }
 })
 ```
