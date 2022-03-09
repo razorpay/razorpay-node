@@ -156,42 +156,6 @@ describe("Fetch all settlements", () => {
       });
   });
 
-  describe("Settlement recon", () => {
-
-    let methodName = "settlementRecon",
-        params = {
-          'year':2021,
-          'month':9,
-          'day': 3
-        },
-        methodArgs = [params],
-        expectedParams = {
-          ...params
-        },
-
-        mockerParams = {
-          url: `${SUB_PATH}/recon/combined`
-        };
-
-      runParamsCheckTest({
-        apiObj,
-        methodName,
-        methodArgs,
-        mockerParams,
-        expectedParams,
-        testTitle: "Check if all params passed are being sent"
-      });
-
-      methodArgs = [{year:2021,month:9}];
-
-      runCallbackCheckTest({
-        apiObj,
-        methodName,
-        mockerParams,
-        methodArgs
-      });
-  });
-
   describe("Fetch all on-demand settlements", () => {
 
     let methodName = "fetchAllOndemandSettlement",

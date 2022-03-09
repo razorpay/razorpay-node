@@ -4,8 +4,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-var _require = require('../utils/razorpay-utils'),
-    normalizeNotes = _require.normalizeNotes;
+var _require = require('../../dist/utils/razorpay-utils'),
+    normalizeBoolean = _require.normalizeBoolean;
+
+var _require2 = require('../utils/razorpay-utils'),
+    normalizeNotes = _require2.normalizeNotes;
 
 module.exports = function (api) {
 
@@ -28,9 +31,13 @@ module.exports = function (api) {
 
       var url = BASE_URL,
           notes = params.notes,
-          rest = _objectWithoutProperties(params, ['notes']),
-          data = Object.assign(rest, normalizeNotes(notes));
+          fixed_amount = params.fixed_amount,
+          rest = _objectWithoutProperties(params, ['notes', 'fixed_amount']);
 
+
+      var data = Object.assign(_extends({
+        fixed_amount: normalizeBoolean(fixed_amount)
+      }, rest), normalizeNotes(notes));
 
       return api.post({
         url: url,
