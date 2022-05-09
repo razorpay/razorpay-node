@@ -596,7 +596,7 @@ instance.payments.transfer(paymentId,{
 
 ### Modify settlement hold for transfers
 ```js
-instance.transfers.edit(paymentId,{
+instance.transfers.edit(transferId, {
   "on_hold": "1",
   "on_hold_until": "1679691505"
 })
@@ -606,8 +606,8 @@ instance.transfers.edit(paymentId,{
 
 | Name          | Type        | Description                                 |
 |---------------|-------------|---------------------------------------------|
-| paymentId*   | string      | The id of the payment to be fetched  |
-| transfers   | array     | All parameters listed here https://razorpay.com/docs/api/route/#hold-settlements-for-transfers are supported |
+| transferId*   | string      | The id of the transfer to be modified       |
+| parameters    | array       | All parameters listed here https://razorpay.com/docs/api/payments/route/#modify-settlement-hold-for-transfers are supported |
 
 **Response:**
 ```json
