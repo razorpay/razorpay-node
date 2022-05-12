@@ -21,6 +21,7 @@ instance.customers.create({
 |---------------|-------------|---------------------------------------------|
 | name*          | string      | Name of the customer                        |
 | email        | string      | Email of the customer                       |
+| fail_existing | string | If a customer with the same details already exists, the request throws an exception by default. Possible value is `0` or `1`|
 | contact      | string      | Contact number of the customer              |
 | notes         | object      | A key-value pair                            |
 
@@ -81,11 +82,13 @@ instance.orders.create({
 | currency*        | string  | Currency of the order. Currently only `INR` is supported.                      |
 | method*        | string  | The authorization method. In this case the value will be `emandate`                      |
 | receipt         | string  | Your system order reference id.                                              |
+| payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
 | notes           | object  | A key-value pair                                                             |
 | token           | object  | A key-value pair                                                             |
 
 **Response:**
 Create order response please click [here](https://razorpay.com/docs/api/recurring-payments/emandate/authorization-transaction/#112-create-an-order)
+
 -------------------------------------------------------------------------------------------------------
 
 ### Create an Authorization Payment
@@ -144,6 +147,7 @@ instance.subscriptions.createRegistrationLink({
 
 **Response:**
 Create registration link response please click [here](https://razorpay.com/docs/api/recurring-payments/emandate/authorization-transaction/#121-create-a-registration-link)
+
 -------------------------------------------------------------------------------------------------------
 
 ### Send/Resend notifications
@@ -385,6 +389,7 @@ instance.orders.create({
 | currency*        | string  | Currency of the order. Currently only `INR` is supported.                      |
 | receipt         | string  | Your system order reference id.                                              |
 | notes           | object  | A key-value pair                                                             |
+| payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
 
 **Response:**
 ```json
@@ -440,8 +445,8 @@ instance.payments.createRecurringPayment({
 | customer_id*        | string  | The `customer_id` for the customer you want to charge.  |
 | token*        | string  | The `token_id` generated when the customer successfully completes the authorization payment. Different payment instruments for the same customer have different `token_id`.|
 | recurring*        | string  | Determines if recurring payment is enabled or not. Possible values:<br>* `1` - Recurring is enabled.* `0` - Recurring is not enabled.|
-| description*        | string  | A user-entered description for the payment.|
-| notes*        | object  | Key-value pair that can be used to store additional information about the entity. Maximum 15 key-value pairs, 256 characters (maximum) each. |
+| description | string  | A user-entered description for the payment.|
+| notes       | object  | Key-value pair that can be used to store additional information about the entity. Maximum 15 key-value pairs, 256 characters (maximum) each. |
 
 **Response:**
 ```json

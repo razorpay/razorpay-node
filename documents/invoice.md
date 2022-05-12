@@ -4,8 +4,9 @@
 
 Request #1
 In this example, an invoice is created using the customer and item details. Here, the customer and item are created while creating the invoice.
+
 ```js
-instance.orders.create({
+instance.invoice.create({
   "type": "invoice",
   "description": "Invoice for the month of January 2020",
   "partial_payment": true,
@@ -46,8 +47,24 @@ instance.orders.create({
 })
 ```
 
+**Parameters:**
+
+| Name            | Type    | Description                                                                  |
+|-----------------|---------|------------------------------------------------------------------------------|
+|type*          | string | entity type (here its invoice)                                               |
+|description        | string  | A brief description of the invoice.                      |
+|customer_id           | string  | customer id for which invoice need be raised                     |
+|customer           | array  | customer details in a array format                     |
+|line_items*           | array  | Details of the line item that is billed in the invoice.  |
+|expire_by           | array  | Details of the line item that is billed in the invoice.  |
+|sms_notify           | array  | Details of the line item that is billed in the invoice.  |
+|email_notify           | array  | Details of the line item that is billed in the invoice.  |
+|partial_payment | boolean  | Indicates whether customers can make partial payments on the invoice . Possible values: true - Customer can make partial payments. false (default) - Customer cannot make partial payments. |
+| currency*   | string  | The currency of the payment (defaults to INR)  |
+
 Request #2
 In this example, an invoice is created using existing `customer_id` and `item_id`
+
 ```js
 instance.invoices.create({
   "type": "invoice",

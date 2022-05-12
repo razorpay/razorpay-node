@@ -21,7 +21,8 @@ instance.orders.create({
 | amount*          | integer | Amount of the order to be paid                                               |
 | currency*        | string  | Currency of the order. Currently only `INR` is supported.                      |
 | receipt         | string  | Your system order reference id.                                              |
-| notes           | object  | A key-value pair                                                             |
+| notes           | object  | A key-value pair  |
+|partial_payment | boolean  | Indicates whether customers can make partial payments on the invoice . Possible values: true - Customer can make partial payments. false (default) - Customer cannot make partial payments. |
 
 **Response:**
 

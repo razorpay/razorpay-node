@@ -164,7 +164,7 @@ module.exports = function (api) {
       var day = params.day,
           count = params.count,
           skip = params.skip,
-          url = BASE_URL + '/report/combined';
+          url = BASE_URL + '/recon/combined';
 
 
       return api.get({

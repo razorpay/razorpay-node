@@ -76,14 +76,25 @@ instance.orders.create({
 **Parameters:**
 | Name            | Type    | Description                                                                  |
 |-----------------|---------|------------------------------------------------------------------------------|
-| amount*          | integer | Amount of the order to be paid                                               |
-| currency*        | string  | Currency of the order. Currently only `INR` is supported.                      |
-| method*        | string  | The authorization method. In this case the value will be `emandate`                      |
-| receipt         | string  | Your system order reference id.                                              |
-| notes           | object  | A key-value pair                                                             |
-| token           | object  | A key-value pair                                                             |
+| amount*   | integer      | The amount to be captured (should be equal to the authorized amount, in paise) |
+| currency*   | string  | The currency of the payment (defaults to INR)  |
+| customerId*   | string      | The id of the customer to be fetched |
+| method*      | string  | Payment method used to make the registration transaction. Possible value is `nach`.  |
+| receipt      | string  | Your system order reference id.  |
+| token.auth_type*  | string  | Possible value is `physical`|
+| token.max_amount  | integer  | Use to set the maximum amount per debit request. The value can range from `500` - `1000000000` (1cr, default value)  |
+| token.expire_at  | integer | The timestamp, in Unix format, till when the  registration link should expire |
+| token.notes  | object  | A key-value pair  |
+| bank.account_number*  | string  | Customer's bank account number.  |
+| bank.ifsc_code*  | string  | Customer's bank IFSC  |
+| bank.beneficiary_name*  | string  |  Customer's name  |
+| bank.account_type*  | string  | Customer's bank account. Possible value is `saving`(default), `current`, `cc`, `nre`, `nro`  |
+| nach.form_reference1  | string  | A user-entered reference that appears on the NACH form  |
+| nach.form_reference2  | string  | A user-entered reference that appears on the NACH form  |
+| nach.description  | string  | All keys listed  |
+| notes | object  | A key-value pair  |
 
-All parameters listed [here](https://razorpay.com/docs/api/route/#create-transfers-from-payments) are supported
+All parameters listed [here](https://razorpay.com/docs/api/payments/recurring-payments/paper-nach/create-authorization-transaction/#112-create-an-order) are supported
 
 **Response:**
 ```json
@@ -659,8 +670,8 @@ instance.payments.createRecurringPayment({
 | customer_id*        | string  | The `customer_id` for the customer you want to charge.  |
 | token*        | string  | The `token_id` generated when the customer successfully completes the authorization payment. Different payment instruments for the same customer have different `token_id`.|
 | recurring*        | string  | Determines if recurring payment is enabled or not. Possible values:<br>* `1` - Recurring is enabled.* `0` - Recurring is not enabled.|
-| description*        | string  | A user-entered description for the payment.|
-| notes*        | object  | Key-value pair that can be used to store additional information about the entity. Maximum 15 key-value pairs, 256 characters (maximum) each. |
+| description       | string  | A user-entered description for the payment.|
+| notes        | object  | Key-value pair that can be used to store additional information about the entity. Maximum 15 key-value pairs, 256 characters (maximum) each. |
 
 **Response:**
 ```json

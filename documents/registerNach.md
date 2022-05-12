@@ -88,7 +88,18 @@ instance.orders.create({
 | customerId*   | string      | The id of the customer to be fetched |
 | method*      | string  | Payment method used to make the registration transaction. Possible value is `nach`.  |
 | receipt      | string  | Your system order reference id.  |
-| token  | object  | All keys listed [here](https://razorpay.com/docs/api/recurring-payments/paper-nach/auto-debit/#112-create-an-order) are supported |
+| payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
+| token.auth_type*  | string  | Possible value is `physical`|
+| token.max_amount  | integer  | Use to set the maximum amount per debit request. The value can range from `500` - `1000000000` (1cr, default value)  |
+| token.expire_at  | integer | The timestamp, in Unix format, till when the  registration link should expire |
+| token.notes  | object  | A key-value pair  |
+| bank.account_number*  | string  | Customer's bank account number.  |
+| bank.ifsc_code*  | string  | Customer's bank IFSC  |
+| bank.beneficiary_name*  | string  |  Customer's name  |
+| bank.account_type*  | string  | Customer's bank account. Possible value is `saving`(default), `current`, `cc`, `nre`, `nro`  |
+| nach.form_reference1  | string  | A user-entered reference that appears on the NACH form  |
+| nach.form_reference2  | string  | A user-entered reference that appears on the NACH form  |
+| nach.description  | string  | All keys listed  |
 | notes | object  | A key-value pair  |
 
 **Response:**
@@ -310,6 +321,7 @@ instance.payments.createRegistrationLink({
 instance.orders.create({
   "amount": 100,
   "currency": "INR",
+  "payment_capture": true,
   "receipt": "Receipt No. 1",
   "notes": {
     "key1": "value3",
@@ -324,6 +336,7 @@ instance.orders.create({
 | amount*   | integer      | The amount to be captured (should be equal to the authorized amount, in paise) |
 | currency*   | string  | The currency of the payment (defaults to INR)  |
 | receipt      | string  | Your system order reference id.  |
+| payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
 | notes | object  | A key-value pair  |
 
 **Response:**

@@ -80,7 +80,8 @@ instance.orders.create({
 | amount*   | integer      | The amount to be captured (should be equal to the authorized amount, in paise) |
 | currency*   | string  | The currency of the payment (defaults to INR)  |
 | customerId*   | string      | The id of the customer to be fetched |
-| method*      | string  | Payment method used to make the registration transaction. Possible value is `emandate`.  |
+| payment_capture* |  boolean  | Indicates whether payment status should be changed to `captured` automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically.|
+| method*      | string  | Payment method used to make the registration transaction. Possible value is `emandate`. |
 | receipt      | string  | Your system order reference id.  |
 | token  | object  | All keys listed [here](https://razorpay.com/docs/api/recurring-payments/emandate/auto-debit/#112-create-an-order) are supported |
 | notes | object  | A key-value pair  |
@@ -144,6 +145,7 @@ instance.payments.createRegistrationLink({
 | description*  | string      | A brief description of the payment.   |
 | subscription_registration   | object  | All keys listed [here](https://razorpay.com/docs/api/recurring-payments/emandate/auto-debit/#121-create-a-registration-link) are supported  |
 | receipt      | string  | Your system order reference id.  |
+| payment_capture* |  boolean  | Indicates whether payment status should be changed to `captured` automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically.|
 | sms_notify  | boolean  | SMS notifications are to be sent by Razorpay (default : 1)  |
 | email_notify | boolean  | Email notifications are to be sent by Razorpay (default : 1)  |
 | expire_by    | integer | The timestamp, in Unix format, till when the customer can make the authorization payment. |
@@ -151,6 +153,7 @@ instance.payments.createRegistrationLink({
 
 **Response:**
 For create registration link response please click [here](https://razorpay.com/docs/api/recurring-payments/emandate/auto-debit/#12-using-a-registration-link)
+
 -------------------------------------------------------------------------------------------------------
 
 ## Create an order to charge the customer

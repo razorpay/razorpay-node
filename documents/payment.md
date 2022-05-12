@@ -415,7 +415,20 @@ instance.payments.createPaymentJson({
 ```
 
 **Parameters:**
- please refer this [doc](https://razorpay.com/docs/payment-gateway/s2s-integration/payment-methods/) for params
+| Name        | Type    | Description                          |
+|-------------|---------|--------------------------------------|
+| amount*          | integer | Amount of the order to be paid  |
+| currency*   | string  | The currency of the payment (defaults to INR)                                  |
+| order_id*        | string  | The unique identifier of the order created. |
+| email*        | string      | Email of the customer                       |
+| contact*      | string      | Contact number of the customer              |
+| method*      | string  | Possible value is `card`, `netbanking`, `wallet`,`emi`, `upi`, `cardless_emi`, `paylater`.  |
+| card      | array      | All keys listed [here](https://razorpay.com/docs/payments/payment-gateway/s2s-integration/payment-methods/#supported-payment-fields) are supported  |
+| bank      | string      | Bank code of the bank used for the payment. Required if the method is `netbanking`.|
+| bank_account | array      | All keys listed [here](https://razorpay.com/docs/payments/customers/customer-fund-account-api/#create-a-fund-account) are supported |
+| vpa      | string      | Virtual payment address of the customer. Required if the method is `upi`. |
+| wallet | string      | Wallet code for the wallet used for the payment. Required if the method is `wallet`. |
+| notes | array  | A key-value pair  |
 
 **Response:** <br>
 ```json
