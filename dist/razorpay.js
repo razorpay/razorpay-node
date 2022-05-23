@@ -33,10 +33,6 @@ var Razorpay = function () {
       throw new Error('`key_id` is mandatory');
     }
 
-    if (!key_secret) {
-      throw new Error('`key_secret` is mandatory');
-    }
-
     this.key_id = key_id;
     this.key_secret = key_secret;
 
