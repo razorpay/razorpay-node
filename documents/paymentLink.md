@@ -11,6 +11,8 @@ instance.paymentLink.create({
   "currency": "INR",
   "accept_partial": true,
   "first_min_partial_amount": 100,
+  "expire_by": 1691097057,
+  "reference_id": "TS1989",
   "description": "For XYZ purpose",
   "customer": {
     "name": "Gaurav Kumar",
@@ -64,9 +66,11 @@ instance.paymentLink.create({
 |upi_link*          | boolean | boolean Must be set to true   //   to creating UPI Payment Link only                                     |
 |amount*        | integer  | Amount to be paid using the Payment Link.                     |
 |currency           | string  |  A three-letter ISO code for the currency in which you want to accept the payment. For example, INR.                     |
+|accept_partial        | boolean  | Indicates whether customers can make partial payments using the Payment Link. Possible values: true - Customer can make partial payments. false (default) - Customer cannot make partial payments. // UPI Payment Link is not supported partial payment  |
 |description           | string  | A brief description of the Payment Link                     |
-|reference_id           | string  | AReference number tagged to a Payment Link.                      |
-|customer           | object  | name, email, contact                 |
+|first_min_partial_amount           | integer  |Minimum amount, in currency subunits, that must be paid by the customer as the first partial payment. // UPI Payment Link is not supported partial payment  |
+|reference_id           | string  | Reference number tagged to a Payment Link.                      |
+|customer           | object  | All parameters listed [here](https://razorpay.com/docs/api/payments/payment-links/#sample-codes-for-standard-payment-links) are supported                 |
 |expire_by           | integer  | Timestamp, in Unix, at which the Payment Link will expire. By default, a Payment Link will be valid for six months from the date of creation.                     |
 |notify           | object  | sms or email (boolean)                     |
 |notes           | json object  | Key-value pair that can be used to store additional information about the entity. Maximum 15 key-value pairs, 256 characters (maximum) each. For example, "note_key": "Beam me up Scotty”                     |
@@ -79,6 +83,12 @@ For create payment link response please click [here](https://razorpay.com/docs/a
 ### Fetch all payment link
 
 ```js
+var instance = new Razorpay({ 
+  key_id: 'YOUR_KEY_ID', 
+  key_secret: 'YOUR_SECRET', 
+  headers: {'Content-Type': 'application/json'} 
+})
+
 instance.paymentLink.all()
 ```
 
@@ -114,7 +124,7 @@ For fetch specific payment link response please click [here](https://razorpay.co
 ### Update payment link
 
 ```js
-instance.paymentLink.edit(paymentLinkId{
+instance.paymentLink.edit(paymentLinkId, {
     "reference_id": "TS35",
     "expire_by": 1653347540,
     "reminder_enable":false,
@@ -180,14 +190,15 @@ instance.paymentLink.notifyBy(paymentLinkId, medium)
 
 ```js
 instance.paymentLink.create({
-  "amount": 20000,
+  "amount": 1500,
   "currency": "INR",
   "accept_partial": false,
-  "description": "For XYZ purpose",
+  "reference_id": "#aasasw8",
+  "description": "Payment for policy no #23456",
   "customer": {
     "name": "Gaurav Kumar",
-    "email": "gaurav.kumar@example.com",
-    "contact": "+919999999999"
+    "contact": "+919999999999",
+    "email": "gaurav.kumar@example.com"
   },
   "notify": {
     "sms": true,
@@ -195,20 +206,34 @@ instance.paymentLink.create({
   },
   "reminder_enable": true,
   "options": {
-    "order": [
-      {
-        "account": "acc_CNo3jSI8OkFJJJ",
-        "amount": 500,
-        "currency": "INR",
-        "notes": {
-          "branch": "Acme Corp Bangalore North",
-          "name": "Saurav Kumar",
+    "order": {
+      "transfers": [
+        {
+          "account": "acc_CPRsN1LkFccllA",
+          "amount": 500,
+          "currency": "INR",
+          "notes": {
+            "branch": "Acme Corp Bangalore North",
+            "name": "Bhairav Kumar"
+          },
+          "linked_account_notes": [
+            "branch"
+          ]
+        },
+        {
+          "account": "acc_CNo3jSI8OkFJJJ",
+          "amount": 500,
+          "currency": "INR",
+          "notes": {
+            "branch": "Acme Corp Bangalore South",
+            "name": "Saurav Kumar"
+          },
           "linked_account_notes": [
             "branch"
           ]
         }
-      }
-    ]
+      ]
+    }
   }
 })
 ```
@@ -218,7 +243,7 @@ instance.paymentLink.create({
 | Name            | Type    | Description                                                                  |
 |-----------------|---------|------------------------------------------------------------------------------|
 |amount*        | integer  | Amount to be paid using the Payment Link.                     |
-|options*           | array  |  Options to configure the transfer in the Payment Link. Parent parameter under which the order child parameter must be passed.                     |
+|options*           | array  |  All parameters listed [here](https://razorpay.com/docs/api/payments/payment-links/transfer-payments/) are supported |
 
 **Response:**
 ```json
@@ -484,38 +509,31 @@ instance.paymentLink.create({
 ```json
 {
   "accept_partial": true,
-  "amount": 1000,
+  "amount": 500,
   "amount_paid": 0,
-  "callback_method": "",
-  "callback_url": "",
   "cancelled_at": 0,
-  "created_at": 1596193199,
+  "created_at": 1654850626,
   "currency": "INR",
   "customer": {
     "contact": "+919999999999",
     "email": "gaurav.kumar@example.com",
     "name": "Gaurav Kumar"
   },
-  "deleted_at": 0,
-  "description": "Payment for policy no #23456",
+  "description": "For XYZ purpose",
   "expire_by": 0,
   "expired_at": 0,
   "first_min_partial_amount": 100,
-  "id": "plink_FL4vbXVKfW7PAz",
+  "id": "plink_JfjKVdpNcgHI4Q",
   "notes": null,
-  "notify": {
-    "email": true,
-    "sms": true
-  },
+  "notify": { "email": true, "sms": true },
   "payments": null,
-  "reference_id": "#42321",
+  "reference_id": "",
   "reminder_enable": true,
   "reminders": [],
-  "short_url": "https://rzp.io/i/F4GC9z1",
-  "source": "",
-  "source_id": "",
+  "short_url": "https://rzp.io/i/uNTBbeYYY",
   "status": "created",
-  "updated_at": 1596193199,
+  "updated_at": 1654850626,
+  "upi_link": false,
   "user_id": ""
 }
 ```

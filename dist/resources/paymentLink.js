@@ -132,10 +132,7 @@ module.exports = function paymentLinkApi(api) {
       }, callback);
     },
     edit: function edit(paymentLinkId, params, callback) {
-      var notes = params.notes,
-          rest = _objectWithoutProperties(params, ["notes"]);
-
-      var data = Object.assign(rest, normalizeNotes(notes));
+      var data = params;
 
       return api.patch({
         url: BASE_URL + "/" + paymentLinkId,
