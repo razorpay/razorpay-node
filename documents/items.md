@@ -23,12 +23,22 @@ instance.items.create({
 **Response:**
 ```json
 {
-  "id": "item_7Oxp4hmm6T4SCn",
+  "id": "item_Jf5MlwKlPMOKBV",
   "active": true,
   "name": "Book / English August",
   "description": "An indian story, Booker prize winner.",
   "amount": 20000,
-  "currency": "INR"
+  "unit_amount": 20000,
+  "currency": "INR",
+  "type": "invoice",
+  "unit": null,
+  "tax_inclusive": false,
+  "hsn_code": null,
+  "sac_code": null,
+  "tax_rate": null,
+  "tax_id": null,
+  "tax_group_id": null,
+  "created_at": 1654709890
 }
 ```
 
@@ -133,12 +143,22 @@ instance.items.edit(itemId,{
 **Response:**
 ```json
 {
-  "id": "item_7Oy8OMV6BdEAac",
+  "id": "item_JInaSLODeDUQiQ",
   "active": true,
   "name": "Book / Ignited Minds - Updated name!",
-  "description": "New descirption too. :)",
-  "amount": 15000,
-  "currency": "INR"
+  "description": "New descirption too. :).",
+  "amount": 20000,
+  "unit_amount": 20000,
+  "currency": "INR",
+  "type": "invoice",
+  "unit": null,
+  "tax_inclusive": false,
+  "hsn_code": null,
+  "sac_code": null,
+  "tax_rate": null,
+  "tax_id": null,
+  "tax_group_id": null,
+  "created_at": 1649843796
 }
 ```
 -------------------------------------------------------------------------------------------------------
