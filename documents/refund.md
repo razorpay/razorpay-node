@@ -40,7 +40,8 @@ instance.payments.refund(paymentId,{
   "created_at": 1597078866,
   "batch_id": null,
   "status": "processed",
-  "speed_processed": "normal"
+  "speed_processed": "normal",
+  "speed_requested": "normal"
 }
 ```
 -------------------------------------------------------------------------------------------------------
@@ -101,8 +102,8 @@ instance.payments.fetchMultipleRefund(paymentId,option)
 | paymentId*  | string      | The id of the payment                       |
 | from  | timestamp | timestamp after which the payments were created  |
 | to    | timestamp | timestamp before which the payments were created |
-| count | integer   | number of payments to fetch (default: 10)        |
-| skip  | integer   | number of payments to be skipped (default: 0)    |
+| count | integer   | number of refunds to fetch (default: 10)        |
+| skip  | integer   | number of refunds to be skipped (default: 0)    |
 
 **Refund:**
 ```json
