@@ -73,13 +73,16 @@ describe('SETTLEMENTS ', () => {
       methodArgs = [TEST_SETTLEMENT_ID],
       mockerParams = {
         url: `${SUB_PATH}/ondemand/${TEST_SETTLEMENT_ID}`
-      };
+      },
+      expectedParams = {};
 
-      runCallbackCheckTest({
+      runParamsCheckTest({
         apiObj,
         methodName,
+        methodArgs,
         mockerParams,
-        methodArgs
+        expectedParams,
+        testTitle: "Check if all params passed are being sent"
       });
   })
 
@@ -134,7 +137,7 @@ describe("Fetch all settlements", () => {
         },
 
         mockerParams = {
-          url: `${SUB_PATH}/report/combined`
+          url: `${SUB_PATH}/recon/combined`
         };
 
       runParamsCheckTest({
