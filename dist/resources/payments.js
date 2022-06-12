@@ -23,6 +23,7 @@ module.exports = function (api) {
           count = params.count,
           skip = params.skip;
 
+      var expand = void 0;
 
       if (from) {
         from = normalizeDate(from);
@@ -30,6 +31,10 @@ module.exports = function (api) {
 
       if (to) {
         to = normalizeDate(to);
+      }
+
+      if (params.hasOwnProperty("expand[]")) {
+        expand = { "expand[]": params["expand[]"] };
       }
 
       count = Number(count) || 10;
@@ -41,17 +46,30 @@ module.exports = function (api) {
           from: from,
           to: to,
           count: count,
-          skip: skip
+          skip: skip,
+          expand: expand
         }
       }, callback);
     },
-    fetch: function fetch(paymentId, callback) {
+    fetch: function fetch(paymentId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+
+      var expand = void 0;
+
       if (!paymentId) {
         throw new Error('`payment_id` is mandatory');
       }
 
+      if (params.hasOwnProperty("expand[]")) {
+        expand = { "expand[]": params["expand[]"] };
+      }
+
       return api.get({
-        url: '/payments/' + paymentId
+        url: '/payments/' + paymentId,
+        data: {
+          expand: expand
+        }
       }, callback);
     },
     capture: function capture(paymentId, amount, currency, callback) {
