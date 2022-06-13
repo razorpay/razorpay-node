@@ -47,33 +47,34 @@ instance.customers.create({
 
 ```js
 instance.orders.create({
-  "amount": 100,
-  "currency": "INR",
-  "method": "nach",
-  "receipt": "Receipt No. 5",
+  "amount":0,
+  "currency":"INR",
+  "method":"nach",
+  "customer_id": "cust_1Aa00000000001",
+  "receipt": "Receipt No. 1",
   "notes": {
-    "note_key 1": "Beam me up Scotty",
-    "note_key 2": "Tea. Earl Gray. Hot."
+    "notes_key_1": "Beam me up Scotty",
+    "notes_key_2": "Engage"
   },
-  "token": {
+  "token":{
     "first_payment_amount": 10000,
-    "auth_type": "physical",
-    "max_amount": 50000,
-    "expire_at": 1634215992,
+    "auth_type":"physical",
+    "max_amount":10000000,
+    "expire_at":1580480689,
     "notes": {
-      "note_key 1": "Tea, Earl Grey… decaf.",
-      "note_key 2": "Tea. Earl Gray. Hot."
+      "notes_key_1": "Tea, Earl Grey, Hot",
+      "notes_key_2": "Tea, Earl Grey… decaf."
     },
-    "bank_account": {
-      "beneficiary_name": "Gaurav Kumar",
-      "account_number": 11214311215411,
-      "account_type": "savings",
-      "ifsc_code": "HDFC0001233"
+    "bank_account":{
+      "account_number":"11214311215411",
+      "ifsc_code":"HDFC0000001",
+      "beneficiary_name":"Gaurav Kumar",
+      "account_type":"savings"
     },
-    "nach": {
-      "form_reference1": "Recurring Payment for Gaurav Kumar",
-      "form_reference2": "Method Paper NACH",
-      "description": "Paper NACH Gaurav Kumar"
+    "nach":{
+      "form_reference1":"Recurring Payment for Gaurav Kumar",
+      "form_reference2":"Method Paper NACH",
+      "description":"Paper NACH Gaurav Kumar"
     }
   }
 })
@@ -89,17 +90,7 @@ instance.orders.create({
 | method*      | string  | Payment method used to make the registration transaction. Possible value is `nach`.  |
 | receipt      | string  | Your system order reference id.  |
 | payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
-| token.auth_type*  | string  | Possible value is `physical`|
-| token.max_amount  | integer  | Use to set the maximum amount per debit request. The value can range from `500` - `1000000000` (1cr, default value)  |
-| token.expire_at  | integer | The timestamp, in Unix format, till when the  registration link should expire |
-| token.notes  | object  | A key-value pair  |
-| bank.account_number*  | string  | Customer's bank account number.  |
-| bank.ifsc_code*  | string  | Customer's bank IFSC  |
-| bank.beneficiary_name*  | string  |  Customer's name  |
-| bank.account_type*  | string  | Customer's bank account. Possible value is `saving`(default), `current`, `cc`, `nre`, `nro`  |
-| nach.form_reference1  | string  | A user-entered reference that appears on the NACH form  |
-| nach.form_reference2  | string  | A user-entered reference that appears on the NACH form  |
-| nach.description  | string  | All keys listed  |
+| token  | object  | All keys listed [here](https://razorpay.com/docs/api/payments/recurring-payments/paper-nach/auto-debit#112-create-an-order) are supported |
 | notes | object  | A key-value pair  |
 
 **Response:**
