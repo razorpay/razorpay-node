@@ -46,28 +46,29 @@ instance.customers.create({
 
 ```js
 instance.orders.create({
-  "amount": 100,
+  "amount": 0,
   "currency": "INR",
   "method": "emandate",
-  "receipt": "Receipt No. 5",
+  "customer_id": "cust_1Aa00000000001",
+  "receipt": "Receipt No. 1",
   "notes": {
-    "note_key 1": "Beam me up Scotty",
-    "note_key 2": "Engage"
+    "notes_key_1": "Beam me up Scotty",
+    "notes_key_2": "Engage"
   },
   "token": {
-    "first_payment_amount": 10000,
+    "first_payment_amount": 100,
     "auth_type": "netbanking",
     "max_amount": 9999900,
     "expire_at": 4102444799,
     "notes": {
-      "note_key 1": "Tea, Earl Grey… decaf.",
-      "note_key 2": "Tea. Earl Gray. Hot."
+      "notes_key_1": "Tea, Earl Grey, Hot",
+      "notes_key_2": "Tea, Earl Grey… decaf."
     },
     "bank_account": {
       "beneficiary_name": "Gaurav Kumar",
-      "account_number": 11214311215411,
+      "account_number": "1121431121541121",
       "account_type": "savings",
-      "ifsc_code": "HDFC0001233"
+      "ifsc_code": "HDFC0000001"
     }
   }
 })
@@ -100,33 +101,33 @@ Please refer this [doc](https://razorpay.com/docs/api/recurring-payments/emandat
 ### Create registration link
 
 ```js
-instance.payments.createRegistrationLink({
+instance.subscriptions.createRegistrationLink({
   "customer": {
     "name": "Gaurav Kumar",
     "email": "gaurav.kumar@example.com",
-    "contact": 9123456780
+    "contact": "9123456780"
   },
   "type": "link",
-  "amount": 100,
+  "amount": 0,
   "currency": "INR",
-  "description": "Registration Link for Gaurav Kumar",
+  "description": "12 p.m. Meals",
   "subscription_registration": {
     "first_payment_amount": 100,
     "method": "emandate",
     "auth_type": "netbanking",
+    "expire_at": 1580480689,
     "max_amount": 50000,
-    "expire_at": 1634215992,
     "bank_account": {
       "beneficiary_name": "Gaurav Kumar",
-      "account_number": 11214311215411,
+      "account_number": "11214311215411",
       "account_type": "savings",
       "ifsc_code": "HDFC0001233"
     }
   },
-  "receipt": "Receipt No. 5",
-  "email_notify": 1,
+  "receipt": "Receipt no. 1",
+  "expire_by": 1880480689,
   "sms_notify": 1,
-  "expire_by": 1634215992,
+  "email_notify": 1,
   "notes": {
     "note_key 1": "Beam me up Scotty",
     "note_key 2": "Tea. Earl Gray. Hot."
@@ -162,6 +163,7 @@ For create registration link response please click [here](https://razorpay.com/d
 instance.orders.create({
   "amount": "100",
   "currency": "INR",
+  "payment_capture": true,
   "receipt": "Receipt No. 1",
   "notes": {
     "key1": "value3",
@@ -176,6 +178,7 @@ instance.orders.create({
 | amount*   | integer      | The amount to be captured (should be equal to the authorized amount, in paise) |
 | currency*   | string  | The currency of the payment (defaults to INR)  |
 | receipt      | string  | Your system order reference id.  |
+| payment_capture* |  boolean  | Indicates whether payment status should be changed to `captured` automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically.|
 | notes | object  | A key-value pair  |
 
 **Response:**
@@ -344,8 +347,44 @@ instance.payments.fetch(paymentId)
 | paymentId*   | string      | The id of the payment to be fetched |
 
 **Response:**
-For fetch token by payment id response please click [here](https://razorpay.com/docs/api/recurring-payments/emandate/auto-debit/#21-fetch-token-by-payment-id)
-
+```json
+{
+    "id": "pay_Jfmt23iAUaxyV3",
+    "entity": "payment",
+    "amount": 0,
+    "currency": "INR",
+    "status": "captured",
+    "order_id": "order_JfmsUQyMCg7Bvz",
+    "invoice_id": "inv_JfmsUQAF4i4kqJ",
+    "international": false,
+    "method": "emandate",
+    "amount_refunded": 0,
+    "refund_status": null,
+    "captured": true,
+    "description": "Invoice #inv_JfmsUQAF4i4kqJ",
+    "card_id": null,
+    "bank": "HDFC",
+    "wallet": null,
+    "vpa": null,
+    "email": "test@test.com",
+    "contact": "+919999999999",
+    "customer_id": "cust_DzYEzfJLV03rkp",
+    "token_id": "token_Jfmt28DxdV3VIb",
+    "notes": {
+        "note_key 1": "Beam me up Scotty",
+        "note_key 2": "Tea. Earl Gray. Hot."
+    },
+    "fee": 2360,
+    "tax": 360,
+    "error_code": null,
+    "error_description": null,
+    "error_source": null,
+    "error_step": null,
+    "error_reason": null,
+    "acquirer_data": {},
+    "created_at": 1654863152
+}
+```
 -------------------------------------------------------------------------------------------------------
 
 ## Fetch tokens by customer id
