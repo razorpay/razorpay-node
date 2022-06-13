@@ -157,7 +157,7 @@ Please refer this [doc](https://razorpay.com/docs/api/recurring-payments/paper-n
 ### Create registration link
 
 ```js
-instance.payments.createRegistrationLink({
+instance.subscriptions.createRegistrationLink({
   "customer": {
     "name": "Gaurav Kumar",
     "email": "gaurav.kumar@example.com",
