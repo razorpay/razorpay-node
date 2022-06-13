@@ -52,7 +52,9 @@ instance.qrCode.create({
     "purpose": "Test UPI QR code notes"
   },
   "customer_id": "cust_HKsR5se84c5LTO",
-  "close_by": 1681615838
+  "close_by": 1681615838,
+  "closed_at": 1623660445,
+  "close_reason": "on_demand"
 }
 ```
 -------------------------------------------------------------------------------------------------------
@@ -145,8 +147,8 @@ instance.qrCode.all()
 |-----------------|---------|------------------------------------------------------------------------------|
 | from  | timestamp | timestamp after which the payments were created  |
 | to    | timestamp | timestamp before which the payments were created |
-| count | integer   | number of payments to fetch (default: 10)        |
-| skip  | integer   | number of payments to be skipped (default: 0)    |
+| count | integer   | number of qrcodes to fetch (default: 10)        |
+| skip  | integer   | number of qrcodes to be skipped (default: 0)    |
 
 **Response:**
 ```json
