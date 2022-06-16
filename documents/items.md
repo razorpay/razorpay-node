@@ -8,7 +8,7 @@ instance.items.create({
   "description": "An indian story, Booker prize winner.",
   "amount": 20000,
   "currency": "INR"
-});
+})
 ```
 
 **Parameters:**
