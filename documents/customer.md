@@ -118,7 +118,7 @@ instance.customers.all(options)
 
 -------------------------------------------------------------------------------------------------------
 
-### Fetch a customer
+###  Fetch Customer by ID
 ```js
 instance.customers.fetch(customerId)
 ```
