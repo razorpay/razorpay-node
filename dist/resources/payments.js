@@ -301,6 +301,67 @@ module.exports = function (api) {
         url: '/payments/' + paymentId + '/otp/submit',
         data: params
       }, callback);
+    },
+    createUpi: function createUpi() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
+
+      /*
+       * Initiate a payment
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = 'payments/create/upi',
+          rest = _objectWithoutProperties(params, []),
+          data = Object.assign(rest);
+
+      return api.post({
+        url: url,
+        data: data
+      }, callback);
+    },
+    validateVpa: function validateVpa() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
+
+      /*
+       * Validate the VPA
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = 'payments/validate/vpa',
+          rest = _objectWithoutProperties(params, []),
+          data = Object.assign(rest);
+
+      return api.post({
+        url: url,
+        data: data
+      }, callback);
+    },
+    fetchPaymentMethods: function fetchPaymentMethods(callback) {
+      /*
+       * Validate the VPA
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = 'methods';
+      return api.get({
+        url: url
+      }, callback);
     }
   };
 };
