@@ -37,9 +37,7 @@ instance.subscriptions.create({
 | quantity      | integer | The number of times the customer should be charged the plan amount per invoice |
 | start_at    | integer | The timestamp, in Unix format, for when the subscription should start. If not passed, the subscription starts immediately after the authorization payment. |
 | expire_by    | integer | The timestamp, in Unix format, till when the customer can make the authorization payment. |
-| addons.item.name    | string | A name for the upfront amount you want to charge the customer. For example, Delivery Fee. |
-| addons.item.amount  | string | The upfront amount in the currency subunit you want to charge the customer. For example ,`30000`. |
-| addons.item.currency | string  | The currency of the payment (defaults to INR) |
+| addons    | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/subscriptions/#create-a-subscription) are supported |
 | notes          | array | Notes you can enter for the contact for future reference.   |
 | offer_id   | string | The unique identifier of the offer that is linked to the subscription. |
 
@@ -118,12 +116,10 @@ instance.subscriptions.create({
 | quantity    | integer | The number of times the customer should be charged the plan amount per invoice |
 | start_at    | integer | The timestamp, in Unix format, for when the subscription should start. If not passed, the subscription starts immediately after the authorization payment. |
 | expire_by    | integer | The timestamp, in Unix format, till when the customer can make the authorization payment. |
-| addons.item.name    | string | A name for the upfront amount you want to charge the customer. For example, Delivery Fee. |
-| addons.item.amount  | string | The upfront amount in the currency subunit you want to charge the customer. For example ,`30000`. |
-| addons.item.currency | string  | The currency of the payment (defaults to INR) |
-| notes          | object | Notes you can enter for the contact for future reference.   |
-| notify_info.notify_phone          | string | Customer phone number  |
-| notify_info.notify_email          | string | Customer email  |
+| addons    | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/subscriptions/#create-a-subscription-link) are supported |
+| notes          | array | Notes you can enter for the contact for future reference.   |
+| notify_info    | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/subscriptions/#create-a-subscription-link) are supported |
+| offer_id   | string | The unique identifier of the offer that is linked to the subscription. |
 
 **Response:**
 ```json
@@ -169,8 +165,8 @@ instance.subscriptions.all(options)
 
 | Name  | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
-| from  | timestamp | timestamp after which the payments were created  |
-| to    | timestamp | timestamp before which the payments were created |
+| from  | timestamp | timestamp after which the subscription were created  |
+| to    | timestamp | timestamp before which the subscription were created |
 | count | integer   | number of subscriptions to fetch (default: 10)        |
 | skip  | integer   | number of subscriptions to be skipped (default: 0)    |
 | plan_id  | string   | The unique identifier of the plan for which you want to retrieve all the subscriptions    |
