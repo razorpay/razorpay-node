@@ -89,7 +89,7 @@ instance.orders.all(option)
 ```
 -------------------------------------------------------------------------------------------------------
 
-### Fetch particular order
+### Fetch an Order With Id
 
 ```js
 instance.orders.fetch(orderId)
@@ -104,17 +104,21 @@ instance.orders.fetch(orderId)
 
 ```json
 {
-  "id":"order_DaaS6LOUAASb7Y",
-  "entity":"order",
-  "amount":2200,
-  "amount_paid":0,
-  "amount_due":2200,
-  "currency":"INR",
-  "receipt":"Receipt #211",
-  "status":"attempted",
-  "attempts":1,
-  "notes":[],
-  "created_at":1572505143
+  "id": "order_Jhgp4wIVHQrg5H",
+  "entity": "order",
+  "amount": 100,
+  "amount_paid": 0,
+  "amount_due": 100,
+  "currency": "INR",
+  "receipt": "123",
+  "offer_id": null,
+  "status": "created",
+  "attempts": 0,
+  "notes": {
+    "key1": "value3",
+    "key2": "value2"
+  },
+  "created_at": 1655278478
 }
 ```
 -------------------------------------------------------------------------------------------------------
