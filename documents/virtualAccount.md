@@ -483,7 +483,7 @@ instance.virtualAccounts.addReceiver(virtualId,{
 |-------|-----------|--------------------------------------------------|
 | virtualId*  | string    | The id of the virtual to be updated  |
 | types*  | object | The receiver type to be added to the virtual account. Possible values are `vpa` or `bank_account`  |
-| vpa    | object | This is to be passed only when `vpa` is passed as the receiver types. |
+| vpa.descriptor | object | descriptor should be 10 characters only. |
 
 **Response:**
 For add receiver to an existing virtual account response please click [here](https://razorpay.com/docs/api/smart-collect/#add-receiver-to-an-existing-virtual-account)
@@ -565,7 +565,7 @@ instance.virtualAccounts.deleteAllowedPayer(virtualId,allowedPayersId)
 
 **Response:**
 ```json
-{}
+null
 ```
 -------------------------------------------------------------------------------------------------------
 ### Close virtual account
@@ -581,6 +581,7 @@ instance.virtualAccounts.close(virtualId)
 
 **Response:**
 For close virtual account response please click [here](https://razorpay.com/docs/api/smart-collect/#close-a-virtual-account)
+
 -------------------------------------------------------------------------------------------------------
 
 **PN: * indicates mandatory fields**
