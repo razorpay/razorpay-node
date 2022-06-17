@@ -161,13 +161,13 @@ For create registration link response please click [here](https://razorpay.com/d
 
 ```js
 instance.orders.create({
-  "amount": "100",
-  "currency": "INR",
+  "amount":1000,
+  "currency":"INR",
   "payment_capture": true,
-  "receipt": "Receipt No. 1",
+  "receipt":"Receipt No. 1",
   "notes": {
-    "key1": "value3",
-    "key2": "value2"
+    "notes_key_1":"Tea, Earl Grey, Hot",
+    "notes_key_2":"Tea, Earl Grey… decaf."
   }
 })
 ```
@@ -208,14 +208,17 @@ instance.orders.create({
 ```js
 instance.payments.createRecurringPayment({
   "email": "gaurav.kumar@example.com",
-  "contact": 9123456789,
+  "contact": "9123456789",
   "amount": 1000,
   "currency": "INR",
-  "recurring": 1,
+  "order_id": "order_1Aa00000000002",
+  "customer_id": "cust_1Aa00000000001",
+  "token": "token_1Aa00000000001",
+  "recurring": "1",
   "description": "Creating recurring payment for Gaurav Kumar",
   "notes": {
-    "key1": "value3",
-    "key2": "value2"
+    "note_key 1": "Beam me up Scotty",
+    "note_key 2": "Tea. Earl Gray. Hot."
   }
 })
 ```
