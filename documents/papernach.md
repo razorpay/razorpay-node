@@ -47,28 +47,33 @@ instance.customers.create({
 
 ```js
 instance.orders.create({
-  "amount": 0,
-  "currency": "INR",
-  "method": "emandate",
+  "amount":0,
+  "currency":"INR",
+  "method":"nach",
   "customer_id": "cust_1Aa00000000001",
-  "receipt": "Receipt No. 1",
+  "receipt":"Receipt No. 1",
   "notes": {
     "notes_key_1": "Beam me up Scotty",
     "notes_key_2": "Engage"
   },
-  "token": {
-    "auth_type": "netbanking",
-    "max_amount": 9999900,
-    "expire_at": 4102444799,
+  "token":{
+    "auth_type":"physical",
+    "max_amount":10000000,
+    "expire_at":2709971120,
     "notes": {
       "notes_key_1": "Tea, Earl Grey, Hot",
       "notes_key_2": "Tea, Earl Grey… decaf."
     },
-    "bank_account": {
-      "beneficiary_name": "Gaurav Kumar",
-      "account_number": 1121431121541121,
-      "account_type": "savings",
-      "ifsc_code": "HDFC0000001"
+    "bank_account":{
+      "account_number":"11214311215411",
+      "ifsc_code":"HDFC0000001",
+      "beneficiary_name":"Gaurav Kumar",
+      "account_type":"savings"
+    },
+    "nach":{
+      "form_reference1":"Recurring Payment for Gaurav Kumar",
+      "form_reference2":"Method Paper NACH",
+      "description":"Paper NACH Gaurav Kumar"
     }
   }
 })
@@ -90,59 +95,63 @@ All parameters listed [here](https://razorpay.com/docs/api/payments/recurring-pa
 **Response:**
 ```json
 {
-   "id":"order_1Aa00000000001",
-   "entity":"order",
-   "amount":0,
-   "amount_paid":0,
-   "amount_due":0,
-   "currency":"INR",
-   "receipt":"rcptid #10",
-   "offer_id":null,
-   "offers":{
-      "entity":"collection",
-      "count":0,
-      "items":[
-
-      ]
-   },
-   "status":"created",
-   "attempts":0,
-   "notes":{
-      "notes_key_1":"Beam me up Scotty",
-      "notes_key_2":"Engage"
-   },
-   "created_at":1579775420,
-   "token":{
-      "method":"nach",
-      "notes":{
-         "notes_key_1":"Tea, Earl Grey, Hot",
-         "notes_key_2":"Tea, Earl Grey… decaf."
+  "id": "order_JiTfunp48y6Pzv",
+  "entity": "order",
+  "amount": 0,
+  "amount_paid": 0,
+  "amount_due": 0,
+  "currency": "INR",
+  "receipt": "Receipt No. 1",
+  "payments": {
+      "entity": "collection",
+      "count": 0,
+      "items": []
+  },
+  "offer_id": null,
+  "offers": {
+      "entity": "collection",
+      "count": 0,
+      "items": []
+  },
+  "status": "created",
+  "attempts": 0,
+  "notes": {
+      "notes_key_1": "Beam me up Scotty",
+      "notes_key_2": "Engage"
+  },
+  "created_at": 1655450516,
+  "token": {
+      "method": "nach",
+      "notes": {
+          "notes_key_1": "Tea, Earl Grey, Hot",
+          "notes_key_2": "Tea, Earl Grey… decaf."
       },
-      "recurring_status":null,
-      "failure_reason":null,
-      "currency":"INR",
-      "max_amount":10000000,
-      "auth_type":"physical",
-      "expire_at":1580480689,
-      "nach":{
-         "create_form":true,
-         "form_reference1":"Recurring Payment for Gaurav Kumar",
-         "form_reference2":"Method Paper NACH",
-         "prefilled_form":"https://rzp.io/i/bitw",
-         "upload_form_url":"https://rzp.io/i/gts",
-         "description":"Paper NACH Gaurav Kumar"
+      "recurring_status": null,
+      "failure_reason": null,
+      "currency": "INR",
+      "max_amount": 10000000,
+      "auth_type": "physical",
+      "expire_at": null,
+      "nach": {
+          "create_form": true,
+          "form_reference1": "Recurring Payment for Gaurav Kumar",
+          "form_reference2": "Method Paper NACH",
+          "prefilled_form": "https://rzp.io/i/LRVCSWsy9",
+          "prefilled_form_transient": "https://rzp.io/i/POSaefL2u",
+          "upload_form_url": "https://rzp.io/i/tLt1U2V50h",
+          "description": "Paper NACH Gaurav Kumar"
       },
-      "bank_account":{
-         "ifsc":"HDFC0000001",
-         "bank_name":"HDFC Bank",
-         "name":"Gaurav Kumar",
-         "account_number":"11214311215411",
-         "account_type":"savings",
-         "beneficiary_email":"gaurav.kumar@example.com",
-         "beneficiary_mobile":"9876543210"
+      "bank_account": {
+          "ifsc": "HDFC0000001",
+          "bank_name": "HDFC Bank",
+          "name": "Gaurav Kumar",
+          "account_number": "11214311215411",
+          "account_type": "savings",
+          "beneficiary_email": "gauray.kumar@example.com",
+          "beneficiary_mobile": "9123456780"
       },
-      "first_payment_amount":0
-   }
+      "first_payment_amount": 0
+  }
 }
 ```
 
