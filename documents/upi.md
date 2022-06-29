@@ -485,7 +485,11 @@ instance.payments.createRecurringPayment({
   "customer_id": "cust_1Aa00000000001",
   "token": "token_1Aa00000000001",
   "recurring": 1,
-  "description": "Creating recurring payment for Gaurav Kumar"
+  "description": "Creating recurring payment for Gaurav Kumar",
+  "notes": {
+    "note_key 1": "Beam me up Scotty",
+    "note_key 2": "Tea. Earl Gray. Hot."
+  }
 })
 ```
 
