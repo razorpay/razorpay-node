@@ -67,7 +67,9 @@ var API = function () {
     }
   }, {
     key: 'post',
-    value: function post(params, cb, isNotForm = false) {
+    value: function post(params, cb) {
+      var isNotForm = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
       var request = {
         url: params.url,
         form: params.data
@@ -91,10 +93,17 @@ var API = function () {
   }, {
     key: 'patch',
     value: function patch(params, cb) {
-      return nodeify(this.rq.patch({
+      var request = {
         url: params.url,
         form: params.data
-      }).catch(normalizeError), cb);
+      };
+
+      if (params.data.hasOwnProperty("isbody")) {
+        delete request['form'];
+        delete params.data.isbody;
+        request.body = params.data;
+      }
+      return nodeify(this.rq.patch(request).catch(normalizeError), cb);
     }
   }, {
     key: 'delete',

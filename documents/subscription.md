@@ -4,23 +4,25 @@
 
 ```js
 instance.subscriptions.create({
-  "plan_id": "plan_7wAosPWtrkhqZw",
-  "customer_notify": 1,
-  "quantity": 5,
-  "total_count": 6,
-  "start_at": 1495995837,
-  "addons": [
+  "plan_id":"plan_00000000000001",
+  "total_count":6,
+  "quantity": 1,
+  "customer_notify":1,
+  "start_at":1580453311,
+  "expire_by":1580626111,
+  "addons":[
     {
-      "item": {
-        "name": "Delivery charges",
-        "amount": 30000,
-        "currency": "INR"
+      "item":{
+        "name":"Delivery charges",
+        "amount":30000,
+        "currency":"INR"
       }
     }
   ],
-  "notes": {
-    "key1": "value3",
-    "key2": "value2"
+  "offer_id":"offer_JHD834hjbxzhd38d",
+  "notes":{
+    "notes_key_1":"Tea, Earl Grey, Hot",
+    "notes_key_2":"Tea, Earl Grey… decaf."
   }
 })
 ```
@@ -32,11 +34,12 @@ instance.subscriptions.create({
 | plan_id*          | string | The unique identifier for a plan that should be linked to the subscription.|
 | total_count*   | string | The number of billing cycles for which the customer should be charged  |
 | customer_notify    | boolean | Indicates whether the communication to the customer would be handled by you or us |
-| quantity    | integer | The number of times the customer should be charged the plan amount per invoice |
+| quantity      | integer | The number of times the customer should be charged the plan amount per invoice |
 | start_at    | integer | The timestamp, in Unix format, for when the subscription should start. If not passed, the subscription starts immediately after the authorization payment. |
 | expire_by    | integer | The timestamp, in Unix format, till when the customer can make the authorization payment. |
-| addons    | object | Object that contains details of any upfront amount you want to collect as part of the authorization transaction. |
-| notes          | object | Notes you can enter for the contact for future reference.   |
+| addons    | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/subscriptions/#create-a-subscription) are supported |
+| notes          | array | Notes you can enter for the contact for future reference.   |
+| offer_id   | string | The unique identifier of the offer that is linked to the subscription. |
 
 **Response:**
 ```json
@@ -76,26 +79,28 @@ instance.subscriptions.create({
 
 ```js
 instance.subscriptions.create({
-  "plan_id": "plan_HoYg68p5kmuvzD",
+  "plan_id": "plan_00000000000001",
   "total_count": 12,
   "quantity": 1,
-  "expire_by": 1633237807,
+  "start_at": 1561852800,
+  "expire_by": 1561939199,
   "customer_notify": 1,
   "addons": [
     {
-      "item": {
-        "name": "Delivery charges",
-        "amount": 30000,
-        "currency": "INR"
+    "item": {
+      "name": "Delivery charges",
+      "amount": 30000,
+      "currency": "INR"
       }
     }
   ],
+  "offer_id":"offer_JHD834hjbxzhd38d",
   "notes": {
-    "notes_key_1": "Tea, Earl Grey, Hot",
-    "notes_key_2": "Tea, Earl Grey… decaf."
+    "notes_key_1":"Tea, Earl Grey, Hot",
+    "notes_key_2":"Tea, Earl Grey… decaf."
   },
-  "notify_info": {
-    "notify_phone": 9123456789,
+  "notify_info":{
+    "notify_phone": "9123456789",
     "notify_email": "gaurav.kumar@example.com"
   }
 })
@@ -111,9 +116,10 @@ instance.subscriptions.create({
 | quantity    | integer | The number of times the customer should be charged the plan amount per invoice |
 | start_at    | integer | The timestamp, in Unix format, for when the subscription should start. If not passed, the subscription starts immediately after the authorization payment. |
 | expire_by    | integer | The timestamp, in Unix format, till when the customer can make the authorization payment. |
-| addons    | object | Object that contains details of any upfront amount you want to collect as part of the authorization transaction. |
-| notes          | object | Notes you can enter for the contact for future reference.   |
-| notify_info          | object | The customer's email and phone number to which notifications are to be sent. (PN: Use this object only if you have set the `customer_notify` parameter to 1. That is, Razorpay sends notifications to the customer.)  |
+| addons    | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/subscriptions/#create-a-subscription-link) are supported |
+| notes          | array | Notes you can enter for the contact for future reference.   |
+| notify_info    | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/subscriptions/#create-a-subscription-link) are supported |
+| offer_id   | string | The unique identifier of the offer that is linked to the subscription. |
 
 **Response:**
 ```json
@@ -159,10 +165,10 @@ instance.subscriptions.all(options)
 
 | Name  | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
-| from  | timestamp | timestamp after which the payments were created  |
-| to    | timestamp | timestamp before which the payments were created |
-| count | integer   | number of payments to fetch (default: 10)        |
-| skip  | integer   | number of payments to be skipped (default: 0)    |
+| from  | timestamp | timestamp after which the subscription were created  |
+| to    | timestamp | timestamp before which the subscription were created |
+| count | integer   | number of subscriptions to fetch (default: 10)        |
+| skip  | integer   | number of subscriptions to be skipped (default: 0)    |
 | plan_id  | string   | The unique identifier of the plan for which you want to retrieve all the subscriptions    |
 
 **Response:**

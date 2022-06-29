@@ -21,6 +21,7 @@ module.exports = function (api) {
           authorized = params.authorized,
           receipt = params.receipt;
 
+      var expand = void 0;
 
       if (from) {
         from = normalizeDate(from);
@@ -28,6 +29,10 @@ module.exports = function (api) {
 
       if (to) {
         to = normalizeDate(to);
+      }
+
+      if (params.hasOwnProperty("expand[]")) {
+        expand = { "expand[]": params["expand[]"] };
       }
 
       count = Number(count) || 10;
@@ -42,7 +47,8 @@ module.exports = function (api) {
           count: count,
           skip: skip,
           authorized: authorized,
-          receipt: receipt
+          receipt: receipt,
+          expand: expand
         }
       }, callback);
     },

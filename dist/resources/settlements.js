@@ -96,8 +96,11 @@ module.exports = function (api) {
       }, callback);
     },
 
-    fetchOndemandSettlementById: function fetchOndemandSettlementById(settlementId, callback) {
+    fetchOndemandSettlementById: function fetchOndemandSettlementById(settlementId) {
+      var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
 
+      var expand = void 0;
       /*
        * Fetch On-demand Settlements by ID
        *
@@ -112,8 +115,15 @@ module.exports = function (api) {
         return Promise.reject("settlment Id is mandatroy");
       }
 
+      if (param.hasOwnProperty("expand[]")) {
+        expand = { "expand[]": param["expand[]"] };
+      }
+
       return api.get({
-        url: BASE_URL + '/ondemand/' + settlementId
+        url: BASE_URL + '/ondemand/' + settlementId,
+        data: {
+          expand: expand
+        }
       }, callback);
     },
     fetchAllOndemandSettlement: function fetchAllOndemandSettlement() {
@@ -130,6 +140,7 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
+      var expand = void 0;
       var from = params.from,
           to = params.to,
           count = params.count,
@@ -137,13 +148,18 @@ module.exports = function (api) {
           url = BASE_URL + '/ondemand';
 
 
+      if (params.hasOwnProperty("expand[]")) {
+        expand = { "expand[]": params["expand[]"] };
+      }
+
       return api.get({
         url: url,
         data: _extends({}, params, {
           from: from,
           to: to,
           count: count,
-          skip: skip
+          skip: skip,
+          expand: expand
         })
       }, callback);
     },
@@ -164,7 +180,7 @@ module.exports = function (api) {
       var day = params.day,
           count = params.count,
           skip = params.skip,
-          url = BASE_URL + '/report/combined';
+          url = BASE_URL + '/recon/combined';
 
 
       return api.get({

@@ -184,6 +184,60 @@ instance.customers.deleteToken(customerId, tokenId)
 ```
 -------------------------------------------------------------------------------------------------------
 
+### Fetch VPA tokens of a customer id
+
+```js
+instance.customers.fetchTokens(customerId)
+```
+
+**Parameters:**
+
+| Name          | Type        | Description                                 |
+|---------------|-------------|---------------------------------------------|
+| customerId*          | string      | The id of the customer to be fetched |
+
+**Response:**
+```json
+{
+  "entity": "collection",
+  "count": 1,
+  "items": [
+    {
+      "id": "token_EeroOjvOvorT5L",
+      "entity": "token",
+      "token": "4ydxm47GQjrIEx",
+      "bank": null,
+      "wallet": null,
+      "method": "card",
+      "card": {
+        "entity": "card",
+        "name": "Gaurav Kumar",
+        "last4": "8430",
+        "network": "Visa",
+        "type": "credit",
+        "issuer": "HDFC",
+        "international": false,
+        "emi": true,
+        "expiry_month": 12,
+        "expiry_year": 2022,
+        "flows": {
+          "otp": true,
+          "recurring": true
+        }
+      },
+      "vpa": null,
+      "recurring": false,
+      "auth_type": null,
+      "mrn": null,
+      "used_at": 1586976724,
+      "created_at": 1586976724,
+      "expired_at": 1672511399,
+      "dcc_enabled": false
+    }
+  ]
+}
+```
+-------------------------------------------------------------------------------------------------------
 **PN: * indicates mandatory fields**
 <br>
 <br>

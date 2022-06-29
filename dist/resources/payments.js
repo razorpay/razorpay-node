@@ -23,6 +23,7 @@ module.exports = function (api) {
           count = params.count,
           skip = params.skip;
 
+      var expand = void 0;
 
       if (from) {
         from = normalizeDate(from);
@@ -30,6 +31,10 @@ module.exports = function (api) {
 
       if (to) {
         to = normalizeDate(to);
+      }
+
+      if (params.hasOwnProperty("expand[]")) {
+        expand = { "expand[]": params["expand[]"] };
       }
 
       count = Number(count) || 10;
@@ -41,17 +46,30 @@ module.exports = function (api) {
           from: from,
           to: to,
           count: count,
-          skip: skip
+          skip: skip,
+          expand: expand
         }
       }, callback);
     },
-    fetch: function fetch(paymentId, callback) {
+    fetch: function fetch(paymentId) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var callback = arguments[2];
+
+      var expand = void 0;
+
       if (!paymentId) {
         throw new Error('`payment_id` is mandatory');
       }
 
+      if (params.hasOwnProperty("expand[]")) {
+        expand = { "expand[]": params["expand[]"] };
+      }
+
       return api.get({
-        url: '/payments/' + paymentId
+        url: '/payments/' + paymentId,
+        data: {
+          expand: expand
+        }
       }, callback);
     },
     capture: function capture(paymentId, amount, currency, callback) {
@@ -277,6 +295,26 @@ module.exports = function (api) {
         url: '/payments/downtimes/' + downtimeId
       }, callback);
     },
+    otpGenerate: function otpGenerate(paymentId, callback) {
+
+      /*
+       * OTP Generate
+       *
+       * @param {String} paymentId
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      if (!paymentId) {
+
+        return Promise.reject("payment Id is mandatory");
+      }
+
+      return api.post({
+        url: '/payments/' + paymentId + '/otp_generate'
+      }, callback);
+    },
     otpSubmit: function otpSubmit(paymentId) {
       var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var callback = arguments[2];
@@ -300,6 +338,87 @@ module.exports = function (api) {
       return api.post({
         url: '/payments/' + paymentId + '/otp/submit',
         data: params
+      }, callback);
+    },
+    otpResend: function otpResend(paymentId, callback) {
+
+      /*
+       * OTP Resend
+       *
+       * @param {String} paymentId
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      if (!paymentId) {
+
+        return Promise.reject("payment Id is mandatory");
+      }
+
+      return api.post({
+        url: '/payments/' + paymentId + '/otp/resend'
+      }, callback);
+    },
+    createUpi: function createUpi() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
+
+      /*
+       * Initiate a payment
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = 'payments/create/upi',
+          rest = _objectWithoutProperties(params, []),
+          data = Object.assign(rest);
+
+      return api.post({
+        url: url,
+        data: data
+      }, callback);
+    },
+    validateVpa: function validateVpa() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var callback = arguments[1];
+
+
+      /*
+       * Validate the VPA
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = 'payments/validate/vpa',
+          rest = _objectWithoutProperties(params, []),
+          data = Object.assign(rest);
+
+      return api.post({
+        url: url,
+        data: data
+      }, callback);
+    },
+    fetchPaymentMethods: function fetchPaymentMethods(callback) {
+      /*
+       * Validate the VPA
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      var url = 'methods';
+      return api.get({
+        url: url
       }, callback);
     }
   };

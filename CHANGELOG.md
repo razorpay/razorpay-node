@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.8.2 - 2022-06-29
+- Added Third party validation & Otp API for Payment (createUpi, validateVpa,
+otpGenerate, otpSubmit, otpResend)
+- Update Documention
+
 ## 2.8.1 - 2022-03-09
 
 - fix: passing `fixed_amount` boolean issue when creating qrcode

@@ -535,4 +535,42 @@ describe('PAYMENTS', () => {
       done()
     })
   })
+
+  it('Otp Generate', (done) => {
+    let paymentId = 'pay_sometestId'
+
+
+    mocker.mock({
+      url: `/payments/${paymentId}/otp_generate`,
+      method : 'POST'
+    })
+
+    rzpInstance.payments.otpGenerate(paymentId).then((response) => {
+      assert.equal(
+        response.__JUST_FOR_TESTS__.url,
+        `/v1/payments/${paymentId}/otp_generate`,
+        'Request url formed correctly'
+      )
+      done()
+    })
+  })
+
+  it('Otp Resend', (done) => {
+    let paymentId = 'pay_sometestId'
+
+
+    mocker.mock({
+      url: `/payments/${paymentId}/otp/resend`,
+      method : 'POST'
+    })
+
+    rzpInstance.payments.otpResend(paymentId).then((response) => {
+      assert.equal(
+        response.__JUST_FOR_TESTS__.url,
+        `/v1/payments/${paymentId}/otp/resend`,
+        'Request url formed correctly'
+      )
+      done()
+    })
+  })
 })

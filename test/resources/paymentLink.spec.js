@@ -83,12 +83,12 @@ describe("PAYMENTLINK", () => {
      
       let params= {
         "param1": "something",
-        "param2": "something else",
-        "notes[something]": "something else"
+        "param2": "something else"
       };
       mocker.mock({
         url: `/payment_links/${TEST_PAYMENTLINK_ID}`,
         method: 'PATCH',
+        ignoreParseBody: true
       })
 
       rzpInstance.paymentLink.edit(TEST_PAYMENTLINK_ID,params).then((response) => {
