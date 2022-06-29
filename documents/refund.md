@@ -40,7 +40,8 @@ instance.payments.refund(paymentId,{
   "created_at": 1597078866,
   "batch_id": null,
   "status": "processed",
-  "speed_processed": "normal"
+  "speed_processed": "normal",
+  "speed_requested": "normal"
 }
 ```
 -------------------------------------------------------------------------------------------------------
@@ -101,8 +102,8 @@ instance.payments.fetchMultipleRefund(paymentId,option)
 | paymentId*  | string      | The id of the payment                       |
 | from  | timestamp | timestamp after which the payments were created  |
 | to    | timestamp | timestamp before which the payments were created |
-| count | integer   | number of payments to fetch (default: 10)        |
-| skip  | integer   | number of payments to be skipped (default: 0)    |
+| count | integer   | number of refunds to fetch (default: 10)        |
+| skip  | integer   | number of refunds to be skipped (default: 0)    |
 
 **Refund:**
 ```json
@@ -136,7 +137,7 @@ instance.payments.fetchMultipleRefund(paymentId,option)
 
 ### Fetch a specific refund for a payment
 ```js
-instance.payments.fetch(paymentId,refundId)
+instance.payments.fetchRefund(paymentId,refundId)
 ```
 
 **Parameters:**
@@ -267,24 +268,24 @@ instance.refunds.edit(refundId,{
 **Response:**
 ```json
 {
-  "id": "rfnd_FP8DDKxqJif6ca",
-  "entity": "refund",
-  "amount": 300100,
+  "acquirer_data": {
+    "arn": "JhIzh5MwYhsVj7"
+  },
+  "amount": 10000,
+  "batch_id": null,
+  "created_at": 1655194550,
   "currency": "INR",
-  "payment_id": "pay_FIKOnlyii5QGNx",
+  "entity": "refund",
+  "id": "rfnd_JhIzTq6K16lpnn",
   "notes": {
     "notes_key_1": "Beam me up Scotty.",
     "notes_key_2": "Engage"
   },
+  "payment_id": "pay_JXPULbHbkkkS8D",
   "receipt": null,
-  "acquirer_data": {
-    "arn": "10000000000000"
-  },
-  "created_at": 1597078124,
-  "batch_id": null,
-  "status": "processed",
-  "speed_processed": "normal",
-  "speed_requested": "optimum"
+  "speed_processed": "instant",
+  "speed_requested": "optimum",
+  "status": "processed"
 }
 ```
 -------------------------------------------------------------------------------------------------------
