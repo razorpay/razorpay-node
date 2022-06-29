@@ -22,6 +22,7 @@ instance.customers.create({
 | name*          | string      | Name of the customer                        |
 | email        | string      | Email of the customer                       |
 | contact      | string      | Contact number of the customer              |
+| fail_existing | string | If a customer with the same details already exists, the request throws an exception by default. Possible value is `0` or `1`|
 | notes         | object      | A key-value pair                            |
 
 **Response:**
@@ -46,28 +47,33 @@ instance.customers.create({
 
 ```js
 instance.orders.create({
-  "amount": 0,
-  "currency": "INR",
-  "method": "emandate",
+  "amount":0,
+  "currency":"INR",
+  "method":"nach",
   "customer_id": "cust_1Aa00000000001",
-  "receipt": "Receipt No. 1",
+  "receipt":"Receipt No. 1",
   "notes": {
     "notes_key_1": "Beam me up Scotty",
     "notes_key_2": "Engage"
   },
-  "token": {
-    "auth_type": "netbanking",
-    "max_amount": 9999900,
-    "expire_at": 4102444799,
+  "token":{
+    "auth_type":"physical",
+    "max_amount":10000000,
+    "expire_at":2709971120,
     "notes": {
       "notes_key_1": "Tea, Earl Grey, Hot",
       "notes_key_2": "Tea, Earl Grey… decaf."
     },
-    "bank_account": {
-      "beneficiary_name": "Gaurav Kumar",
-      "account_number": 1121431121541121,
-      "account_type": "savings",
-      "ifsc_code": "HDFC0000001"
+    "bank_account":{
+      "account_number":"11214311215411",
+      "ifsc_code":"HDFC0000001",
+      "beneficiary_name":"Gaurav Kumar",
+      "account_type":"savings"
+    },
+    "nach":{
+      "form_reference1":"Recurring Payment for Gaurav Kumar",
+      "form_reference2":"Method Paper NACH",
+      "description":"Paper NACH Gaurav Kumar"
     }
   }
 })
@@ -81,17 +87,7 @@ instance.orders.create({
 | customerId*   | string      | The id of the customer to be fetched |
 | method*      | string  | Payment method used to make the registration transaction. Possible value is `nach`.  |
 | receipt      | string  | Your system order reference id.  |
-| token.auth_type*  | string  | Possible value is `physical`|
-| token.max_amount  | integer  | Use to set the maximum amount per debit request. The value can range from `500` - `1000000000` (1cr, default value)  |
-| token.expire_at  | integer | The timestamp, in Unix format, till when the  registration link should expire |
-| token.notes  | object  | A key-value pair  |
-| bank.account_number*  | string  | Customer's bank account number.  |
-| bank.ifsc_code*  | string  | Customer's bank IFSC  |
-| bank.beneficiary_name*  | string  |  Customer's name  |
-| bank.account_type*  | string  | Customer's bank account. Possible value is `saving`(default), `current`, `cc`, `nre`, `nro`  |
-| nach.form_reference1  | string  | A user-entered reference that appears on the NACH form  |
-| nach.form_reference2  | string  | A user-entered reference that appears on the NACH form  |
-| nach.description  | string  | All keys listed  |
+| token  | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/recurring-payments/paper-nach/create-authorization-transaction/#112-create-an-order) are supported |
 | notes | object  | A key-value pair  |
 
 All parameters listed [here](https://razorpay.com/docs/api/payments/recurring-payments/paper-nach/create-authorization-transaction/#112-create-an-order) are supported
@@ -99,59 +95,63 @@ All parameters listed [here](https://razorpay.com/docs/api/payments/recurring-pa
 **Response:**
 ```json
 {
-   "id":"order_1Aa00000000001",
-   "entity":"order",
-   "amount":0,
-   "amount_paid":0,
-   "amount_due":0,
-   "currency":"INR",
-   "receipt":"rcptid #10",
-   "offer_id":null,
-   "offers":{
-      "entity":"collection",
-      "count":0,
-      "items":[
-
-      ]
-   },
-   "status":"created",
-   "attempts":0,
-   "notes":{
-      "notes_key_1":"Beam me up Scotty",
-      "notes_key_2":"Engage"
-   },
-   "created_at":1579775420,
-   "token":{
-      "method":"nach",
-      "notes":{
-         "notes_key_1":"Tea, Earl Grey, Hot",
-         "notes_key_2":"Tea, Earl Grey… decaf."
+  "id": "order_JiTfunp48y6Pzv",
+  "entity": "order",
+  "amount": 0,
+  "amount_paid": 0,
+  "amount_due": 0,
+  "currency": "INR",
+  "receipt": "Receipt No. 1",
+  "payments": {
+      "entity": "collection",
+      "count": 0,
+      "items": []
+  },
+  "offer_id": null,
+  "offers": {
+      "entity": "collection",
+      "count": 0,
+      "items": []
+  },
+  "status": "created",
+  "attempts": 0,
+  "notes": {
+      "notes_key_1": "Beam me up Scotty",
+      "notes_key_2": "Engage"
+  },
+  "created_at": 1655450516,
+  "token": {
+      "method": "nach",
+      "notes": {
+          "notes_key_1": "Tea, Earl Grey, Hot",
+          "notes_key_2": "Tea, Earl Grey… decaf."
       },
-      "recurring_status":null,
-      "failure_reason":null,
-      "currency":"INR",
-      "max_amount":10000000,
-      "auth_type":"physical",
-      "expire_at":1580480689,
-      "nach":{
-         "create_form":true,
-         "form_reference1":"Recurring Payment for Gaurav Kumar",
-         "form_reference2":"Method Paper NACH",
-         "prefilled_form":"https://rzp.io/i/bitw",
-         "upload_form_url":"https://rzp.io/i/gts",
-         "description":"Paper NACH Gaurav Kumar"
+      "recurring_status": null,
+      "failure_reason": null,
+      "currency": "INR",
+      "max_amount": 10000000,
+      "auth_type": "physical",
+      "expire_at": null,
+      "nach": {
+          "create_form": true,
+          "form_reference1": "Recurring Payment for Gaurav Kumar",
+          "form_reference2": "Method Paper NACH",
+          "prefilled_form": "https://rzp.io/i/LRVCSWsy9",
+          "prefilled_form_transient": "https://rzp.io/i/POSaefL2u",
+          "upload_form_url": "https://rzp.io/i/tLt1U2V50h",
+          "description": "Paper NACH Gaurav Kumar"
       },
-      "bank_account":{
-         "ifsc":"HDFC0000001",
-         "bank_name":"HDFC Bank",
-         "name":"Gaurav Kumar",
-         "account_number":"11214311215411",
-         "account_type":"savings",
-         "beneficiary_email":"gaurav.kumar@example.com",
-         "beneficiary_mobile":"9876543210"
+      "bank_account": {
+          "ifsc": "HDFC0000001",
+          "bank_name": "HDFC Bank",
+          "name": "Gaurav Kumar",
+          "account_number": "11214311215411",
+          "account_type": "savings",
+          "beneficiary_email": "gauray.kumar@example.com",
+          "beneficiary_mobile": "9123456780"
       },
-      "first_payment_amount":0
-   }
+      "first_payment_amount": 0
+  }
 }
 ```
 
@@ -166,7 +166,7 @@ Please refer this [doc](https://razorpay.com/docs/api/recurring-payments/paper-n
 ### Create registration link
 
 ```js
-instance.payments.createRegistrationLink({
+instance.subscriptions.createRegistrationLink({
   "customer": {
     "name": "Gaurav Kumar",
     "email": "gaurav.kumar@example.com",
@@ -204,7 +204,19 @@ instance.payments.createRegistrationLink({
 ```
 
 **Parameters:**
-All parameters listed [here](https://razorpay.com/docs/api/recurring-payments/paper-nach/authorization-transaction/#121-create-a-registration-link) are supported
+| Name            | Type    | Description                                                                  |
+|-----------------|---------|------------------------------------------------------------------------------|
+| customer         | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/recurring-payments/paper-nach/create-authorization-transaction/#121-create-a-registration-link) |
+| type*        | string  | In this case, the value is `link`.                      |
+| currency*        | string  | The 3-letter ISO currency code for the payment. Currently, only `INR` is supported. |
+| amount*         | integer  | The payment amount in the smallest currency sub-unit.                 |
+| description*    | string  | A description that appears on the hosted page. For example, `12:30 p.m. Thali meals (Gaurav Kumar`).                                                             |
+| subscription_registration | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/recurring-payments/paper-nach/create-authorization-transaction/#121-create-a-registration-link) |
+| sms_notify  | boolean  | SMS notifications are to be sent by Razorpay (default : 1)  |
+| email_notify | boolean  | Email notifications are to be sent by Razorpay (default : 1)  |
+| expire_by    | integer | The timestamp, in Unix format, till when the customer can make the authorization payment. |
+| receipt      | string  | Your system order reference id.  |
+| notes           | array  | A key-value pair  |
 
 **Response:**
 ```json
@@ -334,91 +346,59 @@ instance.invoices.cancel(invoiceId);
 **Response:**
 ```json
 {
-  "id": "inv_FHrZiAubEzDdaq",
-  "entity": "invoice",
-  "receipt": "Receipt No. 27",
-  "invoice_number": "Receipt No. 27",
-  "customer_id": "cust_BMB3EwbqnqZ2EI",
-  "customer_details": {
-    "id": "cust_BMB3EwbqnqZ2EI",
-    "name": "Gaurav Kumar",
-    "email": "gaurav.kumar@example.com",
-    "contact": "9123456780",
-    "gstin": null,
-    "billing_address": null,
-    "shipping_address": null,
-    "customer_name": "Gaurav Kumar",
-    "customer_email": "gaurav.kumar@example.com",
-    "customer_contact": "9123456780"
-  },
-  "order_id": "order_FHrZiBOkWHZPOp",
-  "line_items": [],
-  "payment_id": null,
-  "status": "cancelled",
-  "expire_by": 1647483647,
-  "issued_at": 1595491154,
-  "paid_at": null,
-  "cancelled_at": 1595491339,
-  "expired_at": null,
-  "sms_status": "sent",
-  "email_status": "sent",
-  "date": 1595491154,
-  "terms": null,
-  "partial_payment": false,
-  "gross_amount": 0,
-  "tax_amount": 0,
-  "taxable_amount": 0,
-  "amount": 0,
-  "amount_paid": 0,
-  "amount_due": 0,
-  "currency": "INR",
-  "currency_symbol": "₹",
-  "description": "12 p.m. Meals",
-  "notes": {
-    "note_key 1": "Beam me up Scotty",
-    "note_key 2": "Tea. Earl Gray. Hot."
-  },
-  "comment": null,
-  "short_url": "https://rzp.io/i/bzDYbNg",
-  "view_less": true,
-  "billing_start": null,
-  "billing_end": null,
-  "type": "link",
-  "group_taxes_discounts": false,
-  "created_at": 1595491154,
-  "idempotency_key": null,
-  "token": {
-    "method": "nach",
-    "notes": {
-      "note_key 1": "Beam me up Scotty",
-      "note_key 2": "Tea. Earl Gray. Hot."
+    "id": "inv_FHrfRupD2ouKIt",
+    "entity": "invoice",
+    "receipt": "Receipt No. 1",
+    "invoice_number": "Receipt No. 1",
+    "customer_id": "cust_BMB3EwbqnqZ2EI",
+    "customer_details": {
+        "id": "cust_BMB3EwbqnqZ2EI",
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9123456780",
+        "gstin": null,
+        "billing_address": null,
+        "shipping_address": null,
+        "customer_name": "Gaurav Kumar",
+        "customer_email": "gaurav.kumar@example.com",
+        "customer_contact": "9123456780"
     },
-    "recurring_status": null,
-    "failure_reason": null,
+    "order_id": "order_FHrfRw4TZU5Q2L",
+    "line_items": [],
+    "payment_id": null,
+    "status": "cancelled",
+    "expire_by": 4102444799,
+    "issued_at": 1595491479,
+    "paid_at": null,
+    "cancelled_at": 1595491488,
+    "expired_at": null,
+    "sms_status": "sent",
+    "email_status": "sent",
+    "date": 1595491479,
+    "terms": null,
+    "partial_payment": false,
+    "gross_amount": 100,
+    "tax_amount": 0,
+    "taxable_amount": 0,
+    "amount": 100,
+    "amount_paid": 0,
+    "amount_due": 100,
     "currency": "INR",
-    "max_amount": 50000,
-    "auth_type": "physical",
-    "expire_at": 1947483647,
-    "nach": {
-      "create_form": true,
-      "form_reference1": "Recurring Payment for Gaurav Kumar",
-      "form_reference2": "Method Paper NACH",
-      "prefilled_form": "https://rzp.io/i/tSYd5aV",
-      "upload_form_url": "https://rzp.io/i/bzDYbNg",
-      "description": "12 p.m. Meals"
+    "currency_symbol": "₹",
+    "description": "Registration Link for Gaurav Kumar",
+    "notes": {
+        "note_key 1": "Beam me up Scotty",
+        "note_key 2": "Tea. Earl Gray. Hot."
     },
-    "bank_account": {
-      "ifsc": "HDFC0001233",
-      "bank_name": "HDFC Bank",
-      "name": "Gaurav Kumar",
-      "account_number": "11214311215411",
-      "account_type": "savings",
-      "beneficiary_email": "gaurav.kumar@example.com",
-      "beneficiary_mobile": "9123456780"
-    },
-    "first_payment_amount": 0
-  },
-  "nach_form_url": "https://rzp.io/i/tSYd5aV"
+    "comment": null,
+    "short_url": "https://rzp.io/i/QlfexTj",
+    "view_less": true,
+    "billing_start": null,
+    "billing_end": null,
+    "type": "link",
+    "group_taxes_discounts": false,
+    "created_at": 1595491480,
+    "idempotency_key": null
 }
 ```
 -------------------------------------------------------------------------------------------------------
@@ -600,6 +580,7 @@ instance.customers.deleteToken(customerId, tokenId)
 instance.orders.create({
   "amount": 1000,
   "currency": "INR",
+  "payment_capture": true,
   "receipt": "Receipt No. 1",
   "notes": {
     "notes_key_1": "Tea, Earl Grey, Hot",
@@ -615,7 +596,9 @@ instance.orders.create({
 | amount*          | integer | Amount of the order to be paid                                               |
 | currency*        | string  | Currency of the order. Currently only `INR` is supported.                      |
 | receipt         | string  | Your system order reference id.                                              |
-| notes           | object  | A key-value pair                                                             |
+| notes           | array  | A key-value pair  |
+| payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
+
 **Response:**
 ```json
 {
