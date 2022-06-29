@@ -52,7 +52,9 @@ instance.qrCode.create({
     "purpose": "Test UPI QR code notes"
   },
   "customer_id": "cust_HKsR5se84c5LTO",
-  "close_by": 1681615838
+  "close_by": 1681615838,
+  "closed_at": 1623660445,
+  "close_reason": "on_demand"
 }
 ```
 -------------------------------------------------------------------------------------------------------
@@ -145,8 +147,8 @@ instance.qrCode.all()
 |-----------------|---------|------------------------------------------------------------------------------|
 | from  | timestamp | timestamp after which the payments were created  |
 | to    | timestamp | timestamp before which the payments were created |
-| count | integer   | number of payments to fetch (default: 10)        |
-| skip  | integer   | number of payments to be skipped (default: 0)    |
+| count | integer   | number of qrcodes to fetch (default: 10)        |
+| skip  | integer   | number of qrcodes to be skipped (default: 0)    |
 
 **Response:**
 ```json
@@ -197,26 +199,26 @@ instance.qrCode.fetch(qrCodeId)
 **Response:**
 ```json
 {
-  "id": "qr_HO2r1MDprYtWRT",
+  "id": "qr_HO2e0813YlchUn",
   "entity": "qr_code",
-  "created_at": 1623915088,
-  "name": "Store_1",
-  "usage": "single_use",
+  "created_at": 1623914349,
+  "name": "Acme Groceries",
+  "usage": "multiple_use",
   "type": "upi_qr",
-  "image_url": "https://rzp.io/i/oCswTOcCo",
-  "payment_amount": 300,
-  "status": "active",
-  "description": "For Store 1",
-  "fixed_amount": true,
-  "payments_amount_received": 0,
-  "payments_count_received": 0,
+  "image_url": "https://rzp.io/i/X6QM7LL",
+  "payment_amount": null,
+  "status": "closed",
+  "description": "Buy fresh groceries",
+  "fixed_amount": false,
+  "payments_amount_received": 200,
+  "payments_count_received": 1,
   "notes": {
-    "purpose": "Test UPI QR code notes"
+    "Branch": "Bangalore - Rajaji Nagar"
   },
   "customer_id": "cust_HKsR5se84c5LTO",
-  "close_by": 1681615838,
-  "closed_at": null,
-  "close_reason": null
+  "close_by": 1625077799,
+  "closed_at": 1623914515,
+  "close_reason": "on_demand"
 }
 ```
 -------------------------------------------------------------------------------------------------------
@@ -299,7 +301,7 @@ instance.qrCode.fetch(qrCodeId)
       "notes": [],
       "customer_id": "cust_HKsR5se84c5LTO",
       "close_by": 1624472999,
-      "close_reason": null
+      "close_reason": "on_demand"
     }
   ]
 }
@@ -316,11 +318,11 @@ instance.qrCode.fetchAllPayments(qrCodeId, options)
 
 | Name            | Type    | Description                                                                  |
 |-----------------|---------|------------------------------------------------------------------------------|
-| qrCodeId*  | string | The id of the qr code to which payment where made |
-| from  | timestamp | timestamp after which the payments were created  |
-| to    | timestamp | timestamp before which the payments were created |
-| count | integer   | number of payments to fetch (default: 10)        |
-| skip  | integer   | number of payments to be skipped (default: 0)    |
+| qrCodeId*  | string | The id of the qr code to which qrcode where made |
+| from  | timestamp | timestamp after which the qrcodes were created  |
+| to    | timestamp | timestamp before which the qrcodes were created |
+| count | integer   | number of qrcodes to fetch (default: 10)        |
+| skip  | integer   | number of qrcodes to be skipped (default: 0)    |
 
 **Response:**
 ```json
@@ -370,7 +372,7 @@ instance.qrCode.fetchAllPayments(qrCodeId, options)
 ### Close a QR Code
 
 ```js
-instance.qrCode.close(qrCodeId);
+instance.qrCode.close(qrCodeId)
 ```
 
 **Parameters:**
@@ -406,8 +408,50 @@ instance.qrCode.close(qrCodeId);
 ```
 -------------------------------------------------------------------------------------------------------
 
+### Refund a Payment
+
+```js
+instance.payments.refund(paymentId,{
+  "amount": "100",
+  "notes": {
+    "notes_key_1": "Beam me up Scotty.",
+    "notes_key_2": "Engage"
+  }
+})
+```
+
+**Parameters:**
+
+| Name            | Type    | Description                                                                  |
+|-----------------|---------|------------------------------------------------------------------------------|
+| paymentId*  | string | The id of the payment to be refunded |
+| amount  | string | Amount to be refunded |
+| notes       | array | Key-value pair that can be used to store additional information about the QR code. Maximum 15 key-value pairs, 256 characters (maximum) each. |
+
+**Response:**
+```json
+{
+  "id": "rfnd_FP8QHiV938haTz",
+  "entity": "refund",
+  "amount": 500100,
+  "receipt": "Receipt No. 31",
+  "currency": "INR",
+  "payment_id": "pay_29QQoUBi66xm2f",
+  "notes": [],
+  "receipt": null,
+  "acquirer_data": {
+    "arn": null
+  },
+  "created_at": 1597078866,
+  "batch_id": null,
+  "status": "processed",
+  "speed_processed": "normal",
+  "speed_requested": "normal"
+}
+```
+-------------------------------------------------------------------------------------------------------
 
 **PN: * indicates mandatory fields**
 <br>
 <br>
-**For reference click [here](https://razorpay.com/docs/qr-codes/)**
+**For reference click [here](https://razorpay.com/docs/api/qr-codes/)**
