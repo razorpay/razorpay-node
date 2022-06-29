@@ -12,7 +12,7 @@ instance.payments.capture(paymentId, amount, currency)
 |-----------|---------|--------------------------------------------------------------------------------|
 | paymentId* | string  | Id of the payment to capture                                                   |
 | amount*    | integer | The amount to be captured (should be equal to the authorized amount, in paise) |
-| currency   | string  | The currency of the payment (defaults to INR)                                  |
+| currency*   | string  | The currency of the payment (defaults to INR)                                  |
 
 **Response:**
 ```json
@@ -67,6 +67,7 @@ instance.payments.all(option)
 | to    | timestamp | timestamp before which the payments were created |
 | count | integer   | number of payments to fetch (default: 10)        |
 | skip  | integer   | number of payments to be skipped (default: 0)    |
+| expand[]   | string    |  Used to retrieve additional information about the payment. Possible value is `cards` or `emi`|
 
 **Response:**
 ```json
@@ -124,6 +125,7 @@ instance.payments.fetch(paymentId)
 | Name       | Type   | Description                       |
 |------------|--------|-----------------------------------|
 | paymentId* | string | Id of the payment to be retrieved |
+| expand[]   | string    |  Used to retrieve additional information about the payment. Possible value is `cards`, `emi` or `offers`|
 
 **Response:**
 ```json
@@ -283,6 +285,61 @@ Request #1: Card
 instance.payments.all({'expand[]':'card'})
 ```
 
+**Response:**<br>
+```json
+{
+  "entity":"collection",
+  "count":2,
+  "items":[
+    {
+      "id":"pay_DG4a4vAWvKrh79",
+      "entity":"payment",
+      "amount":200010,
+      "currency":"INR",
+      "status":"authorized",
+      "order_id":null,
+      "invoice_id":null,
+      "international":false,
+      "method":"card",
+      "amount_refunded":0,
+      "refund_status":null,
+      "captured":false,
+      "description":null,
+      "card_id":"card_DG4a4zHtV31t56",
+      "card":{
+        "id":"card_DG4a4zHtV31t56",
+        "entity":"card",
+        "name":"gaurav",
+        "last4":"9003",
+        "network":"Visa",
+        "type":"credit",
+        "issuer":"ICIC",
+        "international":false,
+        "emi":false,
+        "sub_type": "business"
+      },
+      "bank":null,
+      "wallet":null,
+      "vpa":null,
+      "email":"gaurav@example.com",
+      "contact":"+91997200005",
+      "notes":[],
+      "fee":null,
+      "tax":null,
+      "error_code": null,
+      "error_description": null,
+      "error_source": null,
+      "error_step": null,
+      "error_reason": null,
+      "acquirer_data": {
+        "auth_code": "828553"
+      },
+      "created_at":1568026102
+    }
+  ]
+}    
+```
+
 Request #2: EMI
 
 ```js
@@ -290,7 +347,52 @@ instance.payments.all({'expand[]':'emi'})
 ```
 
 **Response:**<br>
-For expanded card or emi details for payments response please click [here](https://razorpay.com/docs/api/payments/#fetch-expanded-card-or-emi-details-for-payments)
+```json
+{
+  "entity":"collection",
+  "count":2,
+  "items":[
+    {
+      "id":"pay_DG4ZdRK8ZnXC3k",
+      "entity":"payment",
+      "amount":200000,
+      "currency":"INR",
+      "status":"authorized",
+      "order_id":null,
+      "invoice_id":null,
+      "international":false,
+      "method":"emi",
+      "amount_refunded":0,
+      "refund_status":null,
+      "captured":false,
+      "description":null,
+      "card_id":"card_DG4ZdUO3xABb20",
+      "bank":"ICIC",
+      "wallet":null,
+      "vpa":null,
+      "email":"gaurav@example.com",
+      "contact":"+919972000005",
+      "notes":[],
+      "fee":null,
+      "tax":null,
+      "error_code": null,
+      "error_description": null,
+      "error_source": null,
+      "error_step": null,
+      "error_reason": null,
+      "emi":{
+        "issuer":"ICIC",
+        "rate":1300,
+        "duration":6
+      },
+      "acquirer_data": {
+        "auth_code": "828553"
+      },
+      "created_at":1568026077
+    }
+  ]
+}    
+```
 
 -------------------------------------------------------------------------------------------------------
 
