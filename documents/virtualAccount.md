@@ -214,7 +214,43 @@ instance.virtualAccounts.fetch(virtualId)
 | virtualId*          | string      | The id of the virtual to be updated  |
 
 **Response:**
-For fetch virtual account by id response please click [here](https://razorpay.com/docs/api/smart-collect/#fetch-a-virtual-account-by-id)
+```json
+{
+  "id": "va_JccTXwXA6UG4Gi",
+  "name": "ankit",
+  "entity": "virtual_account",
+  "status": "closed",
+  "description": null,
+  "amount_expected": null,
+  "notes": [],
+  "amount_paid": 0,
+  "customer_id": null,
+  "receivers": [
+    {
+      "id": "ba_JccTY5ZkO3ZGHQ",
+      "entity": "bank_account",
+      "ifsc": "RAZR0000001",
+      "bank_name": null,
+      "name": "ankit",
+      "notes": [],
+      "account_number": "1112220057339365"
+    }
+  ],
+  "allowed_payers": [
+    {
+      "type": "bank_account",
+      "id": "ba_JfLrhQNTmpiA4J",
+      "bank_account": {
+        "ifsc": "UTIB0000013",
+        "account_number": "914010012345679"
+      }
+    }
+  ],
+  "close_by": null,
+  "closed_at": 1654774134,
+  "created_at": 1654171468
+}
+```
 -------------------------------------------------------------------------------------------------------
 
 ### Fetch all virtual account
@@ -228,8 +264,8 @@ instance.virtualAccounts.all(options)
 |-------|-----------|--------------------------------------------------|
 | from  | timestamp | timestamp after which the payments were created  |
 | to    | timestamp | timestamp before which the payments were created |
-| count | integer   | number of payments to fetch (default: 10)        |
-| skip  | integer   | number of payments to be skipped (default: 0)    |
+| count | integer   | number of virtual accounts to fetch (default: 10)        |
+| skip  | integer   | number of virtual accounts to be skipped (default: 0)    |
 
 **Response:**
 ```json
@@ -447,7 +483,7 @@ instance.virtualAccounts.addReceiver(virtualId,{
 |-------|-----------|--------------------------------------------------|
 | virtualId*  | string    | The id of the virtual to be updated  |
 | types*  | object | The receiver type to be added to the virtual account. Possible values are `vpa` or `bank_account`  |
-| vpa    | object | This is to be passed only when `vpa` is passed as the receiver types. |
+| vpa.descriptor | object | descriptor should be 10 characters only. |
 
 **Response:**
 For add receiver to an existing virtual account response please click [here](https://razorpay.com/docs/api/smart-collect/#add-receiver-to-an-existing-virtual-account)
@@ -529,7 +565,7 @@ instance.virtualAccounts.deleteAllowedPayer(virtualId,allowedPayersId)
 
 **Response:**
 ```json
-{}
+null
 ```
 -------------------------------------------------------------------------------------------------------
 ### Close virtual account
@@ -545,6 +581,7 @@ instance.virtualAccounts.close(virtualId)
 
 **Response:**
 For close virtual account response please click [here](https://razorpay.com/docs/api/smart-collect/#close-a-virtual-account)
+
 -------------------------------------------------------------------------------------------------------
 
 **PN: * indicates mandatory fields**
