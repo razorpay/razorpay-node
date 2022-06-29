@@ -19,8 +19,8 @@ instance.subscriptions.createAddon('sub_I55auG9GnbsR8u',{
 | Name  | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
 | subscriptionId*  | boolean | The subscription ID to which the add-on is being added. |
-| items*  | object | Details of the add-on you want to create. |
-| quantity*  | integer | This specifies the number of units of the add-on to be charged to the customer. |
+| items  | array | All parameters listed [here](https://razorpay.com/docs/api/payments/subscriptions/#create-an-add-on) are supported |
+| quantity  | integer | This specifies the number of units of the add-on to be charged to the customer. |
 
 **Response:**
 ```json
@@ -61,13 +61,13 @@ instance.addons.all(options)
 ```
 
 **Parameters:**
-
+  
 | Name  | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
-| from  | timestamp | timestamp after which the payments were created  |
-| to    | timestamp | timestamp before which the payments were created |
-| count | integer   | number of payments to fetch (default: 10)        |
-| skip  | integer   | number of payments to be skipped (default: 0)    |
+| from  | timestamp | timestamp after which the addons were created  |
+| to    | timestamp | timestamp before which the addons were created |
+| count | integer   | number of addons to fetch (default: 10)        |
+| skip  | integer   | number of addons to be skipped (default: 0)    |
 
 **Response:**
 ```json
