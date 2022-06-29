@@ -90,8 +90,8 @@ instance.customers.all(options)
 
 | Name          | Type        | Description                                 |
 |---------------|-------------|---------------------------------------------|
-| count | integer   | number of payments to fetch (default: 10)        |
-| skip  | integer   | number of payments to be skipped (default: 0)    |
+| count | integer   | number of customers to fetch (default: 10)        |
+| skip  | integer   | number of customers to be skipped (default: 0)    |
 
 **Response:**
 ```json
@@ -118,7 +118,7 @@ instance.customers.all(options)
 
 -------------------------------------------------------------------------------------------------------
 
-### Fetch a customer
+###  Fetch Customer by ID
 ```js
 instance.customers.fetch(customerId)
 ```
@@ -132,14 +132,17 @@ instance.customers.fetch(customerId)
 **Response:**
 ```json
 {
-  "id" : "cust_1Aa00000000001",
+  "id": "cust_JcXKNTu2YDcbVh",
   "entity": "customer",
-  "name" : "Saurav Kumar",
-  "email" : "Saurav.kumar@example.com",
-  "contact" : "+919000000000",
-  "gstin":"29XAbbA4369J1PA",
-  "notes" : [],
-  "created_at ": 1234567890
+  "name": "Razorpay User",
+  "email": "customer@razorpay.com",
+  "contact" : "9999999999",
+  "gstin": null,
+  "notes": {
+    "notes_key_1": "Tea, Earl Grey, Hot",
+    "notes_key_2": "Tea, Earl Grey… decaf"
+  },
+  "created_at": 1654153339
 }
 ```
 
