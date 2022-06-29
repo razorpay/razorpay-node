@@ -20,6 +20,7 @@ instance.customers.create({
 | name*          | string      | Name of the customer                        |
 | email        | string      | Email of the customer                       |
 | contact      | string      | Contact number of the customer              |
+| fail_existing | string | If a customer with the same details already exists, the request throws an exception by default. Possible value is `0` or `1`|
 | notes         | object      | A key-value pair                            |
 
 **Response:**
@@ -144,7 +145,11 @@ instance.subscriptions.createRegistrationLink({
 | amount*         | integer  | The payment amount in the smallest currency sub-unit.                 |
 | description*    | string  | A description that appears on the hosted page. For example, `12:30 p.m. Thali meals (Gaurav Kumar`).                                                             |
 | subscription_registration           | object  | Details of the authorization payment.                      |
-| notes           | object  | A key-value pair                                                             |
+|sms_notify           | array  | Details of the line item that is billed in the invoice.  |
+|email_notify           | array  | Details of the line item that is billed in the invoice.  |
+|expire_by           | array  | Details of the line item that is billed in the invoice.  |
+|receipt         | string  | Your system order reference id.  |
+|notes           | object  | A key-value pair     |
 
 **Response:**
 ```json
@@ -496,8 +501,8 @@ instance.payments.createRecurringPayment({
 | customer_id*        | string  | The `customer_id` for the customer you want to charge.  |
 | token*        | string  | The `token_id` generated when the customer successfully completes the authorization payment. Different payment instruments for the same customer have different `token_id`.|
 | recurring*        | string  | Determines if recurring payment is enabled or not. Possible values:<br>* `1` - Recurring is enabled.* `0` - Recurring is not enabled.|
-| description*        | string  | A user-entered description for the payment.|
-| notes*        | object  | Key-value pair that can be used to store additional information about the entity. Maximum 15 key-value pairs, 256 characters (maximum) each. |
+| description        | string  | A user-entered description for the payment.|
+| notes        | object  | Key-value pair that can be used to store additional information about the entity. Maximum 15 key-value pairs, 256 characters (maximum) each. |
 
 **Response:**
 ```json

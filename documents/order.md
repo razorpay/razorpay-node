@@ -21,7 +21,8 @@ instance.orders.create({
 | amount*          | integer | Amount of the order to be paid                                               |
 | currency*        | string  | Currency of the order. Currently only `INR` is supported.                      |
 | receipt         | string  | Your system order reference id.                                              |
-| notes           | object  | A key-value pair                                                             |
+| notes           | object  | A key-value pair  |
+|partial_payment | boolean  | Indicates whether customers can make partial payments on the invoice . Possible values: true - Customer can make partial payments. false (default) - Customer cannot make partial payments. |
 
 **Response:**
 
@@ -39,6 +40,54 @@ instance.orders.create({
   "attempts": 0,
   "notes": [],
   "created_at": 1582628071
+}
+```
+
+-------------------------------------------------------------------------------------------------------
+
+### Create order (Third party validation)
+
+```js
+instance.orders.create({
+  "amount": 500,
+  "method": "netbanking",
+  "receipt": "BILL13375649",
+  "currency": "INR",
+  "bank_account": {
+    "account_number": "765432123456789",
+    "name": "Gaurav Kumar",
+    "ifsc": "HDFC0000053"
+  }
+})
+```
+
+**Parameters:**
+
+| Name            | Type    | Description                                                                  |
+|-----------------|---------|------------------------------------------------------------------------------|
+| amount*          | integer | Amount of the order to be paid                                               |
+| method        | string  | The payment method used to make the payment. If this parameter is not passed, customers will be able to make payments using both netbanking and UPI payment methods. Possible values is `netbanking` or `upi`|
+| currency*        | string  | Currency of the order. Currently only `INR` is supported.       |
+| receipt         | string  | Your system order reference id.                                              |
+| notes         | array      | A key-value pair  |
+|bank_account | array  | All keys listed [here](https://razorpay.com/docs/payments/third-party-validation/#step-2-create-an-order) are supported |
+
+**Response:**
+
+```json
+{
+  "id": "order_GAWN9beXgaqRyO",
+  "entity": "order",
+  "amount": 500,
+  "amount_paid": 0,
+  "amount_due": 500,
+  "currency": "INR",
+  "receipt": "BILL13375649",
+  "offer_id": null,
+  "status": "created",
+  "attempts": 0,
+  "notes": [],
+  "created_at": 1573044247
 }
 ```
 

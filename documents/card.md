@@ -71,7 +71,7 @@ instance.orders.create({
 | currency*   | string  | The currency of the payment (defaults to INR)  |
 | customerId*   | string      | The id of the customer to be fetched |
 | receipt      | string  | Your system order reference id.  |
-| method*      | string  | Payment method used to make the registration transaction. Possible value is `card`.  |
+| method      | string  | Payment method used to make the registration transaction. Possible value is `card`.  |
 | token  | object  | All keys listed [here](https://razorpay.com/docs/api/recurring-payments/cards/authorization-transaction/#112-create-an-order) are supported |
 | notes | object  | A key-value pair  |
 
@@ -138,7 +138,7 @@ instance.subscriptions.createRegistrationLink({
 
 | Name            | Type    | Description                                                                  |
 |-----------------|---------|------------------------------------------------------------------------------|
-| customer   | object      | Details of the customer to whom the registration link will be sent. |
+| customer*          | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/recurring-payments/cards/create-authorization-transaction/#121-create-a-registration-link) are supported  |
 | type*  | string | the value is `link`. |
 | amount*   | integer      | The amount to be captured (should be equal to the authorized amount, in paise) |
 | currency*   | string  | The currency of the payment (defaults to INR)  |
@@ -237,7 +237,7 @@ instance.orders.create({
 | amount*   | integer      | The amount to be captured (should be equal to the authorized amount, in paise) |
 | currency*   | string  | The currency of the payment (defaults to INR)  |
 | customerId*   | string      | The id of the customer to be fetched |
-| method*      | string  | Payment method used to make the registration transaction. Possible value is `card`.  |
+| method      | string  | Payment method used to make the registration transaction. Possible value is `card`.  |
 | receipt      | string  | Your system order reference id.  |
 | token  | array  | All keys listed [here](https://razorpay.com/docs/api/recurring-payments/cards/subsequent-payments/#31-create-an-order-to-charge-the-customer) are supported |
 | notes | array  | A key-value pair  |

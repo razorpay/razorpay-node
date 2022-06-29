@@ -88,6 +88,8 @@ instance.payments.all(
 
 - [Settlements](documents/settlement.md)
 
+- [Fund](documents/fund.md)
+
 - [Refunds](documents/refund.md)
 
 - [Invoice](documents/invoice.md)
