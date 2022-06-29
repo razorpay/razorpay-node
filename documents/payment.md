@@ -553,17 +553,19 @@ instance.payments.createPaymentJson({
 ### OTP Generate
 
 ```js
-instance.payments.otpGenerate();
+var instance = new Razorpay({ key_id: "key", key_secret: ""}) // Use only razorpay key
+
+instance.payments.otpGenerate(paymentId)
 ```
 
 **Parameters:**
-
 | Name        | Type    | Description                          |
 |-------------|---------|--------------------------------------|
-| paymentId*    | integer | Unique identifier of the payment                                               |
+| paymentId*    | integer | Unique identifier of the payment |
+
+Doc reference [doc](https://razorpay.com/docs/payments/payment-gateway/s2s-integration/json/v2/build-integration/cards/#otp-generation-)
 
 **Response:** <br>
-
 ```json
 {
  "razorpay_payment_id": "pay_FVmAstJWfsD3SO",
@@ -585,20 +587,24 @@ instance.payments.otpGenerate();
  }
 }
 ```
-
 -------------------------------------------------------------------------------------------------------
 
 ### OTP Submit
 
 ```js
-instance.payments.otpSubmit(paymentId,{otp:'12345'})
+instance.payments.otpSubmit(paymentId,{
+  "otp": "12345"
+})
 ```
 
 **Parameters:**
 
 | Name        | Type    | Description                          |
 |-------------|---------|--------------------------------------|
-| paymentId*    | integer | Unique identifier of the payment                                               |
+| paymentId*    | integer | Unique identifier of the payment  |
+| otp*    | string | The customer receives the OTP using their preferred notification medium - SMS or email |
+
+Doc reference [doc](https://razorpay.com/docs/payments/payment-gateway/s2s-integration/json/v2/build-integration/cards/#response-on-submitting-otp)
 
 **Response:** <br>
 Success
@@ -619,6 +625,33 @@ Failure
   "next": ["otp_submit", "otp_resend"]
 }
 ```
+-------------------------------------------------------------------------------------------------------
+
+### OTP Resend
+
+```js
+instance.payments.otpResend(paymentId)
+```
+
+**Parameters:**
+
+| Name        | Type    | Description                          |
+|-------------|---------|--------------------------------------|
+| paymentId*    | integer | Unique identifier of the payment |
+
+Doc reference [doc](https://razorpay.com/docs/payments/payment-methods/cards/authentication/native-otp/#otp-resend)
+
+**Response:** <br>
+
+```json
+{
+  "next": [
+    "otp_submit",
+    "otp_resend"
+  ],
+  "razorpay_payment_id": "pay_JWaNvYmrx75sXo"
+}
+```  
 -------------------------------------------------------------------------------------------------------
 
 ### Create Payment Json (Third party validation)
@@ -799,7 +832,6 @@ instance.payments.fetchPaymentMethods();
 **Response:** <br>
  please refer this [doc](https://razorpay.com/docs/payments/third-party-validation/s2s-integration/methods-api/#fetch-payment-methods) for response
 
-```
 -------------------------------------------------------------------------------------------------------
 
 **PN: * indicates mandatory fields**

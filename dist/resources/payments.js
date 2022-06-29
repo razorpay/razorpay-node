@@ -295,6 +295,26 @@ module.exports = function (api) {
         url: '/payments/downtimes/' + downtimeId
       }, callback);
     },
+    otpGenerate: function otpGenerate(paymentId, callback) {
+
+      /*
+       * OTP Generate
+       *
+       * @param {String} paymentId
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      if (!paymentId) {
+
+        return Promise.reject("payment Id is mandatory");
+      }
+
+      return api.post({
+        url: '/payments/' + paymentId + '/otp_generate'
+      }, callback);
+    },
     otpSubmit: function otpSubmit(paymentId) {
       var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var callback = arguments[2];
@@ -318,6 +338,26 @@ module.exports = function (api) {
       return api.post({
         url: '/payments/' + paymentId + '/otp/submit',
         data: params
+      }, callback);
+    },
+    otpResend: function otpResend(paymentId, callback) {
+
+      /*
+       * OTP Resend
+       *
+       * @param {String} paymentId
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
+
+      if (!paymentId) {
+
+        return Promise.reject("payment Id is mandatory");
+      }
+
+      return api.post({
+        url: '/payments/' + paymentId + '/otp/resend'
       }, callback);
     },
     createUpi: function createUpi() {
