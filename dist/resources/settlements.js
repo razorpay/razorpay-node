@@ -140,6 +140,7 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
+      var expand = void 0;
       var from = params.from,
           to = params.to,
           count = params.count,
@@ -147,13 +148,18 @@ module.exports = function (api) {
           url = BASE_URL + '/ondemand';
 
 
+      if (params.hasOwnProperty("expand[]")) {
+        expand = { "expand[]": params["expand[]"] };
+      }
+
       return api.get({
         url: url,
         data: _extends({}, params, {
           from: from,
           to: to,
           count: count,
-          skip: skip
+          skip: skip,
+          expand: expand
         })
       }, callback);
     },
