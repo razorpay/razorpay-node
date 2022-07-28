@@ -65,6 +65,8 @@ module.exports = function (api) {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
+      var isNotForm = false;
+
       var amount = params.amount,
           currency = params.currency,
           receipt = params.receipt,
@@ -75,8 +77,8 @@ module.exports = function (api) {
 
       currency = currency || 'INR';
 
-      if (!(amount || method === 'emandate' && amount === 0)) {
-        throw new Error('`amount` is mandatory');
+      if (params.hasOwnProperty("first_payment_min_amount")) {
+        isNotForm = true;
       }
 
       var data = Object.assign(_extends({
@@ -90,7 +92,7 @@ module.exports = function (api) {
       return api.post({
         url: '/orders',
         data: data
-      }, callback);
+      }, callback, isNotForm);
     },
     edit: function edit(orderId) {
       var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
