@@ -97,26 +97,6 @@ describe('ORDERS', () => {
   })
 
   describe('Order create', () => {
-    it('Throws error when mandatory fields are not provided', () => {
-      assert.throws(
-        rzpInstance.orders.create,
-        '`amount` is mandatory',
-        'Should throw exception when amount is not provided'
-      )
-
-      try {
-        rzpInstance.orders.create({
-          method: 'emandate',
-        })
-      } catch (e) {
-        assert.equal(
-          e.message,
-          '`amount` is mandatory',
-          'Should throw exception when amount is not provided with emandate method'
-        )
-      }
-    })
-
     it('Order create request', (done) => {
       let orderAmount = 100
       let receipt = 'testreceiptid'

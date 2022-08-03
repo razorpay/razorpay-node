@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.3 - 2022-07-28
+- [Bugfix]: create order api
+- Updated Documentation
+
 ## 2.8.2 - 2022-06-29
 - Added Third party validation & Otp API for Payment (createUpi, validateVpa,
 otpGenerate, otpSubmit, otpResend)
