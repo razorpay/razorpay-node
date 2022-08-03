@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2.8.3 - 2022-07-28
-- [Bugfix]: order create api
+- [Bugfix]: create order api
 - Updated Documentation
 
 ## 2.8.2 - 2022-06-29
