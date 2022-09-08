@@ -171,7 +171,7 @@ describe("VIRTUAL_ACCOUNTS", () => {
     it("Validation", (done) => {
 
       mocker.mock({
-        url: `${SUB_PATH}/${undefined}`
+        url: `${SUB_PATH}/${undefined}/close`
       });
 
       rzpInstance.virtualAccounts.close().then(() => {
@@ -186,15 +186,15 @@ describe("VIRTUAL_ACCOUNTS", () => {
     it("Url Match", (done) => {
     
       mocker.mock({
-        url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
-        method: "PATCH"
+        url: `${SUB_PATH}/${TEST_VIRTUAL_ACCOUNT}/close`,
+        method: "POST"
       });
 
       rzpInstance.virtualAccounts.close(TEST_VIRTUAL_ACCOUNT).then((response) => {
      
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
-          `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}`,
+          `${FULL_PATH}/${TEST_VIRTUAL_ACCOUNT}/close`,
           "Url is formed correctly"       
         );
 
