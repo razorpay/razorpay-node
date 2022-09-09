@@ -104,7 +104,7 @@ describe('ORDERS', () => {
         amount: orderAmount,
         receipt: receipt,
         currency: 'INR',
-        payment_capture: true,
+        partial_payment: true,
         notes: {
           note1: 'This is note1',
           note2: 'This is note2'
@@ -130,7 +130,7 @@ describe('ORDERS', () => {
               amount: orderAmount,
               receipt: receipt,
               currency: 'INR',
-              payment_capture: 1,
+              partial_payment: true,
               'notes[note1]': 'This is note1',
               'notes[note2]': 'This is note2'
             }

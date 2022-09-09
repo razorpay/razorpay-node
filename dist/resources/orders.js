@@ -70,10 +70,10 @@ module.exports = function (api) {
       var amount = params.amount,
           currency = params.currency,
           receipt = params.receipt,
-          payment_capture = params.payment_capture,
+          partial_payment = params.partial_payment,
           notes = params.notes,
           method = params.method,
-          otherParams = _objectWithoutProperties(params, ['amount', 'currency', 'receipt', 'payment_capture', 'notes', 'method']);
+          otherParams = _objectWithoutProperties(params, ['amount', 'currency', 'receipt', 'partial_payment', 'notes', 'method']);
 
       currency = currency || 'INR';
 
@@ -86,7 +86,7 @@ module.exports = function (api) {
         currency: currency,
         receipt: receipt,
         method: method,
-        payment_capture: normalizeBoolean(payment_capture)
+        partial_payment: normalizeBoolean(partial_payment)
       }, otherParams), normalizeNotes(notes));
 
       return api.post({

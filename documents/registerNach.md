@@ -89,7 +89,6 @@ instance.orders.create({
 | customerId*   | string      | The id of the customer to be fetched |
 | method*      | string  | Payment method used to make the registration transaction. Possible value is `nach`.  |
 | receipt      | string  | Your system order reference id.  |
-| payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
 | token  | object  | All keys listed [here](https://razorpay.com/docs/api/payments/recurring-payments/paper-nach/auto-debit#112-create-an-order) are supported |
 | notes | object  | A key-value pair  |
 
@@ -311,7 +310,6 @@ instance.subscriptions.createRegistrationLink({
 instance.orders.create({
   "amount": 100,
   "currency": "INR",
-  "payment_capture": true,
   "receipt": "Receipt No. 1",
   "notes": {
     "key1": "value3",
@@ -326,7 +324,6 @@ instance.orders.create({
 | amount*   | integer      | The amount to be captured (should be equal to the authorized amount, in paise) |
 | currency*   | string  | The currency of the payment (defaults to INR)  |
 | receipt      | string  | Your system order reference id.  |
-| payment_capture*  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
 | notes | object  | A key-value pair  |
 
 **Response:**
