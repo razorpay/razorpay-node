@@ -82,6 +82,7 @@ instance.orders.create({
 | currency*        | string  | Currency of the order. Currently only `INR` is supported.                      |
 | method*        | string  | The authorization method. In this case the value will be `emandate`                      |
 | receipt         | string  | Your system order reference id.                                              |
+| payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
 | notes           | object  | A key-value pair                                                             |
 | token  | array  | All parameters listed [here](https://razorpay.com/docs/api/payments/recurring-payments/emandate/create-authorization-transaction/#112-create-an-order) are supported|
 
@@ -417,6 +418,7 @@ instance.orders.create({
 | currency*        | string  | Currency of the order. Currently only `INR` is supported.                      |
 | receipt         | string  | Your system order reference id.                                              |
 | notes           | object  | A key-value pair                                                             |
+| payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
 
 **Response:**
 ```json
