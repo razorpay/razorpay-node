@@ -580,6 +580,7 @@ instance.customers.deleteToken(customerId, tokenId)
 instance.orders.create({
   "amount": 1000,
   "currency": "INR",
+  "payment_capture": true,
   "receipt": "Receipt No. 1",
   "notes": {
     "notes_key_1": "Tea, Earl Grey, Hot",
@@ -596,6 +597,7 @@ instance.orders.create({
 | currency*        | string  | Currency of the order. Currently only `INR` is supported.                      |
 | receipt         | string  | Your system order reference id.                                              |
 | notes           | array  | A key-value pair  |
+| payment_capture  | boolean  | Indicates whether payment status should be changed to captured automatically or not. Possible values: true - Payments are captured automatically. false - Payments are not captured automatically. |
 
 **Response:**
 ```json
