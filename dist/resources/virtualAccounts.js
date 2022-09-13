@@ -82,10 +82,12 @@ module.exports = function (api) {
         return Promise.reject(ID_REQUIRED_MSG);
       }
 
-      var data = {};
+      var data = {
+        status: 'closed'
+      };
 
-      return api.post({
-        url: BASE_URL + "/" + virtualAccountId + "/close",
+      return api.patch({
+        url: BASE_URL + "/" + virtualAccountId,
         data: data
       }, callback);
     },
