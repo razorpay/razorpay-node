@@ -1,5 +1,5 @@
 ## Description
-- Description of chang
+- Description of change
 
 ## Detailed Changes
 
