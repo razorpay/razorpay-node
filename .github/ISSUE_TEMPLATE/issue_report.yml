@@ -7,13 +7,6 @@ body:
       value: |
         Thanks for taking the time to fill out this issue report!
   - type: textarea
-    id: what-happened
-    attributes:
-      description: A clear and concise description of what the issue is.
-      placeholder: Tell us what you see!
-    validations:
-      required: true
-  - type: textarea
     id: repro-steps
     attributes:
       label: Steps to reproduce the behavior
