@@ -1,4 +1,4 @@
-name: Issue report
+name: issue.md
 description: Create a report to help us improve
 labels: ["issue"]
 body:
