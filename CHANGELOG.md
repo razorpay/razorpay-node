@@ -1,9 +1,9 @@
 # Changelog
 
 ## 2.8.4 - 2022-11-11
-### Patch Changes
- - Close virtualaccount end point  \[[`3e6daf3`](https://github.com/razorpay/razorpay-node/commit/3e6daf3c555f62eb23660a54eaae756e395ea3b6)]:
- - passing `partial_payment` boolean issue when creating order  \[[`653a278`](https://github.com/razorpay/razorpay-node/commit/653a2784b57095170ee3c0b3dff877aa7d8afca4)]:
+
+- Fixed `virtualAccount.close` function implementation  \[[`3e6daf3`](https://github.com/razorpay/razorpay-node/commit/3e6daf3c555f62eb23660a54eaae756e395ea3b6)]:
+- Fixed `orders.create` function by passing `partial_payment` boolean  \[[`653a278`](https://github.com/razorpay/razorpay-node/commit/653a2784b57095170ee3c0b3dff877aa7d8afca4)]:
 
 ## 2.8.3 - 2022-07-28
 - [Bugfix]: create order api
