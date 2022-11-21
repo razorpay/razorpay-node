@@ -2,9 +2,9 @@
 
 ## 2.8.4 - 2022-11-21
 
-- [#310](https://github.com/razorpay/razorpay-node/pull/310) [`3e6daf3`](https://github.com/razorpay/razorpay-node/commit/3e6daf3c555f62eb23660a54eaae756e395ea3b6) : Thanks [@ankitdas13 ](https://github.com/snitin315)! - Fixed `virtualAccount.close` function implementation
+- [#310](https://github.com/razorpay/razorpay-node/pull/310) [`3e6daf3`](https://github.com/razorpay/razorpay-node/commit/3e6daf3c555f62eb23660a54eaae756e395ea3b6) : Thanks [@ankitdas13 ](https://github.com/ankitdas13)! - Fixed `virtualAccount.close` function implementation
 
-- [#311](https://github.com/razorpay/razorpay-node/pull/322) [`653a278`](https://github.com/razorpay/razorpay-node/commit/653a2784b57095170ee3c0b3dff877aa7d8afca4):  Thanks [@ankitdas13 ](https://github.com/snitin315)! - Fixed `orders.create` function by passing `partial_payment` boolean
+- [#311](https://github.com/razorpay/razorpay-node/pull/322) [`653a278`](https://github.com/razorpay/razorpay-node/commit/653a2784b57095170ee3c0b3dff877aa7d8afca4):  Thanks [@ankitdas13 ](https://github.com/ankitdas13)! - Fixed `orders.create` function by passing `partial_payment` boolean
 
 ## 2.8.3 - 2022-07-28
 - [Bugfix]: create order api
