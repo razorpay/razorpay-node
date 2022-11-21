@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.8.4 - 2022-11-11
+## 2.8.4 - 2022-11-21
 
 - [#310](https://github.com/razorpay/razorpay-node/pull/310) [`3e6daf3`](https://github.com/razorpay/razorpay-node/commit/3e6daf3c555f62eb23660a54eaae756e395ea3b6) : Thanks [@ankitdas13 ](https://github.com/snitin315)! - Fixed `virtualAccount.close` function implementation
 
