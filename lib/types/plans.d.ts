@@ -1,4 +1,5 @@
 export interface IRazorPayPlan {
+    id:string;
     entity: "plan";
     interval: number;
     period: "daily" | "weekly" | "monthly" | "yearly";
@@ -10,7 +11,7 @@ export interface IRazorPayPlan {
         amount: number;
         unit_amount: number;
         currency: string;
-        type: "plan";
+        type: string;
         unit: string | null;
         tax_inclusive: boolean;
         hsn_code: string | null;
@@ -28,13 +29,13 @@ export interface IRazorPayPlan {
 export interface IRazorpayAddPlan {
     item: {
         name: string;
-        description: string;
+        description?: string;
         amount: number;
         currency: string;
     };
     period: "daily" | "weekly" | "monthly" | "yearly";
     interval: number;
-    notes: { [key: string]: string };
+    notes?: { [key: string]: string };
 }
 
 export interface IRazorpayPlanQuery {
@@ -44,7 +45,7 @@ export interface IRazorpayPlanQuery {
     skip?: number;
 }
 
-declare class Plans {
+declare function plans(api: any): {
     /**
      * Creates a plan
      * 
@@ -71,4 +72,4 @@ declare class Plans {
     fetch(planId: string): Promise<IRazorPayPlan>
 }
 
-export default Plans
+export default plans

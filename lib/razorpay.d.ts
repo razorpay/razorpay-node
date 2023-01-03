@@ -1,6 +1,6 @@
-import Plans from "./types/plan"
 import API,{IRazorpayHeaders} from './types/api'
 import addons from "./types/addons"
+import plans from "./types/plan"
 
 interface IRazorpayConfig {
     key_id: string,
@@ -14,7 +14,7 @@ declare class Razorpay {
     constructor(config: IRazorpayConfig)
     api: API
     addons: ReturnType<typeof addons>
-    plans: Plans
+    plans: ReturnType<typeof plans>
 }
 
 export = Razorpay
