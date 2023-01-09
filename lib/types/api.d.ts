@@ -8,8 +8,22 @@ interface IPayload {
 }
 
 export interface IRazorpayHeaders {
-    'X-Razorpay-Account': string,
-    'Content-Type': string
+    'X-Razorpay-Account'?: string,
+    'Content-Type'?: string
+}
+
+/**
+ * Key-value pairs 
+ */
+export interface IMap<T> {
+    [key: string]: T | null;
+}
+
+export interface IRazorpayQuery {
+    from?: number;
+    to?: number;
+    count?: number;
+    skip?: number;
 }
 
 declare class API {

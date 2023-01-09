@@ -1,48 +1,40 @@
-export interface IRazorPayPlan {
-    id:string;
-    entity: "plan";
-    interval: number;
+import { IMap, IRazorpayQuery } from "./api";
+
+export interface IRazorpayPlan {
+    item: IRazorpayItem;
     period: "daily" | "weekly" | "monthly" | "yearly";
-    item: {
-        id: string;
-        active: boolean;
-        name: string;
-        description: string;
-        amount: number;
-        unit_amount: number;
-        currency: string;
-        type: string;
-        unit: string | null;
-        tax_inclusive: boolean;
-        hsn_code: string | null;
-        sac_code: string | null;
-        tax_rate: string | null;
-        tax_id: string | null;
-        tax_group_id: string | null;
-        created_at: number;
-        updated_at: number;
-    };
-    notes: { [key: string]: string };
+    interval: number;
+    notes?: IMap<string | number>;
+}
+
+export interface IRazorPayPlanId extends IRazorpayPlan {
+    id: string;
+    entity: string;
+    item: IRazorpayItemId;
     created_at: number;
 }
 
-export interface IRazorpayAddPlan {
-    item: {
-        name: string;
-        description?: string;
-        amount: number;
-        currency: string;
-    };
-    period: "daily" | "weekly" | "monthly" | "yearly";
-    interval: number;
-    notes?: { [key: string]: string };
+export interface IRazorpayItem {
+    name: string;
+    description?: string;
+    amount: number;
+    currency: string;
 }
 
-export interface IRazorpayPlanQuery {
-    from?: number;
-    to?: number;
-    count?: number;
-    skip?: number;
+export interface IRazorpayItemId extends IRazorpayItem{
+    id: string;
+    active: boolean;
+    unit_amount: number;
+    type: string;
+    unit: string | null;
+    tax_inclusive: boolean;
+    hsn_code: string | null;
+    sac_code: string | null;
+    tax_rate: string | null;
+    tax_id: string | null;
+    tax_group_id: string | null;
+    created_at: number;
+    updated_at: number;
 }
 
 declare function plans(api: any): {
@@ -53,7 +45,7 @@ declare function plans(api: any): {
      * 
      * @return {Promise}
      */
-    create(params: IRazorpayAddPlan): Promise<IRazorPayPlan>
+    create(params: IRazorpayPlan): Promise<IRazorPayPlanId>
     /**
     * Get all plans
     *
@@ -61,15 +53,19 @@ declare function plans(api: any): {
     *
     * @return {Promise}
     */
-    all(params?: IRazorpayPlanQuery): Promise<string>
+    all(params?: IRazorpayQuery): Promise<{
+        entity:string;
+        count:string;
+        items: Array<IRazorPayPlanId>
+    }>
     /**
-    * Fetches a order given Plan ID
+    * Fetch a plans given Plan ID
     *
     * @param {String} planId
     *
     * @return {Promise}
     */
-    fetch(planId: string): Promise<IRazorPayPlan>
+    fetch(planId: string): Promise<IRazorPayPlanId>
 }
 
 export default plans

@@ -60,9 +60,9 @@ declare function addons(api: API): {
     * @return {Promise}
     */
     all(params?: IRazorpayAddonsQuery): Promise<{
-        entity:string,
-        count:number,
-        items:Array<IRazorpayAddonId>
+        entity: string,
+        count: number,
+        items: Array<IRazorpayAddonId>
     }>;
 };
 export default addons;
