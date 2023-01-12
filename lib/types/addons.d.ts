@@ -1,27 +1,33 @@
 import API from './api'
 
+export interface IRazorpayAddonItem {
+    name?: string;
+    amount?: number;
+    currency?: string;
+    description?: string;
+}
+
+export interface IRazorpayAddonItemId {
+    id: string,
+    active: boolean,
+    unit_amount: number,
+    currency: string,
+    type: string,
+    unit: string | null,
+    tax_inclusive: false,
+    hsn_code: string | null,
+    sac_code: string | null,
+    tax_rate: string | null,
+    tax_id: string | null,
+    tax_group_id: string | null,
+    created_at: number,
+    updated_at: number
+}
+
 export interface IRazorpayAddonId {
     id: string,
     entity: string,
-    item: {
-        id: string,
-        active: boolean,
-        name: string,
-        description: string,
-        amount: number,
-        unit_amount: number,
-        currency: string,
-        type: string,
-        unit: string | null,
-        tax_inclusive: false,
-        hsn_code: string | null,
-        sac_code: string | null,
-        tax_rate: string | null,
-        tax_id: string | null,
-        tax_group_id: string | null,
-        created_at: number,
-        updated_at: number
-    },
+    item: IRazorpayAddonItemId,
     quantity: number,
     created_at: number,
     subscription_id: string,
