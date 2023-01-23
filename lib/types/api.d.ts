@@ -1,10 +1,16 @@
-interface IOption<T> {
-    [key: string]: T
+import nodeify from '../utils/nodeify'
+
+interface IOption {
+    hostUrl: string;
+    key_id: string;
+    key_secret?: string;
+    ua: string;
+    headers?: string;
 }
 
-interface IPayload {
+interface IPayload<T> {
     url: string,
-    params: IOption<any>
+    data: T
 }
 
 export interface IRazorpayHeaders {
@@ -20,22 +26,55 @@ export interface IMap<T> {
 }
 
 export interface IRazorpayQuery {
+    /**
+     * The Unix timestamp from when data are to be fetched
+     */
     from?: number;
+    /**
+     * The Unix timestamp till when data are to be fetched.
+     */
     to?: number;
+    /**
+     * The number of data to be fetched. Default value is `10`. Maximum value is `100`.
+     * This can be used for pagination, in combination with skip.
+     */
     count?: number;
+    /**
+     * The number of data to be skipped. Default value is `0`. 
+     * This can be used for pagination, in combination with count.
+     */
     skip?: number;
 }
 
+export interface INormalizeError {
+    statusCode: string | number;
+    error: {
+        code: string;
+        description: string;
+        field?: any;
+        source?: string;
+        step?: string;
+        reason?: string;
+        metadata?: { [key: string]: string };
+    }
+}
+
 declare class API {
-    constructor(options: IOption<any>)
-    get(params: IPayload): Promise<any>
-    post(params: IPayload): Promise<any>
-    put(params: IPayload): Promise<any>
-    patch(params: IPayload): Promise<any>
-    delete(params: IPayload): Promise<any>
-    private allowedHeaders;
-    private normalizeError;
-    private getValidHeaders;
+    constructor(options: IOption)
+    get<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    get<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
+
+    post<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    post<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
+
+    put<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    put<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
+
+    patch<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    patch<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
+
+    delete<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    delete<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
 }
 
 export default API
