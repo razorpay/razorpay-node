@@ -61,19 +61,19 @@ export interface INormalizeError {
 
 declare class API {
     constructor(options: IOption)
-    get<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    get<T, V>(params: IPayload<T>): Promise<V>
     get<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
 
-    post<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    post<T, V>(params: IPayload<T>): Promise<V>
     post<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
 
-    put<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    put<T, V>(params: IPayload<T>): Promise<V>
     put<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
 
-    patch<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    patch<T, V>(params: IPayload<T>): Promise<V>
     patch<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
 
-    delete<T>(params: IPayload<T>): ReturnType<typeof nodeify>
+    delete<T, V>(params: IPayload<T>): Promise<V>
     delete<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
 }
 

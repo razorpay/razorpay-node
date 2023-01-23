@@ -1,10 +1,19 @@
 export interface IRazorpayWebhook {
-    order_id?: string;
-    payment_id?: string;
-    subscription_id?: string;
-    payment_link_id?: string;
-    payment_link_reference_id?: string;
-    payment_link_status?: string;
+    payment_id: string;
+}
+
+export interface IRazorpayVerifyPayment extends IRazorpayWebhook {
+    order_id: string;
+}
+
+export interface IRazorpayVerifySubscription extends IRazorpayWebhook {
+    subscription_id: string;
+}
+
+export interface IRazorpayVerifyPaymentLink extends IRazorpayWebhook {
+    payment_link_id: string;
+    payment_link_reference_id: string;
+    payment_link_status: string;
 }
 
 /**
@@ -33,7 +42,10 @@ export function validateWebhookSignature(body: string, signature: string, secret
 * your webhook secret
 *
 */
-export function validatePaymentVerification(payload: IRazorpayWebhook, signature: string, secret: string): boolean
+export function validatePaymentVerification(payload: IRazorpayVerifyPayment, signature: string, secret: string): boolean
+export function validatePaymentVerification(payload: IRazorpayVerifySubscription, signature: string, secret: string): boolean
+export function validatePaymentVerification(payload: IRazorpayVerifyPaymentLink, signature: string, secret: string): boolean
+
 
 /**
 * given an object , returns prettified string
