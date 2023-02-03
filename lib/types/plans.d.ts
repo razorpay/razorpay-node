@@ -1,40 +1,48 @@
-import { IMap, IRazorpayQuery } from "./api";
+import { IMap, IRazorpayQuery, INormalizeError } from "./api";
+import { Items } from "./items";
 
-export interface IRazorpayPlan {
-    item: IRazorpayItem;
-    period: "daily" | "weekly" | "monthly" | "yearly";
-    interval: number;
-    notes?: IMap<string | number>;
-}
+export declare namespace Plans {
+    interface IRazorpayPlanBaseRequestBody {
+        /**
+         * Details of the plan.
+         */
+        item: Items.IRazorpayItemCreateRequestBody;
+        /**
+         * This, combined with interval, defines the frequency. Possible values:
+         * `daily`, `weekly`, `monthly`, `yearly`
+         * 
+         * If the billing cycle is 2 months, the value should be monthly.
+         */
+        period: "daily" | "weekly" | "monthly" | "yearly";
+        /**
+         * This, combined with `period`, defines the frequency. 
+         * If the billing cycle is 2 months, the value should be `2`.
+         */
+        interval: number;
+        /**
+         * Notes you can enter for the contact for future reference. 
+         * This is a key-value pair. You can enter a maximum of 15 key-value pairs. 
+         * For example, `note_key`: `Beam me up Scotty`
+         */
+        notes?: IMap<string | number>;
+    }
 
-export interface IRazorPayPlanId extends IRazorpayPlan {
-    id: string;
-    entity: string;
-    item: IRazorpayItemId;
-    created_at: number;
-}
+    interface IRazorpayPlanCreateRequestBody extends IRazorpayPlanBaseRequestBody { }
 
-export interface IRazorpayItem {
-    name: string;
-    description?: string;
-    amount: number;
-    currency: string;
-}
-
-export interface IRazorpayItemId extends IRazorpayItem{
-    id: string;
-    active: boolean;
-    unit_amount: number;
-    type: string;
-    unit: string | null;
-    tax_inclusive: boolean;
-    hsn_code: string | null;
-    sac_code: string | null;
-    tax_rate: string | null;
-    tax_id: string | null;
-    tax_group_id: string | null;
-    created_at: number;
-    updated_at: number;
+    interface IRazorPayPlans extends IRazorpayPlanBaseRequestBody {
+        /**
+         * The unique identifier linked to a plan
+         */
+        id: string;
+        /**
+         * Indicates the type of entity.
+         */
+        entity: string;
+        /**
+         * The Unix timestamp at which the plan was created.
+         */
+        created_at: number;
+    }
 }
 
 declare function plans(api: any): {
@@ -43,9 +51,9 @@ declare function plans(api: any): {
      * 
      * @param {Object} params
      * 
-     * @return {Promise}
      */
-    create(params: IRazorpayPlan): Promise<IRazorPayPlanId>
+    create(params: Plans.IRazorpayPlanCreateRequestBody): Promise<Plans.IRazorPayPlans>
+    create(params: Plans.IRazorpayPlanCreateRequestBody, callback: (err: INormalizeError | null, data: Plans.IRazorPayPlans) => void): void;
     /**
     * Get all plans
     *
@@ -54,18 +62,23 @@ declare function plans(api: any): {
     * @return {Promise}
     */
     all(params?: IRazorpayQuery): Promise<{
-        entity:string;
-        count:string;
-        items: Array<IRazorPayPlanId>
+        entity: string;
+        count: string;
+        items: Array<Plans.IRazorPayPlans>
     }>
+    all(params: IRazorpayQuery, callback: (err: INormalizeError | null, data: {
+        entity: string,
+        count: number,
+        items: Array<Plans.IRazorPayPlans>
+    }) => void): void
     /**
     * Fetch a plans given Plan ID
     *
-    * @param {String} planId
+    * @param {string} planId
     *
-    * @return {Promise}
     */
-    fetch(planId: string): Promise<IRazorPayPlanId>
+    fetch(planId: string): Promise<Plans.IRazorPayPlans>
+    fetch(planId: string, callback: (err: INormalizeError | null, data: Plans.IRazorPayPlans) => void): void;
 }
 
 export default plans
