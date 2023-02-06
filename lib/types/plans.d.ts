@@ -6,7 +6,7 @@ export declare namespace Plans {
         /**
          * Details of the plan.
          */
-        item: Items.IRazorpayItemCreateRequestBody;
+        item: Items.IRazorpayItem;
         /**
          * This, combined with interval, defines the frequency. Possible values:
          * `daily`, `weekly`, `monthly`, `yearly`

@@ -138,6 +138,14 @@ declare function items(api: any): {
   */
   edit(itemId: string, params: Items.IRazorpayItemUpdateRequestBody): Promise<Items.IRazorpayItem>
   edit(itemId: string, params: Items.IRazorpayItemUpdateRequestBody, callback: (err: INormalizeError | null, data: Items.IRazorpayItem) => void): void;
+  /**
+  * Delete a item given Item ID
+  *
+  * @param {string} itemId - The unique identifier of the item.
+  *
+  */
+   delete(itemId: string): Promise<[]>
+   delete(itemId: string, callback: (err: INormalizeError | null, data: []) => void): void;
 }
 
 export default items
