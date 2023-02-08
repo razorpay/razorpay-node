@@ -1,12 +1,12 @@
-import { IMap, IRazorpayQuery, INormalizeError } from "./api";
+import { IMap, RazorpayQuery, INormalizeError } from "./api";
 import { Items } from "./items";
 
 export declare namespace Plans {
-    interface IRazorpayPlanBaseRequestBody {
+    interface RazorpayPlanBaseRequestBody {
         /**
          * Details of the plan.
          */
-        item: Items.IRazorpayItem;
+        item: Items.RazorpayItemBaseRequestBody;
         /**
          * This, combined with interval, defines the frequency. Possible values:
          * `daily`, `weekly`, `monthly`, `yearly`
@@ -27,9 +27,9 @@ export declare namespace Plans {
         notes?: IMap<string | number>;
     }
 
-    interface IRazorpayPlanCreateRequestBody extends IRazorpayPlanBaseRequestBody { }
+    interface RazorpayPlanCreateRequestBody extends RazorpayPlanBaseRequestBody { }
 
-    interface IRazorPayPlans extends IRazorpayPlanBaseRequestBody {
+    interface RazorPayPlans extends RazorpayPlanBaseRequestBody {
         /**
          * The unique identifier linked to a plan
          */
@@ -42,6 +42,10 @@ export declare namespace Plans {
          * The Unix timestamp at which the plan was created.
          */
         created_at: number;
+        /**
+         * Details of the plan.
+         */
+        item: Items.RazorpayItem;
     }
 }
 
@@ -49,36 +53,35 @@ declare function plans(api: any): {
     /**
      * Creates a plan
      * 
-     * @param {Object} params
+     * @param params - Check [doc](https://razorpay.com/docs/payments/invoices/items/api#create-an-item) for required params
      * 
      */
-    create(params: Plans.IRazorpayPlanCreateRequestBody): Promise<Plans.IRazorPayPlans>
-    create(params: Plans.IRazorpayPlanCreateRequestBody, callback: (err: INormalizeError | null, data: Plans.IRazorPayPlans) => void): void;
+    create(params: Plans.RazorpayPlanCreateRequestBody): Promise<Plans.RazorPayPlans>
+    create(params: Plans.RazorpayPlanCreateRequestBody, callback: (err: INormalizeError | null, data: Plans.RazorPayPlans) => void): void;
     /**
     * Get all plans
     *
-    * @param {Object} params
+    * @param params - Check [doc](https://razorpay.com/docs/payments/invoices/items/api#fetch-multiple-items) for required params
     *
-    * @return {Promise}
     */
-    all(params?: IRazorpayQuery): Promise<{
+    all(params?: RazorpayQuery): Promise<{
         entity: string;
         count: string;
-        items: Array<Plans.IRazorPayPlans>
+        items: Array<Plans.RazorPayPlans>
     }>
-    all(params: IRazorpayQuery, callback: (err: INormalizeError | null, data: {
+    all(params: RazorpayQuery, callback: (err: INormalizeError | null, data: {
         entity: string,
         count: number,
-        items: Array<Plans.IRazorPayPlans>
+        items: Array<Plans.RazorPayPlans>
     }) => void): void
     /**
     * Fetch a plans given Plan ID
     *
-    * @param {string} planId
+    * @param planId - The unique identifier of the plan
     *
     */
-    fetch(planId: string): Promise<Plans.IRazorPayPlans>
-    fetch(planId: string, callback: (err: INormalizeError | null, data: Plans.IRazorPayPlans) => void): void;
+    fetch(planId: string): Promise<Plans.RazorPayPlans>
+    fetch(planId: string, callback: (err: INormalizeError | null, data: Plans.RazorPayPlans) => void): void;
 }
 
 export default plans

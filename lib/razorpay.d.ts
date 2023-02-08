@@ -1,48 +1,95 @@
-import API, { IRazorpayHeaders } from './types/api'
-import customers from "./types/customers"
+import API, { RazorpayHeaders } from './types/api'
 import addons from "./types/addons"
 import plans from "./types/plans"
-import orders from "./types/orders"
-import payments from "./types/payments"
-import transfers from "./types/transfers"
-import refunds from "./types/refunds"
-import cards from "./types/cards"
-import fundAccount from "./types/fundAccount"
 import items from "./types/items"
-import paymentLink from "./types/paymentLink"
-import invoices from "./types/invoices"
-import qrCode from "./types/qrCode"
-import subscriptions from "./types/subscriptions"
-import virtualAccount from "./types/virtualAccounts"
 import { validateWebhookSignature } from "./utils/razorpay-utils"
 
 interface IRazorpayConfig {
-    key_id: string,
-    key_secret?: string,
-    headers?: IRazorpayHeaders
+    key_id: string;
+    key_secret?: string;
+    headers?: RazorpayHeaders;
 }
 
 declare class Razorpay {
     static VERSION: string
-    static validateWebhookSignature(body: string, signature: string, secret: string): ReturnType<typeof validateWebhookSignature>
+    static validateWebhookSignature: typeof validateWebhookSignature
 
     constructor(config: IRazorpayConfig)
     api: API
-    customers: ReturnType<typeof customers>
+    /**
+     * Customers Entity
+     * @see https://razorpay.com/docs/api/customers/
+     */
+    customers: any
+    /**
+     * Addons Entity
+     * @see https://razorpay.com/docs/api/payments/subscriptions/#add-on
+     */
     addons: ReturnType<typeof addons>
+    /**
+     * Plans Entity
+     * @see https://razorpay.com/docs/api/payments/subscriptions/#plans
+     */
     plans: ReturnType<typeof plans>
-    orders: ReturnType<typeof orders>
-    payments: ReturnType<typeof payments>
-    transfers: ReturnType<typeof transfers>
-    refunds: ReturnType<typeof refunds>
-    cards: ReturnType<typeof cards>
-    fundAccount: ReturnType<typeof fundAccount>
+    /**
+     * Orders Entity
+     * @see https://razorpay.com/docs/api/orders
+     */
+    orders: any
+    /**
+     * Orders Entity
+     * @see https://razorpay.com/docs/api/payments
+     */
+    payments: any
+    /**
+     * Payments Entity
+     * @see https://razorpay.com/docs/api/payments/route/transfers
+     */
+    transfers: any
+    /**
+     * Transfers Entity
+     * @see https://razorpay.com/docs/api/refunds
+     */
+    refunds: any
+    /**
+     * Cards Entity
+     */
+    cards: any
+    /**
+     * FundaAccount Entity
+     * @see https://razorpay.com/docs/api/x/fund-accounts/
+     */
+    fundAccount: any
+    /**
+     * Items Entity
+     * @see https://razorpay.com/docs/payments/invoices/items/api/
+     */
     items: ReturnType<typeof items>
-    paymentLink: ReturnType<typeof paymentLink>
-    invoices: ReturnType<typeof invoices>
-    qrCode: ReturnType<typeof qrCode>
-    subscriptions: ReturnType<typeof subscriptions>
-    virtualAccounts: ReturnType<typeof virtualAccount>
+    /**
+     * PaymentLinks Entity
+     * @see https://razorpay.com/docs/payments/payment-links/apis
+     */
+    paymentLink: any
+    /**
+     * Invoices Entity
+     * @see https://razorpay.com/docs/payments/invoices/apis/
+     */
+    invoices: any
+    /**
+     * QrCode Entity
+     * @see https://razorpay.com/docs/payments/qr-codes/apis/
+     */
+    qrCode: any
+    /**
+     * Subscrptions Entity
+     * @see https://razorpay.com/docs/api/payments/subscriptions/#subscriptions
+     */
+    subscriptions: any
+    /**
+     * VirtualAccounts Entity
+     * @see https://razorpay.com/docs/api/payments/smart-collect/
+     */
+    virtualAccounts: any
 }
 
 export = Razorpay

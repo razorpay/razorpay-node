@@ -1,7 +1,7 @@
-import { IRazorpayQuery, INormalizeError } from "./api";
+import { RazorpayQuery, INormalizeError } from "./api";
 
 export declare namespace Items {
-  interface IRazorpayItemBaseRequestBody {
+  interface RazorpayItemBaseRequestBody {
     /**
      * A name for the item. For example, `Extra appala (papadum)`.
      */
@@ -20,9 +20,9 @@ export declare namespace Items {
     description?: string;
   }
 
-  interface IRazorpayItemCreateRequestBody extends IRazorpayItemBaseRequestBody { }
+  interface RazorpayItemCreateRequestBody extends RazorpayItemBaseRequestBody { }
 
-  interface IRazorpayItemUpdateRequestBody extends Partial<IRazorpayItemBaseRequestBody> {
+  interface RazorpayItemUpdateRequestBody extends Partial<RazorpayItemBaseRequestBody> {
     /**
      * Indicates the status of the item. Possible values :
      * `true` - Item is in `active` state
@@ -32,7 +32,7 @@ export declare namespace Items {
     active?: boolean;
   }
 
-  export interface IRazorpayItem extends IRazorpayItemBaseRequestBody {
+  interface RazorpayItem extends RazorpayItemBaseRequestBody {
     /**
      * The unique identifier of the item.
      */
@@ -100,48 +100,48 @@ declare function items(api: any): {
   /**
   * Create an Item
   *
-  * @param {Object} params - Check [doc](https://razorpay.com/docs/api/payments/items#create-an-item) for required params
+  * @param params - Check [doc](https://razorpay.com/docs/api/payments/items#create-an-item) for required params
   * 
   */
-  create(params: Items.IRazorpayItemCreateRequestBody): Promise<Items.IRazorpayItem>
-  create(params: Items.IRazorpayItemCreateRequestBody, callback: (err: INormalizeError | null, data: Items.IRazorpayItem) => void): void;
+  create(params: Items.RazorpayItemCreateRequestBody): Promise<Items.RazorpayItem>
+  create(params: Items.RazorpayItemCreateRequestBody, callback: (err: INormalizeError | null, data: Items.RazorpayItem) => void): void;
   /**
   * Get all Items
   *
-  * @param {Object} params - Check [doc](https://razorpay.com/docs/api/payments/items#fetch-multiple-items) for required params
+  * @param params - Check [doc](https://razorpay.com/docs/api/payments/items#fetch-multiple-items) for required params
   *
   */
-  all(params?: IRazorpayQuery | { active: number }): Promise<{
+  all(params?: RazorpayQuery | { active: number }): Promise<{
     entity: string,
     count: number,
-    items: Array<Items.IRazorpayItem>
+    items: Array<Items.RazorpayItem>
   }>;
-  all(params: IRazorpayQuery | { active: number }, callback: (err: INormalizeError | null, data: {
+  all(params: RazorpayQuery | { active: number }, callback: (err: INormalizeError | null, data: {
     entity: string,
     count: number,
-    items: Array<Items.IRazorpayItem>
+    items: Array<Items.RazorpayItem>
   }) => void): void
   /**
   * Fetch a item given Item ID
   *
-  * @param {string} itemId - The unique identifier of the item.
+  * @param itemId - The unique identifier of the item.
   *
   */
-  fetch(itemId: string): Promise<Items.IRazorpayItem>
-  fetch(itemId: string, callback: (err: INormalizeError | null, data: Items.IRazorpayItem) => void): void;
+  fetch(itemId: string): Promise<Items.RazorpayItem>
+  fetch(itemId: string, callback: (err: INormalizeError | null, data: Items.RazorpayItem) => void): void;
   /**
   * Edit a items given Item ID
   *
-  * @param {string} itemId - The unique identifier of the item.
-  * @param {Object} params - Check [doc](https://razorpay.com/docs/api/payments/items#update-an-item) for required params
+  * @param itemId - The unique identifier of the item.
+  * @param params - Check [doc](https://razorpay.com/docs/api/payments/items#update-an-item) for required params
   * 
   */
-  edit(itemId: string, params: Items.IRazorpayItemUpdateRequestBody): Promise<Items.IRazorpayItem>
-  edit(itemId: string, params: Items.IRazorpayItemUpdateRequestBody, callback: (err: INormalizeError | null, data: Items.IRazorpayItem) => void): void;
+  edit(itemId: string, params: Items.RazorpayItemUpdateRequestBody): Promise<Items.RazorpayItem>
+  edit(itemId: string, params: Items.RazorpayItemUpdateRequestBody, callback: (err: INormalizeError | null, data: Items.RazorpayItem) => void): void;
   /**
   * Delete a item given Item ID
   *
-  * @param {string} itemId - The unique identifier of the item.
+  * @param itemId - The unique identifier of the item.
   *
   */
    delete(itemId: string): Promise<[]>

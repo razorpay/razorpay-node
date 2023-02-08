@@ -9,13 +9,13 @@ interface IOption {
 }
 
 interface IPayload<T> {
-    url: string,
-    data: T
+    url: string;
+    data: T;
 }
 
-export interface IRazorpayHeaders {
-    'X-Razorpay-Account'?: string,
-    'Content-Type'?: string
+export interface RazorpayHeaders {
+    'X-Razorpay-Account'?: string;
+    'Content-Type'?: string;
 }
 
 /**
@@ -25,7 +25,10 @@ export interface IMap<T> {
     [key: string]: T | null;
 }
 
-export interface IRazorpayQuery {
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+export type PartialOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+
+export interface RazorpayQuery {
     /**
      * The Unix timestamp from when data are to be fetched
      */
