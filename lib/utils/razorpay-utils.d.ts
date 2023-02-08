@@ -1,25 +1,25 @@
-export interface IRazorpayWebhook {
+export interface RazorpayWebhook {
     /**
      * Payment ID of the successful payment.
      */
     payment_id: string;
 }
 
-export interface IRazorpayVerifyPayment extends IRazorpayWebhook {
+export interface RazorpayVerifyPayment extends RazorpayWebhook {
     /**
      * The id of the order to be fetched
      */
     order_id: string;
 }
 
-export interface IRazorpayVerifySubscription extends IRazorpayWebhook {
+export interface RazorpayVerifySubscription extends RazorpayWebhook {
     /**
      * The id of the subscription to be fetched
      */
     subscription_id: string;
 }
 
-export interface IRazorpayVerifyPaymentLink extends IRazorpayWebhook {
+export interface RazorpayVerifyPaymentLink extends RazorpayWebhook {
     /**
      * Payment Link ID generated at the time of link creation.
      */
@@ -62,7 +62,7 @@ export function validateWebhookSignature(body: string, signature: string, secret
 * your webhook secret
 *
 */
-export function validatePaymentVerification(payload: IRazorpayVerifyPayment | IRazorpayVerifySubscription | IRazorpayVerifyPaymentLink, signature: string, secret: string): boolean
+export function validatePaymentVerification(payload: RazorpayVerifyPayment | RazorpayVerifySubscription | RazorpayVerifyPaymentLink, signature: string, secret: string): boolean
 
 /**
 * given an object , returns prettified string
