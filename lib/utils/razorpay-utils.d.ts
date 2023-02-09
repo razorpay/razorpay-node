@@ -36,6 +36,22 @@ export interface RazorpayVerifyPaymentLink extends RazorpayWebhook {
     payment_link_status: string;
 }
 
+export function getDateInSecs(date: string): number
+
+export function normalizeDate(date: number | string): number
+
+export function isNumber(num: any): boolean
+
+export function isNonNullObject(input: Object | undefined): boolean
+
+export function normalizeBoolean(bool: boolean | undefined): 1 | 0
+
+export function isDefined(value: any): boolean
+
+export function normalizeNotes(notes: Object): Object
+
+export function getTestError(summary: string, expectedVal: string, gotVal: string): Error
+
 /**
 * Verify webhook verification
 *
