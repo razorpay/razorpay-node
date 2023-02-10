@@ -25,10 +25,30 @@ export interface IMap<T> {
     [key: string]: T | null;
 }
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 export type PartialOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
 export interface RazorpayQuery {
+    /**
+     * The Unix timestamp from when data are to be fetched
+     */
+    from?: number;
+    /**
+     * The Unix timestamp till when data are to be fetched.
+     */
+    to?: number;
+    /**
+     * The number of data to be fetched. Default value is `10`. Maximum value is `100`.
+     * This can be used for pagination, in combination with skip.
+     */
+    count?: number;
+    /**
+     * The number of data to be skipped. Default value is `0`. 
+     * This can be used for pagination, in combination with count.
+     */
+    skip?: number;
+}
+
+export interface IRazorpayQuery {
     /**
      * The Unix timestamp from when data are to be fetched
      */
