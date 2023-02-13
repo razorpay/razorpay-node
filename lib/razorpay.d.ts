@@ -4,8 +4,9 @@ import plans from "./types/plans"
 import items from "./types/items"
 import fundAccount from "./types/fundAccount"
 import invoices from "./types/invoices"
+import transfers from "./types/transfers"
 import settlements from './types/settlements'
-
+import orders from './types/orders'
 import { validateWebhookSignature } from "./utils/razorpay-utils"
 
 interface IRazorpayConfig {
@@ -39,7 +40,7 @@ declare class Razorpay {
      * Orders Entity
      * @see https://razorpay.com/docs/api/orders
      */
-    orders: any
+    orders: ReturnType<typeof orders>
     /**
      * Orders Entity
      * @see https://razorpay.com/docs/api/payments
@@ -49,7 +50,7 @@ declare class Razorpay {
      * Payments Entity
      * @see https://razorpay.com/docs/api/payments/route/transfers
      */
-    transfers: any
+    transfers: ReturnType<typeof transfers>
     /**
      * Transfers Entity
      * @see https://razorpay.com/docs/api/refunds
