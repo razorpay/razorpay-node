@@ -2,6 +2,10 @@ import API, { RazorpayHeaders } from './types/api'
 import addons from "./types/addons"
 import plans from "./types/plans"
 import items from "./types/items"
+import fundAccount from "./types/fundAccount"
+import invoices from "./types/invoices"
+import settlements from './types/settlements'
+
 import { validateWebhookSignature } from "./utils/razorpay-utils"
 
 interface IRazorpayConfig {
@@ -59,7 +63,7 @@ declare class Razorpay {
      * FundaAccount Entity
      * @see https://razorpay.com/docs/api/x/fund-accounts/
      */
-    fundAccount: any
+     fundAccount: ReturnType<typeof fundAccount>
     /**
      * Items Entity
      * @see https://razorpay.com/docs/payments/invoices/items/api/
@@ -74,7 +78,7 @@ declare class Razorpay {
      * Invoices Entity
      * @see https://razorpay.com/docs/payments/invoices/apis/
      */
-    invoices: any
+    invoices: ReturnType<typeof invoices>
     /**
      * QrCode Entity
      * @see https://razorpay.com/docs/payments/qr-codes/apis/
@@ -85,6 +89,11 @@ declare class Razorpay {
      * @see https://razorpay.com/docs/api/payments/subscriptions/#subscriptions
      */
     subscriptions: any
+    /**
+     * Settlements Entity
+     * @see https://razorpay.com/docs/api/settlements
+     */
+    settlements: ReturnType<typeof settlements>
     /**
      * VirtualAccounts Entity
      * @see https://razorpay.com/docs/api/payments/smart-collect/

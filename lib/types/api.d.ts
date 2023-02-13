@@ -27,6 +27,8 @@ export interface IMap<T> {
 
 export type PartialOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
+export type RequiredOptional<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>
+
 export interface RazorpayQuery {
     /**
      * The Unix timestamp from when data are to be fetched
