@@ -1,7 +1,7 @@
 import { IMap, INormalizeError } from "./api";
 
 export declare namespace FundAccounts {
-    interface IRazorpayFundAccountBaseRequestBody {
+    interface RazorpayFundAccountBaseRequestBody {
         /**
          * This is the unique ID linked to a customer. 
          * For example, `cust_Aa000000000001`.
@@ -15,12 +15,12 @@ export declare namespace FundAccounts {
         /**
          * Customer bank account details.
          */
-        bank_account: IRazorpayBankAccountBaseRequestBody;
+        bank_account: RazorpayBankAccountBaseRequestBody;
     }
 
-    interface IRazorpayFundAccountCreateRequestBody extends IRazorpayFundAccountBaseRequestBody { }
+    interface RazorpayFundAccountCreateRequestBody extends RazorpayFundAccountBaseRequestBody { }
 
-    interface IRazorpayBankAccountBaseRequestBody {
+    interface RazorpayBankAccountBaseRequestBody {
         /**
          * Data type string. Name of account holder as per bank records. 
          * For example, `Gaurav Kumar`.
@@ -38,7 +38,7 @@ export declare namespace FundAccounts {
         ifsc: string;
     }
 
-    interface RazorpayBankAccount extends IRazorpayBankAccountBaseRequestBody {
+    interface RazorpayBankAccount extends RazorpayBankAccountBaseRequestBody {
         /**
          * Customer's bank name
          */
@@ -50,7 +50,7 @@ export declare namespace FundAccounts {
         notes: IMap<string | number> | [];
     }
 
-    interface IRazorpayFundAccount extends Omit<IRazorpayFundAccountBaseRequestBody, 'bank_account'> {
+    interface RazorpayFundAccount extends Omit<RazorpayFundAccountBaseRequestBody, 'bank_account'> {
         /**
          * The unique ID linked to the fund account.
          */
@@ -84,8 +84,8 @@ declare function fundAccount(api: any): {
      * @param params - Check [doc](https://razorpay.com/docs/payments/customers/customer-fund-account-api/#create-a-fund-account) for required params
      * 
      */
-    create(params: FundAccounts.IRazorpayFundAccountCreateRequestBody): Promise<FundAccounts.IRazorpayFundAccount>
-    create(params: FundAccounts.IRazorpayFundAccountCreateRequestBody, callback: (err: INormalizeError | null, data: FundAccounts.IRazorpayFundAccount) => void): void;
+    create(params: FundAccounts.RazorpayFundAccountCreateRequestBody): Promise<FundAccounts.RazorpayFundAccount>
+    create(params: FundAccounts.RazorpayFundAccountCreateRequestBody, callback: (err: INormalizeError | null, data: FundAccounts.RazorpayFundAccount) => void): void;
     /**
     * Fetch all Fund Accounts
     *
@@ -95,12 +95,12 @@ declare function fundAccount(api: any): {
     fetch(customerId: string): Promise<{
         entity: string;
         count: number;
-        items: Array<FundAccounts.IRazorpayFundAccount>;
+        items: Array<FundAccounts.RazorpayFundAccount>;
     }>
     fetch(customerId: string, callback: (err: INormalizeError | null, data: {
         entity: string,
         count: number,
-        items: Array<FundAccounts.IRazorpayFundAccount>;
+        items: Array<FundAccounts.RazorpayFundAccount>;
     }) => void): void
 
 }
