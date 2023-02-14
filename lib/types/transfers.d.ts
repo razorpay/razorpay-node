@@ -159,7 +159,7 @@ declare function transfers(api: any): {
     /**
     * Fetch Transfers for a Settlement
     *
-    * @param {Object} params - Unique identifier of a settlement obtained from the `settlement.processed` webhook payload.
+    * @param params - Unique identifier of a settlement obtained from the `settlement.processed` webhook payload.
     *
     */
     all(params?: RazorpayQuery | { recipient_settlement_id: string }): Promise<{
@@ -175,7 +175,7 @@ declare function transfers(api: any): {
     /**
     * Fetch a transfer
     *
-    * @param {string} transferId - The unique identifier of the transfer.
+    * @param transferId - The unique identifier of the transfer.
     *
     */
     fetch(transferId: string): Promise<Transfers.RazorpayTransfer>
@@ -183,7 +183,7 @@ declare function transfers(api: any): {
     /**
     * Edit a payment given Transfer ID
     *
-    * @param {string} transferId - The unique identifier of the transfer.
+    * @param transferId - The unique identifier of the transfer.
     * @param params - Check [doc](https://razorpay.com/docs/api/payments/route/transfers/#modify-settlement-hold-for-transfers) for required params
     * 
     */
@@ -192,7 +192,7 @@ declare function transfers(api: any): {
     /**
     * Reverse transfers from all linked accounts
     *
-    * @param {string} transferId - The unique identifier of the transfer.
+    * @param transferId - The unique identifier of the transfer.
     * @param params - Check [doc](https://razorpay.com/docs/api/payments/route/transfers/#reverse-a-transfer) for required params
     * 
     */

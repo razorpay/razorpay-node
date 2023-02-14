@@ -9,7 +9,7 @@ export declare namespace Items {
     /**
      * The amount you want to charge the customer for the item, in the currency subunit. For example, `30000`.
      */
-    amount: number;
+    amount: number | string;
     /**
      * The currency in which the customer should be charged for the item. For example, `INR`.
      */

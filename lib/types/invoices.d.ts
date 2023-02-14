@@ -1,4 +1,4 @@
-import { IMap, INormalizeError, RazorpayQuery } from './api'
+import { IMap, INormalizeError, INotify, RazorpayQuery } from './api'
 import { Items } from './items';
 
 export declare namespace Invoices {
@@ -389,8 +389,8 @@ declare function invoices(api: any): {
     * @param medium - Possible values: `sms`, `email`
     * 
     */
-    notifyBy(invoiceId: string, medium: 'sms' | 'email'): Promise<{ success: boolean }>
-    notifyBy(invoiceId: string, medium: 'sms' | 'email', callback: (err: INormalizeError | null, data: { success: boolean }) => void): void;
+    notifyBy(invoiceId: string, medium: INotify): Promise<{ success: boolean }>
+    notifyBy(invoiceId: string, medium: INotify, callback: (err: INormalizeError | null, data: { success: boolean }) => void): void;
 }
 
 export default invoices
