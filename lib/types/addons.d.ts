@@ -1,4 +1,4 @@
-import API, { INormalizeError, RazorpayQuery } from './api'
+import API, { INormalizeError, RazorpayPaginationOptions } from './api'
 import { Items } from './items';
 
 export declare namespace Addons {
@@ -58,12 +58,12 @@ declare function addons(api: API): {
     * @param params - Check [doc](https://razorpay.com/docs/api/payments/subscriptions/#fetch-all-add-ons) for required params
     * 
     */
-    all(params?: RazorpayQuery): Promise<{
+    all(params?: RazorpayPaginationOptions): Promise<{
         entity: string,
         count: number,
         items: Array<Addons.RazorpayAddon>
     }>;
-    all(params: RazorpayQuery, callback: (err: INormalizeError | null, data: {
+    all(params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: {
         entity: string,
         count: number,
         items: Array<Addons.RazorpayAddon>

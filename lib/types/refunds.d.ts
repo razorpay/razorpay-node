@@ -1,4 +1,4 @@
-import { IMap, INormalizeError, RazorpayQuery } from "./api";
+import { IMap, INormalizeError, RazorpayPaginationOptions } from "./api";
 
 export declare namespace Refunds {
     interface RazorpayRefundBaseRequestBody {
@@ -20,7 +20,11 @@ export declare namespace Refunds {
         receipt?: string | null;
     }
 
-    interface RazorpayRefundCreateRequestBody extends RazorpayRefundBaseRequestBody { }
+    interface RazorpayRefundCreateRequestBody extends RazorpayRefundBaseRequestBody {}
+
+    interface RazorpayRefundUpdateRequestBody extends RazorpayRefundBaseRequestBody {
+        notes: IMap<string | number>
+    }
 
     interface RazorpayRefund extends Omit<RazorpayRefundBaseRequestBody, 'speed'> {
         /**
@@ -82,12 +86,12 @@ declare function refunds(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/refunds/#fetch-all-refunds) for required params
     *
     */
-    all(params?: RazorpayQuery): Promise<{
+    all(params?: RazorpayPaginationOptions): Promise<{
         entity: string,
         count: number,
         items: Array<Refunds.RazorpayRefund>
     }>
-    all(params: RazorpayQuery, callback: (err: INormalizeError | null, data: {
+    all(params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: {
         entity: string,
         count: number,
         items: Array<Refunds.RazorpayRefund>
@@ -108,8 +112,8 @@ declare function refunds(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/refunds/#update-refund) for required params
     * 
     */
-    edit(refundId: string, params: { notes: IMap<string | number> }): Promise<Refunds.RazorpayRefund>
-    edit(refundId: string, params: { notes?: IMap<string | number> }, callback: (err: INormalizeError | null, data: Refunds.RazorpayRefund) => void): void
+    edit(refundId: string, params: Refunds.RazorpayRefundUpdateRequestBody): Promise<Refunds.RazorpayRefund>
+    edit(refundId: string, params: Refunds.RazorpayRefundUpdateRequestBody, callback: (err: INormalizeError | null, data: Refunds.RazorpayRefund) => void): void
 }
 
 export default refunds

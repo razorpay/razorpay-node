@@ -1,4 +1,4 @@
-import { IMap, INormalizeError, RazorpayQuery } from "./api";
+import { IMap, INormalizeError, RazorpayPaginationOptions } from "./api";
 
 export declare namespace Settlements {
     
@@ -268,7 +268,11 @@ export declare namespace Settlements {
             items: Settlements.RazorpaySettlement[];
         }
         scheduled: boolean;
-    }  
+    }
+    
+    interface RazorpayOndemandSettlementQuery extends RazorpayPaginationOptions {
+        'expand[]'?: 'ondemand_payouts';
+    }
 }
 
 declare function settlements(api: any): {
@@ -286,12 +290,12 @@ declare function settlements(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/settlements/instant#fetch-all-instant-settlements) for required params
     *
     */
-    all(params?: RazorpayQuery): Promise<{
+    all(params?: RazorpayPaginationOptions): Promise<{
         entity: string;
         count: number;
         items: Array<Settlements.RazorpaySettlement>;
     }>
-    all(params: RazorpayQuery, callback: (err: INormalizeError | null, data: {
+    all(params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: {
         entity: string;
         count: number;
         items: Array<Settlements.RazorpaySettlement>;
@@ -311,12 +315,12 @@ declare function settlements(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/settlements/instant#fetch-all-instant-settlements) for required params
     * 
     */
-    fetchAllOndemandSettlement(params: RazorpayQuery | { 'expand[]': 'ondemand_payouts' }): Promise<{
+    fetchAllOndemandSettlement(params: Settlements.RazorpayOndemandSettlementQuery): Promise<{
         entity: string;
         count: number;
         items: Settlements.RazorpayInstantSettlement[];
     }>
-    fetchAllOndemandSettlement(params: RazorpayQuery | { 'expand[]': 'ondemand_payouts' }, callback: (err: INormalizeError | null, data: {
+    fetchAllOndemandSettlement(params: Settlements.RazorpayOndemandSettlementQuery, callback: (err: INormalizeError | null, data: {
         entity: string;
         count: number;
         items: Settlements.RazorpayInstantSettlement[];
@@ -328,8 +332,8 @@ declare function settlements(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/settlements/instant#fetch-instant-settlement-by-id) for required params
     * 
     */
-    fetchOndemandSettlementById(settlementId: string, params: { 'expand[]': 'ondemand_payouts' }): Promise<Settlements.RazorpayInstantSettlement>;
-    fetchOndemandSettlementById(settlementId: string, params: { 'expand[]': 'ondemand_payouts' }, callback: (err: INormalizeError | null, data: Settlements.RazorpayInstantSettlement) => void): void
+    fetchOndemandSettlementById(settlementId: string, params?: { 'expand[]': 'ondemand_payouts' }): Promise<Settlements.RazorpayInstantSettlement>;
+    fetchOndemandSettlementById(settlementId: string, params: { 'expand[]'?: 'ondemand_payouts' }, callback: (err: INormalizeError | null, data: Settlements.RazorpayInstantSettlement) => void): void
     /**
     * Settlement report for a month
     *

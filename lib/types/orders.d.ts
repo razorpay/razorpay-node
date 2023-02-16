@@ -1,5 +1,6 @@
-import { IMap, RazorpayQuery, INormalizeError } from './api'
+import { IMap, RazorpayPaginationOptions, INormalizeError } from './api'
 import { FundAccounts } from './fundAccount'
+import { Payments } from './payments'
 import { Tokens } from './tokens'
 import { Transfers } from './transfers'
 
@@ -154,7 +155,7 @@ export declare namespace Orders {
         transfers?: Transfers.RazorpayTransfer[];
     }
 
-    interface RazorpayOrderQuery extends RazorpayQuery {
+    interface RazorpayOrderQuery extends RazorpayPaginationOptions {
         /**
          * Possible values:
          * `1` : Retrieves Orders for which payments have been authorized. Payment and order states differ.
@@ -265,6 +266,22 @@ declare function orders(api: any): {
     */
     edit(orderId: string, params: Orders.RazorpayOrderUpdateRequestBody): Promise<Orders.RazorpayOrder>
     edit(orderId: string, params: Orders.RazorpayOrderUpdateRequestBody, callback: (err: INormalizeError | null, data: Orders.RazorpayOrder) => void): void
+    /**
+    * Fetch payments for an order
+    *
+    * @param orderId - The unique identifier of the order
+    *  
+    */
+    fetchPayments(orderId: string, callback: (err: INormalizeError | null, data: {
+        entity: string,
+        count: number,
+        items: Array<Payments.RazorpayPayment>
+    }) => void): void
+    fetchPayments(orderId: string): Promise<{
+        entity: string,
+        count: number,
+        items: Array<Payments.RazorpayPayment>
+    }>
     /**
     * Fetch transfers for an order
     *

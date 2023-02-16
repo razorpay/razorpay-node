@@ -1,4 +1,4 @@
-import { IMap, INormalizeError, RazorpayQuery } from "./api";
+import { IMap, INormalizeError, RazorpayPaginationOptions } from "./api";
 
 export declare namespace Transfers {
     interface RazorpayTransferBaseRequestBody {
@@ -145,6 +145,10 @@ export declare namespace Transfers {
          */
         created_at: number
     }
+
+    interface RazorpayTransferQuery extends RazorpayPaginationOptions {
+        recipient_settlement_id?: string
+    }
 }
 
 declare function transfers(api: any): {
@@ -162,12 +166,12 @@ declare function transfers(api: any): {
     * @param params - Unique identifier of a settlement obtained from the `settlement.processed` webhook payload.
     *
     */
-    all(params?: RazorpayQuery | { recipient_settlement_id: string }): Promise<{
+    all(params?: Transfers.RazorpayTransferQuery): Promise<{
         entity: string;
         count: number;
         items: Array<Transfers.RazorpayTransfer>;
     }>
-    all(params: RazorpayQuery | { recipient_settlement_id: string }, callback: (err: INormalizeError | null, data: {
+    all(params: Transfers.RazorpayTransferQuery, callback: (err: INormalizeError | null, data: {
         entity: string;
         count: number;
         items: Array<Transfers.RazorpayTransfer>;
@@ -196,8 +200,8 @@ declare function transfers(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/payments/route/transfers/#reverse-a-transfer) for required params
     * 
     */
-    reverse(transferId: string, params?: { amount: number } | IMap<any>): Promise<Transfers.RazorpayReversal>
-    reverse(transferId: string, params: { amount: number } | IMap<any>, callback: (err: INormalizeError | null, data: Transfers.RazorpayReversal) => void): void
+    reverse(transferId: string, params?: { amount: number }): Promise<Transfers.RazorpayReversal>
+    reverse(transferId: string, params: { amount?: number }, callback: (err: INormalizeError | null, data: Transfers.RazorpayReversal) => void): void
     /**
     * Fetch settlement details
     * 

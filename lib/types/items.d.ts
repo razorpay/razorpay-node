@@ -1,4 +1,4 @@
-import { RazorpayQuery, INormalizeError } from "./api";
+import { RazorpayPaginationOptions, INormalizeError } from "./api";
 
 export declare namespace Items {
   interface RazorpayItemBaseRequestBody {
@@ -94,6 +94,10 @@ export declare namespace Items {
      */
     active: boolean;
   }
+
+  interface RazorpayItemQuery extends RazorpayPaginationOptions {
+    active?: number;
+  }
 }
 
 declare function items(api: any): {
@@ -111,12 +115,12 @@ declare function items(api: any): {
   * @param params - Check [doc](https://razorpay.com/docs/api/payments/items#fetch-multiple-items) for required params
   *
   */
-  all(params?: RazorpayQuery | { active: number }): Promise<{
+  all(params?: Items.RazorpayItemQuery): Promise<{
     entity: string,
     count: number,
     items: Array<Items.RazorpayItem>
   }>;
-  all(params: RazorpayQuery | { active: number }, callback: (err: INormalizeError | null, data: {
+  all(params: Items.RazorpayItemQuery, callback: (err: INormalizeError | null, data: {
     entity: string,
     count: number,
     items: Array<Items.RazorpayItem>

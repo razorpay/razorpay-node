@@ -1,6 +1,7 @@
 import { IMap } from "./api";
 import { Invoices } from "./invoices";
 import { Orders } from "./orders";
+import { Payments } from "./payments";
 
 
 export declare namespace Tokens {
@@ -138,7 +139,7 @@ export declare namespace Tokens {
         /**
          * Details related to card used to make the transaction.
          */
-        card?: RazorpayCard;
+        card?: Payments.RazorpayCard;
         /**
          * The VPA details
          */
@@ -206,83 +207,6 @@ export declare namespace Tokens {
          * Details of the customer's billing address.
          */
         billing_address: Invoices.RazorpayInvoiceAddress;
-    }
-
-    interface RazorpayCardBaseRequestBody {
-        /**
-         * Unformatted card number.
-         */
-        number: string;
-        /**
-         * Name of the cardholder.
-         */
-        name: string;
-        /**
-         * Expiry month for card in MM format.
-         */
-        expiry_month: number;
-        /**
-         * Expiry year for card in YY format.
-         */
-        expiry_year: number;
-        /**
-         * CVV printed on the back of card.
-         */
-        cvv: number;
-    }
-
-    interface RazorpayCardCreateRequest extends RazorpayCardBaseRequestBody { }
-
-    interface RazorpayCard extends RazorpayCardCreateRequest {
-        /**
-         * The unique identifier of the card used by the customer to make the payment.
-         */
-        id: string;
-        /**
-         * Indicates the type of entity.
-         */
-        entity: string;
-        /**
-         * The last 4 digits of the card number.
-         */
-        last4: string;
-        /**
-         * The card network.
-         */
-        network:
-        | "American Express"
-        | "Diners Club"
-        | "Maestro"
-        | "MasterCard"
-        | "RuPay"
-        | "Unknown"
-        | "Visa";
-        /**
-         * The card type.
-         */
-        type: "credit" | "debit" | "prepaid" | "unknown";
-        /**
-         * The card issuer. The 4-character code denotes the issuing bank.
-         */
-        issuer: string;
-        /**
-         * This attribute is set to `true` if the card can be used for EMI payment method.
-         */
-        emi: boolean;
-        /**
-         * The sub-type of the customer's card. 
-         */
-        sub_type: 'customer' | 'business';
-        token_iin: string | null;
-        /**
-         * The transaction flow details.
-         */
-        flows: {
-            otp?: boolean;
-            recurring: boolean;
-        }
-        international: boolean;
-        cobranding_partner?: string | null
     }
     
 }

@@ -1,4 +1,4 @@
-import { IMap, INormalizeError, INotify, RazorpayQuery } from './api'
+import { IMap, INormalizeError, INotify, RazorpayPaginationOptions } from './api'
 import { Items } from './items';
 
 export declare namespace Invoices {
@@ -67,7 +67,7 @@ export declare namespace Invoices {
         /**
          * Amount to be paid using the invoice
          */
-        amount?: number;
+        amount?: number | string;
     }
 
     interface RazorpayInvoiceAddressBaseRequestBody {
@@ -293,7 +293,7 @@ export declare namespace Invoices {
         ref_num?: any;
     }
 
-    interface RazorpayInvoiceQuery extends RazorpayQuery {
+    interface RazorpayInvoiceQuery extends RazorpayPaginationOptions {
         type?: string;
         /**
          * The unique identifier of the payment made by the customer against the invoice.

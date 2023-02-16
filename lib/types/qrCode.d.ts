@@ -1,4 +1,4 @@
-import { IMap, RazorpayQuery, INormalizeError } from "./api"
+import { IMap, RazorpayPaginationOptions, INormalizeError } from "./api"
 import { Payments } from "./payments"
 
 export declare namespace QrCode {
@@ -157,7 +157,7 @@ export declare namespace QrCode {
         close_reason?: 'on_demand'| 'paid' | null
     }
 
-    interface RazorpayQrCodeQuery extends RazorpayQuery {
+    interface RazorpayQrCodeQuery extends RazorpayPaginationOptions {
         customer_id?: string;
         payment_id?: string;
     }
@@ -204,8 +204,8 @@ declare function qrCode(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/qr-codes/gst/#fetch-payments-for-a-qr-code) for required params
     * 
     */
-    fetchAllPayments(qrCodeId: string, params: RazorpayQuery): Promise<Payments.RazorpayPayment>
-    fetchAllPayments(qrCodeId: string, params: RazorpayQuery, callback: (err: INormalizeError | null, data: Payments.RazorpayPayment) => void): void;
+    fetchAllPayments(qrCodeId: string, params: RazorpayPaginationOptions): Promise<Payments.RazorpayPayment>
+    fetchAllPayments(qrCodeId: string, params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: Payments.RazorpayPayment) => void): void;
     /**
     * Close a QR Code
     *

@@ -1,4 +1,4 @@
-import { IMap, INormalizeError, RazorpayQuery } from "./api";
+import { IMap, INormalizeError, RazorpayPaginationOptions } from "./api";
 import { Orders } from "./orders";
 import { Payments } from "./payments";
 
@@ -187,12 +187,12 @@ declare function virtualAccounts(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/payments/smart-collect#fetch-all-customer-identifiers) for required params
     * 
     */
-    all(params?: RazorpayQuery): Promise<{
+    all(params?: RazorpayPaginationOptions): Promise<{
         entity: string;
         count: number;
         items: Array<VirtualAccounts.RazorpayVirtualAccount>;
     }>
-    all(params: RazorpayQuery, callback: (err: INormalizeError | null, data: {
+    all(params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: {
         entity: string;
         count: number;
         items: Array<VirtualAccounts.RazorpayVirtualAccount>;
@@ -220,12 +220,12 @@ declare function virtualAccounts(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/payments/smart-collect-tpv#fetch-payments-for-a-customer-identifier) for required params
     * 
     */
-    fetchPayments(virtualId: string, params?: RazorpayQuery): Promise<{
+    fetchPayments(virtualId: string, params?: RazorpayPaginationOptions): Promise<{
         entity: string;
         count: number;
         items: Array<Payments.RazorpayPayment>;
     }>
-    fetchPayments(virtualId: string, params: RazorpayQuery, callback: (err: INormalizeError | null, data: {
+    fetchPayments(virtualId: string, params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: {
         entity: string;
         count: number;
         items: Array<Payments.RazorpayPayment>;

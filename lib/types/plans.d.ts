@@ -1,4 +1,4 @@
-import { IMap, RazorpayQuery, INormalizeError } from "./api";
+import { IMap, RazorpayPaginationOptions, INormalizeError } from "./api";
 import { Items } from "./items";
 
 export declare namespace Plans {
@@ -64,12 +64,12 @@ declare function plans(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/payments/invoices/items/api#fetch-multiple-items) for required params
     *
     */
-    all(params?: RazorpayQuery): Promise<{
+    all(params?: RazorpayPaginationOptions): Promise<{
         entity: string;
         count: string;
         items: Array<Plans.RazorPayPlans>
     }>
-    all(params: RazorpayQuery, callback: (err: INormalizeError | null, data: {
+    all(params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: {
         entity: string,
         count: number,
         items: Array<Plans.RazorPayPlans>

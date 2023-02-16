@@ -1,4 +1,4 @@
-import { IMap, INormalizeError, RazorpayQuery, RequiredOptional, PartialOptional } from "./api";
+import { IMap, INormalizeError, RazorpayPaginationOptions, PartialOptional } from "./api";
 import { Orders } from "./orders";
 import { Refunds } from "./refunds"
 import { Tokens } from "./tokens";
@@ -351,7 +351,7 @@ export declare namespace Payments {
         wallet?: string;
     }
 
-    interface RazorpayRecurringPaymentCreateRequestBody extends RequiredOptional<Payments.RazorpayPaymentBaseRequestBody, 'customer_id'> {
+    interface RazorpayRecurringPaymentCreateRequestBody extends Payments.RazorpayPaymentBaseRequestBody {
         /**
          * he `token_id` generated when the customer successfully completes the authorization payment. 
          * Different payment instruments for the same customer have different `token_id`.
@@ -421,7 +421,7 @@ export declare namespace Payments {
         }
     }
 
-    interface RazorpayPaymentQuery extends RazorpayQuery {
+    interface RazorpayPaymentQuery extends RazorpayPaginationOptions {
         'expand[]'?: string;
     }
 
@@ -702,12 +702,12 @@ declare function payments(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/refunds/#fetch-multiple-refunds-for-a-payment) for required params
     *
     */
-    fetchMultipleRefund(paymentId: string, params?: RazorpayQuery): Promise<{
+    fetchMultipleRefund(paymentId: string, params?: RazorpayPaginationOptions): Promise<{
         entity: string;
         count: number;
         items: Array<Refunds.RazorpayRefund>;
     }>
-    fetchMultipleRefund(paymentId: string, params: RazorpayQuery | {}, callback: (err: INormalizeError | null, data: {
+    fetchMultipleRefund(paymentId: string, params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: {
         entity: string;
         count: number;
         items: Array<Refunds.RazorpayRefund>;
