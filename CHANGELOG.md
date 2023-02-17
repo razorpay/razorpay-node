@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.8.5 - 
+
+feat(Typescript): Migrated the SDK to TypeScript for better type safety and improved development experience.
+- Added TypeScript definitions for all modules and functions in the SDK.
+- Added comments throughout the codebase to improve readability and maintainability.
+- Added a type declarations file (*.d.ts) to provide better type checking and editor support for consumers of the SDK.
+- Improved the build process to incorporate the TypeScript compiler and generate both CommonJS and ES module versions of the SDK.
+
+Overall, this update should provide a better developer experience for anyone using the SDK, by leveraging the power of TypeScript's static type checking and providing clearer documentation and comments throughout the codebase.
+
 ## 2.8.4 - 2022-11-21
 
 - [#310](https://github.com/razorpay/razorpay-node/pull/310) [`3e6daf3`](https://github.com/razorpay/razorpay-node/commit/3e6daf3c555f62eb23660a54eaae756e395ea3b6) : Thanks [@ankitdas13](https://github.com/ankitdas13)! - Fixed `virtualAccount.close` function implementation

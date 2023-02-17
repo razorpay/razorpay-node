@@ -125,30 +125,30 @@ export declare namespace VirtualAccounts {
     }
 
     interface RazorpayVirtualAccountReceiver {
-        id?: string;
-        entity?: string;
+        id: string;
+        entity: string;
         /**
          * The IFSC for the virtual bank account created.
          */
-        ifsc?: string;
+        ifsc: string;
         /**
          * The bank associated with the virtual bank account.
          */
-        bank_name?: string;
+        bank_name: string;
         /**
          * The unique account number provided by the bank
          */
-        account_number?: string;
+        account_number: string;
         /**
          * The `merchant billing label ` as it 
          * appears on the Razorpay Dashboard.
          */
-        name?: string;
+        name: string;
         /**
          * Any custom notes you might want to add to the virtual bank account 
          * or virtual UPI ID can be entered here. 
          */
-        notes?: IMap<string | number>;
+        notes: IMap<string | number>;
         /**
          * The UPI ID consists of the username and the bank handle.
          */
