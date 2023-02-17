@@ -53,7 +53,7 @@ declare function plans(api: any): {
     /**
      * Creates a plan
      * 
-     * @param params - Check [doc](https://razorpay.com/docs/payments/invoices/items/api#create-an-item) for required params
+     * @param params - Check [doc](https://razorpay.com/docs/api/payments/subscriptions/#create-a-plan) for required params
      * 
      */
     create(params: Plans.RazorpayPlanCreateRequestBody): Promise<Plans.RazorPayPlans>
@@ -61,7 +61,7 @@ declare function plans(api: any): {
     /**
     * Get all plans
     *
-    * @param params - Check [doc](https://razorpay.com/docs/payments/invoices/items/api#fetch-multiple-items) for required params
+    * @param params - Check [doc](https://razorpay.com/docs/api/payments/subscriptions/#fetch-all-plans) for required params
     *
     */
     all(params?: RazorpayPaginationOptions): Promise<{
