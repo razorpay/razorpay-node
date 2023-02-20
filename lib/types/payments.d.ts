@@ -167,12 +167,12 @@ export declare namespace Payments {
             auth_code?: string;
             upi_transaction_id?: string;
         }
-        emi_plan?: {
+        emi?: {
             issuer: string;
             type: string;
             rate: string;
             duration: string;
-        }
+        };
         /**
          * Timestamp, in UNIX format, on which the payment was created.
          */

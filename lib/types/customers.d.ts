@@ -55,7 +55,7 @@ export declare namespace Customers {
         /**
          * Details of the customer's shipping address.
          */
-        shipping_address?: Invoices.RazorpayInvoiceAddress;
+        shipping_address?: Invoices.RazorpayInvoiceAddress[];
     }
 }
 
