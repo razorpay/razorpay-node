@@ -26,7 +26,7 @@ export declare namespace Subscriptions {
          * 
          * `1` (default): communication handled by Razorpay.
          */
-        customer_notify?: number;
+        customer_notify?: boolean | 0 | 1;
         /**
          * The number of times the customer should be charged the plan 
          * amount per invoice.
@@ -267,7 +267,7 @@ export declare namespace Subscriptions {
 
     interface RazorpayRegistrationLink extends Invoices.RazorpayInvoice {
         auth_link_status: string | null;
-        token?: Tokens.RazorpayToken;
+        token?: Tokens.RazorpayAuthorizationToken;
         nach_form_url?: string | null;
     }
 
@@ -359,7 +359,7 @@ declare function subscriptions(api: any): {
     * @param cancelAtCycleEnd - `false` (default): Cancel the subscription immediately.
     * 
     */
-    cancel(subscriptionId: string, cancelAtCycleEnd: boolean): Promise<Subscriptions.RazorpaySubscription>
+    cancel(subscriptionId: string, cancelAtCycleEnd?: boolean): Promise<Subscriptions.RazorpaySubscription>
     cancel(subscriptionId: string, cancelAtCycleEnd: boolean, callback: (err: INormalizeError | null, data: Subscriptions.RazorpaySubscription) => void): void;
     /**
     * Delete offer linked to a subscription

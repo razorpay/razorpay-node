@@ -77,7 +77,7 @@ export declare namespace PaymentLinks {
         callback_method?: string;
     }
 
-    interface RazorpayPaymentLinkCreateRequestBody extends RazorpayPaymentLinkBaseRequestBody {}
+    interface RazorpayPaymentLinkCreateRequestBody extends RazorpayPaymentLinkBaseRequestBody { }
 
     interface RazorpayPaymentLinkUpdateRequestBody extends Pick<RazorpayPaymentLinkBaseRequestBody, 'accept_partial' | 'reference_id' | 'expire_by' | 'notes' | 'reminder_enable'> { }
 
@@ -198,7 +198,10 @@ export declare namespace PaymentLinks {
         checkout:
         | RazorpayCheckoutRenameLabels
         | RazorpayCheckoutChangeBusinessName
-        | RazorpayCheckoutPrefill
+        | RazorpayCheckoutPrefillCard
+        | RazorpayCheckoutPrefillNetBanking
+        | RazorpayCheckoutPrefillWallet
+        | RazorpayCheckoutPrefillVpa
         | RazorpayCheckoutPaymentMethod
         | RazorpayCheckoutReadonly
         | RazorpayCheckoutThematicChange
@@ -239,7 +242,7 @@ export declare namespace PaymentLinks {
         description?: string;
     }
 
-    interface RazorpayCheckoutPrefill {
+    interface RazorpayCheckoutPrefillCard {
         /**
          * Prefills the payment method and related details on Checkout.
          */
@@ -263,19 +266,58 @@ export declare namespace PaymentLinks {
             */
             'card[expiry]': string;
             'card[cvv]': string;
+        }
+    }
+
+    interface RazorpayCheckoutPrefillNetBanking {
+        /**
+         * Prefills the payment method and related details on Checkout.
+         */
+        prefill: {
+            /**
+             * Pre-selection of the payment method for the customer. 
+             * Will only work if contact and email are also pre-filled
+             */
+            method?: 'card' | 'netbanking' | 'wallet' | 'upi';
             /**
              * Prefills the customer's bank code. The value must be entered in upper case. 
              * For example, for HDFC bank, it should be "HDFC".
              */
-            bank?: string;
+            bank: string;
+        }
+    }
+
+    interface RazorpayCheckoutPrefillWallet {
+        /**
+         * Prefills the payment method and related details on Checkout.
+         */
+        prefill: {
+            /**
+             * Pre-selection of the payment method for the customer. 
+             * Will only work if contact and email are also pre-filled
+             */
+            method?: 'card' | 'netbanking' | 'wallet' | 'upi';
             /**
              * Wallet code used to authorize the payment requested.
              */
-            wallet?: string;
+            wallet: string;
+        }
+    }
+
+    interface RazorpayCheckoutPrefillVpa {
+        /**
+         * Prefills the payment method and related details on Checkout.
+         */
+        prefill: {
+            /**
+             * Pre-selection of the payment method for the customer. 
+             * Will only work if contact and email are also pre-filled
+             */
+            method?: 'card' | 'netbanking' | 'wallet' | 'upi';
             /**
              * UPI ID for making the payment on the UPI app.
              */
-            vpa?: string;
+            vpa: string;
         }
     }
 

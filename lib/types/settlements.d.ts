@@ -271,7 +271,7 @@ export declare namespace Settlements {
     }
     
     interface RazorpayOndemandSettlementQuery extends RazorpayPaginationOptions {
-        'expand[]'?: 'ondemand_payouts';
+        'expand[]'?: string;
     }
 }
 

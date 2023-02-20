@@ -154,7 +154,7 @@ export declare namespace QrCode {
          * 
          * `null`: The QR Code has not been closed yet.
          */
-        close_reason?: 'on_demand'| 'paid' | null
+        close_reason?: 'on_demand' | 'paid' | null
     }
 
     interface RazorpayQrCodeQuery extends RazorpayPaginationOptions {
@@ -204,8 +204,16 @@ declare function qrCode(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/qr-codes/gst/#fetch-payments-for-a-qr-code) for required params
     * 
     */
-    fetchAllPayments(qrCodeId: string, params: RazorpayPaginationOptions): Promise<Payments.RazorpayPayment>
-    fetchAllPayments(qrCodeId: string, params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: Payments.RazorpayPayment) => void): void;
+    fetchAllPayments(qrCodeId: string, params?: RazorpayPaginationOptions): Promise<{
+        entity: string;
+        count: number;
+        items: Array<Payments.RazorpayPayment>;
+    }>
+    fetchAllPayments(qrCodeId: string, params: RazorpayPaginationOptions, callback: (err: INormalizeError | null, data: {
+        entity: string,
+        count: number,
+        items: Array<Payments.RazorpayPayment>
+    }) => void): void
     /**
     * Close a QR Code
     *

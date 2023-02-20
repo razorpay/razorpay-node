@@ -1,5 +1,6 @@
 import { IMap, INormalizeError, INotify, RazorpayPaginationOptions } from './api'
 import { Items } from './items';
+import { Tokens } from './tokens';
 
 export declare namespace Invoices {
 
@@ -291,6 +292,13 @@ export declare namespace Invoices {
         view_less?: boolean;
         idempotency_key?: any
         ref_num?: any;
+        /**
+         * Details related to the authorization transaction such as max amount and bank 
+         * account information. Pass a value in the `first_payment_amount` parameter 
+         * if you want to auto-charge the customer the first payment immediately 
+         * after authorization.
+         */
+        token?: Tokens.RazorpayAuthorizationToken;
     }
 
     interface RazorpayInvoiceQuery extends RazorpayPaginationOptions {

@@ -166,6 +166,18 @@ export declare namespace VirtualAccounts {
          * The URL of the QR code.
          */
         short_url?: string;
+        /**
+         * A 14-digit reference number or a receipt for the payment. 
+         * It will be the same as the value of id without the prefix `qr_`.
+         * A sample `reference` value will look like this: `4lsdkfldlteskf`.
+         */
+        reference?: string | null;
+        updated_at:number;
+        /**
+         * The status of the payment. It can have two values, 
+         * `active` and `closed`.
+         */
+        status?: string;
     }
 }
 

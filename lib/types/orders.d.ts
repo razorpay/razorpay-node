@@ -152,7 +152,7 @@ export declare namespace Orders {
         token: Tokens.RazorpayAuthorizationToken;
         payments?: { [key:string] : string };
         offers?: { [key:string] : string };
-        transfers?: Transfers.RazorpayTransfer[];
+        transfers?: {entity: string; count: string; items: Transfers.RazorpayTransfer[] } | Transfers.RazorpayTransfer[];
     }
 
     interface RazorpayOrderQuery extends RazorpayPaginationOptions {
@@ -228,7 +228,7 @@ declare function orders(api: any): {
     /**
      * Creates a order
      * 
-     * @param params - Check [doc](https://razorpay.com/docs/api/payments/items#update-an-item) for required params
+     * @param params - Check [doc](https://razorpay.com/docs/api/orders/#create-an-order) for required params
      * @see https://razorpay.com/docs/api/payments/recurring-payments/
      */
     create(params: Orders.RazorpayOrderCreateRequestBody | Orders.RazorpayTransferCreateRequestBody | Orders.RazorpayAuthorizationCreateRequestBody): Promise<Orders.RazorpayOrder>
@@ -261,7 +261,7 @@ declare function orders(api: any): {
     * Edit a order given Order ID
     *
     * @param orderId - The unique identifier of the order
-    * @param params
+    * @param params - Check [doc](https://razorpay.com/docs/api/orders/#update-order) for required params
     * 
     */
     edit(orderId: string, params: Orders.RazorpayOrderUpdateRequestBody): Promise<Orders.RazorpayOrder>

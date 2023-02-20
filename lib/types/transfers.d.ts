@@ -88,6 +88,7 @@ export declare namespace Transfers {
          * Unique identifier of the settlement.
          */
         recipient_settlement_id: string | null;
+        recipient_settlement: string | null;
         /**
          * Timestamp, in Unix, at which the record was created.
          */
