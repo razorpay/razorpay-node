@@ -7,7 +7,7 @@
   "scripts": {
     "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
-    "cp-types":"mkdir dist/types && cp lib/types/* dist/types",
+    "cp-types":"mkdir dist/types && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
     "cp-ts": "cp lib/razorpay.d.ts dist/ && npm run cp-types",
     "build:commonjs": "babel lib -d dist",
     "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
