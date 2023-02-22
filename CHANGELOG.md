@@ -1,12 +1,12 @@
 # Changelog
 
-## 2.8.5 - 2023-02-21
+## 2.8.5 - 2023-02-22
 
-feat(Typescript): 
+feat(Typescript): add typescript definitions
 
-- Added TypeScript definitions for all modules and functions in the SDK.
-- Added comments throughout the codebase to improve readability and maintainability.
-- Added a type declarations file (*.d.ts) to provide better type checking and editor support for consumers of the SDK.
+- TypeScript definitions for all modules and functions in the SDK.
+- Add comments throughout the codebase to improve readability and maintainability.
+- Add a type declarations file (*.d.ts) to provide better type checking and editor support for consumers of the SDK.
 
 Overall, this update should provide a better developer experience for anyone using the SDK, by leveraging the power of TypeScript's static type checking and providing clearer documentation and comments throughout the codebase.
 
