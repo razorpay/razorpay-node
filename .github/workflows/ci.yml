@@ -1,7 +1,7 @@
 name: Codecov
 on:
   push:
-    branches: [ publish_workflow ]
+    branches: [ git_workflow ]
 
 jobs:
   codecov:
