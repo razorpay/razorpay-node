@@ -12,7 +12,7 @@
     "build:commonjs": "babel lib -d dist",
     "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
     "debug": "npm run build && node-debug examples/index.js",
-    "test": "npm run build && mocha --recursive --require babel-register test/",
+    "test": "npm run build && mocha --recursive --require babel-register test/ && nyc --reporter=text mocha",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "repository": {
