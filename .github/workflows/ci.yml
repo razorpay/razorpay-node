@@ -14,8 +14,6 @@ jobs:
           node-version: 14.x
       - name: Install dependencies
         run: npm install
-      - name: Run tests
-        run: npm test 
       - name: Run coverage
         run: npm test 
       - name: Upload coverage to Codecov
