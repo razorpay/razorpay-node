@@ -16,9 +16,8 @@ jobs:
       - name: Run tests
         run: npm test 
       - name: Run coverage
-        run: npm test 
+        run: npm coverage 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
            token: ${{ secrets.CODECOV_TOKEN }}
-           files: ${{ github.workspace }}/coverage.lcov
