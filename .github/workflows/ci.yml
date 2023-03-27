@@ -15,7 +15,5 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run coverage
-        run: |
-         curl -Os https://uploader.codecov.io/latest/linux/codecov
-         chmod +x codecov
-         ./codecov -t ${secrets.CODECOV_TOKEN}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
