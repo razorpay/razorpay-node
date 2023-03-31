@@ -34,4 +34,4 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm config set //registry.npmjs.org/:_authToken ${{secrets.NPM_TOKEN}}
-      - run: npm publish --otp=$(oathtool -b --topt ${{secrets.NPM_SECRET_KEY}})"
+      - run: npm publish --otp="$(oathtool -b --topt ${{secrets.NPM_SECRET_KEY}})"
