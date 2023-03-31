@@ -1,4 +1,4 @@
-name: Codecov
+name: Publish Package
 on:
   push:
     branches: [ git_workflow ]
@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16
         uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 16
       - name: Install dependencies
         run: npm install
       - name: Run tests
@@ -27,10 +27,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: sudo apt-get install -y oathtool
       - uses: actions/setup-node@v2
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm config set //registry.npmjs.org/:_authToken ${{secrets.NPM_TOKEN}}
-      - run: npm publish
+      - run: npm publish --otp=$(oathtool -b --topt ${{secrets.NPM_SECRET_KEY}})"
