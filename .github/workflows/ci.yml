@@ -1,0 +1,51 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+*
+  pull_request:
+    branches:
+      - master
+jobs:
+  test:
+    name: Run tests and publish test coverage
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x, 18.x, 19,x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'  
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test 
+      - name: Run coverage
+        run: npm run coverage 
+      - name: Upload coverage to Codecov
+        if: ${{ matrix.node-version == '16.x' }}
+        uses: codecov/codecov-action@v3
+        with:
+           token: ${{ secrets.CODECOV_TOKEN }}
+
+  publish-npm:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get install -y oathtool
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm config set //registry.npmjs.org/:_authToken ${{secrets.NPM_TOKEN}}
+      - run: npm publish --otp="$(oathtool -b --totp ${{secrets.NPM_SECRET_KEY}})"

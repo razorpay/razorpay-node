@@ -12,7 +12,8 @@
     "build:commonjs": "babel lib -d dist",
     "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
     "debug": "npm run build && node-debug examples/index.js",
-    "test": "npm run build && mocha --recursive --require babel-register test/"
+    "test": "npm run build && mocha --recursive --require babel-register test/ && nyc --reporter=text mocha",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov"
   },
   "repository": {
     "type": "git",
@@ -41,7 +42,8 @@
     "chai": "^4.3.4",
     "deep-equal": "^2.0.5",
     "mocha": "^9.0.0",
-    "nock": "^13.1.1"
+    "nock": "^13.1.1",
+    "nyc": "^15.1.0"
   },
   "dependencies": {
     "@types/request-promise": "^4.1.48",
