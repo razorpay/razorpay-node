@@ -30,7 +30,7 @@ jobs:
       - name: Run coverage
         run: npm run coverage 
       - name: Upload coverage to Codecov
-        if: ${{ matrix.node-version == '16.x }}
+        if: ${{ matrix.node-version == '16.x' }}
         uses: codecov/codecov-action@v3
         with:
            token: ${{ secrets.CODECOV_TOKEN }}
