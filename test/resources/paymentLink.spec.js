@@ -51,8 +51,7 @@ describe("PAYMENTLINK", () => {
       };
       mocker.mock({
         url: `/payment_links`,
-        method: 'POST',
-        ignoreParseBody: true
+        method: 'POST'
       })
 
       rzpInstance.paymentLink.create(params).then((response) => {

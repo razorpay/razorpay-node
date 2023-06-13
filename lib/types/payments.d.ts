@@ -205,15 +205,15 @@ export declare namespace Payments {
         /**
          * Expiry month for card in MM format.
          */
-        expiry_month: number;
+        expiry_month: string | number;
         /**
          * Expiry year for card in YY format.
          */
-        expiry_year: number;
+        expiry_year: string | number;
         /**
          * CVV printed on the back of card.
          */
-        cvv: number;
+        cvv: string | number;
     }
 
     interface RazorpayCardCreateRequest extends RazorpayCardBaseRequestBody { }
