@@ -238,9 +238,9 @@ instance.accounts.edit(accountId,{
 
 ### Delete an account
 ```js
-accountId = "acc_GP4lfNA0iIMn5B";
+var accountId = "acc_GP4lfNA0iIMn5B";
 
-instance.accounts.delete($accountId);
+instance.accounts.delete(accountId);
 ```
 
 **Parameters:**

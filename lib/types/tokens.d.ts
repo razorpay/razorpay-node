@@ -325,24 +325,24 @@ declare function tokens(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/payments/payment-methods/cards/token-hq/merchant-requestor/apis/#12-fetch-card-properties-of-an-existing-token) for required params
     *
     */
-    fetch(params: Object): Promise<Tokens.RazorpayToken>
-    fetch(params: Object, callback: (err: INormalizeError | null, data: Tokens.RazorpayToken) => void): void;
+    fetch(params: { id: string}): Promise<Tokens.RazorpayToken>
+    fetch(params: { id: string}, callback: (err: INormalizeError | null, data: Tokens.RazorpayToken) => void): void;
     /**
     * Delete a token
     *
     * @param params - Check [doc](https://razorpay.com/docs/payments/payment-methods/cards/token-hq/merchant-requestor/apis/#13-delete-a-token) for required params
     * 
     */
-    delete(params: Object): Promise<[]>
-    delete(params: Object, callback: (err: INormalizeError | null, data: []) => void): void;
+    delete(params: { id: string}): Promise<[]>
+    delete(params: { id: string}, callback: (err: INormalizeError | null, data: []) => void): void;
     /**
     * Process a payment on another PA/PG with token created on razorpay
     *
     * @param params - Check [doc](https://razorpay.com/docs/payments/payment-methods/cards/token-hq/merchant-requestor-with-network-tokens/apis/#3-process-a-payment-on-another-pa-pg) for required params
     *
     */
-    processPaymentOnAlternatePAorPG(params: Object): Promise<Tokens.RazorpyProcessPayment>
-    processPaymentOnAlternatePAorPG(params: Object, callback: (err: INormalizeError | null, data: Tokens.RazorpyProcessPayment) => void): void;
+    processPaymentOnAlternatePAorPG(params: { id: string}): Promise<Tokens.RazorpyProcessPayment>
+    processPaymentOnAlternatePAorPG(params: { id: string}, callback: (err: INormalizeError | null, data: Tokens.RazorpyProcessPayment) => void): void;
 }
 
 export default tokens

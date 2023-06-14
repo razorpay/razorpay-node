@@ -10,7 +10,7 @@ export declare namespace Cards {
     /**
      * Determines if the card is saved as a token. possible value is `true` or `false`
      */
-    tokenised: boolean;
+    tokenised?: boolean;
   }
 
   interface RazorpayCardReferenceTokenBaseRequest {

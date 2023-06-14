@@ -33,7 +33,7 @@ export declare namespace Transfers {
          * `1` - Put the transfer settlement on hold
          * `0` - Releases the settlement.
          */
-        on_hold: boolean | 0 | 1;
+        on_hold?: boolean | 0 | 1;
         /**
          * Timestamp, in Unix, that indicates until when the settlement of the transfer must be put on hold. 
          * If no value is passed, the settlement is put on hold indefinitely.

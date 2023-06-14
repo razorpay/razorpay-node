@@ -5,27 +5,35 @@ export declare namespace Accounts {
         /**
          *  The sub-merchant's business email address.
          */
-        email: string 
+        email: string;
         /**
          * The business details of the sub-merchant's account
          */
-        profile: Profile
+        profile: Profile;
         /**
          *  The sub-merchant's business phone number. The minimum length is 8 characters and the maximum length is 15.
          */
-        phone: string | number
+        phone: string | number;
+        /**
+         * The account type. Possible value is standard
+         */
+        type?: string;
         /**
          * The type of business operated by the sub-merchant.
          */
-        business_type: string
+        business_type: string;
+        /**
+         * Partner's external account reference id. The minimum length is 1 character and the maximum length is 512.
+         */
+        reference_id?: string;
         /**
          * The name of the sub-merchant's business. For example, Acme Corp. The minimum length is 4 characters and the maximum length is 200.
          */
-        legal_business_name: string
+        legal_business_name: string;
         /**
          * The sub-merchant billing label as it appears on the Razorpay Dashboard. The minimum length is 1 character and the maximum length is 255.
          */
-        customer_facing_business_name?: string
+        customer_facing_business_name?: string;
         /**
          * The legal details about the sub-merchant's business.
          */
@@ -33,32 +41,32 @@ export declare namespace Accounts {
             /**
              * Valid PAN number details of the sub-merchant's business.
              */
-            pan?: string
+            pan?: string;
             /**
              * Valid GSTIN number details of the sub-merchant.
              */
-            gst?: string
+            gst?: string;
             /**
              * CIN is for Private Limited and Public Limited, whereas LLPIN is for LLP business type.
              */
-            cin?: string
+            cin?: string;
         }
         /**
          * The website/app details of the sub-merchant's business.
          */
-        apps: {
+        apps?: {
             /**
              * The websites for the sub-merchant's business. A minimum of 1 website is required.
              */
-            websites: string[],
+            websites: string[];
             /**
              * Android app details
              */
-            android: AppDetails[],
+            android: AppDetails[];
             /**
              * iOS app details
              */
-            ios: AppDetails[]
+            ios: AppDetails[];
         }
         /**
          * The branding details of the sub-merchant's business.
@@ -67,16 +75,16 @@ export declare namespace Accounts {
             /**
              * The color code of sub-merchant's business brand. This is a 6-character hex code (Regex: [a-fA-F0-9]{6}).
              */
-            color?: string
+            color?: string;
         }
         /**
          *  The name of the contact. The minimum length is 4 and the maximum length is 255 characters.
          */
-        contact_name: string
+        contact_name: string;
         /**
          * Options available for contact support
          */
-        contact_info?: ContactInfoSupport
+        contact_info?: ContactInfoSupport;
         /**
          * Contains user-defined fields stored by the partner for reference purposes.
          */
@@ -84,23 +92,23 @@ export declare namespace Accounts {
     }
 
     type AppDetails = {
-        url: string,
-        name: string
+        url: string;
+        name: string;
     }
 
     interface Profile {
         /**
          * The business category of the sub-merchant.
          */
-        category?: string
+        category?: string;
         /**
          * The business sub-category of the sub-merchant.
          */
-        subcategory?: string
+        subcategory?: string;
         /**
          * This parameter has been deprecated. Pass the description using the `business_model` parameter.
          */
-        description: string
+        description?: string;
         /**
          * Details of sub-merchant's address.
          */
@@ -108,79 +116,79 @@ export declare namespace Accounts {
             /**
              * Details of the sub-merchant's registered address.
              */
-            registered?: ProfileAddresses
+            registered?: ProfileAddresses;
             /**
              * Details of the sub-merchant's operational address.
              */
-            operation?: ProfileAddresses
+            operation?: ProfileAddresses;
         }
         /**
          * The business description. The character limit between 1-255 characters.
          */
-        business_model: string
+        business_model?: string;
     }
 
     interface ProfileAddresses {
         /**
          * Address, line 1. The maximum length is 100 characters.
          */
-        street1: string
+        street1: string;
         /**
          *  Address, line 2. The maximum length is 100 characters.
          */
-        street2: string
+        street2: string;
         /**
          * The city. The maximum length is 100 characters.
          */
-        city: string
+        city: string;
         /**
          * The state. The minimum length is 2 and the maximum length is 32.
          */
-        state: string
+        state: string;
         /**
          * The postal code. This should be exactly 6 characters.
          */
-        postal_code: number | string
+        postal_code: number | string;
         /**
          * he country. The minimum length is 2 and the maximum length is 64. This can either be a country 
          * code in capital letters or the full name of the country in lower case letters.
          */
-        country: string
+        country: string;
     }
 
     interface ContactInfoSupport {
         /**
          * The type of contact support.
          */
-        chargeback?: SupportType
+        chargeback?: SupportType;
         /**
          * The type of contact support.
          */
-        refund?: SupportType
+        refund?: SupportType;
         /**
          * The type of contact support.
          */
-        support?: SupportType
+        support?: SupportType;
     }
 
     type SupportType = {
         /**
          * The email id of chargeback POC.
          */
-        email?: string
+        email?: string;
         /**
          * The phone number of chargeback POC
          */
-        phone?: string
+        phone?: string;
         /**
          * The URL of chargeback policy.
          */
-        policy_url?: string
+        policy_url?: string;
     }
 
     interface RazorpayAccountCreateRequestBody extends RazorpayAccountBaseRequestBody { }
 
-    interface RazorpayAccountUpdateRequestBody extends PartialOptional<Omit<RazorpayAccountBaseRequestBody, 'email' | 'business_type'>, 'phone' | 'legal_business_name'> { }
+    interface RazorpayAccountUpdateRequestBody extends Partial<Omit<RazorpayAccountBaseRequestBody, 'email' | 'business_type'>> { }
 
     interface RazorpayAccount extends RazorpayAccountBaseRequestBody {
         /**
@@ -188,13 +196,9 @@ export declare namespace Accounts {
          */
         id: string;
         /**
-         * The account type. Possible value is standard
-         */
-        type: string;
-        /**
          * Unix timestamp that indicates when the merchant account was activated. This parameter has null value till the account is activated.
          */
-        activated_at: any;
+        activated_at: number;
         /**
          * Indicates the payments acceptance status of the merchant account.
          */
@@ -218,8 +222,8 @@ export declare namespace Accounts {
     interface RazorpayAccountDocuments {
         business_proof_of_identification: [
             {
-                type: string,
-                url: string
+                type: string;
+                url: string;
             }
         ]
     }
@@ -263,6 +267,7 @@ declare function accounts(api: any): {
     * Upload account documents
     *
     * @param accountId - The unique identifier of the account.
+    * @param params - Check [doc](https://razorpay.com/docs/api/partners/upload-document#request-parameters) for required params
     *
     */
      uploadAccountDoc(accountId: string, params: Accounts.FileCreateParams): Promise<Accounts.RazorpayAccountDocuments>

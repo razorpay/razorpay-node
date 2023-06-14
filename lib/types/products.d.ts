@@ -6,15 +6,15 @@ export declare namespace Products {
         /**
          * The product(s) to be configured. Possible values: `payment_gateway` or `payment_links`
          */
-        product_name: string
+        product_name: string;
         /**
          * Pass this parameter to accept terms and conditions. Send this parameter along with the ip parameter when the tnc is accepted.
          */
-        tnc_accepted: boolean,
+        tnc_accepted: boolean;
         /**
          * he IP address of the merchant while accepting the terms and conditions. Send this parameter along with the `tnc_accepted` parameter when the `tnc` is accepted.
          */
-        ip: string
+        ip: string;
     }
 
     interface RazorpayProductCreateRequestBody extends RazorpayProductBaseRequestBody { }
@@ -23,11 +23,11 @@ export declare namespace Products {
         /**
          * This denotes the notifications settings
          */
-        notifications?: Notifications
+        notifications?: Notifications;
         /**
          *  The checkout form of the payment capture
          */
-        checkout?: Checkout
+        checkout?: Checkout;
         /**
          * This denotes the payment refund settings
          */
@@ -35,73 +35,73 @@ export declare namespace Products {
             /**
              * Speed at which the refund is to be processed
              */
-            default_refund_speed: string
+            default_refund_speed: string;
         }
         /**
          *  The Settlement settings object.
          */
-        settlements?: Omit<Orders.RazorpayBankAccountBaseRequestBody, 'beneficiary_mobile' | 'account_type'>
+        settlements?: Omit<Orders.RazorpayBankAccountBaseRequestBody, 'beneficiary_mobile' | 'account_type'>;
         /**
          * Details of the payment method you want to enable for the product.
          */
-        payment_methods?: PaymentMethods
+        payment_methods?: PaymentMethods;
     }
 
     interface PaymentMethods {
         /**
          * The payment method to be enabled.
          */
-        netbanking: Netbanking
-        cards: Cards
-        wallet: Wallet
-        paylater: Paylater
-        upi: Upi
-        emi: Emi
+        netbanking: Netbanking;
+        cards: Cards;
+        wallet: Wallet;
+        paylater: Paylater;
+        upi: Upi;
+        emi: Emi;
     }
 
     interface Netbanking {
-        enabled: boolean
-        instrument: Instrument[]
+        enabled: boolean;
+        instrument: Instrument[];
     }
 
     interface Instrument {
-        type: string
-        bank: string[]
+        type: string;
+        bank: string[];
     }
 
     interface Cards {
-        enabled: boolean
-        instrument: Instrument2[]
+        enabled: boolean;
+        instrument: InstrumentCard[];
     }
 
-    interface Instrument2 {
-        issuer: string
-        type: string[]
+    interface InstrumentCard {
+        issuer: string;
+        type: string[];
     }
 
     interface Wallet {
-        enabled: boolean
-        instrument: string[]
+        enabled: boolean;
+        instrument: string[];
     }
 
     interface Paylater {
-        enabled: boolean
-        instrument: string[]
+        enabled: boolean;
+        instrument: string[];
     }
 
     interface Upi {
-        enabled: boolean
-        instrument: string[]
+        enabled: boolean;
+        instrument: string[];
     }
 
     interface Emi {
-        enabled: boolean
-        instrument: Instrument3[]
+        enabled: boolean;
+        instrument: InstrumentEmi[];
     }
 
-    interface Instrument3 {
-        type: string
-        partner: string[]
+    interface InstrumentEmi {
+        type: string;
+        partner: string[];
     }
 
     interface RazorpayProduct extends RazorpayProductBaseRequestBody {
@@ -109,116 +109,122 @@ export declare namespace Products {
          * The configuration of the product requested by the user that is yet to be set as active.
          */
         requested_configuration: {
-            payment_methods: PaymentMethods[]
+            payment_methods: PaymentMethods[];
         }
         /**
          * The configuration of the product that has been set as active.
          */
-        active_configuration: ActiveConfiguration
+        active_configuration: ActiveConfiguration;
         /**
          * The list of requirements to be enabled for this product or some of the configurations under this product.
          */
         requirements: Requirement[]
-        tnc: Tnc
-        id: string
-        activation_status: string
-        account_id: string
+        tnc: Tnc;
+        id: string;
+        activation_status: string;
+        account_id: string;
         /**
          * The Unix timestamp at which the product configuration is requested.
          */
-        requested_at: number
+        requested_at: number;
     }
 
     interface ActiveConfiguration {
-        payment_capture: PaymentCapture
-        settlements: Settlements
-        checkout: Checkout
+        payment_capture: PaymentCapture;
+        settlements: Settlements;
+        checkout: Checkout;
         refund: {
-            default_refund_speed: string
+            default_refund_speed: string;
         }
-        notifications: Notifications
-        payment_methods: PaymentMethods
+        notifications: Notifications;
+        payment_methods: PaymentMethods;
     }
 
     interface PaymentCapture {
-        mode: string
-        refund_speed: string
-        automatic_expiry_period: number
+        mode: string;
+        refund_speed: string;
+        automatic_expiry_period: number;
     }
 
     interface Settlements {
-        account_number: any
-        ifsc_code: any
-        beneficiary_name: any
+        account_number: string;
+        ifsc_code: string;
+        beneficiary_name: string;
     }
 
     interface Checkout {
-        theme_color?: string
-        flash_checkout?: boolean
+        theme_color?: string;
+        flash_checkout?: boolean;
     }
 
     interface Notifications {
         /**
          * The WhatsApp notifications you receive regarding payments, settlements, daily payment reports, webhooks, etc.
          */
-        whatsapp?: boolean
+        whatsapp?: boolean;
         /**
          *  The SMS notifications you receive regarding payments, settlements, daily payment reports, webhooks,
          */
-        sms?: boolean
+        sms?: boolean;
         /**
          * he email addresses that will receive notifications regarding 
          * payments, settlements, daily payment reports, webhooks, and so on.
          */
-        email?: string[]
+        email?: string[];
     }
 
     interface Requirement {
         /**
          *  The field which is in issue or missing. The JSON key path in resolution URL.
          */
-        field_reference: string
+        field_reference: string;
         /**
          * The URL to address the requirement. The API endpoint to be used for updating missing fields or documents.
          */
-        resolution_url: string
+        resolution_url: string;
         /**
          * The status of the requirement.
          */
-        status: string
+        status: string;
         /**
          * The reason code for showing in the requirement
          */
-        reason_code: string
+        reason_code: string;
     }
 
     interface Tnc {
-        id: string
-        accepted: boolean
-        accepted_at: number
+        id: string;
+        accepted: boolean;
+        accepted_at: number;
     }
 
     interface RazorpayProductTnc {
         /**
          *  The name of the entity.
          */
-        entity: string
+        entity: string;
         /**
          *  Determines what business unit the terms and conditions belong to.
          */
-        product_name: string
+        product_name: string;
         /**
          * Unique identifier of the terms and conditions belonging to a specific business unit.
          */
-        id: string
+        id: string;
         /**
          * The terms and conditions content.
          */
-        tnc: Tnc
+        tnc: ProductsTnc;
         /**
          * The timestamp in Unix format, when the terms and conditions were created/last updated.
          */
-        last_published_at: number
+        last_published_at: number;
+    }
+
+    interface ProductsTnc {
+        terms: string;
+        privacy: string;
+        agreement: string;
     }
 }
 
@@ -243,9 +249,9 @@ declare function products(api: any): {
     /**
     * Update a Product Configuration
     *
-    * @param params - Check [doc](https://razorpay.com/docs/api/partners/product-configuration/#update-a-product-configuration) for required params
     * @param accountId - The unique identifier of the account.
     * @param productId - The unique identifier of a product.
+    * @param params - Check [doc](https://razorpay.com/docs/api/partners/product-configuration/#update-a-product-configuration) for required params
     */
     edit(accountId: string, productId: string, params: Products.RazorpayProductUpdateRequestBody): Promise<Products.RazorpayProduct>
     edit(accountId: string, productId: string, params: Products.RazorpayProductUpdateRequestBody, callback: (err: INormalizeError | null, data: Products.RazorpayProduct) => void): void;
@@ -256,7 +262,7 @@ declare function products(api: any): {
     * 
     */
     fetchTnc(productName: string): Promise<Products.RazorpayProductTnc>
-    fetchTnc(productName: string, callback: (err: INormalizeError | null, data: Promise<Products.RazorpayProductTnc>) => void): void;
+    fetchTnc(productName: string, callback: (err: INormalizeError | null, data: Products.RazorpayProductTnc) => void): void;
 }
 
 export default products
