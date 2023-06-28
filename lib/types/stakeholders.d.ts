@@ -1,5 +1,6 @@
 import { Accounts } from "./accounts";
 import { IMap, INormalizeError, PartialOptional, RazorpayPaginationOptions } from "./api";
+import * as fs from "fs";
 
 export declare namespace Stakeholders {
     interface RazorpayStakeholderBaseRequestBody {
@@ -47,7 +48,7 @@ export declare namespace Stakeholders {
 
     interface RazorpayStakeholderCreateRequestBody extends RazorpayStakeholderBaseRequestBody { }
 
-    interface RazorpayStakeholderUpdateRequestBody extends Omit<RazorpayStakeholderBaseRequestBody, 'email'> { }
+    interface RazorpayStakeholderUpdateRequestBody extends Partial<Omit<RazorpayStakeholderBaseRequestBody, 'email'>> { }
 
     interface RazorpayStakeholder extends RazorpayStakeholderBaseRequestBody {
         /**
@@ -86,7 +87,16 @@ export declare namespace Stakeholders {
         director?: boolean;
     }
 
-    interface FileCreateParams {}
+    interface FileCreateParams {
+        file: {
+            value: fs.ReadStream;
+            options: {
+                filename: string;
+                contentType: string | null;
+            };
+        };
+        document_type: string;
+    }
 
     interface RazorpayStakeholderDocuments {
         individual_proof_of_address: [

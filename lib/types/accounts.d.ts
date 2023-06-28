@@ -1,4 +1,5 @@
 import { IMap, INormalizeError, PartialOptional, RazorpayPaginationOptions } from "./api";
+import * as fs from 'fs';
 
 export declare namespace Accounts {
     interface RazorpayAccountBaseRequestBody {
@@ -217,7 +218,16 @@ export declare namespace Accounts {
         created_at: number;
     }
 
-    interface FileCreateParams {}
+    interface FileCreateParams {
+        file: {
+            value: fs.ReadStream;
+            options: {
+                filename: string;
+                contentType: string | null;
+            };
+        };
+        document_type: string;
+    }
 
     interface RazorpayAccountDocuments {
         business_proof_of_identification: [
