@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.9.0 - 2023-06-30
+
+feat: Added new API endpoints
+- Added account onboarding API `create`, `fetch`, `edit`, `delete`
+- Added stakeholders API `create`, `fetch`, `fetchAll`, `edit`
+- Added product configuration API  `requestProductConfiguration`, `fetch`, `edit`,  `fetchTnc
+- Added webhooks API `create`, `fetch`, `fetchAll`, `edit`, `delete`
+- Added Documents API `uploadAccountDoc`, `fetchAccountDoc`, `uploadStakeholderDoc` , `fetchStakeholderDoc`
+- Added token sharing API `create`, `fetch`, `delete`, `processPaymentOnAlternatePAorPG`
+
 ## 2.8.6 - 2023-02-22
 
 feat(Typescript): add typescript definitions
