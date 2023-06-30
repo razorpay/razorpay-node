@@ -74,6 +74,8 @@ instance.payments.all(
 ```
 
 ## Supported Resources
+- [Account](documents/account.md)
+
 - [Addon](documents/addon.md)
 
 - [Item](documents/items.md)
@@ -98,7 +100,11 @@ instance.payments.all(
 
 - [Payment Links](documents/paymentLink.md)
 
+- [Product Configuration](documents/productConfiguration)
+
 - [Smart Collect](documents/virtualAccount.md)
+
+- [Stakeholder](documents/stakeholders.md)
 
 - [Route](documents/transfer.md)
 
@@ -117,6 +123,8 @@ instance.payments.all(
 - [Register NACH and Charge First Payment Together](documents/registerNach.md)
 
 - [Payment Verification](documents/paymentVerfication.md)
+
+- [Webhook](documents/webhook.md)
 ---
 
 ## Development
