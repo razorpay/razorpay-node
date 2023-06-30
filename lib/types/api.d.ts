@@ -10,7 +10,8 @@ interface IOption {
 
 interface IPayload<T> {
     url: string;
-    data: T;
+    data?: T;
+    formData?: T;
 }
 
 export type INotify = 'email' | 'sms'

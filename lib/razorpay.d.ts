@@ -16,6 +16,12 @@ import paymentLink from './types/paymentLink'
 import cards from './types/cards'
 import { validateWebhookSignature } from "./utils/razorpay-utils"
 import customers from './types/customers'
+import accounts from './types/accounts'
+import stakeholders from './types/stakeholders'
+import webhooks from './types/webhooks'
+import products from './types/products'
+import tokens from './types/tokens'
+import iins from './types/iins'
 
 interface IRazorpayConfig {
     key_id: string;
@@ -29,6 +35,11 @@ declare class Razorpay {
 
     constructor(config: IRazorpayConfig)
     api: API
+    /**
+     * Accounts Entity
+     * @see https://razorpay.com/docs/api/partners/account-onboarding/
+     */
+    accounts: ReturnType<typeof accounts>
     /**
      * Customers Entity
      * @see https://razorpay.com/docs/api/customers/
@@ -50,19 +61,19 @@ declare class Razorpay {
      */
     orders: ReturnType<typeof orders>
     /**
-     * Orders Entity
+     * Payments Entity
      * @see https://razorpay.com/docs/api/payments
      */
     payments: ReturnType<typeof payments>
     /**
-     * Payments Entity
+     * Transfers Entity
      * @see https://razorpay.com/docs/api/payments/route/transfers
      */
     transfers: ReturnType<typeof transfers>
     /**
-     * Transfers Entity
+     * Refunds Entity
      * @see https://razorpay.com/docs/api/refunds
-     */
+     */ 
     refunds: ReturnType<typeof refunds>
     /**
      * Cards Entity
@@ -84,6 +95,11 @@ declare class Razorpay {
      */
     paymentLink: ReturnType<typeof paymentLink>
     /**
+     * Products Entity
+     * @see https://razorpay.com/docs/payments/payment-links/apis
+     */
+    products: ReturnType<typeof products>
+    /**
      * Invoices Entity
      * @see https://razorpay.com/docs/payments/invoices/apis/
      */
@@ -99,6 +115,11 @@ declare class Razorpay {
      */
     subscriptions: ReturnType<typeof subscriptions>
     /**
+     * Stakeholders Entity
+     * @see https://razorpay.com/docs/api/partners/stakeholder#stakeholders-entity
+     */
+    stakeholders: ReturnType<typeof stakeholders>
+    /**
      * Settlements Entity
      * @see https://razorpay.com/docs/api/settlements
      */
@@ -108,6 +129,21 @@ declare class Razorpay {
      * @see https://razorpay.com/docs/api/payments/smart-collect/
      */
     virtualAccounts: ReturnType<typeof virtualAccounts>
+    /**
+     * Webhook Entity
+     * @see https://razorpay.com/docs/api/partners/webhooks/#webhook-entity
+     */
+    webhooks: ReturnType<typeof webhooks>
+    /**
+     * Tokens Entity
+     * @see https://razorpay.com/docs/payments/payment-methods/cards/token-hq/merchant-requestor-with-network-tokens/apis/#1-tokenise-cards
+     */
+    tokens: ReturnType<typeof tokens>
+    /**
+     * Iins Entity
+     * @see https://razorpay.com/docs/api/payments/cards/iin-api/#iin-entity
+     */
+    iins: ReturnType<typeof iins>
 }
 
 export = Razorpay
