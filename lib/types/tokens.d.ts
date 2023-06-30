@@ -1,4 +1,5 @@
-import { IMap } from "./api";
+import { IMap, INormalizeError } from "./api";
+import { Customers } from "./customers";
 import { Invoices } from "./invoices";
 import { Orders } from "./orders";
 import { Payments } from "./payments";
@@ -23,7 +24,7 @@ export declare namespace Tokens {
          */
         frequency: string
     }
-    
+
     interface RazorpayTokenEmandate {
         /**
          * Emandate type used to make the authorization payment
@@ -55,7 +56,7 @@ export declare namespace Tokens {
         first_payment_amount?: number;
     }
 
-    interface RazorpayTokenNach extends RazorpayTokenEmandate{
+    interface RazorpayTokenNach extends RazorpayTokenEmandate {
         /**
          * Additional information to be printed on the NACH form that your customer will sign.
          */
@@ -109,7 +110,39 @@ export declare namespace Tokens {
         }
     }
 
-    interface RazorpayBankAccount extends Orders.RazorpayBankAccount, Orders.RazorpayBankAccountBaseRequestBody {}
+    interface RazorpayBankAccount extends Orders.RazorpayBankAccount, Orders.RazorpayBankAccountBaseRequestBody { }
+
+    interface RazorpayTokenBaseRequestBody {
+        customer_id?: string
+        /**
+         *  The type of object that needs to be tokenised. Currently, card is the only supported value.
+         */
+        method: string
+        /**
+         * The card details.
+         */
+        card: Payments.RazorpayCardBaseRequestBody
+        /**
+         * Token authentication details.
+         */
+        authentication: Authentication
+        notes?: IMap<string | number> | [];
+    }
+
+    interface Authentication {
+        /**
+         * The platform through which authentication was processed
+         */
+        provider: Provider
+        /**
+         *  The unique payment identifier of the payment used to collect AFA on any PA/PG.
+         */
+        provider_reference_id: string
+        /**
+         * A unique reference number generated when authentication is initiated.
+         */
+        authentication_reference_number: string
+    }
 
     interface RazorpayToken {
         /**
@@ -197,16 +230,119 @@ export declare namespace Tokens {
          * The minimum value is 100 (₹1 ), and the maximum value is 1500000 (₹15,000).
          */
         max_amount?: number;
-        status?:string;
+        /**
+         * The overall status for the token.
+         */
+        status?: Status;
+        error_code?: string;
         error_description?: string | null;
         internal_error_code?: string | null;
         source: string | null;
         notes?: IMap<string | number>;
         compliant_with_tokenisation_guidelines?: boolean;
+        customer_id?: string;
+        customer: Customers.RazorpayCustomer; 
         /**
          * Details of the customer's billing address.
          */
         billing_address: Invoices.RazorpayInvoiceAddress;
     }
-    
+
+    interface RazorpyProcessPayment {
+        token_number: string
+        /**
+         * The token cryptogram value.
+         */
+        cryptogram_value: string
+        /**
+         * A dynamic 4-digit number printed on the front of the Amex card. This cvv should 
+         * be passed in the CVV field to your PA/PG for processing the payment.
+         */
+        cvv: string
+        /**
+         * The token expiry month in `mm` format.
+         */
+        token_expiry_month: number
+        /**
+         * The token expiry year in `yyyy` format.
+         */
+        token_expiry_year: number
+        /**
+         * The details of the card
+         */
+        card: {
+            /**
+             * The card number.
+             */
+            number: string
+            /**
+             * The expiry month of the card in `mm` format.
+             */
+            expiry_month: string
+            /**
+             * The expiry year of the card in `yyyy` format.
+             */
+            expiry_year: number
+        }
+    }
+
+    type Status = 
+    | 'initiated' 
+    | 'active' 
+    | 'suspended' 
+    | 'deactivated'
+
+    type Provider = 
+    | 'amex'
+    | 'axis_migs'
+    | 'cashfree'
+    | 'ccavenue'
+    | 'cybersource'
+    | 'first_data'
+    | 'fss'
+    | 'hdfc'
+    | 'mpgs'
+    | 'paysecure'
+    | 'paytm'
+    | 'payu'
+    | 'zakpay'
+    | 'razorpay'
+
 }
+
+declare function tokens(api: any): {
+    /**
+     * Create a token
+     * 
+     * @param params - Check [doc](https://razorpay.com/docs/payments/payment-methods/cards/token-hq/merchant-requestor/apis/#11-create-a-token) for required params
+     * 
+     */
+    create(params: Tokens.RazorpayTokenBaseRequestBody): Promise<Tokens.RazorpayToken>
+    create(params: Tokens.RazorpayTokenBaseRequestBody, callback: (err: INormalizeError | null, data: Tokens.RazorpayToken) => void): void;
+    /**
+    * Fetch card properties of an existing token
+    *
+    * @param params - Check [doc](https://razorpay.com/docs/payments/payment-methods/cards/token-hq/merchant-requestor/apis/#12-fetch-card-properties-of-an-existing-token) for required params
+    *
+    */
+    fetch(params: { id: string}): Promise<Tokens.RazorpayToken>
+    fetch(params: { id: string}, callback: (err: INormalizeError | null, data: Tokens.RazorpayToken) => void): void;
+    /**
+    * Delete a token
+    *
+    * @param params - Check [doc](https://razorpay.com/docs/payments/payment-methods/cards/token-hq/merchant-requestor/apis/#13-delete-a-token) for required params
+    * 
+    */
+    delete(params: { id: string}): Promise<[]>
+    delete(params: { id: string}, callback: (err: INormalizeError | null, data: []) => void): void;
+    /**
+    * Process a payment on another PA/PG with token created on razorpay
+    *
+    * @param params - Check [doc](https://razorpay.com/docs/payments/payment-methods/cards/token-hq/merchant-requestor-with-network-tokens/apis/#3-process-a-payment-on-another-pa-pg) for required params
+    *
+    */
+    processPaymentOnAlternatePAorPG(params: { id: string}): Promise<Tokens.RazorpyProcessPayment>
+    processPaymentOnAlternatePAorPG(params: { id: string}, callback: (err: INormalizeError | null, data: Tokens.RazorpyProcessPayment) => void): void;
+}
+
+export default tokens

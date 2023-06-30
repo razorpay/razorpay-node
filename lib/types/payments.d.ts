@@ -205,15 +205,31 @@ export declare namespace Payments {
         /**
          * Expiry month for card in MM format.
          */
-        expiry_month: number;
+        expiry_month: string | number;
         /**
          * Expiry year for card in YY format.
          */
-        expiry_year: number;
+        expiry_year: string | number;
         /**
          * CVV printed on the back of card.
          */
-        cvv: number;
+        cvv: string | number;
+        /**
+         * The cryptogram value for the token.
+         */
+        cryptogram_value?: string;
+        /**
+         * Indicates if the payment is made using tokenised card or actual card. Possible values are `true` or `false`
+         */
+        tokenised?: boolean;
+        /**
+         * The name of the aggregator that provided the token
+         */
+        token_provider?: string;
+        /**
+         * The last 4 digits of the tokenised card.
+         */
+        last4?: string;
     }
 
     interface RazorpayCardCreateRequest extends RazorpayCardBaseRequestBody { }
@@ -478,7 +494,16 @@ export declare namespace Payments {
     }
 
     interface RazorpayPaymentS2SCreateRequestBody extends RazorpayPaymentBaseRequestBody {
-        card: RazorpayCardS2SMethod;
+        save:boolean | number;
+        /**
+         *  Pass the unique token id created when the customer made the first payment.
+         */
+        token?:string;
+        /**
+         * Pass the sub-merchant's unique identifier.
+         */
+        account_id?: string;
+        card: Partial<RazorpayCardS2SMethod>;
         /**
          * The customer's IP address.
          */
@@ -486,7 +511,7 @@ export declare namespace Payments {
         /**
          * Referrer header passed by the client's browser.
          */
-        referer: string;
+        referer?: string;
         /**
          * The User-Agent header of the user's browser. 
          * Default value will be passed by Razorpay if not provided by merchant.
