@@ -583,8 +583,8 @@ instance.cards.requestCardReference({"number":"4854980604708430"});
 
 ## Using Razporpay token
 
-```php
-$api->card->requestCardReference(array("token" =>"token_4lsdksD31GaZ09"));
+```js
+instance.cards.requestCardReference({"token":"token_4lsdksD31GaZ09"});
 ```
 **Parameters:**
 
