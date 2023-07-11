@@ -33,7 +33,7 @@ describe('PAYMENTLINKS', function() {
             "callback_url": "https://example-callback-url.com/",
             "callback_method": "get"
         }
-        this.timeout(5000);
+        this.timeout(10000);
         rzpInstance.paymentLink.create(params).then((response) => {
             paymentLinkId = response.id
             assert.ok(response.hasOwnProperty('id'))
@@ -42,6 +42,7 @@ describe('PAYMENTLINKS', function() {
     })
 
     it('fetch paymentlink', (done) => {
+        this.timeout(10000);
         rzpInstance.paymentLink.fetch(paymentLinkId).then((response) => {
             assert.ok(response.hasOwnProperty('id'))
             assert.ok((response.id == paymentLinkId))
@@ -55,7 +56,7 @@ describe('PAYMENTLINKS', function() {
                 "policy_name": "Jeevan Bima"
             }
         }
-
+        this.timeout(10000);
         rzpInstance.paymentLink.edit(paymentLinkId, params).then((response) => {
             assert.ok(response.hasOwnProperty('id'))
             assert.ok((response.id == paymentLinkId))
@@ -68,6 +69,7 @@ describe('PAYMENTLINKS', function() {
             skip: 0,
             count: 10
         }
+        this.timeout(10000);
         rzpInstance.paymentLink.all(expectedParams).then((response) => {
             assert.ok(response.hasOwnProperty('payment_links'))
             done()
@@ -75,6 +77,7 @@ describe('PAYMENTLINKS', function() {
     })
 
     it('send notification', (done) => {
+       this.timeout(10000);
         rzpInstance.paymentLink.notifyBy(paymentLinkId, "email").then((response) => {
             assert.ok(response.hasOwnProperty('success'))
             done()
@@ -82,6 +85,7 @@ describe('PAYMENTLINKS', function() {
     })
 
     it('cancel paymentLink', (done) => {
+        this.timeout(10000);
         rzpInstance.paymentLink.cancel(paymentLinkId).then((response) => {
             assert.ok(response.hasOwnProperty('id'))
             done()
