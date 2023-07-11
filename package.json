@@ -14,7 +14,7 @@
     "debug": "npm run build && node-debug examples/index.js",
     "test": "npm run build && mocha --recursive --require babel-register test/ && nyc --reporter=text mocha",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov",
-    "test_prod": "npm run build && mocha --timeout 50000 --recursive --require babel-register test_prod/"
+    "test_prod": "npm run build && mocha -s --recursive --require babel-register test_prod/"
   },
   "repository": {
     "type": "git",
