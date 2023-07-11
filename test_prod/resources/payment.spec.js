@@ -9,8 +9,6 @@ let paymentId = null
 let fetchCardDetails = "pay_MCO770x0UjBDZh"
 
 describe('PAYMENT', function() {
-
-    this.timeout(10000);
   
     it('fetch payment', (done) => {
         let expectedParams = {
