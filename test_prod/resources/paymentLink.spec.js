@@ -8,6 +8,8 @@ var paymentLinkId = null;
 
 describe('PAYMENTLINKS', function() {
 
+    this.timeout(10000);
+  
     it('paymentlink create request', (done) => {
 
         let params = {
