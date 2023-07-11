@@ -6,7 +6,7 @@ const equal = require('deep-equal')
 
 var paymentLinkId = null;
 
-describe('PAYMENTLINKS', () => {
+describe('PAYMENTLINKS', function() {
 
     it('paymentlink create request', (done) => {
 
@@ -42,7 +42,6 @@ describe('PAYMENTLINKS', () => {
     })
 
     it('fetch paymentlink', (done) => {
-        this.timeout(5000);
         rzpInstance.paymentLink.fetch(paymentLinkId).then((response) => {
             assert.ok(response.hasOwnProperty('id'))
             assert.ok((response.id == paymentLinkId))
@@ -51,7 +50,6 @@ describe('PAYMENTLINKS', () => {
     })
 
     it('edit customer', (done) => {
-        this.timeout(5000);
         let params = {
             "notes": {
                 "policy_name": "Jeevan Bima"
@@ -66,7 +64,6 @@ describe('PAYMENTLINKS', () => {
     })
 
     it('fetch all paymentLink', (done) => {
-        this.timeout(5000);
         let expectedParams = {
             skip: 0,
             count: 10
@@ -78,7 +75,6 @@ describe('PAYMENTLINKS', () => {
     })
 
     it('send notification', (done) => {
-        this.timeout(5000);
         rzpInstance.paymentLink.notifyBy(paymentLinkId, "email").then((response) => {
             assert.ok(response.hasOwnProperty('success'))
             done()
@@ -86,7 +82,6 @@ describe('PAYMENTLINKS', () => {
     })
 
     it('cancel paymentLink', (done) => {
-       this.timeout(5000);
         rzpInstance.paymentLink.cancel(paymentLinkId).then((response) => {
             assert.ok(response.hasOwnProperty('id'))
             done()
