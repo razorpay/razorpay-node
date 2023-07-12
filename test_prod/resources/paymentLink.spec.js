@@ -46,7 +46,7 @@ describe('PAYMENTLINKS', function() {
             assert.ok(response.hasOwnProperty('id'))
             assert.ok((response.id == paymentLinkId))
             done()
-        })
+        }).catch(err=>console.log(err))
     })
 
     it('edit customer', (done) => {
@@ -59,7 +59,7 @@ describe('PAYMENTLINKS', function() {
             assert.ok(response.hasOwnProperty('id'))
             assert.ok((response.id == paymentLinkId))
             done()
-        })
+        }).catch(err=>console.log(err))
     })
 
     it('fetch all paymentLink', (done) => {
@@ -70,14 +70,14 @@ describe('PAYMENTLINKS', function() {
         rzpInstance.paymentLink.all(expectedParams).then((response) => {
             assert.ok(response.hasOwnProperty('payment_links'))
             done()
-        })
+        }).catch(err=>console.log(err))
     })
 
     it('send notification', (done) => {
         rzpInstance.paymentLink.notifyBy(paymentLinkId, "email").then((response) => {
             assert.ok(response.hasOwnProperty('success'))
             done()
-        })
+        }).catch(err=>console.log(err))
     })
 
     it('cancel paymentLink', (done) => {
@@ -85,5 +85,5 @@ describe('PAYMENTLINKS', function() {
             assert.ok(response.hasOwnProperty('id'))
             done()
         })
-    })
+    }).catch(err=>console.log(err))
 })
