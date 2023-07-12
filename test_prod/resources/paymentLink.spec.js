@@ -33,12 +33,12 @@ describe('PAYMENTLINKS', function() {
             "callback_url": "https://example-callback-url.com/",
             "callback_method": "get"
         }
-        this.timeout(10000);
+  
         rzpInstance.paymentLink.create(params).then((response) => {
             paymentLinkId = response.id
             assert.ok(response.hasOwnProperty('id'))
             done()
-        })
+        }).catch(err=>console.log(err))
     })
 
     it('fetch paymentlink', (done) => {
@@ -84,6 +84,6 @@ describe('PAYMENTLINKS', function() {
         rzpInstance.paymentLink.cancel(paymentLinkId).then((response) => {
             assert.ok(response.hasOwnProperty('id'))
             done()
-        })
-    }).catch(err=>console.log(err))
+        }).catch(err=>console.log(err))
+    })
 })
