@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.9.1 - 2023-07-13
+fix: Create paymentLink request
+
 ## 2.9.0 - 2023-06-30
 
 feat: Added new API endpoints
