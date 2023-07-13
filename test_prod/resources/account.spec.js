@@ -101,13 +101,6 @@ describe('ACCOUNTS', () => {
         }).catch(err => console.log(err))
     })
 
-    // it('edit token', (done) => {
-    //     rzpInstance.accounts.edit(accountId, {}).then((response) => {
-    //         assert.ok(response.hasOwnProperty('id'))
-    //         done()
-    //     }).catch(err => console.log(err))
-    // })
-
     it('document upload token', (done) => {
 
         rzpInstance.accounts.uploadAccountDoc(accountId, {
