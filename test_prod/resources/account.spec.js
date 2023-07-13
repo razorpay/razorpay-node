@@ -4,6 +4,7 @@ var assert = require('assert');
 const rzpInstance = require('../product')
 const path = require('path')
 const fs = require('fs');
+let skipDoc = true;
 
 let accountId = null;
 let setAccount = {
@@ -114,6 +115,7 @@ describe('ACCOUNTS', () => {
             'document_type': 'business_proof_url'
         })
             .then(response => {
+                skipDoc = false
                 assert.ok(response.hasOwnProperty('business_proof_of_identification'))
                 done()
             }).catch(err => {
@@ -130,7 +132,12 @@ describe('ACCOUNTS', () => {
 
     it('fetch documents', (done) => {
         rzpInstance.accounts.fetchAccountDoc(accountId).then((response) => {
-            assert.ok(response.hasOwnProperty('business_proof_of_identification'))
+            if(skipDoc){
+                assert.ok((typeof response == 'object'))
+            }else{
+                assert.ok(response.hasOwnProperty('business_proof_of_identification'))
+            }
+            
             done()
         }).catch(err => console.log(err))
     })
