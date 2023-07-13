@@ -168,7 +168,6 @@ describe('STAKEHOLDERS', () => {
                 assert.ok(response.hasOwnProperty('individual_proof_of_address'))
                 done()
             }).catch(err => {
-                console.log(err)
                 if (err.hasOwnProperty('error')) {
                     if (err.error.reason == 'NA') {
                         console.warn('server issue')
