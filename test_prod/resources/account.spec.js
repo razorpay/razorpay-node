@@ -4,7 +4,6 @@ var assert = require('assert');
 const rzpInstance = require('../product')
 const path = require('path')
 const fs = require('fs');
-const { __esModule } = require('../../tests');
 
 let accountId = null;
 let setAccount = {
