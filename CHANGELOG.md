@@ -1,8 +1,8 @@
 # Changelog
 
-## 2.9.1 - 2023-07-13
+## 2.9.1 - 2023-07-18
 
-fix: Create paymentLink request
+fix: A bug in the “Create Payment Link” request has been fixed.
 
 ## 2.9.0 - 2023-06-30
 
