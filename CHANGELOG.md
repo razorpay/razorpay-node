@@ -1,5 +1,41 @@
 # Changelog
 
+## 2.9.1 - 2023-07-18
+
+fix: A bug in the “Create Payment Link” request has been fixed.
+
+## 2.9.0 - 2023-06-30
+
+feat: Added new API endpoints
+- Added account onboarding API `create`, `fetch`, `edit`, `delete`
+- Added stakeholders API `create`, `fetch`, `fetchAll`, `edit`
+- Added product configuration API  `requestProductConfiguration`, `fetch`, `edit`,  `fetchTnc
+- Added webhooks API `create`, `fetch`, `fetchAll`, `edit`, `delete`
+- Added Documents API `uploadAccountDoc`, `fetchAccountDoc`, `uploadStakeholderDoc` , `fetchStakeholderDoc`
+- Added token sharing API `create`, `fetch`, `delete`, `processPaymentOnAlternatePAorPG`
+
+## 2.8.6 - 2023-02-22
+
+feat(Typescript): add typescript definitions
+
+- TypeScript definitions for all modules and functions in the SDK.
+- Add comments throughout the codebase to improve readability and maintainability.
+- Add a type declarations file (*.d.ts) to provide better type checking and editor support for consumers of the SDK.
+
+Overall, this update should provide a better developer experience for anyone using the SDK, by leveraging the power of TypeScript's static type checking and providing clearer documentation and comments throughout the codebase.
+
+Note: This release is a patch of the previous release that includes an update to the `razorpay.d.ts` file
+
+## 2.8.5 - 2023-02-22
+
+feat(Typescript): add typescript definitions
+
+- TypeScript definitions for all modules and functions in the SDK.
+- Add comments throughout the codebase to improve readability and maintainability.
+- Add a type declarations file (*.d.ts) to provide better type checking and editor support for consumers of the SDK.
+
+Overall, this update should provide a better developer experience for anyone using the SDK, by leveraging the power of TypeScript's static type checking and providing clearer documentation and comments throughout the codebase.
+
 ## 2.8.4 - 2022-11-21
 
 - [#310](https://github.com/razorpay/razorpay-node/pull/310) [`3e6daf3`](https://github.com/razorpay/razorpay-node/commit/3e6daf3c555f62eb23660a54eaae756e395ea3b6) : Thanks [@ankitdas13](https://github.com/ankitdas13)! - Fixed `virtualAccount.close` function implementation

@@ -22,9 +22,9 @@ Mocker.prototype.mock = function(params) {
   let { url, method = 'GET', requestBody, replyWithError, ignoreParseBody } = params
   let status = replyWithError ? 400 : 200
   let requestQueryParams
-
+  let version = params.hasOwnProperty('version')? params.version : this.version
   nock(this.host)
-    .intercept(normalizeUrl(`/${this.version}/${url}`), method)
+    .intercept(normalizeUrl(`/${version}/${url}`), method)
     .query((qp) => {
       requestQueryParams = qp
       return true

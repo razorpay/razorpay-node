@@ -1,17 +1,19 @@
 {
   "name": "razorpay",
-  "version": "2.8.4",
+  "version": "2.9.1",
   "description": "Official Node SDK for Razorpay API",
   "main": "dist/razorpay",
   "typings": "dist/razorpay",
   "scripts": {
     "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
-    "cp-ts": "cp lib/razorpay.d.ts dist/",
+    "cp-types":"mkdir dist/types && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
+    "cp-ts": "cp lib/razorpay.d.ts dist/ && npm run cp-types",
     "build:commonjs": "babel lib -d dist",
     "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
     "debug": "npm run build && node-debug examples/index.js",
-    "test": "npm run build && mocha --recursive --require babel-register test/"
+    "test": "npm run build && mocha --recursive --require babel-register test/ && nyc --reporter=text mocha",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov"
   },
   "repository": {
     "type": "git",
@@ -40,11 +42,14 @@
     "chai": "^4.3.4",
     "deep-equal": "^2.0.5",
     "mocha": "^9.0.0",
-    "nock": "^13.1.1"
+    "nock": "^13.1.1",
+    "nyc": "^15.1.0"
   },
   "dependencies": {
+    "@types/request-promise": "^4.1.48",
     "promise": "^8.1.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.6"
+    "request-promise": "^4.2.6",
+    "typescript": "^4.9.4"
   }
 }
