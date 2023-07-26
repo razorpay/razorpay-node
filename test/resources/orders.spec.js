@@ -43,13 +43,13 @@ describe('ORDERS', () => {
       }
 
       mocker.mock({
-        url: '/orders'
+        url: '/orders',
       })
 
       rzpInstance.orders.all({
         from: fromDate,
         to: toDate,
-        authorized: true,
+        authorized: 1,
         receipt: 'testreceiptid',
         count: 25,
         skip: 5
@@ -58,7 +58,7 @@ describe('ORDERS', () => {
           response.__JUST_FOR_TESTS__.requestQueryParams,
           expectedParams
         ), 'from & to dates are converted to ms & authorized to binary')
-
+        
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
           `/v1/orders?from=${fromDateInSecs}&to=${toDateInSecs}&count=25&skip=5&authorized=1&receipt=testreceiptid`,
@@ -131,8 +131,10 @@ describe('ORDERS', () => {
               receipt: receipt,
               currency: 'INR',
               partial_payment: true,
-              'notes[note1]': 'This is note1',
-              'notes[note2]': 'This is note2'
+              notes: {
+                note1: 'This is note1',
+                note2: 'This is note2'
+              }
             }
           ),
           'All params are passed in request body'
