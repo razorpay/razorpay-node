@@ -3,7 +3,7 @@
 const Razorpay = require("../dist/razorpay");
 let request = require('request-promise');
 
-class RazorpayTest extends Razorpay {
+class RazorpayBeta extends Razorpay {
   constructor(options) {
     super(options)
     this.api.rq = request.defaults({
@@ -18,7 +18,7 @@ class RazorpayTest extends Razorpay {
 }
 
 
-module.exports = new RazorpayTest({
+module.exports = new RazorpayBeta({
   key_id: process.env.API_KEY || "",
   key_secret: process.env.API_SECRET || "",
   hostUrl : "https://api-web.dev.razorpay.in"
