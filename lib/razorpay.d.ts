@@ -27,7 +27,6 @@ interface IRazorpayConfig {
     key_id: string;
     key_secret?: string;
     headers?: RazorpayHeaders;
-    hostUrl? : string;
 }
 
 declare class Razorpay {
