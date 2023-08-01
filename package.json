@@ -47,7 +47,6 @@
   },
   "dependencies": {
     "@types/request-promise": "^4.1.48",
-    "node-fetch": "^2.6.12",
     "promise": "^8.1.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.6",
