@@ -1,6 +1,7 @@
 'use strict';
 
 const Razorpay = require("../dist/razorpay");
+let request = require('request-promise');
 
 class RazorpayBeta extends Razorpay {
   constructor(options) {
