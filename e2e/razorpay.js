@@ -7,7 +7,7 @@ class RazorpayBeta extends Razorpay {
   constructor(options) {
     super(options)
     this.api.rq = request.defaults({
-      baseUrl: hostUrl,
+      baseUrl: options.hostUrl,
       json: true,
       auth: {
         user: options.key_id,
