@@ -7,7 +7,7 @@ class RazorpayTest extends Razorpay {
   constructor(options) {
     super(options)
     this.api.rq = request.defaults({
-      baseUrl: "https://api-web.dev.razorpay.in",
+      baseUrl: hostUrl,
       json: true,
       auth: {
         user: options.key_id,
@@ -20,5 +20,6 @@ class RazorpayTest extends Razorpay {
 
 module.exports = new RazorpayTest({
   key_id: process.env.API_KEY || "",
-  key_secret: process.env.API_SECRET || ""
+  key_secret: process.env.API_SECRET || "",
+  hostUrl : "https://api-web.dev.razorpay.in"
 });
