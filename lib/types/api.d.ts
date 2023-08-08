@@ -81,8 +81,8 @@ declare class API {
     patch<T, V>(params: IPayload<T>): Promise<V>
     patch<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
 
-    postformData<T, V>(params: IPayload<T>): Promise<V>
-    postformData<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
+    postFormData<T, V>(params: IPayload<T>): Promise<V>
+    postFormData<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
 
     delete<T, V>(params: IPayload<T>): Promise<V>
     delete<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
