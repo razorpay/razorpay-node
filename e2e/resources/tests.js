@@ -1,6 +1,5 @@
 var assert = require('assert');
 const rzpInstance = require('../razorpay')
-const rzpInstance_New = require('../product')
 const crpyto = require("crypto")
 const fs = require("fs")
 const path = require("path")
