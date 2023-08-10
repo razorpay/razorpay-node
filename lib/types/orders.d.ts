@@ -79,10 +79,6 @@ export declare namespace Orders {
          * level [auto-capture settings]( https://razorpay.com/docs/payments/payments/capture-settings) configured using the Dashboard.
          */
         payment?: RazorpayCapturePayment;
-        /**
-         * This parameter will contain information about the convenience fee split for the given order.
-         */
-        convenience_fee_config?: ConvenienceFeeConfig;
     }
 
     interface RazorpayOrderCreateRequestBody extends RazorpayOrderBaseRequestBody { }
@@ -225,58 +221,6 @@ export declare namespace Orders {
              */
             refund_speed: 'optimum' | 'normal';
         }
-    }
-
-    interface ConvenienceFeeConfig {
-        /**
-         * Message displayed at the checkout in case convenience fee is applicable.
-         */
-        message?: string;
-        /**
-         * Label shown at the checkout in case convenience fee is applicable. The maximum character 
-         * limit is `20`. The default value is `Convenience Fee`.
-         */
-        label?: string;
-        rules: Rule[];
-    }
-
-    interface Rule {
-        /**
-         * Payment method for which the given rule will be applicable.
-         */
-        method: 
-        | 'card' 
-        | 'netbanking'
-        | 'upi'
-        | 'wallet';
-        /**
-         *  Applicable only when the `method=card`
-         */
-        "card.type"?: string[];
-        /**
-         *  Contains information about the convenience fee split and payee details for the given order.
-         */
-        fee: Fee;
-    }
-
-    interface Fee {
-        /**
-         * The party that will be bearing the convenience fee.
-         */
-        payee: 
-        | 'customer'
-        | 'business';
-        /**
-         * The percentage of convenience fee that the customer or business will pay. Up to two decimal 
-         * places are supported.
-         */
-        percentage_value?: string;
-        /**
-         * Convenience fee value, in paisa, that the customer or business will pay. If this value 
-         * exceeds the total platform fee, then the maximum amount will be considered.
-         * Pass either `percentage_value` or `flat_value` to decide the final fee split.
-         */
-        flat_value?: number;
     }
 }
 
