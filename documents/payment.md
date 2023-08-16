@@ -200,7 +200,7 @@ instance.orders.fetchPayments(orderId)
       "wallet": null,
       "vpa": null,
       "email": "gaurav.kumar@example.com",
-      "contact": "9364591752",
+      "contact": "+919999999999",
       "fee": 70,
       "tax": 10,
       "error_code": null,
