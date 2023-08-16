@@ -12,6 +12,9 @@ interface IPayload<T> {
     url: string;
     data?: T;
     formData?: T;
+    qs?: T;
+    form?: T;
+    body?: T;
 }
 
 export type INotify = 'email' | 'sms'
@@ -77,6 +80,9 @@ declare class API {
 
     patch<T, V>(params: IPayload<T>): Promise<V>
     patch<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
+
+    postFormData<T, V>(params: IPayload<T>): Promise<V>
+    postFormData<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
 
     delete<T, V>(params: IPayload<T>): Promise<V>
     delete<T, V>(params: IPayload<T>, callback: (err: INormalizeError, data: V) => void): void
