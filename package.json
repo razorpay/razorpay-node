@@ -1,6 +1,6 @@
 {
   "name": "razorpay",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "description": "Official Node SDK for Razorpay API",
   "main": "dist/razorpay",
   "typings": "dist/razorpay",

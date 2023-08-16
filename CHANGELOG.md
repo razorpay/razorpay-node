@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.9.2 - 2023-08-16
+chore: Changed Content-Type of all APIs from application/x-www-form-urlencoded to application/json
+
 ## 2.9.1 - 2023-07-18
 
 fix: A bug in the “Create Payment Link” request has been fixed.
