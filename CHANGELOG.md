@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.9.2 - 2023-08-16
+fix: The encoded request type form is changed to the body
+
 ## 2.9.1 - 2023-07-18
 
 fix: A bug in the “Create Payment Link” request has been fixed.
