@@ -236,8 +236,10 @@ describe('PAYMENTS', () => {
             response.__JUST_FOR_TESTS__.requestBody,
             {
               amount: refundAmount,
-              'notes[note1]': 'This is note1',
-              'notes[note2]': 'This is note2'
+              notes: {
+                note1: 'This is note1',
+                note2: 'This is note2'
+              }
             }
           ),
           'Amount & notes are passed in request body'
@@ -287,12 +289,18 @@ describe('PAYMENTS', () => {
           equal(
             response.__JUST_FOR_TESTS__.requestBody,
             {
-              'transfers[0][account]': 'acc_7jO4N6LScw5CEG',
-              'transfers[0][amount]': 100,
-              'transfers[0][currency]': 'INR',
-              'transfers[0][on_hold]': 1,
-              'notes[note1]': 'This is note1',
-              'notes[note2]': 'This is note2'
+              transfers: [
+                {
+                  account: 'acc_7jO4N6LScw5CEG',
+                  amount: 100,
+                  currency: 'INR',
+                  on_hold: true
+                }
+              ],
+              notes: {
+                note1: 'This is note1',
+                note2: 'This is note2'
+              }
             }
           ),
           'Correct params are passed in request body'

@@ -23,8 +23,10 @@ describe('TRANSFERS', () => {
       account: 'acc_7jO4N6LScw5CEG',
       amount: 100,
       currency: 'INR',
-      'notes[note1]': 'This is note1',
-      'notes[note2]': 'This is note2'
+      notes: {
+        note1: 'This is note1',
+        note2: 'This is note2'
+      }
     }
 
     mocker.mock({
@@ -59,8 +61,10 @@ describe('TRANSFERS', () => {
     }
 
     let expectedParams = {
-      'notes[note1]': 'This is note1',
-      'notes[note2]': 'This is note2'
+      notes: {
+        note1: 'This is note1',
+        note2: 'This is note2'
+      }
     }
 
     mocker.mock({
@@ -96,7 +100,9 @@ describe('TRANSFERS', () => {
 
     let expectedParams = {
       on_hold: 1,
-      'notes[note1]': 'This is note1'
+      notes: {
+        note1: 'This is note1'
+      }
     }
 
     mocker.mock({
@@ -135,7 +141,9 @@ describe('TRANSFERS', () => {
     let expectedParams = {
       amount: 100,
       currency: 'INR',
-      'notes[note1]': 'This is note1'
+      notes: {
+        note1: 'This is note1'
+      }
     }
 
     mocker.mock({
