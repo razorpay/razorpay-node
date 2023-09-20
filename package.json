@@ -7,11 +7,11 @@
   "scripts": {
     "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
-    "cp-types":"mkdir dist/types && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
+    "cp-types": "mkdir dist/types && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
     "cp-ts": "cp lib/razorpay.d.ts dist/ && npm run cp-types",
     "build:commonjs": "babel lib -d dist",
     "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
-    "debug": "npm run build && node-debug examples/index.js",
+    "debug": "npm run build && node --inspect examples/index.js",
     "test": "npm run build && mocha --recursive --require babel-register test/ && nyc --reporter=text mocha",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov"
   },
@@ -35,6 +35,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.22.20",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.0",
@@ -46,10 +47,9 @@
     "nyc": "^15.1.0"
   },
   "dependencies": {
-    "@types/request-promise": "^4.1.48",
+    "babel-polyfill": "^6.26.0",
+    "node-fetch": "^2.7.0",
     "promise": "^8.1.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.6",
     "typescript": "^4.9.4"
   }
 }
