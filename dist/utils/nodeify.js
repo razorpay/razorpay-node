@@ -5,7 +5,7 @@ var nodeify = function nodeify(promise, cb) {
     return promise;
   }
 
-  return promise.then(function (response) {
+  promise.then(function (response) {
     cb(null, response);
   }).catch(function (error) {
     cb(error, null);
