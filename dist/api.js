@@ -46,6 +46,8 @@ var API = function () {
   function API(options) {
     _classCallCheck(this, API);
 
+    this.version = 'v1';
+
     this.rq = request.defaults({
       baseUrl: options.hostUrl,
       json: true,
@@ -58,58 +60,61 @@ var API = function () {
   }
 
   _createClass(API, [{
+    key: 'getEntityUrl',
+    value: function getEntityUrl(params) {
+      return params.hasOwnProperty('version') ? '/' + params.version + params.url : '/' + this.version + params.url;
+    }
+  }, {
     key: 'get',
     value: function get(params, cb) {
       return nodeify(this.rq.get({
-        url: params.url,
+        url: this.getEntityUrl(params),
         qs: params.data
       }).catch(normalizeError), cb);
     }
   }, {
     key: 'post',
     value: function post(params, cb) {
-      var isNotForm = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
       var request = {
-        url: params.url,
-        form: params.data
+        url: this.getEntityUrl(params),
+        body: params.data
       };
+      return nodeify(this.rq.post(request).catch(normalizeError), cb);
+    }
 
-      if (isNotForm) {
-        delete request['form'];
-        request.body = params.data;
-      }
+    // postFormData method for file uploads.
 
+  }, {
+    key: 'postFormData',
+    value: function postFormData(params, cb) {
+      var request = {
+        url: this.getEntityUrl(params),
+        formData: params.formData
+      };
       return nodeify(this.rq.post(request).catch(normalizeError), cb);
     }
   }, {
     key: 'put',
     value: function put(params, cb) {
       return nodeify(this.rq.put({
-        url: params.url,
-        form: params.data
+        url: this.getEntityUrl(params),
+        body: params.data
       }).catch(normalizeError), cb);
     }
   }, {
     key: 'patch',
     value: function patch(params, cb) {
       var request = {
-        url: params.url,
-        form: params.data
+        url: this.getEntityUrl(params),
+        body: params.data
       };
-
-      if (params.data.hasOwnProperty("isbody")) {
-        delete request['form'];
-        delete params.data.isbody;
-        request.body = params.data;
-      }
       return nodeify(this.rq.patch(request).catch(normalizeError), cb);
     }
   }, {
     key: 'delete',
     value: function _delete(params, cb) {
       return nodeify(this.rq.delete({
-        url: params.url
+        url: this.getEntityUrl(params)
       }).catch(normalizeError), cb);
     }
   }]);

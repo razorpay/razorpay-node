@@ -65,14 +65,9 @@ module.exports = function (api) {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
-      var notes = params.notes,
-          rest = _objectWithoutProperties(params, ["notes"]);
-
-      var data = Object.assign(rest, normalizeNotes(notes));
-
       return api.post({
         url: BASE_URL,
-        data: data
+        data: params
       }, callback);
     },
     close: function close(virtualAccountId, callback) {
@@ -82,13 +77,8 @@ module.exports = function (api) {
         return Promise.reject(ID_REQUIRED_MSG);
       }
 
-      var data = {
-        status: 'closed'
-      };
-
-      return api.patch({
-        url: BASE_URL + "/" + virtualAccountId,
-        data: data
+      return api.post({
+        url: BASE_URL + "/" + virtualAccountId + "/close"
       }, callback);
     },
     fetchPayments: function fetchPayments(virtualAccountId, callback) {
