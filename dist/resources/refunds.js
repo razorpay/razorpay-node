@@ -43,18 +43,13 @@ module.exports = function (api) {
       }, callback);
     },
     edit: function edit(refundId, params, callback) {
-      var notes = params.notes;
-
-
       if (!refundId) {
         throw new Error('refund Id is mandatory');
       }
 
-      var data = Object.assign(normalizeNotes(notes));
-
       return api.patch({
         url: '/refunds/' + refundId,
-        data: data
+        data: params
       }, callback);
     },
     fetch: function fetch(refundId) {

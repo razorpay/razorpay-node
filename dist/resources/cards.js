@@ -10,6 +10,12 @@ module.exports = function (api) {
       return api.get({
         url: '/cards/' + itemId
       }, callback);
+    },
+    requestCardReference: function requestCardReference(params, callback) {
+      return api.post({
+        url: '/cards/fingerprints',
+        data: params
+      }, callback);
     }
   };
 };

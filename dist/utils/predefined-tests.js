@@ -8,7 +8,7 @@ var mocker = require('../../test/mocker'),
     equal = require('deep-equal'),
     chai = require('chai'),
     assert = chai.assert,
-    _require = require("../../dist/utils/razorpay-utils"),
+    _require = require("./razorpay-utils"),
     prettify = _require.prettify,
     getTestError = _require.getTestError;
 

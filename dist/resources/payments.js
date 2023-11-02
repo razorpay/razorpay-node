@@ -7,11 +7,10 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 var Promise = require("promise");
 
 var _require = require('../utils/razorpay-utils'),
-    normalizeDate = _require.normalizeDate,
-    normalizeBoolean = _require.normalizeBoolean,
-    normalizeNotes = _require.normalizeNotes;
+    normalizeDate = _require.normalizeDate;
 
-var ID_REQUIRED_MSG = '`payment_id` is mandatory';
+var ID_REQUIRED_MSG = '`payment_id` is mandatory',
+    BASE_URL = '/payments';
 
 module.exports = function (api) {
   return {
@@ -41,7 +40,7 @@ module.exports = function (api) {
       skip = Number(skip) || 0;
 
       return api.get({
-        url: '/payments',
+        url: '' + BASE_URL,
         data: {
           from: from,
           to: to,
@@ -66,7 +65,7 @@ module.exports = function (api) {
       }
 
       return api.get({
-        url: '/payments/' + paymentId,
+        url: BASE_URL + '/' + paymentId,
         data: {
           expand: expand
         }
@@ -99,12 +98,12 @@ module.exports = function (api) {
       }
 
       return api.post({
-        url: '/payments/' + paymentId + '/capture',
+        url: BASE_URL + '/' + paymentId + '/capture',
         data: payload
       }, callback);
     },
     createPaymentJson: function createPaymentJson(params, callback) {
-      var url = 'payments/create/json',
+      var url = BASE_URL + '/create/json',
           rest = _objectWithoutProperties(params, []),
           data = Object.assign(rest);
 
@@ -114,48 +113,34 @@ module.exports = function (api) {
       }, callback);
     },
     createRecurringPayment: function createRecurringPayment(params, callback) {
-      var notes = params.notes,
-          rest = _objectWithoutProperties(params, ['notes']);
-
-      var data = Object.assign(rest, normalizeNotes(notes));
-
       return api.post({
-        url: '/payments/create/recurring',
-        data: data
+        url: BASE_URL + '/create/recurring',
+        data: params
       }, callback);
     },
     edit: function edit(paymentId) {
       var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var callback = arguments[2];
-      var notes = params.notes;
-
 
       if (!paymentId) {
         throw new Error('`payment_id` is mandatory');
       }
 
-      var data = Object.assign(normalizeNotes(notes));
-
       return api.patch({
-        url: '/payments/' + paymentId,
-        data: data
+        url: BASE_URL + '/' + paymentId,
+        data: params
       }, callback);
     },
     refund: function refund(paymentId) {
       var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var callback = arguments[2];
 
-      var notes = params.notes,
-          otherParams = _objectWithoutProperties(params, ['notes']);
-
       if (!paymentId) {
         throw new Error('`payment_id` is mandatory');
       }
-
-      var data = Object.assign(otherParams, normalizeNotes(notes));
       return api.post({
-        url: '/payments/' + paymentId + '/refund',
-        data: data
+        url: BASE_URL + '/' + paymentId + '/refund',
+        data: params
       }, callback);
     },
     fetchMultipleRefund: function fetchMultipleRefund(paymentId) {
@@ -177,7 +162,7 @@ module.exports = function (api) {
           to = params.to,
           count = params.count,
           skip = params.skip,
-          url = '/payments/' + paymentId + '/refunds';
+          url = BASE_URL + '/' + paymentId + '/refunds';
 
 
       return api.get({
@@ -201,7 +186,7 @@ module.exports = function (api) {
       }
 
       return api.get({
-        url: '/payments/' + paymentId + '/refunds/' + refundId
+        url: BASE_URL + '/' + paymentId + '/refunds/' + refundId
       }, callback);
     },
     fetchTransfer: function fetchTransfer(paymentId, callback) {
@@ -220,7 +205,7 @@ module.exports = function (api) {
       }
 
       return api.get({
-        url: '/payments/' + paymentId + '/transfers'
+        url: BASE_URL + '/' + paymentId + '/transfers'
       }, callback);
     },
     transfer: function transfer(paymentId) {
@@ -230,21 +215,9 @@ module.exports = function (api) {
       if (!paymentId) {
         throw new Error('`payment_id` is mandatory');
       }
-
-      var notes = params.notes,
-          otherParams = _objectWithoutProperties(params, ['notes']);
-
-      var data = Object.assign(otherParams, normalizeNotes(notes));
-
-      if (data.transfers) {
-        var transfers = data.transfers;
-        transfers.forEach(function (transfer) {
-          transfer.on_hold = normalizeBoolean(!!transfer.on_hold);
-        });
-      }
       return api.post({
-        url: '/payments/' + paymentId + '/transfers',
-        data: data
+        url: BASE_URL + '/' + paymentId + '/transfers',
+        data: params
       }, callback);
     },
     bankTransfer: function bankTransfer(paymentId, callback) {
@@ -255,7 +228,7 @@ module.exports = function (api) {
       }
 
       return api.get({
-        url: '/payments/' + paymentId + '/bank_transfer'
+        url: BASE_URL + '/' + paymentId + '/bank_transfer'
       }, callback);
     },
     fetchCardDetails: function fetchCardDetails(paymentId, callback) {
@@ -266,13 +239,13 @@ module.exports = function (api) {
       }
 
       return api.get({
-        url: '/payments/' + paymentId + '/card'
+        url: BASE_URL + '/' + paymentId + '/card'
       }, callback);
     },
     fetchPaymentDowntime: function fetchPaymentDowntime(callback) {
 
       return api.get({
-        url: '/payments/downtimes'
+        url: BASE_URL + '/downtimes'
       }, callback);
     },
     fetchPaymentDowntimeById: function fetchPaymentDowntimeById(downtimeId, callback) {
@@ -292,7 +265,7 @@ module.exports = function (api) {
       }
 
       return api.get({
-        url: '/payments/downtimes/' + downtimeId
+        url: BASE_URL + '/downtimes/' + downtimeId
       }, callback);
     },
     otpGenerate: function otpGenerate(paymentId, callback) {
@@ -312,7 +285,7 @@ module.exports = function (api) {
       }
 
       return api.post({
-        url: '/payments/' + paymentId + '/otp_generate'
+        url: BASE_URL + '/' + paymentId + '/otp_generate'
       }, callback);
     },
     otpSubmit: function otpSubmit(paymentId) {
@@ -336,7 +309,7 @@ module.exports = function (api) {
       }
 
       return api.post({
-        url: '/payments/' + paymentId + '/otp/submit',
+        url: BASE_URL + '/' + paymentId + '/otp/submit',
         data: params
       }, callback);
     },
@@ -357,7 +330,7 @@ module.exports = function (api) {
       }
 
       return api.post({
-        url: '/payments/' + paymentId + '/otp/resend'
+        url: BASE_URL + '/' + paymentId + '/otp/resend'
       }, callback);
     },
     createUpi: function createUpi() {
@@ -374,7 +347,7 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = 'payments/create/upi',
+      var url = BASE_URL + '/create/upi',
           rest = _objectWithoutProperties(params, []),
           data = Object.assign(rest);
 
@@ -397,7 +370,7 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = 'payments/validate/vpa',
+      var url = BASE_URL + '/validate/vpa',
           rest = _objectWithoutProperties(params, []),
           data = Object.assign(rest);
 
@@ -416,7 +389,7 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = 'methods';
+      var url = '/methods';
       return api.get({
         url: url
       }, callback);
