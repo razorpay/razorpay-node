@@ -143,12 +143,10 @@ describe("VIRTUAL_ACCOUNTS", () => {
   it ("Create Virtual Account", (done) => {
   
     const params = {
-    
       notes : {"comment": "My notes"},
       param1: "param1",
       param2: "param2"
-    }, {notes, ...rest} = params;
-
+    };
     mocker.mock({
       url   : `${SUB_PATH}`,
       method: "POST"
@@ -157,8 +155,7 @@ describe("VIRTUAL_ACCOUNTS", () => {
     rzpInstance.virtualAccounts.create(params).then((response) => {
  
       assert.ok(equal(
-        response.__JUST_FOR_TESTS__.requestBody,
-        Object.assign(rest, normalizeNotes(notes))),
+        response.__JUST_FOR_TESTS__.requestBody,params),
         "Params matched, and notes normalized"
       );
 
