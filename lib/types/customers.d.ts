@@ -1,6 +1,7 @@
 import { IMap, INormalizeError, RazorpayPaginationOptions } from "./api";
 import { Invoices } from "./invoices";
 import { Tokens } from "./tokens";
+import { VirtualAccounts } from "./virtualAccounts"
 
 export declare namespace Customers {
     interface RazorpayCustomerBaseRequestBody {
@@ -56,6 +57,87 @@ export declare namespace Customers {
          * Details of the customer's shipping address.
          */
         shipping_address?: Invoices.RazorpayInvoiceAddress[];
+    }
+
+    interface RazorpayCustomerBankAccountRequestBody {
+        /**
+         * The IFSC code of the bank branch associated with the account.
+         */
+        ifsc_code: string;
+        /**
+         * Customer's bank account number.
+         */
+        account_number: string;
+        /**
+         * The name of the beneficiary associated with the bank account.
+         */
+        beneficiary_name?: string;
+        /**
+         * The virtual payment address.
+         */
+        beneficiary_address1?: string;
+        beneficiary_address2?: string;
+        beneficiary_address3?: string;
+        beneficiary_address4?: string;
+        /**
+         * Email address of the beneficiary. For example, `gaurav.kumar@example.com`.
+         */
+        beneficiary_email?: string;
+        /**
+         * Mobile number of the beneficiary.
+         */
+        beneficiary_mobile?: string;
+        /**
+         * The name of the city of the beneficiary.
+         */
+        beneficiary_city?: string;
+        /**
+         * The state of the beneficiary.
+         */
+        beneficiary_state?: string;
+        /**
+         * The country of the beneficiary.
+         */
+        beneficiary_country?: string;
+        /**
+         * The pin code of the beneficiary's address.
+         */
+        beneficiary_pin?: string;     
+    }
+
+    interface RazorpayCustomerBankAccount extends Partial<VirtualAccounts.RazorpayVirtualAccountReceiver>{
+        success?: string; 
+    }
+
+    interface CustomersEligibility {        
+        id: string;
+        contact: string;
+        ip: string;
+        referrer: string;
+        user_agent: string;   
+    }
+
+    interface RazorpayCustomerEligibilityRequestBody {
+        inquiry?: string;
+        amount: number | string;
+        currency: string;
+        customer: Partial<CustomersEligibility>;
+    }
+    
+    interface Instruments {        
+        method: string;
+        issuer: string;
+        type: string;
+        provider: string;
+        eligibility_req_id: string;
+        eligibility: {
+            status: string;
+            error: Omit<INormalizeError,'statusCode'> 
+        }          
+    }
+
+    interface RazorpayCustomerEligibility extends RazorpayCustomerEligibilityRequestBody {
+        instruments? : Array<Instruments>
     }
 }
 
@@ -135,6 +217,32 @@ declare function customers(api: any): {
     */
     deleteToken(customerId: string, tokenId: string): Promise<{ deleted: boolean }>
     deleteToken(customerId: string, tokenId: string, callback: (err: INormalizeError | null, data: { deleted: boolean }) => void): void;
+    /**
+     * Add Bank Account of Customer
+     * 
+     * @param customerId - The unique identifier of the customer.
+     * @param param - Check [doc](https://razorpay.com/docs/api/customers/bank-accounts/#1-add-bank-account-of-customer) for required params 
+     */
+    addBankAccount(customerId: string, params: Customers.RazorpayCustomerBankAccountRequestBody): Promise<Customers.RazorpayCustomerBankAccount>
+    /**
+     * Delete Bank Account of Customer
+     * 
+     * @param customerId - The unique identifier of the customer. 
+     * @param bankAccountId - The bank_id that needs to be deleted.
+     */
+     deleteBankAccount(customerId: string, bankAccountId: string): Promise<Customers.RazorpayCustomerBankAccount>
+     /**
+      * Eligibility Check API
+      * 
+      * @param param - Check [doc](https://razorpay.com/docs/payments/payment-gateway/affordability/eligibility-check/#eligibility-check-api) for required params
+      */
+     requestEligibilityCheck(param: Customers.RazorpayCustomerEligibilityRequestBody): Promise<Partial<Customers.RazorpayCustomerEligibility>>
+     /**
+      * Fetch Eligibility by id
+      * 
+      * @param eligibilityId - The unique identifier of the eligibility request to be retrieved. 
+      */
+     fetchEligibility(eligibilityId: string): Promise<Partial<Customers.RazorpayCustomerEligibility>>
 }
 
 export default customers
