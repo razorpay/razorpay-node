@@ -22,6 +22,7 @@ import webhooks from './types/webhooks'
 import products from './types/products'
 import tokens from './types/tokens'
 import iins from './types/iins'
+import disputes from './types/disputes'
 
 interface IRazorpayConfig {
     key_id: string;
@@ -144,6 +145,11 @@ declare class Razorpay {
      * @see https://razorpay.com/docs/api/payments/cards/iin-api/#iin-entity
      */
     iins: ReturnType<typeof iins>
+    /**
+     * Dispute Entity
+     * @see https://razorpay.com/docs/api/disputes/contest
+     */
+    disputes: ReturnType<typeof disputes>
 }
 
 export = Razorpay
