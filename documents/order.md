@@ -261,6 +261,193 @@ instance.orders.edit(orderId,{
 -------------------------------------------------------------------------------------------------------
 
 
+### Create an order (Magic checkout)
+
+```js
+instance.orders.create({
+   "amount": 50000,
+   "currency": "INR",
+   "receipt": "receipt#22",
+   "notes": {
+       "key1": "value3",
+       "key2": "value2"
+   },
+   "rto_review": true,
+   "line_items": [
+       {
+           "type": "e-commerce",
+           "sku": "1g234",
+           "variant_id": "12r34",
+           "price": "3900",
+           "offer_price": "3800",
+           "tax_amount": 0,
+           "quantity": 1,
+           "name": "TEST",
+           "description": "TEST",
+           "weight": "1700",
+           "dimensions": {
+               "length": "1700",
+               "width": "1700",
+               "height": "1700"
+           },
+           "image_url": "https://unsplash.com/s/photos/new-wallpaper",
+           "product_url": "https://unsplash.com/s/photos/new-wallpaper",
+           "notes": {}
+       }
+   ],
+   "line_items_total": "1200",
+   "shipping_fee": 100,
+   "cod_fee": 100,
+   "customer_details": {
+       "name": "Gaurav Kumar",
+       "contact": "+919000090000",
+       "email": "gaurav.kumar@example.com",
+       "shipping_address": {
+           "name": "Gaurav Kumar",
+           "line1": "84th floor, Millennium Tower",
+           "line2": "2nd main",
+           "zipcode": "560000",
+           "contact": "+919000090000",
+           "city": "Bangalore",
+           "state": "Karnataka",
+           "country": "IND",
+           "tag": "home",
+           "landmark": "XYZ Hospital"
+       },
+       "billing_address": {
+           "name": "Gaurav Kumar",
+           "line1": "84th floor, Millennium Tower",
+           "line2": "2nd main",
+           "zipcode": "560000",
+           "contact": "+919000090000",
+           "city": "Bangalore",
+           "state": "Karnataka",
+           "country": "IND",
+           "tag": "home",
+           "landmark": "XYZ Hospital"
+       }
+   },
+   "promotions": [{
+       "reference_id": "reference",
+       "code": "code",
+       "type": "discount",
+       "value": 20,
+       "value_type": "flat",
+       "description": "description"
+   }],
+   "device_details": {
+       "ip": "127.0.0.1",
+       "user_agent": "abc"
+   }
+});
+```
+**Parameters**
+
+| Name     | Type   | Description                         |
+|----------|--------|-------------------------------------|
+| amount* | integer | The transaction amount, expressed in the currency subunit, such as paise (in case of INR). |
+| currency* | string  | The currency in which the transaction should be made. default value is `INR`|
+| receipt | string  | Your receipt id for this order should be passed here. Maximum length of 40 characters. |
+| notes | array  | Key-value pair that can be used to store additional information about the entity.|
+| rto_review | boolean  | Identifier to mark the order eligible for RTO risk prediction. Possible values is `0` or `1` |
+| line_items | array  | All keys listed [here](https://razorpay.com/docs/payments/magic-checkout/rto-intelligence/#step-1-create-an-order) are supported |
+| line_items_total | integer  | Sum of offer_price for all line items added in the cart in paise.  |
+| shipping_fee | integer  | Shipping fee charged on the line items in paisa. |
+| cod_fee | integer  | COD fee charged on the line items in paisa. |
+| promotions | array  | Used to pass all offer or discount related information including coupon code discount, method discount and so on. |
+| customer | array  | All keys listed [here](https://razorpay.com/docs/payments/magic-checkout/rto-intelligence/#step-1-create-an-order) are supported |
+| device_details | array  | All keys listed [here](https://razorpay.com/docs/payments/magic-checkout/rto-intelligence/#step-1-create-an-order) are supported |
+| shipping_details | array  | All keys listed [here](https://razorpay.com/docs/payments/magic-checkout/rto-intelligence/#step-1-create-an-order) are supported |
+
+**Response:**
+```json
+{
+  "id": "order_MpyV7eOsTBn24z",
+  "entity": "order",
+  "amount": 50000,
+  "amount_paid": 0,
+  "amount_due": 50000,
+  "currency": "INR",
+  "receipt": "receipt#22",
+  "status": "created",
+  "attempts": 0,
+  "notes": {
+    "key1": "value3",
+    "key2": "value2"
+  },
+  "created_at": 1697698714
+}
+```
+-------------------------------------------------------------------------------------------------------
+
+### View RTO/Risk Reasons
+
+```js
+var orderId = "order_DaaS6LOUAASb7Y";
+
+instance.orders.viewRtoReview(orderId);
+```
+**Parameters**
+
+| Name     | Type   | Description                         |
+|----------|--------|-------------------------------------|
+| orderId* | string | The id of the order to be retrieve payment info |
+| notes*   | array  | A key-value pair                    |
+
+**Response:**
+```json
+{
+  "risk_tier": "high",
+  "rto_reasons": [
+    {
+      "reason": "short_shipping_address",
+      "description": "Short shipping address",
+      "bucket": "address"
+    },
+    {
+      "reason": "address_pincode_state_mismatch",
+      "description": "Incorrect pincode state entered",
+      "bucket": "address"
+    }
+  ]
+}
+```
+-------------------------------------------------------------------------------------------------------
+
+```js
+var orderId = "order_DaaS6LOUAASb7Y";
+
+instance.orders.editFulfillment(orderId, {
+  "payment_method": "upi",
+  "shipping": {
+    "waybill": "123456789",
+    "status": "rto",
+    "provider": "Bluedart"
+  }
+});
+```
+**Parameters**
+
+| Name     | Type   | Description                         |
+|----------|--------|-------------------------------------|
+| payment_method | string | The id of the order to be retrieve payment info |
+| shipping | array  | All keys listed [here](https://razorpay.com/docs/payments/magic-checkout/rto-intelligence/#step-3-update-the-fulfillment-details) are supported |
+
+**Response:**
+```json
+{
+  "entity": "order.fulfillment",
+  "order_id": "EKwxwAgItXXXX",
+  "payment_method": "upi",
+  "shipping": {
+    "waybill": "123456789",
+    "status": "rto",
+    "provider": "Bluedart"
+  }
+}
+```
+-------------------------------------------------------------------------------------------------------
+
 **PN: * indicates mandatory fields**
 <br>
 <br>
