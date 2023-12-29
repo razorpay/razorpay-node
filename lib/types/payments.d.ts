@@ -555,6 +555,10 @@ export declare namespace Payments {
         entity: string;
     }
 
+    interface ExpandDetails {
+       'expand[]': 'card' | 'emi' | 'offers' | 'upi'  
+    }
+
 }
 
 declare function payments(api: any): {
@@ -581,8 +585,8 @@ declare function payments(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/payments/#fetch-a-payment) for required params
     *
     */
-    fetch(paymentId: string, params?: { 'expand[]': 'card' | 'emi' | 'offers' }): Promise<Payments.RazorpayPayment>
-    fetch(paymentId: string, params: { 'expand[]': 'card' | 'emi' | 'offers' }, callback: (err: INormalizeError | null, data: Payments.RazorpayPayment) => void): void
+    fetch(paymentId: string, params?: Payments.ExpandDetails): Promise<Payments.RazorpayPayment>
+    fetch(paymentId: string, params: Payments.ExpandDetails, callback: (err: INormalizeError | null, data: Payments.RazorpayPayment) => void): void
     /**
     * Capture payment
     *
