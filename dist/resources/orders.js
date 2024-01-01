@@ -5,9 +5,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var _require = require('../utils/razorpay-utils'),
-    normalizeDate = _require.normalizeDate,
-    normalizeBoolean = _require.normalizeBoolean,
-    normalizeNotes = _require.normalizeNotes;
+    normalizeDate = _require.normalizeDate;
 
 module.exports = function (api) {
   return {
@@ -37,7 +35,7 @@ module.exports = function (api) {
 
       count = Number(count) || 10;
       skip = Number(skip) || 0;
-      authorized = normalizeBoolean(authorized);
+      authorized = authorized;
 
       return api.get({
         url: '/orders',
@@ -65,50 +63,32 @@ module.exports = function (api) {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
-      var isNotForm = false;
-
-      var amount = params.amount,
-          currency = params.currency,
-          receipt = params.receipt,
-          payment_capture = params.payment_capture,
-          notes = params.notes,
-          method = params.method,
-          otherParams = _objectWithoutProperties(params, ['amount', 'currency', 'receipt', 'payment_capture', 'notes', 'method']);
+      var currency = params.currency,
+          otherParams = _objectWithoutProperties(params, ['currency']);
 
       currency = currency || 'INR';
 
-      if (params.hasOwnProperty("first_payment_min_amount")) {
-        isNotForm = true;
-      }
-
       var data = Object.assign(_extends({
-        amount: amount,
-        currency: currency,
-        receipt: receipt,
-        method: method,
-        payment_capture: normalizeBoolean(payment_capture)
-      }, otherParams), normalizeNotes(notes));
+        currency: currency
+      }, otherParams));
 
       return api.post({
         url: '/orders',
         data: data
-      }, callback, isNotForm);
+      }, callback);
     },
     edit: function edit(orderId) {
       var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var callback = arguments[2];
-      var notes = params.notes;
 
 
       if (!orderId) {
         throw new Error('`order_id` is mandatory');
       }
 
-      var data = Object.assign(normalizeNotes(notes));
-
       return api.patch({
         url: '/orders/' + orderId,
-        data: data
+        data: params
       }, callback);
     },
     fetchPayments: function fetchPayments(orderId, callback) {

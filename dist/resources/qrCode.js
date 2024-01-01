@@ -2,14 +2,6 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-var _require = require('../../dist/utils/razorpay-utils'),
-    normalizeBoolean = _require.normalizeBoolean;
-
-var _require2 = require('../utils/razorpay-utils'),
-    normalizeNotes = _require2.normalizeNotes;
-
 module.exports = function (api) {
 
   var BASE_URL = "/payments/qr_codes";
@@ -29,19 +21,11 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = BASE_URL,
-          notes = params.notes,
-          fixed_amount = params.fixed_amount,
-          rest = _objectWithoutProperties(params, ['notes', 'fixed_amount']);
-
-
-      var data = Object.assign(_extends({
-        fixed_amount: normalizeBoolean(fixed_amount)
-      }, rest), normalizeNotes(notes));
+      var url = BASE_URL;
 
       return api.post({
         url: url,
-        data: data
+        data: params
       }, callback);
     },
     all: function all() {
@@ -93,7 +77,7 @@ module.exports = function (api) {
           to = params.to,
           count = params.count,
           skip = params.skip,
-          url = BASE_URL + '/' + qrCodeId + '/payments';
+          url = BASE_URL + "/" + qrCodeId + "/payments";
 
 
       return api.get({
@@ -114,7 +98,7 @@ module.exports = function (api) {
       }
 
       return api.get({
-        url: BASE_URL + '/' + qrCodeId
+        url: BASE_URL + "/" + qrCodeId
       }, callback);
     },
     close: function close(qrCodeId, callback) {
@@ -124,7 +108,7 @@ module.exports = function (api) {
         return Promise.reject("qrCode Id is mandatroy");
       }
 
-      var url = BASE_URL + '/' + qrCodeId + '/close';
+      var url = BASE_URL + "/" + qrCodeId + "/close";
 
       return api.post({
         url: url

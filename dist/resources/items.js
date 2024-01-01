@@ -5,8 +5,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var _require = require('../utils/razorpay-utils'),
-    normalizeDate = _require.normalizeDate,
-    normalizeBoolean = _require.normalizeBoolean;
+    normalizeDate = _require.normalizeDate;
 
 module.exports = function (api) {
   return {
@@ -31,7 +30,6 @@ module.exports = function (api) {
 
       count = Number(count) || 10;
       skip = Number(skip) || 0;
-      authorized = normalizeBoolean(authorized);
 
       return api.get({
         url: '/items',
@@ -58,10 +56,9 @@ module.exports = function (api) {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var callback = arguments[1];
 
-      var name = params.name;
-      var amount = params.amount;
-      var currency = params.currency;
-      var description = params.description;
+      var amount = params.amount,
+          currency = params.currency,
+          rest = _objectWithoutProperties(params, ['amount', 'currency']);
 
       currency = currency || 'INR';
 
@@ -69,13 +66,10 @@ module.exports = function (api) {
         throw new Error('`amount` is mandatory');
       }
 
-      var data = Object.assign({
-        name: name,
-        amount: amount,
+      var data = Object.assign(_extends({
         currency: currency,
-        description: description
-      });
-
+        amount: amount
+      }, rest));
       return api.post({
         url: '/items',
         data: data
@@ -90,18 +84,10 @@ module.exports = function (api) {
         throw new Error('`item_id` is mandatory');
       }
 
-      var url = '/items/' + itemId,
-          active = params.active,
-          rest = _objectWithoutProperties(params, ['active']);
-
-
-      var data = Object.assign(_extends({
-        active: normalizeBoolean(active)
-      }, rest));
-
+      var url = '/items/' + itemId;
       return api.patch({
         url: url,
-        data: data
+        data: params
       }, callback);
     },
 

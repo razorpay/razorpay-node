@@ -2,14 +2,6 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-var _require = require('../../dist/utils/razorpay-utils'),
-    normalizeBoolean = _require.normalizeBoolean;
-
-var _require2 = require('../utils/razorpay-utils'),
-    normalizeNotes = _require2.normalizeNotes;
-
 module.exports = function (api) {
 
   var BASE_URL = "/settlements";
@@ -29,19 +21,11 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = BASE_URL + '/ondemand',
-          notes = params.notes,
-          settle_full_balance = params.settle_full_balance,
-          rest = _objectWithoutProperties(params, ['notes', 'settle_full_balance']);
-
-
-      var data = Object.assign(_extends({
-        settle_full_balance: normalizeBoolean(settle_full_balance)
-      }, rest), normalizeNotes(notes));
+      var url = BASE_URL + "/ondemand";
 
       return api.post({
         url: url,
-        data: data
+        data: params
       }, callback);
     },
     all: function all() {
@@ -92,7 +76,7 @@ module.exports = function (api) {
       }
 
       return api.get({
-        url: BASE_URL + '/' + settlementId
+        url: BASE_URL + "/" + settlementId
       }, callback);
     },
 
@@ -120,7 +104,7 @@ module.exports = function (api) {
       }
 
       return api.get({
-        url: BASE_URL + '/ondemand/' + settlementId,
+        url: BASE_URL + "/ondemand/" + settlementId,
         data: {
           expand: expand
         }
@@ -145,7 +129,7 @@ module.exports = function (api) {
           to = params.to,
           count = params.count,
           skip = params.skip,
-          url = BASE_URL + '/ondemand';
+          url = BASE_URL + "/ondemand";
 
 
       if (params.hasOwnProperty("expand[]")) {
@@ -180,7 +164,7 @@ module.exports = function (api) {
       var day = params.day,
           count = params.count,
           skip = params.skip,
-          url = BASE_URL + '/recon/combined';
+          url = BASE_URL + "/recon/combined";
 
 
       return api.get({

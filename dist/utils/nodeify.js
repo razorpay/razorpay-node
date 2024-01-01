@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var nodeify = function nodeify(promise, cb) {
   if (!cb) {
