@@ -1,13 +1,13 @@
 {
   "name": "razorpay",
-  "version": "2.9.2",
+  "version": "2.9.3",
   "description": "Official Node SDK for Razorpay API",
   "main": "dist/razorpay",
   "typings": "dist/razorpay",
   "scripts": {
     "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
-    "cp-types":"mkdir dist/types && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
+    "cp-types": "cd dist && mkdir types && cd .. && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
     "cp-ts": "cp lib/razorpay.d.ts dist/ && npm run cp-types",
     "build:commonjs": "babel lib -d dist",
     "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
@@ -46,10 +46,8 @@
     "nyc": "^15.1.0"
   },
   "dependencies": {
-    "@types/request-promise": "^4.1.48",
-    "promise": "^8.1.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.6",
+    "axios": "^1.6.5",
+    "promise": "^8.3.0",
     "typescript": "^4.9.4"
   }
 }

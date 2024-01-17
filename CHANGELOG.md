@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.9.3 - 2024-01-01
+- Removed deprecreated and unmaintained dependencies - `request` and `request-promise` which had `tough-cookie Prototype Pollution vulnerability` and `Server-Side Request Forgery vulnerability`
+- Added `axios` in place of `request` and `request-promise`
+- Fixed a bug in `package.json` scripts which would not allow creating `types` directory inside `dist` when the command `cp-types` script is executed
+
 ## 2.9.2 - 2023-08-16
 chore: Changed Content-Type of all APIs from application/x-www-form-urlencoded to application/json
 
