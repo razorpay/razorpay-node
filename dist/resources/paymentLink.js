@@ -3,28 +3,13 @@
 /*
  * DOCS: https://razorpay.com/docs/payment-links/
  */
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-var Promise = require("promise"),
-    _require = require('../utils/razorpay-utils'),
-    normalizeDate = _require.normalizeDate,
-    normalizeNotes = _require.normalizeNotes;
-
-
-module.exports = function paymentLinkApi(api) {
-
-  var BASE_URL = "/payment_links",
-      MISSING_ID_ERROR = "Payment Link ID is mandatory";
-
+import Promise from "promise";
+import { normalizeDate } from "../utils/razorpay-utils.js";
+export default function paymentLinkApi(api) {
+  const BASE_URL = "/payment_links";
+  const MISSING_ID_ERROR = "Payment Link ID is mandatory";
   return {
-    create: function create() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    create(params, callback) {
       /*
        * Creates Payment Link.
        *
@@ -34,19 +19,13 @@ module.exports = function paymentLinkApi(api) {
        * @return {Promise}
        */
 
-      var url = BASE_URL,
-          notes = params.notes,
-          rest = _objectWithoutProperties(params, ["notes"]),
-          data = Object.assign(params);
-
-
+      let url = BASE_URL;
       return api.post({
-        url: url,
-        data: data
-      }, callback, true);
+        url,
+        data: params
+      }, callback);
     },
-    cancel: function cancel(paymentLinkId, callback) {
-
+    cancel(paymentLinkId, callback) {
       /*
        * Cancels issued paymentLink
        *
@@ -57,18 +36,14 @@ module.exports = function paymentLinkApi(api) {
        */
 
       if (!paymentLinkId) {
-
         return Promise.reject(MISSING_ID_ERROR);
       }
-
-      var url = BASE_URL + "/" + paymentLinkId + "/cancel";
-
+      let url = `${BASE_URL}/${paymentLinkId}/cancel`;
       return api.post({
-        url: url
+        url
       }, callback);
     },
-    fetch: function fetch(paymentLinkId, callback) {
-
+    fetch(paymentLinkId, callback) {
       /*
        * Fetches paymentLink entity with given id
        *
@@ -79,21 +54,14 @@ module.exports = function paymentLinkApi(api) {
        */
 
       if (!paymentLinkId) {
-
         return Promise.reject(MISSING_ID_ERROR);
       }
-
-      var url = BASE_URL + "/" + paymentLinkId;
-
+      let url = `${BASE_URL}/${paymentLinkId}`;
       return api.get({
-        url: url
+        url
       }, callback);
     },
-    all: function all() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    all(params = {}, callback) {
       /*
        * Fetches multiple paymentLink with given query options
        *
@@ -103,72 +71,59 @@ module.exports = function paymentLinkApi(api) {
        * @return {Promise}
        */
 
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          url = BASE_URL;
-
-
+      let {
+          from,
+          to,
+          count,
+          skip
+        } = params,
+        url = BASE_URL;
       if (from) {
         from = normalizeDate(from);
       }
-
       if (to) {
         to = normalizeDate(to);
       }
-
       count = Number(count) || 10;
       skip = Number(skip) || 0;
-
       return api.get({
-        url: url,
-        data: _extends({}, params, {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip
-        })
+        url,
+        data: {
+          ...params,
+          from,
+          to,
+          count,
+          skip
+        }
       }, callback);
     },
-    edit: function edit(paymentLinkId, params, callback) {
-      var rest = params;
-      var isbody = true;
-
-      var data = _extends({ isbody: isbody }, rest);
-
+    edit(paymentLinkId, params, callback) {
       return api.patch({
-        url: BASE_URL + "/" + paymentLinkId,
-        data: data
+        url: `${BASE_URL}/${paymentLinkId}`,
+        data: params
       }, callback);
     },
-    notifyBy: function notifyBy(paymentLinkId, medium, callback) {
-
+    notifyBy(paymentLinkId, medium, callback) {
       /*
        * Send/re-send notification for invoice by given medium
-       * 
+       *
        * @param {String} paymentLinkId
        * @param {String} medium
        * @param {Function} callback
-       * 
+       *
        * @return {Promise}
        */
 
       if (!paymentLinkId) {
-
         return Promise.reject(MISSING_ID_ERROR);
       }
-
       if (!medium) {
-
         return Promise.reject("`medium` is required");
       }
-
-      var url = BASE_URL + "/" + paymentLinkId + "/notify_by/" + medium;
-
+      let url = `${BASE_URL}/${paymentLinkId}/notify_by/${medium}`;
       return api.post({
-        url: url
+        url
       }, callback);
     }
   };
-};
+}

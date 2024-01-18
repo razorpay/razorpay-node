@@ -1,117 +1,78 @@
 "use strict";
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-var _require = require('../utils/razorpay-utils'),
-    normalizeDate = _require.normalizeDate,
-    normalizeBoolean = _require.normalizeBoolean,
-    normalizeNotes = _require.normalizeNotes;
-
-module.exports = function (api) {
+import { normalizeDate } from "../utils/razorpay-utils.js";
+export default function (api) {
   return {
-    all: function all() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          payment_id = params.payment_id,
-          recipient_settlement_id = params.recipient_settlement_id;
-
-      var url = '/transfers';
-
+    all(params = {}, callback) {
+      let {
+        from,
+        to,
+        count,
+        skip,
+        payment_id,
+        recipient_settlement_id
+      } = params;
+      let url = "/transfers";
       if (payment_id) {
-        url = '/payments/' + payment_id + '/transfers';
+        url = `/payments/${payment_id}/transfers`;
       }
-
       if (from) {
         from = normalizeDate(from);
       }
-
       if (to) {
         to = normalizeDate(to);
       }
-
       count = Number(count) || 10;
       skip = Number(skip) || 0;
-
       return api.get({
-        url: url,
+        url,
         data: {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip,
-          recipient_settlement_id: recipient_settlement_id
+          from,
+          to,
+          count,
+          skip,
+          recipient_settlement_id
         }
       }, callback);
     },
-    fetch: function fetch(transferId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-      var payment_id = params.payment_id;
-
+    fetch(transferId, params = {}, callback) {
+      let {
+        payment_id
+      } = params;
       if (!transferId) {
-        throw new Error('`transfer_id` is mandatory');
+        throw new Error("`transfer_id` is mandatory");
       }
-
-      var url = '/transfers/' + transferId;
-
+      let url = `/transfers/${transferId}`;
       return api.get({
-        url: url
+        url
       }, callback);
     },
-    create: function create(params, callback) {
-      var notes = params.notes,
-          rest = _objectWithoutProperties(params, ['notes']);
-
-      var data = Object.assign(rest, normalizeNotes(notes));
-
-      if (data.on_hold) {
-        data.on_hold = normalizeBoolean(data.on_hold);
-      }
-
+    create(params, callback) {
       return api.post({
-        url: '/transfers',
-        data: data
+        url: "/transfers",
+        data: params
       }, callback);
     },
-    edit: function edit(transferId, params, callback) {
-      var notes = params.notes,
-          rest = _objectWithoutProperties(params, ['notes']);
-
-      var data = Object.assign(rest, normalizeNotes(notes));
-
-      if (typeof data.on_hold !== "undefined") {
-        data.on_hold = normalizeBoolean(data.on_hold);
-      }
-
+    edit(transferId, params, callback) {
       return api.patch({
-        url: '/transfers/' + transferId,
-        data: data
+        url: `/transfers/${transferId}`,
+        data: params
       }, callback);
     },
-    reverse: function reverse(transferId, params, callback) {
+    reverse(transferId, params, callback) {
       if (!transferId) {
-        throw new Error('`transfer_id` is mandatory');
+        throw new Error("`transfer_id` is mandatory");
       }
-
-      var notes = params.notes,
-          rest = _objectWithoutProperties(params, ['notes']);
-
-      var data = Object.assign(rest, normalizeNotes(notes));
-      var url = '/transfers/' + transferId + '/reversals';
-
+      let url = `/transfers/${transferId}/reversals`;
       return api.post({
-        url: url,
-        data: data
+        url,
+        data: params
       }, callback);
     },
-    fetchSettlements: function fetchSettlements(callback) {
+    fetchSettlements(callback) {
       return api.get({
-        url: 'transfers?expand[]=recipient_settlement'
+        url: `/transfers?expand[]=recipient_settlement`
       }, callback);
     }
   };
-};
+}

@@ -1,5 +1,6 @@
 node_modules/
 
+
 *.orig
 *.log
 *.swp
@@ -7,3 +8,4 @@ node_modules/
 *.swn
 *.swm
 **/.DS_Store
+

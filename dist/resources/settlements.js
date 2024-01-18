@@ -1,25 +1,9 @@
-'use strict';
+"use strict";
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-var _require = require('../../dist/utils/razorpay-utils'),
-    normalizeBoolean = _require.normalizeBoolean;
-
-var _require2 = require('../utils/razorpay-utils'),
-    normalizeNotes = _require2.normalizeNotes;
-
-module.exports = function (api) {
-
-  var BASE_URL = "/settlements";
-
+export default function (api) {
+  const BASE_URL = "/settlements";
   return {
-    createOndemandSettlement: function createOndemandSettlement() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    createOndemandSettlement(params = {}, callback) {
       /*
        * Create on-demand settlement
        *
@@ -29,26 +13,13 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = BASE_URL + '/ondemand',
-          notes = params.notes,
-          settle_full_balance = params.settle_full_balance,
-          rest = _objectWithoutProperties(params, ['notes', 'settle_full_balance']);
-
-
-      var data = Object.assign(_extends({
-        settle_full_balance: normalizeBoolean(settle_full_balance)
-      }, rest), normalizeNotes(notes));
-
+      let url = `${BASE_URL}/ondemand`;
       return api.post({
-        url: url,
-        data: data
+        url,
+        data: params
       }, callback);
     },
-    all: function all() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    all(params = {}, callback) {
       /*
        * Fetch all settlements
        *
@@ -58,25 +29,25 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          url = BASE_URL;
-
-
+      let {
+          from,
+          to,
+          count,
+          skip
+        } = params,
+        url = BASE_URL;
       return api.get({
-        url: url,
-        data: _extends({}, params, {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip
-        })
+        url,
+        data: {
+          ...params,
+          from,
+          to,
+          count,
+          skip
+        }
       }, callback);
     },
-    fetch: function fetch(settlementId, callback) {
-
+    fetch(settlementId, callback) {
       /*
        * Fetch a settlement
        *
@@ -87,20 +58,14 @@ module.exports = function (api) {
        */
 
       if (!settlementId) {
-
         return Promise.reject("settlement Id is mandatroy");
       }
-
       return api.get({
-        url: BASE_URL + '/' + settlementId
+        url: `${BASE_URL}/${settlementId}`
       }, callback);
     },
-
-    fetchOndemandSettlementById: function fetchOndemandSettlementById(settlementId) {
-      var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
-      var expand = void 0;
+    fetchOndemandSettlementById: function fetchOndemandSettlementById(settlementId, param = {}, callback) {
+      let expand;
       /*
        * Fetch On-demand Settlements by ID
        *
@@ -111,26 +76,21 @@ module.exports = function (api) {
        */
 
       if (!settlementId) {
-
         return Promise.reject("settlment Id is mandatroy");
       }
-
       if (param.hasOwnProperty("expand[]")) {
-        expand = { "expand[]": param["expand[]"] };
+        expand = {
+          "expand[]": param["expand[]"]
+        };
       }
-
       return api.get({
-        url: BASE_URL + '/ondemand/' + settlementId,
+        url: `${BASE_URL}/ondemand/${settlementId}`,
         data: {
-          expand: expand
+          expand
         }
       }, callback);
     },
-    fetchAllOndemandSettlement: function fetchAllOndemandSettlement() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    fetchAllOndemandSettlement(params = {}, callback) {
       /*
        * Fetch all demand settlements
        *
@@ -140,57 +100,56 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var expand = void 0;
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          url = BASE_URL + '/ondemand';
-
-
+      let expand;
+      let {
+          from,
+          to,
+          count,
+          skip
+        } = params,
+        url = `${BASE_URL}/ondemand`;
       if (params.hasOwnProperty("expand[]")) {
-        expand = { "expand[]": params["expand[]"] };
+        expand = {
+          "expand[]": params["expand[]"]
+        };
       }
-
       return api.get({
-        url: url,
-        data: _extends({}, params, {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip,
-          expand: expand
-        })
+        url,
+        data: {
+          ...params,
+          from,
+          to,
+          count,
+          skip,
+          expand
+        }
       }, callback);
     },
-    reports: function reports() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    reports(params = {}, callback) {
       /*
-      * Settlement report for a month
-      *
-      * @param {Object} params
-      * @param {Function} callback
-      *
-      * @return {Promise}
-      */
+       * Settlement report for a month
+       *
+       * @param {Object} params
+       * @param {Function} callback
+       *
+       * @return {Promise}
+       */
 
-      var day = params.day,
-          count = params.count,
-          skip = params.skip,
-          url = BASE_URL + '/recon/combined';
-
-
+      let {
+          day,
+          count,
+          skip
+        } = params,
+        url = `${BASE_URL}/recon/combined`;
       return api.get({
-        url: url,
-        data: _extends({}, params, {
-          day: day,
-          count: count,
-          skip: skip
-        })
+        url,
+        data: {
+          ...params,
+          day,
+          count,
+          skip
+        }
       }, callback);
     }
   };
-};
+}

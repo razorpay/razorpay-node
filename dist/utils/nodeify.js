@@ -1,15 +1,13 @@
-'use strict';
+"use strict";
 
-var nodeify = function nodeify(promise, cb) {
+const nodeify = (promise, cb) => {
   if (!cb) {
     return promise;
   }
-
-  return promise.then(function (response) {
+  return promise.then(response => {
     cb(null, response);
-  }).catch(function (error) {
+  }).catch(error => {
     cb(error, null);
   });
 };
-
-module.exports = nodeify;
+export default nodeify;

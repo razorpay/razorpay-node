@@ -1,25 +1,9 @@
-'use strict';
+"use strict";
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-var _require = require('../../dist/utils/razorpay-utils'),
-    normalizeBoolean = _require.normalizeBoolean;
-
-var _require2 = require('../utils/razorpay-utils'),
-    normalizeNotes = _require2.normalizeNotes;
-
-module.exports = function (api) {
-
-  var BASE_URL = "/payments/qr_codes";
-
+export default function (api) {
+  const BASE_URL = "/payments/qr_codes";
   return {
-    create: function create() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    create(params = {}, callback) {
       /*
        * Creates a QrCode
        *
@@ -29,26 +13,13 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = BASE_URL,
-          notes = params.notes,
-          fixed_amount = params.fixed_amount,
-          rest = _objectWithoutProperties(params, ['notes', 'fixed_amount']);
-
-
-      var data = Object.assign(_extends({
-        fixed_amount: normalizeBoolean(fixed_amount)
-      }, rest), normalizeNotes(notes));
-
+      let url = BASE_URL;
       return api.post({
-        url: url,
-        data: data
+        url,
+        data: params
       }, callback);
     },
-    all: function all() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    all(params = {}, callback) {
       /*
        * Fetch all fund accounts
        *
@@ -58,28 +29,25 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          url = BASE_URL;
-
-
+      let {
+          from,
+          to,
+          count,
+          skip
+        } = params,
+        url = BASE_URL;
       return api.get({
-        url: url,
-        data: _extends({}, params, {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip
-        })
+        url,
+        data: {
+          ...params,
+          from,
+          to,
+          count,
+          skip
+        }
       }, callback);
     },
-    fetchAllPayments: function fetchAllPayments(qrCodeId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
-
+    fetchAllPayments(qrCodeId, params = {}, callback) {
       /*
        * Fetch all payment for a qrCode
        *
@@ -89,46 +57,40 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          url = BASE_URL + '/' + qrCodeId + '/payments';
-
-
+      let {
+          from,
+          to,
+          count,
+          skip
+        } = params,
+        url = `${BASE_URL}/${qrCodeId}/payments`;
       return api.get({
-        url: url,
-        data: _extends({}, params, {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip
-        })
+        url,
+        data: {
+          ...params,
+          from,
+          to,
+          count,
+          skip
+        }
       }, callback);
     },
-    fetch: function fetch(qrCodeId, callback) {
-
+    fetch(qrCodeId, callback) {
       if (!qrCodeId) {
-
         return Promise.reject("qrCode Id is mandatroy");
       }
-
       return api.get({
-        url: BASE_URL + '/' + qrCodeId
+        url: `${BASE_URL}/${qrCodeId}`
       }, callback);
     },
-    close: function close(qrCodeId, callback) {
-
+    close(qrCodeId, callback) {
       if (!qrCodeId) {
-
         return Promise.reject("qrCode Id is mandatroy");
       }
-
-      var url = BASE_URL + '/' + qrCodeId + '/close';
-
+      let url = `${BASE_URL}/${qrCodeId}/close`;
       return api.post({
-        url: url
+        url
       }, callback);
     }
   };
-};
+}
