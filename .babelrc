@@ -1,6 +1,18 @@
 {
   "presets": [
-    "env",
-    "stage-0"
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "modules": false
+      }
+    ]
+  ],
+  "plugins": [
+    // Stage 0
+    "@babel/plugin-proposal-function-bind",
+    "@babel/plugin-syntax-import-attributes"
   ]
 }

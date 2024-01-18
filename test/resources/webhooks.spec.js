@@ -1,106 +1,101 @@
-'use strict'
+"use strict";
 
-const chai = require('chai')
-const { assert } = chai
-const rzpInstance = require('../razorpay')
-const mocker = require('../mocker')
-const equal = require('deep-equal')
-const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
+import { assert } from "chai";
+import rzpInstance from "../razorpay.js";
+import mocker from "../mocker.js";
+import equal from "deep-equal";
+import { describe, it } from "mocha";
 
 let mockRequest = {
-    "url": "https://google.com",
-    "alert_email": "gaurav.kumar@example.com",
-    "secret": "12345",
-    "events": [
-      "payment.authorized",
-      "payment.failed",
-      "payment.captured",
-      "payment.dispute.created",
-      "refund.failed",
-      "refund.created"
-    ]
-  }
+  url: "https://google.com",
+  alert_email: "gaurav.kumar@example.com",
+  secret: "12345",
+  events: [
+    "payment.authorized",
+    "payment.failed",
+    "payment.captured",
+    "payment.dispute.created",
+    "refund.failed",
+    "refund.created",
+  ],
+};
 
-const BASE_URL = '/accounts',
-  API_VERSION = 'v2',
-  TEST_ACCOUNT_ID = 'acc_GRWKk7qQsLnDjX',
-  TEST_WEBHOOK_ID = 'HK890egfiItP3H'
+const BASE_URL = "/accounts",
+  API_VERSION = "v2",
+  TEST_ACCOUNT_ID = "acc_GRWKk7qQsLnDjX",
+  TEST_WEBHOOK_ID = "HK890egfiItP3H";
 
-describe('WEBHOOKS', () => {
-  it('Create an webhook', (done) => {
-
+describe("WEBHOOKS", () => {
+  it("Create an webhook", (done) => {
     mocker.mock({
       version: API_VERSION,
       url: `${BASE_URL}/${TEST_ACCOUNT_ID}/webhooks`,
-      method: 'POST'
-    })
+      method: "POST",
+    });
 
-    rzpInstance.webhooks.create(mockRequest, TEST_ACCOUNT_ID).then((response) => {
-      assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `/v2/accounts/${TEST_ACCOUNT_ID}/webhooks`,
-        'Create webhook request url formed'
-      )
+    rzpInstance.webhooks
+      .create(mockRequest, TEST_ACCOUNT_ID)
+      .then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v2/accounts/${TEST_ACCOUNT_ID}/webhooks`,
+          "Create webhook request url formed"
+        );
 
-      assert.ok(
-        equal(
-          response.__JUST_FOR_TESTS__.requestBody.url,
-          mockRequest.url
-        ),
-        'param are passed in request body'
-      )
-      done()
-    })
-  })
+        assert.ok(
+          equal(response.__JUST_FOR_TESTS__.requestBody.url, mockRequest.url),
+          "param are passed in request body"
+        );
+        done();
+      });
+  });
 
-  it('Edit webhook', (done) => {
-    
+  it("Edit webhook", (done) => {
     const mockParam = {
-        "url": "https://www.linkedin.com",
-        "events": [
-          "refund.created"
-        ]
-    }
-      
+      url: "https://www.linkedin.com",
+      events: ["refund.created"],
+    };
+
     mocker.mock({
       version: API_VERSION,
       url: `${BASE_URL}/${TEST_ACCOUNT_ID}/webhooks/${TEST_WEBHOOK_ID}`,
-      method: 'PATCH'
-    })
+      method: "PATCH",
+    });
 
-    rzpInstance.webhooks.edit(mockParam, TEST_WEBHOOK_ID, TEST_ACCOUNT_ID).then((response) => {
-      assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `/v2/accounts/${TEST_ACCOUNT_ID}/webhooks/${TEST_WEBHOOK_ID}`,
-        'Edit webhook request url formed'
-      )
+    rzpInstance.webhooks
+      .edit(mockParam, TEST_WEBHOOK_ID, TEST_ACCOUNT_ID)
+      .then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v2/accounts/${TEST_ACCOUNT_ID}/webhooks/${TEST_WEBHOOK_ID}`,
+          "Edit webhook request url formed"
+        );
 
-      assert.ok(
-        equal(
-          response.__JUST_FOR_TESTS__.requestBody.url,
-          mockParam.url
-        ),
-        'All params are passed in request body'
-      )
-      done()
-    })
-  })
+        assert.ok(
+          equal(response.__JUST_FOR_TESTS__.requestBody.url, mockParam.url),
+          "All params are passed in request body"
+        );
+        done();
+      });
+  });
 
-  it('Webhook fetch', (done) => {
+  it("Webhook fetch", (done) => {
     mocker.mock({
       version: API_VERSION,
-      url: `${BASE_URL}/${TEST_ACCOUNT_ID}/webhooks/${TEST_WEBHOOK_ID}`
-    })
+      url: `${BASE_URL}/${TEST_ACCOUNT_ID}/webhooks/${TEST_WEBHOOK_ID}`,
+    });
 
-    rzpInstance.webhooks.fetch(TEST_WEBHOOK_ID, TEST_ACCOUNT_ID).then((response) => {
-      assert.equal(
-        response.__JUST_FOR_TESTS__.url,
-        `/v2/accounts/${TEST_ACCOUNT_ID}/webhooks/${TEST_WEBHOOK_ID}`,
-        'Fetch webhooks url formed correctly'
-      )
-      done()
-    })
-  })
+    rzpInstance.webhooks
+      .fetch(TEST_WEBHOOK_ID, TEST_ACCOUNT_ID)
+      .then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v2/accounts/${TEST_ACCOUNT_ID}/webhooks/${TEST_WEBHOOK_ID}`,
+          "Fetch webhooks url formed correctly"
+        );
+        done();
+      });
+  });
 
   // it('Fetch all webhooks', (done) => {
   //   let fromDate = 'Aug 25, 2016'
@@ -138,4 +133,4 @@ describe('WEBHOOKS', () => {
   //     done()
   //   })
   // })
-})
+});

@@ -1,19 +1,19 @@
 {
   "name": "razorpay",
-  "version": "2.9.3",
+  "version": "3.0.0",
   "description": "Official Node SDK for Razorpay API",
   "main": "dist/razorpay",
-  "typings": "dist/razorpay",
+  "type": "module",
   "scripts": {
     "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
     "cp-types": "cd dist && mkdir types && cd .. && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
     "cp-ts": "cp lib/razorpay.d.ts dist/ && npm run cp-types",
-    "build:commonjs": "babel lib -d dist",
-    "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
+    "build:esm": "babel lib -d dist",
+    "build": "npm run clean && npm run build:esm && npm run cp-ts",
     "debug": "npm run build && node-debug examples/index.js",
-    "test": "npm run build && mocha --recursive --require babel-register test/ && nyc --reporter=text mocha",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov"
+    "test": "npm run build && mocha --recursive --require @babel/register test/ && c8 --reporter=text mocha",
+    "coverage": "c8 report --reporter=text-lcov > coverage.lcov"
   },
   "repository": {
     "type": "git",
@@ -35,15 +35,18 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.0",
-    "babel-register": "^6.26.0",
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.23.7",
+    "@babel/plugin-proposal-function-bind": "^7.23.3",
+    "@babel/plugin-syntax-import-attributes": "^7.23.3",
+    "@babel/preset-env": "^7.23.8",
+    "@babel/register": "^7.23.7",
+    "c8": "^9.1.0",
     "chai": "^4.3.4",
     "deep-equal": "^2.0.5",
-    "mocha": "^9.0.0",
-    "nock": "^13.1.1",
-    "nyc": "^15.1.0"
+    "esm": "^3.2.25",
+    "mocha": "^10.2.0",
+    "nock": "^13.1.1"
   },
   "dependencies": {
     "axios": "^1.6.5",

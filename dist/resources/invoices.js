@@ -3,22 +3,11 @@
 /*
  * DOCS: https://razorpay.com/docs/invoices/
  */
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-var Promise = require("promise"),
-    _require = require('../utils/razorpay-utils'),
-    normalizeDate = _require.normalizeDate,
-    normalizeNotes = _require.normalizeNotes,
-    normalizeBoolean = _require.normalizeBoolean;
-
-
-module.exports = function invoicesApi(api) {
-
-  var BASE_URL = "/invoices",
-      MISSING_ID_ERROR = "Invoice ID is mandatory";
+import Promise from "promise";
+import { normalizeDate } from "../utils/razorpay-utils.js";
+export default function invoicesApi(api) {
+  const BASE_URL = "/invoices";
+  const MISSING_ID_ERROR = "Invoice ID is mandatory";
 
   /**
    * Invoice entity gets used for both Payment Links and Invoices system.
@@ -28,11 +17,7 @@ module.exports = function invoicesApi(api) {
    */
 
   return {
-    create: function create() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    create(params = {}, callback) {
       /*
        * Creates invoice of any type(invoice|link|ecod).
        *
@@ -42,25 +27,13 @@ module.exports = function invoicesApi(api) {
        * @return {Promise}
        */
 
-      var url = BASE_URL,
-          notes = params.notes,
-          partial_payment = params.partial_payment,
-          rest = _objectWithoutProperties(params, ["notes", "partial_payment"]);
-
-
-      var data = Object.assign(_extends({
-        partial_payment: normalizeBoolean(partial_payment)
-      }, rest), normalizeNotes(notes));
+      let url = BASE_URL;
       return api.post({
-        url: url,
-        data: data
+        url,
+        data: params
       }, callback);
     },
-    edit: function edit(invoiceId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
-
+    edit(invoiceId, params = {}, callback) {
       /*
        * Patches given invoice with new attributes
        *
@@ -71,46 +44,34 @@ module.exports = function invoicesApi(api) {
        * @return {Promise}
        */
 
-      var url = BASE_URL + "/" + invoiceId,
-          notes = params.notes,
-          rest = _objectWithoutProperties(params, ["notes"]),
-          data = Object.assign(rest, normalizeNotes(notes));
-
-
+      let url = `${BASE_URL}/${invoiceId}`;
       if (!invoiceId) {
-
         return Promise.reject("Invoice ID is mandatory");
       }
-
       return api.patch({
-        url: url,
-        data: data
+        url,
+        data: params
       }, callback);
     },
-    issue: function issue(invoiceId, callback) {
-
+    issue(invoiceId, callback) {
       /*
        * Issues drafted invoice
        *
        * @param {String} invoiceId
        * @param {Function} callback
-       * 
+       *
        * @return {Promise}
        */
 
       if (!invoiceId) {
-
         return Promise.reject(MISSING_ID_ERROR);
       }
-
-      var url = BASE_URL + "/" + invoiceId + "/issue";
-
+      let url = `${BASE_URL}/${invoiceId}/issue`;
       return api.post({
-        url: url
+        url
       }, callback);
     },
-    delete: function _delete(invoiceId, callback) {
-
+    delete(invoiceId, callback) {
       /*
        * Deletes drafted invoice
        *
@@ -121,21 +82,17 @@ module.exports = function invoicesApi(api) {
        */
 
       if (!invoiceId) {
-
         return Promise.reject(MISSING_ID_ERROR);
       }
-
-      var url = BASE_URL + "/" + invoiceId;
-
+      let url = `${BASE_URL}/${invoiceId}`;
       return api.delete({
-        url: url
+        url
       }, callback);
     },
-    cancel: function cancel(invoiceId, callback) {
-
+    cancel(invoiceId, callback) {
       /*
        * Cancels issued invoice
-       * 
+       *
        * @param {String} invoiceId
        * @param {Function} callback
        *
@@ -143,18 +100,14 @@ module.exports = function invoicesApi(api) {
        */
 
       if (!invoiceId) {
-
         return Promise.reject(MISSING_ID_ERROR);
       }
-
-      var url = BASE_URL + "/" + invoiceId + "/cancel";
-
+      let url = `${BASE_URL}/${invoiceId}/cancel`;
       return api.post({
-        url: url
+        url
       }, callback);
     },
-    fetch: function fetch(invoiceId, callback) {
-
+    fetch(invoiceId, callback) {
       /*
        * Fetches invoice entity with given id
        *
@@ -165,21 +118,14 @@ module.exports = function invoicesApi(api) {
        */
 
       if (!invoiceId) {
-
         return Promise.reject(MISSING_ID_ERROR);
       }
-
-      var url = BASE_URL + "/" + invoiceId;
-
+      let url = `${BASE_URL}/${invoiceId}`;
       return api.get({
-        url: url
+        url
       }, callback);
     },
-    all: function all() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    all(params = {}, callback) {
       /*
        * Fetches multiple invoices with given query options
        *
@@ -189,61 +135,53 @@ module.exports = function invoicesApi(api) {
        * @return {Promise}
        */
 
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          url = BASE_URL;
-
-
+      let {
+          from,
+          to,
+          count,
+          skip
+        } = params,
+        url = BASE_URL;
       if (from) {
         from = normalizeDate(from);
       }
-
       if (to) {
         to = normalizeDate(to);
       }
-
       count = Number(count) || 10;
       skip = Number(skip) || 0;
-
       return api.get({
-        url: url,
-        data: _extends({}, params, {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip
-        })
+        url,
+        data: {
+          ...params,
+          from,
+          to,
+          count,
+          skip
+        }
       }, callback);
     },
-    notifyBy: function notifyBy(invoiceId, medium, callback) {
-
+    notifyBy(invoiceId, medium, callback) {
       /*
        * Send/re-send notification for invoice by given medium
-       * 
+       *
        * @param {String} invoiceId
        * @param {String} medium
        * @param {Function} callback
-       * 
+       *
        * @return {Promise}
        */
 
       if (!invoiceId) {
-
         return Promise.reject(MISSING_ID_ERROR);
       }
-
       if (!medium) {
-
         return Promise.reject("`medium` is required");
       }
-
-      var url = BASE_URL + "/" + invoiceId + "/notify_by/" + medium;
-
+      let url = `${BASE_URL}/${invoiceId}/notify_by/${medium}`;
       return api.post({
-        url: url
+        url
       }, callback);
     }
   };
-};
+}

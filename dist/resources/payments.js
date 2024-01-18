@@ -1,88 +1,69 @@
-'use strict';
+"use strict";
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-var Promise = require("promise");
-
-var _require = require('../utils/razorpay-utils'),
-    normalizeDate = _require.normalizeDate,
-    normalizeBoolean = _require.normalizeBoolean,
-    normalizeNotes = _require.normalizeNotes;
-
-var ID_REQUIRED_MSG = '`payment_id` is mandatory';
-
-module.exports = function (api) {
+import Promise from "promise";
+import { normalizeDate } from "../utils/razorpay-utils.js";
+const ID_REQUIRED_MSG = "`payment_id` is mandatory";
+const BASE_URL = "/payments";
+export default function (api) {
   return {
-    all: function all() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip;
-
-      var expand = void 0;
-
+    all(params = {}, callback) {
+      let {
+        from,
+        to,
+        count,
+        skip
+      } = params;
+      let expand;
       if (from) {
         from = normalizeDate(from);
       }
-
       if (to) {
         to = normalizeDate(to);
       }
-
       if (params.hasOwnProperty("expand[]")) {
-        expand = { "expand[]": params["expand[]"] };
+        expand = {
+          "expand[]": params["expand[]"]
+        };
       }
-
       count = Number(count) || 10;
       skip = Number(skip) || 0;
-
       return api.get({
-        url: '/payments',
+        url: `${BASE_URL}`,
         data: {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip,
-          expand: expand
+          from,
+          to,
+          count,
+          skip,
+          expand
         }
       }, callback);
     },
-    fetch: function fetch(paymentId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
-      var expand = void 0;
-
+    fetch(paymentId, params = {}, callback) {
+      let expand;
       if (!paymentId) {
-        throw new Error('`payment_id` is mandatory');
+        throw new Error("`payment_id` is mandatory");
       }
-
       if (params.hasOwnProperty("expand[]")) {
-        expand = { "expand[]": params["expand[]"] };
+        expand = {
+          "expand[]": params["expand[]"]
+        };
       }
-
       return api.get({
-        url: '/payments/' + paymentId,
+        url: `${BASE_URL}/${paymentId}`,
         data: {
-          expand: expand
+          expand
         }
       }, callback);
     },
-    capture: function capture(paymentId, amount, currency, callback) {
+    capture(paymentId, amount, currency, callback) {
       if (!paymentId) {
-        throw new Error('`payment_id` is mandatory');
+        throw new Error("`payment_id` is mandatory");
       }
-
       if (!amount) {
-        throw new Error('`amount` is mandatory');
+        throw new Error("`amount` is mandatory");
       }
-
-      var payload = {
-        amount: amount
+      const payload = {
+        amount
       };
 
       /**
@@ -91,121 +72,93 @@ module.exports = function (api) {
        * instead of currency.
        * Set accordingly.
        */
-      if (typeof currency === 'function' && !callback) {
+      if (typeof currency === "function" && !callback) {
         callback = currency;
         currency = undefined;
-      } else if (typeof currency === 'string') {
+      } else if (typeof currency === "string") {
         payload.currency = currency;
       }
-
       return api.post({
-        url: '/payments/' + paymentId + '/capture',
+        url: `${BASE_URL}/${paymentId}/capture`,
         data: payload
       }, callback);
     },
-    createPaymentJson: function createPaymentJson(params, callback) {
-      var url = 'payments/create/json',
-          rest = _objectWithoutProperties(params, []),
-          data = Object.assign(rest);
-
+    createPaymentJson(params, callback) {
+      let url = `${BASE_URL}/create/json`,
+        {
+          ...rest
+        } = params,
+        data = Object.assign(rest);
       return api.post({
-        url: url,
-        data: data
+        url,
+        data
       }, callback);
     },
-    createRecurringPayment: function createRecurringPayment(params, callback) {
-      var notes = params.notes,
-          rest = _objectWithoutProperties(params, ['notes']);
-
-      var data = Object.assign(rest, normalizeNotes(notes));
-
+    createRecurringPayment(params, callback) {
       return api.post({
-        url: '/payments/create/recurring',
-        data: data
+        url: `${BASE_URL}/create/recurring`,
+        data: params
       }, callback);
     },
-    edit: function edit(paymentId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-      var notes = params.notes;
-
-
+    edit(paymentId, params = {}, callback) {
       if (!paymentId) {
-        throw new Error('`payment_id` is mandatory');
+        throw new Error("`payment_id` is mandatory");
       }
-
-      var data = Object.assign(normalizeNotes(notes));
-
       return api.patch({
-        url: '/payments/' + paymentId,
-        data: data
+        url: `${BASE_URL}/${paymentId}`,
+        data: params
       }, callback);
     },
-    refund: function refund(paymentId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
-      var notes = params.notes,
-          otherParams = _objectWithoutProperties(params, ['notes']);
-
+    refund(paymentId, params = {}, callback) {
       if (!paymentId) {
-        throw new Error('`payment_id` is mandatory');
+        throw new Error("`payment_id` is mandatory");
       }
-
-      var data = Object.assign(otherParams, normalizeNotes(notes));
       return api.post({
-        url: '/payments/' + paymentId + '/refund',
-        data: data
+        url: `${BASE_URL}/${paymentId}/refund`,
+        data: params
       }, callback);
     },
-    fetchMultipleRefund: function fetchMultipleRefund(paymentId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
-
+    fetchMultipleRefund(paymentId, params = {}, callback) {
       /*
        * Fetch multiple refunds for a payment
        *
-       * @param {String} paymentId 
+       * @param {String} paymentId
        * @param {Object} params
        * @param {Function} callback
        *
        * @return {Promise}
        */
 
-      var from = params.from,
-          to = params.to,
-          count = params.count,
-          skip = params.skip,
-          url = '/payments/' + paymentId + '/refunds';
-
-
+      let {
+          from,
+          to,
+          count,
+          skip
+        } = params,
+        url = `${BASE_URL}/${paymentId}/refunds`;
       return api.get({
-        url: url,
-        data: _extends({}, params, {
-          from: from,
-          to: to,
-          count: count,
-          skip: skip
-        })
+        url,
+        data: {
+          ...params,
+          from,
+          to,
+          count,
+          skip
+        }
       }, callback);
     },
-    fetchRefund: function fetchRefund(paymentId, refundId, callback) {
-
+    fetchRefund(paymentId, refundId, callback) {
       if (!paymentId) {
-        throw new Error('payment Id` is mandatory');
+        throw new Error("payment Id` is mandatory");
       }
-
       if (!refundId) {
-        throw new Error('refund Id` is mandatory');
+        throw new Error("refund Id` is mandatory");
       }
-
       return api.get({
-        url: '/payments/' + paymentId + '/refunds/' + refundId
+        url: `${BASE_URL}/${paymentId}/refunds/${refundId}`
       }, callback);
     },
-    fetchTransfer: function fetchTransfer(paymentId, callback) {
-
+    fetchTransfer(paymentId, callback) {
       /*
        * Fetch transfers for a payment
        *
@@ -216,67 +169,43 @@ module.exports = function (api) {
        */
 
       if (!paymentId) {
-        throw new Error('payment Id` is mandatory');
+        throw new Error("payment Id` is mandatory");
       }
-
       return api.get({
-        url: '/payments/' + paymentId + '/transfers'
+        url: `${BASE_URL}/${paymentId}/transfers`
       }, callback);
     },
-    transfer: function transfer(paymentId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
+    transfer(paymentId, params = {}, callback) {
       if (!paymentId) {
-        throw new Error('`payment_id` is mandatory');
-      }
-
-      var notes = params.notes,
-          otherParams = _objectWithoutProperties(params, ['notes']);
-
-      var data = Object.assign(otherParams, normalizeNotes(notes));
-
-      if (data.transfers) {
-        var transfers = data.transfers;
-        transfers.forEach(function (transfer) {
-          transfer.on_hold = normalizeBoolean(!!transfer.on_hold);
-        });
+        throw new Error("`payment_id` is mandatory");
       }
       return api.post({
-        url: '/payments/' + paymentId + '/transfers',
-        data: data
+        url: `${BASE_URL}/${paymentId}/transfers`,
+        data: params
       }, callback);
     },
-    bankTransfer: function bankTransfer(paymentId, callback) {
-
+    bankTransfer(paymentId, callback) {
       if (!paymentId) {
-
         return Promise.reject(ID_REQUIRED_MSG);
       }
-
       return api.get({
-        url: '/payments/' + paymentId + '/bank_transfer'
+        url: `${BASE_URL}/${paymentId}/bank_transfer`
       }, callback);
     },
-    fetchCardDetails: function fetchCardDetails(paymentId, callback) {
-
+    fetchCardDetails(paymentId, callback) {
       if (!paymentId) {
-
         return Promise.reject(ID_REQUIRED_MSG);
       }
-
       return api.get({
-        url: '/payments/' + paymentId + '/card'
+        url: `${BASE_URL}/${paymentId}/card`
       }, callback);
     },
-    fetchPaymentDowntime: function fetchPaymentDowntime(callback) {
-
+    fetchPaymentDowntime(callback) {
       return api.get({
-        url: '/payments/downtimes'
+        url: `${BASE_URL}/downtimes`
       }, callback);
     },
-    fetchPaymentDowntimeById: function fetchPaymentDowntimeById(downtimeId, callback) {
-
+    fetchPaymentDowntimeById(downtimeId, callback) {
       /*
        * Fetch Payment Downtime
        *
@@ -287,16 +216,13 @@ module.exports = function (api) {
        */
 
       if (!downtimeId) {
-
         return Promise.reject("Downtime Id is mandatory");
       }
-
       return api.get({
-        url: '/payments/downtimes/' + downtimeId
+        url: `${BASE_URL}/downtimes/${downtimeId}`
       }, callback);
     },
-    otpGenerate: function otpGenerate(paymentId, callback) {
-
+    otpGenerate(paymentId, callback) {
       /*
        * OTP Generate
        *
@@ -307,19 +233,13 @@ module.exports = function (api) {
        */
 
       if (!paymentId) {
-
         return Promise.reject("payment Id is mandatory");
       }
-
       return api.post({
-        url: '/payments/' + paymentId + '/otp_generate'
+        url: `${BASE_URL}/${paymentId}/otp_generate`
       }, callback);
     },
-    otpSubmit: function otpSubmit(paymentId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var callback = arguments[2];
-
-
+    otpSubmit(paymentId, params = {}, callback) {
       /*
        * OTP Submit
        *
@@ -331,17 +251,14 @@ module.exports = function (api) {
        */
 
       if (!paymentId) {
-
         return Promise.reject("payment Id is mandatory");
       }
-
       return api.post({
-        url: '/payments/' + paymentId + '/otp/submit',
+        url: `${BASE_URL}/${paymentId}/otp/submit`,
         data: params
       }, callback);
     },
-    otpResend: function otpResend(paymentId, callback) {
-
+    otpResend(paymentId, callback) {
       /*
        * OTP Resend
        *
@@ -352,19 +269,13 @@ module.exports = function (api) {
        */
 
       if (!paymentId) {
-
         return Promise.reject("payment Id is mandatory");
       }
-
       return api.post({
-        url: '/payments/' + paymentId + '/otp/resend'
+        url: `${BASE_URL}/${paymentId}/otp/resend`
       }, callback);
     },
-    createUpi: function createUpi() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    createUpi(params = {}, callback) {
       /*
        * Initiate a payment
        *
@@ -374,20 +285,17 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = 'payments/create/upi',
-          rest = _objectWithoutProperties(params, []),
-          data = Object.assign(rest);
-
+      let url = `${BASE_URL}/create/upi`,
+        {
+          ...rest
+        } = params,
+        data = Object.assign(rest);
       return api.post({
-        url: url,
-        data: data
+        url,
+        data
       }, callback);
     },
-    validateVpa: function validateVpa() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var callback = arguments[1];
-
-
+    validateVpa(params = {}, callback) {
       /*
        * Validate the VPA
        *
@@ -397,16 +305,17 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = 'payments/validate/vpa',
-          rest = _objectWithoutProperties(params, []),
-          data = Object.assign(rest);
-
+      let url = `${BASE_URL}/validate/vpa`,
+        {
+          ...rest
+        } = params,
+        data = Object.assign(rest);
       return api.post({
-        url: url,
-        data: data
+        url,
+        data
       }, callback);
     },
-    fetchPaymentMethods: function fetchPaymentMethods(callback) {
+    fetchPaymentMethods(callback) {
       /*
        * Validate the VPA
        *
@@ -416,10 +325,10 @@ module.exports = function (api) {
        * @return {Promise}
        */
 
-      var url = 'methods';
+      let url = `/methods`;
       return api.get({
-        url: url
+        url
       }, callback);
     }
   };
-};
+}
