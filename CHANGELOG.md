@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.9.3 - 2024-04-18
+fix: Type definition for Product and Customer has been updated.
+
 ## 2.9.2 - 2023-08-16
 chore: Changed Content-Type of all APIs from application/x-www-form-urlencoded to application/json
 
