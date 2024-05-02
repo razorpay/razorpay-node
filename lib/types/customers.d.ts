@@ -9,7 +9,7 @@ export declare namespace Customers {
          * and parentheses are allowed. The name must be between 3-50 characters 
          * in length. For example, `Gaurav Kumar`.
          */
-        name: string;
+        name?: string;
         /**
          * The customer's email address. A maximum length of 64 characters. 
          * For example, `gaurav.kumar@example.com`.
