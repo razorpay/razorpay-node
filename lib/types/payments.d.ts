@@ -230,6 +230,10 @@ export declare namespace Payments {
          * The last 4 digits of the tokenised card.
          */
         last4?: string;
+        /**
+         * The name of the aggregator that provided the token. Possible values are `Visa`, `Mastercard`, `Amex` or `HDFC for Diners`
+         */
+         provider_type?: string;
     }
 
     interface RazorpayCardCreateRequest extends RazorpayCardBaseRequestBody { }
