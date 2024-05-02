@@ -106,6 +106,7 @@ export declare namespace Orders {
          * Details of the customer.
          */
         device_details?: DeviceDetails;
+        phonepe_switch_context? :string;
     }
 
     interface RazorpayOrderCreateRequestBody extends RazorpayOrderBaseRequestBody { }

@@ -10,11 +10,11 @@ export declare namespace Products {
         /**
          * Pass this parameter to accept terms and conditions. Send this parameter along with the ip parameter when the tnc is accepted.
          */
-        tnc_accepted: boolean;
+        tnc_accepted?: boolean;
         /**
          * he IP address of the merchant while accepting the terms and conditions. Send this parameter along with the `tnc_accepted` parameter when the `tnc` is accepted.
          */
-        ip: string;
+        ip?: string;
     }
 
     interface RazorpayProductCreateRequestBody extends RazorpayProductBaseRequestBody { }
