@@ -166,6 +166,15 @@ export declare namespace PaymentLinks {
         | RazorpayTransferPayment
         | RazorpayOffer
         | RazorpayCustomizeCheckout
+        | RazorpayBankAccount
+    }
+
+    interface RazorpayBankAccount {
+        bank_account: {
+            account_number: string;
+            name: string;
+            ifsc: string;
+        }
     }
 
     interface RazorpayTransferPayment {
@@ -196,6 +205,7 @@ export declare namespace PaymentLinks {
 
     interface RazorpayCustomizeCheckout {
         checkout:
+        | RazorpayCheckoutDisplayPayment
         | RazorpayCheckoutRenameLabels
         | RazorpayCheckoutChangeBusinessName
         | RazorpayCheckoutPrefillCard
@@ -206,6 +216,28 @@ export declare namespace PaymentLinks {
         | RazorpayCheckoutReadonly
         | RazorpayCheckoutThematicChange
     }
+
+    interface RazorpayCheckoutDisplayPayment {
+        config: {
+          display: {
+            blocks: {
+              banks: {
+                name: string;
+                instruments: [
+                  {
+                    method: string,
+                    banks: string[]
+                  }
+                ];
+              };
+            };
+            sequence: string[];
+            preferences: {
+              show_default_blocks: boolean;
+            };
+          };
+        };
+      }
 
     interface RazorpayCheckoutRenameLabels {
         /**
