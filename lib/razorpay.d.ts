@@ -147,7 +147,7 @@ declare class Razorpay {
     iins: ReturnType<typeof iins>
     /**
      * Dispute Entity
-     * @see https://razorpay.com/docs/api/disputes/contest
+     * @see https://razorpay.com/docs/api/disputes
      */
     disputes: ReturnType<typeof disputes>
 }
