@@ -93,6 +93,13 @@ export declare namespace Iins {
     | 'consumer'
     | 'business'
     | 'unknown'
+
+    type ListType = {flow: string;} | {sub_type: string;}
+
+    interface RazorpayIinList {
+        count: number; 
+        iins : string[];
+    }
 }
 
 declare function iins(api: any): {
@@ -104,6 +111,13 @@ declare function iins(api: any): {
     */
     fetch(tokenIin: string): Promise<Iins.RazorpayIin>
     fetch(tokenIin: string, callback: (err: INormalizeError | null, data: Iins.RazorpayIin) => void): void;
+    /**
+     * Fetch all IINs supporting `native otp` or `business sub-type`
+     * 
+     * @param params - Check [doc](https://razorpay.com/docs/api/payments/cards/iin-api/#fetch-all-iins-supporting-native-otp) for required params
+     */
+    all(params: Iins.ListType): Promise<Iins.RazorpayIinList>
+    all(params: Iins.ListType, callback: (err: INormalizeError | null, data: Iins.RazorpayIinList) => void): void;
 }
 
 export default iins
