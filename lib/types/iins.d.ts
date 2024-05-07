@@ -117,6 +117,7 @@ declare function iins(api: any): {
      * @param params - Check [doc](https://razorpay.com/docs/api/payments/cards/iin-api/#fetch-all-iins-supporting-native-otp) for required params
      */
     all(params: Iins.ListType): Promise<Iins.RazorpayIinList>
+    all(params: Iins.ListType, callback: (err: INormalizeError | null, data: Iins.RazorpayIinList) => void): void;
 }
 
 export default iins
