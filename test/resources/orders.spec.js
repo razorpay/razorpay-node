@@ -142,6 +142,33 @@ describe('ORDERS', () => {
         done()
       })
     })
+
+    it('Update the fulfillment details', (done) => {
+      let orderId = 'order_sometestId'
+
+      let param = {
+        "payment_method": "upi",
+        "shipping": {
+          "waybill": "123456789",
+          "status": "rto",
+          "provider": "Bluedart"
+        }
+      }
+
+      mocker.mock({
+        url: `/orders/${orderId}/fulfillment`,
+        method: 'POST'
+      })
+
+      rzpInstance.orders.editFulfillment(orderId, param).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/orders/${orderId}/fulfillment`,
+          'Request url formed correctly'
+        )
+        done()
+      })
+    })
   })
 
   describe('Fetch order\'s payments', () => {
@@ -191,6 +218,24 @@ describe('ORDERS', () => {
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
           `/v1/orders/${orderId}`,
+          'Request url formed correctly'
+        )
+        done()
+      })
+    })
+
+    it('view RTO/Risk reasons', (done) => {
+      let orderId = 'order_sometestId'
+
+      mocker.mock({
+        url: `/orders/${orderId}/rto_review`,
+        method: 'POST'
+      })
+
+      rzpInstance.orders.viewRtoReview(orderId).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/orders/${orderId}/rto_review`,
           'Request url formed correctly'
         )
         done()

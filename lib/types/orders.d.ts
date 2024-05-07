@@ -1,3 +1,4 @@
+import { Invoices } from './invoices'
 import { IMap, RazorpayPaginationOptions, INormalizeError } from './api'
 import { FundAccounts } from './fundAccount'
 import { Payments } from './payments'
@@ -79,6 +80,33 @@ export declare namespace Orders {
          * level [auto-capture settings]( https://razorpay.com/docs/payments/payments/capture-settings) configured using the Dashboard.
          */
         payment?: RazorpayCapturePayment;
+        /**
+         * Identifier to mark the order eligible for RTO risk prediction.
+         */
+        rto_review?: boolean;
+        /**
+         * This will have the details about the specific items added to the cart.
+         */
+        line_items?: LineItems[];
+        /**
+         * Sum of `offer_price` for all line items added in the cart in paise.
+         */
+        line_items_total?: number | string;
+        shipping_fee?: number;
+        cod_fee?: number;
+        /**
+         * Details of the customer.
+         */
+        customer_details?: CustomerDetails;
+        /**
+         * Details of the customer's billing address.
+         */
+        promotions?: Promotion[];
+        /**
+         * Details of the customer.
+         */
+        device_details?: DeviceDetails;
+        phonepe_switch_context? :string;
     }
 
     interface RazorpayOrderCreateRequestBody extends RazorpayOrderBaseRequestBody { }
@@ -222,6 +250,174 @@ export declare namespace Orders {
             refund_speed: 'optimum' | 'normal';
         }
     }
+
+    interface LineItems {
+        /**
+         * Defines the category type. Possible values is `mutual_funds` or `e-commerce`
+         */
+        type: string;
+        /**
+         * Unique product id defined by you.
+         */
+        sku: string;
+        /**
+         * Unique variant_id defined by you.
+         */
+        variant_id: string;
+        /**
+         * Price of the product in paise.
+         */
+        price: string;
+        /**
+         * Price charged to the customer in paise.
+         */
+        offer_price: string;
+        /**
+         * The tax levied on the product.
+         */
+        tax_amount: number;
+        /**
+         * Number of units added in the cart.
+         */
+        quantity: number;
+        /**
+         * Name of the product.
+         */
+        name: string;
+        /**
+         * Description of the product.
+         */
+        description: string;
+        /**
+         * Weight of the product in grams.
+         */
+        weight: string;
+        /**
+         * The dimensions of the product.
+         */
+        dimensions: Dimensions;
+        /**
+         * URL of the product image.
+         */
+        image_url: string;
+        /**
+         * URL of the product's listing page.
+         */
+        product_url: string;
+        notes?: IMap<string | number>;
+    }
+
+    interface Dimensions {
+        length: string;
+        width: string;
+        height: string;
+    }
+
+    interface Reason {
+        /**
+         * Id of the Offer.
+         */
+        reason: string;
+        /**
+         * unique identifier for the RTO reason
+         */
+        description: string;
+        /**
+         * Categorises the reason into a specific group.
+         */
+        bucket: string;
+    }
+
+    interface CustomerDetails {
+        /**
+         * Customer's name.
+         */
+        name: string;
+        /**
+         * The customer's phone number. 
+         */
+        contact: string;
+        /**
+         * The customer's email address.
+         */
+        email: string;
+        /**
+         * Details of the customer's shipping address.
+         */
+        shipping_address: Partial<Invoices.RazorpayInvoiceAddress>;
+        /**
+         * Details of the customer's billing address.
+         */
+        billing_address: Partial<Invoices.RazorpayInvoiceAddress>;
+    }
+
+    interface Promotion {
+        /**
+         * Id of the Offer.
+         */
+        reference_id: string;
+        /**
+         * Coupon code used to avail discount.
+         */
+        code: string;
+        /**
+         * Type of Offer. Possible value is `coupon` or `offer`
+         */
+        type: string;
+        /**
+         * The offer value that needs to be applied.
+         */
+        value: number;
+        /**
+         * The type of value. Possible value is `fixed_amount` or `percentage`
+         */
+        value_type: string;
+        /**
+         * Description of the promotion applied.
+         */
+        description?: string;    
+    }
+
+    interface DeviceDetails {
+        /**
+         *  Public IP Address of the device used to place the order.
+         */
+        ip: string;
+        /**
+         * The user-agent header of the customer's browser.
+         */
+        user_agent: string;
+    }
+
+    interface RazorpayRtoReview {
+        /**
+         * Determines how risky the order is. Possible is `high`, `medium` or `low`
+         */
+        risk_tier: string;
+        rto_reasons: Reason[];
+    }
+
+    interface RazorpayShipping {
+        waybill: string;
+        status?: string;
+        provider?: string;
+    }
+
+    interface RazorpayFulFillmentBaseRequestBody {
+        /**
+         * Payment Method opted by the customer to complete the payment.
+         */
+        payment_method?: string;
+        /**
+         * Contains the shipping data.
+         */
+        shipping?: RazorpayShipping;
+    }
+
+    interface RazorpayFulFillment extends RazorpayFulFillmentBaseRequestBody {
+        entity: string;
+        order_id: string;
+    }
 }
 
 declare function orders(api: any): {
@@ -290,6 +486,25 @@ declare function orders(api: any): {
     */
     fetchTransferOrder(orderId: string): Promise<Orders.RazorpayOrder>
     fetchTransferOrder(orderId: string, callback: (err: INormalizeError | null, data: Orders.RazorpayOrder) => void): void
+
+    /**
+     * View RTO/Risk Reasons
+     * 
+     * @param orderId - The unique identifier of the order
+     * 
+     */
+    viewRtoReview(orderId: string): Promise<Orders.RazorpayRtoReview>
+    viewRtoReview(orderId: string, callback: (err: INormalizeError | null, data: Orders.RazorpayRtoReview) => void): void
+
+    /**
+     * Update the Fulfillment Details
+     * 
+     * @param orderId - The unique identifier of the order
+     * @param params - Check [doc](https://razorpay.com/docs/payments/magic-checkout/rto-intelligence/#step-3-update-the-fulfillment-details) for required params
+     * 
+     */
+    editFulfillment(orderId: string, param: Orders.RazorpayFulFillmentBaseRequestBody): Promise<any>
+    editFulfillment(orderId: string, param: Orders.RazorpayFulFillmentBaseRequestBody, callback: (err: INormalizeError | null, data: any) => void): void
 }
 
 export default orders
