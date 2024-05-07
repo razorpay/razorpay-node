@@ -1004,7 +1004,7 @@ instance.payments.fetch(paymentId, {"expand[]": "emi"});
 ```
 
 -------------------------------------------------------------------------------------------------------
-###
+### Fetch a Payment (With Expanded UPI Details)
 
 ```js
 var paymentId = "pay_MLzFlOC98cJmHQ";
