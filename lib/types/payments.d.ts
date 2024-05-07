@@ -42,6 +42,16 @@ export declare namespace Payments {
          * The unique identifier of the customer you want to charge.
          */
         customer_id: string;
+        /**
+         * The unique identifier of the subscription.
+         */
+        subscription_id?: string;
+        /**
+         * The authentication channel for the payment. Possible value is `browser` or `app`
+         */
+        authentication?: {
+            authentication_channel: string;
+        };
     }
 
     interface RazorpayPaymentCreateRequestBody extends RazorpayPaymentBaseRequestBody { }
@@ -230,6 +240,10 @@ export declare namespace Payments {
          * The last 4 digits of the tokenised card.
          */
         last4?: string;
+        /**
+         * The name of the aggregator that provided the token. Possible values are `Visa`, `Mastercard`, `Amex` or `HDFC for Diners`
+         */
+        provider_type?: string;
     }
 
     interface RazorpayCardCreateRequest extends RazorpayCardBaseRequestBody { }
@@ -422,7 +436,7 @@ export declare namespace Payments {
         /**
          * Details of the expiry of the UPI link
          */
-        upi: {
+        upi?: {
             /**
              * Specify the type of the UPI payment flow.
              * Possible values: `collect` (default), `intent`
@@ -435,6 +449,10 @@ export declare namespace Payments {
              */
             expiry_time?: number;
         }
+        /**
+         * Token of the saved VPA.
+         */
+        token?: string;
     }
 
     interface RazorpayPaymentQuery extends RazorpayPaginationOptions {
@@ -451,54 +469,51 @@ export declare namespace Payments {
              */
             authentication_channel: 'browser' | 'app'
         }
+    }
+
+    interface BrowserInfo {
         /**
-         * Information regarding the customer's browser. 
-         * This parameter need not be passed when `authentication_channel=app`.
+         * Indicates whether the customer's browser supports Java. 
+         * Obtained from the `navigator` HTML DOM object.
          */
-        browser?: {
-            /**
-             * Indicates whether the customer's browser supports Java. 
-             * Obtained from the `navigator` HTML DOM object.
-             */
-            java_enabled: boolean;
-            /**
-             * ndicates whether the customer's browser is able to execute JavaScript.
-             * Obtained from the `navigator` HTML DOM object.
-             */
-            javascript_enabled: boolean;
-            /**
-             * Time difference between UTC time and the cardholder browser local time. 
-             * Obtained from the `getTimezoneOffset()` method applied to Date object.
-             */
-            timezone_offset: number;
-            /**
-             * Total width of the payer's screen in pixels. 
-             * Obtained from the `screen.width` HTML DOM property.
-             */
-            screen_width: number;
-            /**
-             * Obtained from the `navigator` HTML DOM object.
-             */
-            screen_height: number;
-            /**
-             * Obtained from payer's browser using 
-             * the `screen.colorDepth` HTML DOM property.
-             */
-            color_depth: string;
-            /**
-             * Obtained from payer's browser using the navigator.
-             * language HTML DOM property. Maximum limit of 8 characters.
-             */
-            language: string;
-        }
+        java_enabled: boolean;
+        /**
+         * Indicates whether the customer's browser is able to execute JavaScript.
+         * Obtained from the `navigator` HTML DOM object.
+         */
+        javascript_enabled: boolean;
+        /**
+         * Time difference between UTC time and the cardholder browser local time. 
+         * Obtained from the `getTimezoneOffset()` method applied to Date object.
+         */
+        timezone_offset: number | string;
+        /**
+         * Total width of the payer's screen in pixels. 
+         * Obtained from the `screen.width` HTML DOM property.
+         */
+        screen_width: number | string;
+        /**
+         * Obtained from the `navigator` HTML DOM object.
+         */
+        screen_height: number | string;
+        /**
+         * Obtained from payer's browser using 
+         * the `screen.colorDepth` HTML DOM property.
+         */
+        color_depth: number | string;
+        /**
+         * Obtained from payer's browser using the navigator.
+         * language HTML DOM property. Maximum limit of 8 characters.
+         */
+        language: string;
     }
 
     interface RazorpayPaymentS2SCreateRequestBody extends RazorpayPaymentBaseRequestBody {
-        save:boolean | number;
+        save: boolean | number;
         /**
          *  Pass the unique token id created when the customer made the first payment.
          */
-        token?:string;
+        token?: string;
         /**
          * Pass the sub-merchant's unique identifier.
          */
@@ -517,6 +532,12 @@ export declare namespace Payments {
          * Default value will be passed by Razorpay if not provided by merchant.
          */
         user_agent: string | null;
+        provider_name?: string;
+        /**
+         * Information regarding the customer's browser. 
+         * This parameter need not be passed when `authentication_channel=app`.
+         */
+        browser?: Partial<BrowserInfo>
     }
 
     interface RazorpayPaymentS2SJson {
@@ -555,6 +576,10 @@ export declare namespace Payments {
         entity: string;
     }
 
+    interface ExpandDetails {
+        'expand[]': 'card' | 'emi' | 'offers' | 'upi'
+    }
+
 }
 
 declare function payments(api: any): {
@@ -581,8 +606,8 @@ declare function payments(api: any): {
     * @param params - Check [doc](https://razorpay.com/docs/api/payments/#fetch-a-payment) for required params
     *
     */
-    fetch(paymentId: string, params?: { 'expand[]': 'card' | 'emi' | 'offers' }): Promise<Payments.RazorpayPayment>
-    fetch(paymentId: string, params: { 'expand[]': 'card' | 'emi' | 'offers' }, callback: (err: INormalizeError | null, data: Payments.RazorpayPayment) => void): void
+    fetch(paymentId: string, params?: Payments.ExpandDetails): Promise<Payments.RazorpayPayment>
+    fetch(paymentId: string, params: Payments.ExpandDetails, callback: (err: INormalizeError | null, data: Payments.RazorpayPayment) => void): void
     /**
     * Capture payment
     *
