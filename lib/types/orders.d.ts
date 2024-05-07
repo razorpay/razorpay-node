@@ -101,7 +101,7 @@ export declare namespace Orders {
         /**
          * Details of the customer's billing address.
          */
-        promotion?: Promotion[];
+        promotions?: Promotion[];
         /**
          * Details of the customer.
          */
@@ -375,7 +375,7 @@ export declare namespace Orders {
         /**
          * Description of the promotion applied.
          */
-        description: string;    
+        description?: string;    
     }
 
     interface DeviceDetails {
