@@ -478,7 +478,7 @@ export declare namespace Payments {
          */
         java_enabled: boolean;
         /**
-         * ndicates whether the customer's browser is able to execute JavaScript.
+         * Indicates whether the customer's browser is able to execute JavaScript.
          * Obtained from the `navigator` HTML DOM object.
          */
         javascript_enabled: boolean;
