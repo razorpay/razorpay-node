@@ -166,6 +166,41 @@ export declare namespace PaymentLinks {
         | RazorpayTransferPayment
         | RazorpayOffer
         | RazorpayCustomizeCheckout
+        | RazorpayBankAccount
+        | RazorpayNetBankingPayment
+    }
+
+    interface RazorpayBankAccount {
+        method?: string;
+        bank_account: {
+            account_number: string;
+            name: string;
+            ifsc: string;
+        }
+        /**
+         * Details of the products.
+         * Check [doc](https://razorpay.com/docs/api/orders/products/create-pl-with-details/)
+         */
+        products: Products;
+    }
+
+    interface Products {
+        type: string;
+        plan: string;
+        folio: string;
+        amount: string;
+        option: string;
+        scheme: string;
+        receipt: string;
+        mf_member_id: string;
+        mf_user_id: string;
+        mf_partner: string;
+        mf_investment_type: string;
+        mf_amc_code: string;
+    }
+
+    interface RazorpayNetBankingPayment {
+        order: RazorpayBankAccount
     }
 
     interface RazorpayTransferPayment {
@@ -177,7 +212,7 @@ export declare namespace PaymentLinks {
             /**
              * Pass transfer details such as amount, account, linked account information and more
              */
-            transfers: PartialOptional<Transfers.RazorpayOrderCreateRequestBody, 'on_hold'>[]
+            transfers?: PartialOptional<Transfers.RazorpayOrderCreateRequestBody, 'on_hold'>[];
         }
     }
 
@@ -196,6 +231,7 @@ export declare namespace PaymentLinks {
 
     interface RazorpayCustomizeCheckout {
         checkout:
+        | RazorpayCheckoutDisplayPayment
         | RazorpayCheckoutRenameLabels
         | RazorpayCheckoutChangeBusinessName
         | RazorpayCheckoutPrefillCard
@@ -206,6 +242,28 @@ export declare namespace PaymentLinks {
         | RazorpayCheckoutReadonly
         | RazorpayCheckoutThematicChange
     }
+
+    interface RazorpayCheckoutDisplayPayment {
+        config: {
+          display: {
+            blocks: {
+              banks: {
+                name: string;
+                instruments: [
+                  {
+                    method: string,
+                    banks: string[]
+                  }
+                ];
+              };
+            };
+            sequence: string[];
+            preferences: {
+              show_default_blocks: boolean;
+            };
+          };
+        };
+      }
 
     interface RazorpayCheckoutRenameLabels {
         /**
