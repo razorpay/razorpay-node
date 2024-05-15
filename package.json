@@ -35,6 +35,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^20.12.12",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.0",
