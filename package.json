@@ -7,7 +7,7 @@
   "scripts": {
     "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
-    "cp-types":"mkdir dist/types && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
+    "cp-types": "mkdir dist/types && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
     "cp-ts": "cp lib/razorpay.d.ts dist/ && npm run cp-types",
     "build:commonjs": "babel lib -d dist",
     "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
@@ -43,13 +43,13 @@
     "deep-equal": "^2.0.5",
     "mocha": "^9.0.0",
     "nock": "^13.1.1",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "typescript": "^4.9.4"
   },
   "dependencies": {
     "@types/request-promise": "^4.1.48",
     "promise": "^8.1.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.6",
-    "typescript": "^4.9.4"
+    "request-promise": "^4.2.6"
   }
 }
