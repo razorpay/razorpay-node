@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2.9.4 - 2024-05-17
-fix: resolve SSRF vulnerability in request handling
+fix: Resolve SSRF vulnerability in request handling
 feat: Added new API endpoints
 - Added support for `addBankAccount`, `deleteBankAccount`, `requestEligibilityCheck` & `fetchEligibility` on customer
 - Added support for [Dispute](https://razorpay.com/docs/api/disputes/)
