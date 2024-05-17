@@ -125,6 +125,11 @@ instance.payments.all(
 - [Payment Verification](documents/paymentVerfication.md)
 
 - [Webhook](documents/webhook.md)
+
+- [Dispute](documents/disputes.md)
+
+- [Document](documents/documents.md)
+
 ---
 
 ## Development

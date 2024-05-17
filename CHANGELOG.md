@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.9.4 - 2024-05-17
+fix: Resolve SSRF vulnerability in request handling
+feat: Added new API endpoints
+- Added support for `addBankAccount`, `deleteBankAccount`, `requestEligibilityCheck` & `fetchEligibility` on customer
+- Added support for [Dispute](https://razorpay.com/docs/api/disputes/)
+- Added support for [Document](https://razorpay.com/docs/api/documents/)
+- Added support for `viewRtoReview` & `editFulfillment` on order
+- Added support for fetch all IINs Supporting native otps & fetch all IINs with business sub-type using `all`
+
 ## 2.9.3 - 2024-04-18
 fix: Type definition for Product and Customer has been updated.
 
