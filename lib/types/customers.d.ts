@@ -25,7 +25,7 @@ export declare namespace Customers {
          *
          * `1` (default): If a customer with the same details already exists, throws an error.
          */
-        fail_existing?: boolean | 0 | 1;
+        fail_existing?: "0" | "1";
         /**
          * Customer's GST number, if available
          */
