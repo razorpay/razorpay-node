@@ -1,5 +1,8 @@
 # Changelog
 
+
+## 2.9.5 - 2024-10-23
+fix: Cancel subscription `cancelAtCycleEnd` now supports both `boolean` and `0/1` values as expected.
 ## 2.9.4 - 2024-05-17
 fix: Resolve SSRF vulnerability in request handling
 feat: Added new API endpoints
