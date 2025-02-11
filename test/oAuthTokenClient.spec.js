@@ -1,8 +1,9 @@
 "use strict";
 
 const mocker = require("./mocker");
-const OAuthTokenClient = require("../dist/oAuthTokenClient");
+const OAuthTokenClient = require("../lib/oAuthTokenClient");
 const { assert } = require("chai");
+const { error } = require("console");
 
 describe("OAuth", () => {
   let rzpHost;
@@ -43,11 +44,46 @@ describe("OAuth", () => {
         assert.equal(
           response.__JUST_FOR_TESTS__.capturedUrl,
           `${mocker.host}/token`,
-          "Fetch stakeholder url formed correctly"
+          "Access token url formed correctly"
         );
         done();
       })
-      .catch((err) => console.log(err));
+  });
+
+  it("get access token with invalid param", (done) => {
+    let params = {
+      client_id: "XXXXXXXXXXkQ5C",
+      client_secret: "XXXXXXXXXXXXXXXXXXHx7rXX",
+      grant_type: "authorization_code",
+    };
+
+    mocker.mock({
+      url: `/token`,
+      method: "POST",
+      requestBody: params,
+    });
+
+    oAuth
+      .getAccessToken(params)
+      .catch(err=>{
+        console.log('getAccessToken', err)
+        assert.hasAllKeys(err, ['redirect_uri', 'code']);
+        done();
+      })
+  });
+
+  it("refresh access token with invalid param", (done) => {
+    mocker.mock({
+      url: `/token`,
+      method: "POST",
+    });
+
+    oAuth
+      .refreshToken()
+      .catch((err) => {
+        assert.hasAnyKeys(err, ['client_id'])
+        done();
+      })
   });
 
   it("refresh access token", (done) => {
@@ -70,24 +106,23 @@ describe("OAuth", () => {
         assert.equal(
           response.__JUST_FOR_TESTS__.capturedUrl,
           `${mocker.host}/token`,
-          "Fetch stakeholder url formed correctly"
+          "Refresh access token url formed correctly"
         );
         done();
       })
-      .catch((err) => console.log(err));
   });
 
   it("revoke access token", (done) => {
     let params = {
       client_id: "XXXXXXXXXXkQ5C",
       client_secret: "XXXXXXXXXXXXXXXXXXHx7rXX",
-      grant_type: "refresh_token",
-      refresh_token: "def5020096e1c470c901d34cd60fa53abdaf3662sa0",
+      token_type_hint: "access_token",
+      token: "def5020096e1c470c901d34cd60fa53abdaf3662sa0",
     };
 
     mocker.mock({
-      url: `/token`,
-      method: "PATCH",
+      url: `/revoke`,
+      method: "POST",
       requestBody: params,
     });
 
@@ -96,11 +131,10 @@ describe("OAuth", () => {
       .then((response) => {
         assert.equal(
           response.__JUST_FOR_TESTS__.capturedUrl,
-          `${mocker.host}/token`,
-          "Fetch stakeholder url formed correctly"
+          `${mocker.host}/revoke`,
+          "Revoke access token url formed correctly"
         );
         done();
       })
-      .catch((err) => console.log(err));
   });
 });
