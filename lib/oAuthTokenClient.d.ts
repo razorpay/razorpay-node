@@ -36,11 +36,11 @@ declare namespace OAuthTokenClient {
         state: string;
     }
 
-    interface OAuthTokenTokenRequest extends OAuthTokenBaseRequestBody {
+    interface OAuthTokenRequest extends OAuthTokenBaseRequestBody {
         /**
          * Defines the grant type for the request. possible value is `authorization_code`
          */
-        grant_type: string;
+        grant_type?: string;
         /**
          * Specifies the same `redirect_uri` used in the authorisation request.
          */
@@ -58,7 +58,7 @@ declare namespace OAuthTokenClient {
          */
         refresh_token?: string;
         /**
-         * The type of token for the request. possible value is `access_token` or `access_token`.
+         * The type of token for the request. possible value is `access_token` or `refresh_token`.
          */
         token_type_hint?: string;
         /**
@@ -110,22 +110,22 @@ declare class OAuthTokenClient extends API{
      * Get access token
      * @param param - Check [doc](https://razorpay.com/docs/partners/technology-partners/onboard-businesses/integrate-oauth/integration-steps/#request-parameters) for required params
      */
-    getAccessToken(param: OAuthTokenClient.OAuthTokenTokenRequest): Promise<OAuthTokenClient.OAuthTokenTokenResponse>;
-    getAccessToken(param: OAuthTokenClient.OAuthTokenTokenRequest, callback: (err: INormalizeError | null, data: OAuthTokenClient.OAuthTokenTokenResponse) => void): void
+    getAccessToken(param: OAuthTokenClient.OAuthTokenRequest): Promise<OAuthTokenClient.OAuthTokenTokenResponse>;
+    getAccessToken(param: OAuthTokenClient.OAuthTokenRequest, callback: (err: INormalizeError | null, data: OAuthTokenClient.OAuthTokenTokenResponse) => void): void
 
     /**
      * Get refresh token
      * @param param - Check [doc](https://razorpay.com/docs/partners/technology-partners/onboard-businesses/integrate-oauth/integration-steps/#refresh-token-api) for required params
      */    
-    refreshToken(param: OAuthTokenClient.OAuthTokenTokenRequest): Promise<OAuthTokenClient.OAuthTokenTokenResponse>;
-    refreshToken(param: OAuthTokenClient.OAuthTokenTokenRequest, callback: (err: INormalizeError | null, data: OAuthTokenClient.OAuthTokenTokenResponse) => void): void
+    refreshToken(param: OAuthTokenClient.OAuthTokenRequest): Promise<OAuthTokenClient.OAuthTokenTokenResponse>;
+    refreshToken(param: OAuthTokenClient.OAuthTokenRequest, callback: (err: INormalizeError | null, data: OAuthTokenClient.OAuthTokenTokenResponse) => void): void
 
     /**
      * Revoke token
      * @param param - Check [doc](https://razorpay.com/docs/partners/technology-partners/onboard-businesses/integrate-oauth/integration-steps/#revoke-token-api) for required params
      */
-    revokeToken(param: OAuthTokenClient.OAuthTokenTokenRequest): Promise<{ message: string;}>;
-    revokeToken(param: OAuthTokenClient.OAuthTokenTokenRequest, callback: (err: INormalizeError | null, data: { message: string;}) => void): void
+    revokeToken(param: OAuthTokenClient.OAuthTokenRequest): Promise<{ message: string;}>;
+    revokeToken(param: OAuthTokenClient.OAuthTokenRequest, callback: (err: INormalizeError | null, data: { message: string;}) => void): void
 }
 
 export = OAuthTokenClient
