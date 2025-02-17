@@ -29,18 +29,19 @@ declare namespace OAuthTokenClient {
          * by separating with a space.
          * possible values is `read_only` or `read_write`.
          */
-        scope: string;
+        scope: string | string[];
         /**
          * Check [doc](https://razorpay.com/docs/partners/technology-partners/onboard-businesses/integrate-oauth/integration-steps/#query-parameters) for required params
          */
         state: string;
+        onboarding_signature?: string;
     }
 
     interface OAuthTokenRequest extends OAuthTokenBaseRequestBody {
         /**
-         * Defines the grant type for the request. possible value is `authorization_code`
+         * Defines the grant type for the request. possible value is `authorization_code` or `refresh_token`
          */
-        grant_type?: string;
+        grant_type?: "authorization_code" | "refresh_token";
         /**
          * Specifies the same `redirect_uri` used in the authorisation request.
          */
@@ -52,7 +53,7 @@ declare namespace OAuthTokenClient {
         /**
          * The type of mode. possible values is `test` or `live`.
          */
-        mode?: string;
+        mode?: "test" | "live";
         /**
          * Used to refresh the access token when it expires.
          */
@@ -60,7 +61,7 @@ declare namespace OAuthTokenClient {
         /**
          * The type of token for the request. possible value is `access_token` or `refresh_token`.
          */
-        token_type_hint?: string;
+        token_type_hint?: "access_token" | "refresh_token";
         /**
          * The token whose access should be revoked.
          */
