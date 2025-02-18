@@ -3,7 +3,6 @@
 const mocker = require("./mocker");
 const OAuthTokenClient = require("../lib/oAuthTokenClient");
 const { assert } = require("chai");
-const { error } = require("console");
 
 describe("OAuth", () => {
   let rzpHost;
@@ -66,7 +65,6 @@ describe("OAuth", () => {
     oAuth
       .getAccessToken(params)
       .catch(err=>{
-        console.log('getAccessToken', err)
         assert.hasAllKeys(err, ['redirect_uri', 'code']);
         done();
       })
