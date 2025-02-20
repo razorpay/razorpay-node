@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.9.6 - 2025-02-20
+feat: Added support for access token based authentication mechanism
+- Added oauth APIs (getAuthURL, getAccessToken, refreshToken, revokeToken)
+- Added support for onboarding signature generation
+- Doc updated
 
 ## 2.9.5 - 2024-10-23
 fix: Cancel subscription `cancelAtCycleEnd` now supports both `boolean` and `0/1` values as expected.
