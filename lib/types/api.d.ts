@@ -1,11 +1,13 @@
 import nodeify from '../utils/nodeify'
 
-interface IOption {
-    hostUrl: string;
-    key_id: string;
-    key_secret?: string;
-    ua: string;
-    headers?: string;
+
+interface IOption  {
+  key_id?: string;
+  key_secret?: string;
+  headers?: RazorpayHeaders;
+  oauthToken?: string;
+  hostUrl: string;
+  ua: string;
 }
 
 interface IPayload<T> {
