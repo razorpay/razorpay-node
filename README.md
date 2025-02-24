@@ -141,6 +141,8 @@ instance.payments.all(
 
 - [Document](documents/documents.md)
 
+- [oAuthTokenClient](documents/oAuthTokenClient.md)
+
 ---
 
 ## Development

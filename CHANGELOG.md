@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.9.6 - 2025-02-20
+## 2.9.6 - 2025-02-24
 feat: Added support for access token based authentication mechanism
 - Added oauth APIs (getAuthURL, getAccessToken, refreshToken, revokeToken)
 - Added support for onboarding signature generation

@@ -3,8 +3,8 @@
 ### Generate Authorize Url
 ```js
 
-const OAuthTokenClient = require("./dist/oAuthTokenClient");
-const { generateOnboardingSignature } = require("./dist/utils/razorpay-utils")
+const OAuthTokenClient = require("razorpay/dist/oAuthTokenClient")
+const { generateOnboardingSignature } = require("razorpay/dist/utils/razorpay-utils")
 
 // Initialize client
 let oAuth = new OAuthTokenClient();
