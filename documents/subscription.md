@@ -7,7 +7,7 @@ instance.subscriptions.create({
   "plan_id":"plan_00000000000001",
   "total_count":6,
   "quantity": 1,
-  "customer_notify":1,
+  "customer_notify": true,
   "start_at":1580453311,
   "expire_by":1580626111,
   "addons":[
@@ -84,7 +84,7 @@ instance.subscriptions.create({
   "quantity": 1,
   "start_at": 1561852800,
   "expire_by": 1561939199,
-  "customer_notify": 1,
+  "customer_notify": true,
   "addons": [
     {
     "item": {
@@ -263,7 +263,12 @@ instance.subscriptions.fetch(subscriptionId)
 ### Cancel particular subscription
 
 ```js
-instance.subscriptions.cancel(subscriptionId,options)
+var subscriptionId = "sub_00000000000001";
+var options = {
+  "cancel_at_cycle_end": true
+}
+
+instance.subscriptions.cancel(subscriptionId,options);
 ```
 
 **Parameters:**
@@ -271,7 +276,7 @@ instance.subscriptions.cancel(subscriptionId,options)
 | Name  | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
 | subscriptionId*  | string | The id of the subscription to be cancelled  |
-| cancel_at_cycle_end  | boolean | Possible values:<br>0 (default): Cancel the subscription immediately. <br> 1: Cancel the subscription at the end of the current billing cycle.  |
+| cancel_at_cycle_end  | boolean | Possible values:<br>false (default): Cancel the subscription immediately. <br> true: Cancel the subscription at the end of the current billing cycle.  |
 
 **Response:**
 ```json
@@ -311,7 +316,18 @@ instance.subscriptions.cancel(subscriptionId,options)
 ### Update particular subscription
 
 ```js
-instance.subscriptions.update(subscriptionId,options)
+var subscriptionId = "sub_00000000000001";
+var options = {
+  "plan_id":"plan_00000000000002",
+  "offer_id":"offer_JHD834hjbxzhd38d",
+  "quantity":5,
+  "remaining_count":5,
+  "start_at":1496000432,
+  "schedule_change_at":"now",
+  "customer_notify": true
+}
+
+instance.subscriptions.update(subscriptionId,options);
 ```
 
 **Parameters:**
@@ -658,7 +674,10 @@ instance.invoices.all({
 ### Delete offer linked to a subscription
 
 ```js
-instance.subscriptions.deleteOffer(subscriptionId, offerId)
+var subscriptionId = "sub_00000000000001";
+var offerId = "offer__00000000000001";
+
+instance.subscriptions.deleteOffer(subscriptionId, offerId);
 ```
 
 **Parameters:**
