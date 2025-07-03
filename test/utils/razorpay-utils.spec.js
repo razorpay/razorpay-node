@@ -167,7 +167,7 @@ describe('Razorpay Utils', () => {
             'invoice_receipt_id':'order_rcptid_11',
             'invoice_status':'paid',
           },
-          correctSignature = '3d8ca5c0b03c702d5675b36faf63b5f42bdd78dc946ef99b797a42bd42ab8104',
+          correctSignature = '797a05a35631be3d8c88b65d449952cb5314fba3d5fa89709d0c4faf931608be',
           wrongSignature = 'sddsfdsfs',
           secret = 'EnLs21M47BllR3X8PSFtjtbd';
 
