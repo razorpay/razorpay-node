@@ -159,4 +159,22 @@ describe('Razorpay Utils', () => {
         'Validates payment'
       );
   })
+  it('Invoice Payment Verfication', () => {
+      
+          const respBody = {
+            'payment_id':'pay_IH4NVgf4Dreq1l',
+            'invoice_id':'inv_KY9Xb8W2Xx1e1A',
+            'invoice_receipt_id':'order_rcptid_11',
+            'invoice_status':'paid',
+          },
+          correctSignature = '3d8ca5c0b03c702d5675b36faf63b5f42bdd78dc946ef99b797a42bd42ab8104',
+          wrongSignature = 'sddsfdsfs',
+          secret = 'EnLs21M47BllR3X8PSFtjtbd';
+
+       assert.ok(
+        validatePaymentVerification(respBody, correctSignature, secret) &&
+        !validatePaymentVerification(respBody, wrongSignature, secret),
+        'Validates invoice payment'
+      );
+  })
 })
