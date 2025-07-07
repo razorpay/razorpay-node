@@ -40,8 +40,8 @@ instance.invoice.create({
       "quantity": 1
     }
   ],
-  "sms_notify": 1,
-  "email_notify": 1,
+  "sms_notify": true,
+  "email_notify": true,
   "currency": "USD",
   "expire_by": 1589765167
 })
