@@ -49,3 +49,4 @@ jobs:
       - run: npm ci
       - run: npm config set //registry.npmjs.org/:_authToken ${{secrets.NPM_TOKEN}}
       - run: npm publish --otp="$(oathtool -b --totp ${{secrets.NPM_SECRET_KEY}})"
+      
