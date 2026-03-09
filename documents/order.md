@@ -349,7 +349,7 @@ instance.orders.create({
 | currency* | string  | The currency in which the transaction should be made. default value is `INR`|
 | receipt | string  | Your receipt id for this order should be passed here. Maximum length of 40 characters. |
 | notes | array  | Key-value pair that can be used to store additional information about the entity.|
-| rto_review | boolean  | Identifier to mark the order eligible for RTO risk prediction. Possible values is `0` or `1` |
+| rto_review | boolean  | Identifier to mark the order eligible for RTO risk prediction. Possible values is `true` or `false` |
 | line_items | array  | All keys listed [here](https://razorpay.com/docs/payments/magic-checkout/rto-intelligence/#step-1-create-an-order) are supported |
 | line_items_total | integer  | Sum of offer_price for all line items added in the cart in paise.  |
 | shipping_fee | integer  | Shipping fee charged on the line items in paisa. |

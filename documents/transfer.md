@@ -91,7 +91,7 @@ instance.orders.create({
       "linked_account_notes": [
         "branch"
       ],
-      "on_hold": 1,
+      "on_hold": true,
       "on_hold_until": 1671222870
     },
     {
@@ -105,7 +105,7 @@ instance.orders.create({
       "linked_account_notes": [
         "branch"
       ],
-      "on_hold": 0
+      "on_hold": true
     }
   ]
 })
@@ -556,7 +556,7 @@ instance.transfers.fetchSettlements()
 ```js
 instance.payments.refund(paymentId,{
     "amount" : 100,
-    "reverse_all" : 1
+    "reverse_all" : true
 })
 ```
 
@@ -566,7 +566,7 @@ instance.payments.refund(paymentId,{
 |---------------|-------------|---------------------------------------------|
 | paymentId*   | string      | The id of the payment to be fetched  |
 | amount*   | integer      | The amount to be captured (should be equal to the authorized amount, in paise) |
-| reverse_all   | boolean    | Reverses transfer made to a linked account. Possible values:<br> * `1` - Reverses transfer made to a linked account.<br>* `0` - Does not reverse transfer made to a linked account.|
+| reverse_all   | boolean    | Reverses transfer made to a linked account. Possible values:<br> * `true` - Reverses transfer made to a linked account.<br>* `false` - Does not reverse transfer made to a linked account.|
 
 **Response:**
 ```json
@@ -769,7 +769,7 @@ instance.payments.transfer(paymentId,{
 ### Modify settlement hold for transfers
 ```js
 instance.transfers.edit(transferId,{
-  "on_hold": "1",
+  "on_hold": true,
   "on_hold_until": "1679691505"
 })
 ```
@@ -779,7 +779,7 @@ instance.transfers.edit(transferId,{
 | Name          | Type        | Description                                 |
 |---------------|-------------|---------------------------------------------|
 | transferId*   | string      | The id of the payment to be fetched  |
-| on_hold*   | boolean      | Possible values is `0` or `1`  |
+| on_hold*   | boolean      | Possible values is `true` or `false`  |
 | on_hold_until   | integer      | Timestamp, in Unix, that indicates until when the settlement of the transfer must be put on hold |
 
 **Response:**
