@@ -243,6 +243,14 @@ declare function customers(api: any): {
       * @param eligibilityId - The unique identifier of the eligibility request to be retrieved. 
       */
      fetchEligibility(eligibilityId: string): Promise<Partial<Customers.RazorpayCustomerEligibility>>
+     /**
+      * Cancel a token
+      * 
+      * @param customerId - The unique identifier of the customer with whom the token is linked.
+      * @param tokenId - The unique identifier of the token that is to be cancelled.
+      */
+     cancelToken(customerId: string, tokenId: string): Promise<{ success: boolean }>
+     cancelToken(customerId: string, tokenId: string, callback: (err: INormalizeError | null, data: { success: boolean }) => void): void;
 }
 
 export default customers
