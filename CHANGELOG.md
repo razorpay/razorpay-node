@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+fix(types): `customers.create` `fail_existing` accepts string `'0'` / `'1'` in addition to boolean and numeric `0` / `1`, matching the Customers API.
+
 ## 2.9.6 - 2025-02-24
 feat: Added support for access token based authentication mechanism
 - Added oauth APIs (getAuthURL, getAccessToken, refreshToken, revokeToken)
