@@ -1,6 +1,9 @@
 {
   "presets": [
-    "env",
-    "stage-0"
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "22"
+      }
+    }]
   ]
 }
