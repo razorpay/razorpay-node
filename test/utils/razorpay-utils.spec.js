@@ -11,9 +11,12 @@ const {
   normalizeNotes,
   getDateInSecs,
   isDefined,
+  isNonNullObject,
   getTestError,
   validateWebhookSignature,
-  validatePaymentVerification
+  validatePaymentVerification,
+  isValidUrl,
+  generateOnboardingSignature
 } = require('../../dist/utils/razorpay-utils')
 
 describe('Razorpay Utils', () => {
@@ -144,7 +147,7 @@ describe('Razorpay Utils', () => {
   })
 
   it('Payment Verfication', () => {
-      
+
           const respBody = {
             'order_id':'order_IEIaMR65cu6nz3',
             'payment_id':'pay_IH4NVgf4Dreq1l',
@@ -158,5 +161,182 @@ describe('Razorpay Utils', () => {
         !validatePaymentVerification(respBody, wrongSignature, secret),
         'Validates payment'
       );
+  })
+
+  // New tests for isNonNullObject
+  describe('isNonNullObject', () => {
+    it('should return true for plain objects', () => {
+      assert.equal(isNonNullObject({}), true)
+      assert.equal(isNonNullObject({ key: 'value' }), true)
+    })
+
+    it('should return false for null', () => {
+      assert.equal(isNonNullObject(null), false)
+    })
+
+    it('should return false for arrays', () => {
+      assert.equal(isNonNullObject([]), false)
+      assert.equal(isNonNullObject([1, 2, 3]), false)
+    })
+
+    it('should return false for primitives', () => {
+      assert.equal(isNonNullObject(undefined), false)
+      assert.equal(isNonNullObject('string'), false)
+      assert.equal(isNonNullObject(123), false)
+      assert.equal(isNonNullObject(true), false)
+    })
+  })
+
+  // New tests for isValidUrl
+  describe('isValidUrl', () => {
+    it('should return true for valid https URLs', () => {
+      assert.equal(isValidUrl('https://razorpay.com'), true)
+      assert.equal(isValidUrl('https://api.razorpay.com/v1/orders'), true)
+    })
+
+    it('should return true for valid http URLs', () => {
+      assert.equal(isValidUrl('http://localhost:3000'), true)
+      assert.equal(isValidUrl('http://example.com/path?query=1'), true)
+    })
+
+    it('should return false for invalid URLs', () => {
+      assert.equal(isValidUrl('not-a-url'), false)
+      assert.equal(isValidUrl(''), false)
+      assert.equal(isValidUrl('razorpay.com'), false)
+    })
+
+    it('should return false for non-string inputs', () => {
+      assert.equal(isValidUrl(null), false)
+      assert.equal(isValidUrl(undefined), false)
+      assert.equal(isValidUrl(123), false)
+    })
+  })
+
+  // New tests for generateOnboardingSignature
+  describe('generateOnboardingSignature', () => {
+    it('should generate a hex string signature', () => {
+      const params = { key: 'value', nested: { a: 1 } }
+      const secret = '1234567890123456' // 16 chars for AES-128
+      const result = generateOnboardingSignature(params, secret)
+
+      assert.ok(typeof result === 'string', 'Result should be a string')
+      assert.ok(result.length > 0, 'Result should not be empty')
+      assert.ok(/^[0-9a-f]+$/.test(result), 'Result should be valid hex')
+    })
+
+    it('should produce different output for different inputs', () => {
+      const secret = '1234567890123456'
+      const sig1 = generateOnboardingSignature({ a: 1 }, secret)
+      const sig2 = generateOnboardingSignature({ a: 2 }, secret)
+
+      assert.notEqual(sig1, sig2, 'Different inputs should produce different signatures')
+    })
+
+    it('should handle empty params', () => {
+      const secret = '1234567890123456'
+      const result = generateOnboardingSignature({}, secret)
+
+      assert.ok(typeof result === 'string', 'Result should be a string')
+      assert.ok(result.length > 0, 'Result should not be empty')
+    })
+  })
+
+  // New tests for validateWebhookSignature edge cases
+  describe('validateWebhookSignature - Edge Cases', () => {
+    it('should throw error when body is undefined', () => {
+      assert.throws(() => {
+        validateWebhookSignature(undefined, 'signature', 'secret')
+      }, /Invalid Parameters/)
+    })
+
+    it('should throw error when signature is undefined', () => {
+      assert.throws(() => {
+        validateWebhookSignature('body', undefined, 'secret')
+      }, /Invalid Parameters/)
+    })
+
+    it('should throw error when secret is undefined', () => {
+      assert.throws(() => {
+        validateWebhookSignature('body', 'signature', undefined)
+      }, /Invalid Parameters/)
+    })
+
+    it('should handle Buffer body input', () => {
+      const body = Buffer.from('{"test":"data"}')
+      const secret = 'test_secret'
+      const crypto = require('crypto')
+      const expectedSig = crypto.createHmac('sha256', secret)
+                                .update(body.toString())
+                                .digest('hex')
+
+      assert.equal(
+        validateWebhookSignature(body, expectedSig, secret),
+        true,
+        'Should validate Buffer body correctly'
+      )
+    })
+
+    it('should return false for wrong length signature', () => {
+      const body = '{"test":"data"}'
+      const secret = 'test_secret'
+      const shortSig = 'abc123'
+
+      assert.equal(
+        validateWebhookSignature(body, shortSig, secret),
+        false,
+        'Should reject wrong length signature'
+      )
+    })
+
+    it('should return false for non-hex signature', () => {
+      const body = '{"test":"data"}'
+      const secret = 'test_secret'
+      const nonHexSig = 'not-valid-hex-chars!!@@##$$%%'
+
+      assert.equal(
+        validateWebhookSignature(body, nonHexSig, secret),
+        false,
+        'Should reject non-hex signature'
+      )
+    })
+
+    it('should return false for empty signature', () => {
+      const body = '{"test":"data"}'
+      const secret = 'test_secret'
+
+      assert.equal(
+        validateWebhookSignature(body, '', secret),
+        false,
+        'Should reject empty signature'
+      )
+    })
+
+    it('should return false for tampered but valid-hex signature', () => {
+      const body = '{"test":"data"}'
+      const secret = 'test_secret'
+      // Valid hex but wrong value
+      const tamperedSig = 'aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899'
+
+      assert.equal(
+        validateWebhookSignature(body, tamperedSig, secret),
+        false,
+        'Should reject tampered signature'
+      )
+    })
+  })
+
+  // New tests for validatePaymentVerification error handling
+  describe('validatePaymentVerification - Error Handling', () => {
+    it('should throw error when secret is missing', () => {
+      assert.throws(() => {
+        validatePaymentVerification({ order_id: 'order_123', payment_id: 'pay_123' }, 'sig', '')
+      }, /secret is mandatory/)
+    })
+
+    it('should throw error when neither order_id nor subscription_id is provided', () => {
+      assert.throws(() => {
+        validatePaymentVerification({ payment_id: 'pay_123' }, 'sig', 'secret')
+      }, /Either order_id or subscription_id is mandatory/)
+    })
   })
 })
