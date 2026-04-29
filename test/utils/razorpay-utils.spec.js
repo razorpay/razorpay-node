@@ -243,6 +243,21 @@ describe('Razorpay Utils', () => {
 
   // New tests for validateWebhookSignature edge cases
   describe('validateWebhookSignature - Edge Cases', () => {
+    it('should return true for valid signature', () => {
+      const body = '{"test":"data"}'
+      const secret = 'test_secret'
+      const crypto = require('crypto')
+      const validSig = crypto.createHmac('sha256', secret)
+                             .update(body)
+                             .digest('hex')
+
+      assert.equal(
+        validateWebhookSignature(body, validSig, secret),
+        true,
+        'Should return true for valid signature'
+      )
+    })
+
     it('should throw error when body is undefined', () => {
       assert.throws(() => {
         validateWebhookSignature(undefined, 'signature', 'secret')
