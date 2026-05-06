@@ -1,18 +1,43 @@
 {
   "name": "razorpay",
-  "version": "2.9.6",
+  "version": "3.0.0",
   "description": "Official Node SDK for Razorpay API",
   "main": "dist/razorpay",
+  "module": "dist/razorpay.mjs",
   "typings": "dist/razorpay",
+  "exports": {
+    ".": {
+      "types": "./dist/razorpay.d.ts",
+      "import": "./dist/razorpay.mjs",
+      "require": "./dist/razorpay.js"
+    },
+    "./dist/razorpay.mjs": "./dist/razorpay.mjs",
+    "./dist/razorpay.js": "./dist/razorpay.js",
+    "./dist/oAuthTokenClient": {
+      "types": "./dist/oAuthTokenClient.d.ts",
+      "default": "./dist/oAuthTokenClient.js"
+    },
+    "./dist/utils/nodeify": {
+      "types": "./dist/utils/nodeify.d.ts",
+      "default": "./dist/utils/nodeify.js"
+    },
+    "./dist/utils/razorpay-utils": {
+      "types": "./dist/utils/razorpay-utils.d.ts",
+      "default": "./dist/utils/razorpay-utils.js"
+    },
+    "./dist/utils/predefined-tests": {
+      "default": "./dist/utils/predefined-tests.js"
+    },
+    "./dist/types/*": "./dist/types/*.d.ts"
+  },
   "scripts": {
     "prepublish": "npm test",
     "clean": "rm -rf dist && mkdir dist",
-    "cp-types": "mkdir dist/types && cp lib/types/* dist/types && cp lib/utils/*d.ts dist/utils",
+    "cp-types": "mkdir -p dist/types dist/utils && cp lib/types/* dist/types && cp lib/utils/*.d.ts dist/utils",
     "cp-ts": "cp lib/razorpay.d.ts dist/ && cp lib/oAuthTokenClient.d.ts dist/ && npm run cp-types",
-    "build:commonjs": "babel lib -d dist",
-    "build": "npm run clean && npm run build:commonjs && npm run cp-ts",
+    "build": "npm run clean && tsup && npm run cp-ts",
     "debug": "npm run build && node-debug examples/index.js",
-    "test": "npm run build && mocha --recursive --require babel-register test/ && nyc --reporter=text mocha",
+    "test": "npm run build && mocha --recursive test/",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov"
   },
   "repository": {
@@ -36,18 +61,15 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.12.12",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.0",
-    "babel-register": "^6.26.0",
     "chai": "^4.3.4",
     "deep-equal": "^2.0.5",
     "mocha": "^9.0.0",
     "nock": "^13.1.1",
     "nyc": "^15.1.0",
-    "typescript": "^4.9.4"
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "axios": "^1.6.8"
+    "axios": "^1.15.2"
   }
 }
