@@ -1,7 +1,7 @@
 "use strict";
 
 const mocker = require("./mocker");
-const OAuthTokenClient = require("../lib/oAuthTokenClient");
+const OAuthTokenClient = require("../dist/oAuthTokenClient");
 const { assert } = require("chai");
 
 describe("OAuth", () => {
