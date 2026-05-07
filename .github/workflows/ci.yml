@@ -14,12 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x, 18.x, 19,x]
+        node-version: ['24.x']
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/    
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'  
@@ -31,7 +31,7 @@ jobs:
         run: npm run coverage 
       - name: Upload coverage to Codecov
         if: ${{ matrix.node-version == '16.x' }}
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
            token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -40,9 +40,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: sudo apt-get install -y oathtool
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
