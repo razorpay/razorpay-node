@@ -26,9 +26,10 @@ import documents from './types/documents'
 import disputes from './types/disputes'
 
 interface IRazorpayConfig {
-    key_id: string;
+    key_id?: string;
     key_secret?: string;
     headers?: RazorpayHeaders;
+    oauthToken?: string;
 }
 
 declare class Razorpay {

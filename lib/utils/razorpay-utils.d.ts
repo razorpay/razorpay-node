@@ -86,3 +86,5 @@ export function validatePaymentVerification(payload: RazorpayVerifyPayment | Raz
 * @param val
 */
 export function prettify(val: Object): string
+
+export function generateOnboardingSignature(params: any, secret: string): string

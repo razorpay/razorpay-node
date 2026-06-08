@@ -29,6 +29,17 @@ var instance = new Razorpay({
 });
 ```
 
+### Using Access Token
+Instantiate the razorpay instance with `access_token`. The `access_token` can be obtained only in case if you are a platform partner. For more information, refer page - https://razorpay.com/docs/partners/platform/.
+
+```js
+const Razorpay = require('razorpay');
+
+var instance = new Razorpay({
+  "oauthToken": "ACCESS_TOKEN"
+})
+```
+x
 The resources can be accessed via the instance. All the methods invocations follows the namespaced signature
 
 ```js
@@ -129,6 +140,8 @@ instance.payments.all(
 - [Dispute](documents/disputes.md)
 
 - [Document](documents/documents.md)
+
+- [oAuthTokenClient](documents/oAuthTokenClient.md)
 
 ---
 

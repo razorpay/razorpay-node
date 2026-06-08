@@ -33,12 +33,13 @@ Mocker.prototype.mock = function(params) {
       if (replyWithError) {
         return FIXTURES.error
       }
-
+      let capturedUrl = `${this.req.options.proto}://${this.req.options.hostname}${url}`;
       return {
         "success": true,
         __JUST_FOR_TESTS__: {
           url,
           method,
+          capturedUrl,
           requestQueryParams,
           requestBody,
           headers: this.req.headers

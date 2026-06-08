@@ -500,19 +500,30 @@ instance.orders.create({
 
 ```js
 instance.payments.createPaymentJson({
-  "amount": 100,
-  "currency": "INR",
-  "order_id": "order_EAkbvXiCJlwhHR",
-  "email": "gaurav.kumar@example.com",
-  "contact": 9090909090,
-  "method": "card",
-  "card":{
-    "number": 4111111111111111,
-    "name": "Gaurav",
-    "expiry_month": 11,
-    "expiry_year": 23,
-    "cvv": 100
-  }
+	"amount": 100,
+	"currency": "INR",
+	"contact": "9000090000",
+	"email": "gaurav.kumar@example.com",
+	"order_id": "order_DPzFe1Q1dEOKed",
+	"method": "card",
+	"card": {
+    	"number": "4386289407660153",
+    	"name": "Gaurav",
+    	"expiry_month": 11,
+    	"expiry_year": 30,
+    	"cvv": 100
+    },
+    "authentication": {
+    	"authentication_channel": "browser"
+    },
+    "browser": {
+    	"java_enabled": false,
+    	"javascript_enabled": false,
+    	"timezone_offset": 11,
+    	"color_depth": 23,
+    	"screen_width": 23,
+    	"screen_height": 100
+    }
 })
 ```
 
@@ -705,7 +716,7 @@ instance.payments.createUpi({
   "contact": "9123456789",
   "method": "upi",
   "customer_id": "cust_EIW4T2etiweBmG",
-  "save": 1,
+  "save": true,
   "ip": "192.168.0.103",
   "referer": "http",
   "user_agent": "Mozilla/5.0",
@@ -732,7 +743,7 @@ instance.payments.createUpi({
 | contact*      | string      | Contact number of the customer              |
 | notes | array  | A key-value pair  |
 | description | string  | Descriptive text of the payment. |
-| save | boolean  |  Specifies if the VPA should be stored as tokens.Possible value is `0`, `1`  |
+| save | boolean  |  Specifies if the VPA should be stored as tokens.Possible value is `true`, `false`  |
 | callback_url   | string      | URL where Razorpay will submit the final payment status. |
 | ip*   | string      | The client's browser IP address. For example `117.217.74.98` |
 | referer*   | string      | Value of `referer` header passed by the client's browser. For example, `https://example.com/` |
@@ -780,7 +791,7 @@ instance.payments.createUpi({
 | contact*      | string      | Contact number of the customer              |
 | notes | array  | A key-value pair  |
 | description | string  | Descriptive text of the payment. |
-| save | boolean  |  Specifies if the VPA should be stored as tokens.Possible value is `0`, `1`  |
+| save | boolean  |  Specifies if the VPA should be stored as tokens.Possible value is `true`, `false`  |
 | callback_url   | string      | URL where Razorpay will submit the final payment status. |
 | ip*   | string      | The client's browser IP address. For example `117.217.74.98` |
 | referer*   | string      | Value of `referer` header passed by the client's browser. For example, `https://example.com/` |
