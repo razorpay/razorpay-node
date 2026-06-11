@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.9.7 - 2026-06-10
+fix: Use random nonce per call in AES-GCM onboarding signature
+
 ## 2.9.6 - 2025-02-24
 feat: Added support for access token based authentication mechanism
 - Added oauth APIs (getAuthURL, getAccessToken, refreshToken, revokeToken)
