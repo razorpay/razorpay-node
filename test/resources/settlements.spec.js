@@ -4,6 +4,8 @@ const chai = require('chai')
 const { assert } = chai
 const rzpInstance = require('../razorpay')
 const mocker = require('../mocker')
+const equal = require('deep-equal')
+const { getDateInSecs } = require('../../dist/utils/razorpay-utils')
 const { runCallbackCheckTest,
     runParamsCheckTest }  = require("../../dist/utils/predefined-tests.js");
 
@@ -119,6 +121,35 @@ describe("Fetch all settlements", () => {
         mockerParams,
         methodArgs
       });
+
+      it('`From` & `To` dates are converted to seconds', (done) => {
+        let fromDate = 'Aug 25, 2016'
+        let toDate = 'Aug 30, 2016'
+        let fromDateInSecs = getDateInSecs(fromDate)
+        let toDateInSecs = getDateInSecs(toDate)
+
+        mocker.mock({
+          url: SUB_PATH
+        })
+
+        rzpInstance.settlements.all({
+          from: fromDate,
+          to: toDate,
+          count: 25,
+          skip: 5
+        }).then((response) => {
+          assert.ok(equal(
+            response.__JUST_FOR_TESTS__.requestQueryParams,
+            {
+              from: fromDateInSecs,
+              to: toDateInSecs,
+              count: 25,
+              skip: 5
+            }
+          ), 'from & to dates are converted to seconds')
+          done()
+        })
+      });
   });
 
   describe("Settlement report for a month", () => {
@@ -191,6 +222,34 @@ describe("Fetch all settlements", () => {
         methodName,
         mockerParams,
         methodArgs
+      });
+
+      it('`From` & `To` dates are converted to seconds', (done) => {
+        let fromDate = 'Aug 25, 2016'
+        let toDate = 'Aug 30, 2016'
+        let fromDateInSecs = getDateInSecs(fromDate)
+        let toDateInSecs = getDateInSecs(toDate)
+
+        mocker.mock({
+          url: `${SUB_PATH}/ondemand`
+        })
+
+        rzpInstance.settlements.fetchAllOndemandSettlement({
+          from: fromDate,
+          to: toDate,
+          count: 25,
+          skip: 5
+        }).then((response) => {
+          assert.ok(equal(
+            response.__JUST_FOR_TESTS__.requestQueryParams.from,
+            fromDateInSecs
+          ), 'from date is converted to seconds')
+          assert.ok(equal(
+            response.__JUST_FOR_TESTS__.requestQueryParams.to,
+            toDateInSecs
+          ), 'to date is converted to seconds')
+          done()
+        })
       });
   });
 });

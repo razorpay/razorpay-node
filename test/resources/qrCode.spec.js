@@ -336,5 +336,48 @@ describe('QRCODE ', () => {
         mockerParams,
         methodArgs
       });
+
+      it('`From` & `To` dates are converted to seconds', (done) => {
+        let fromDate = 'Aug 25, 2016'
+        let toDate = 'Aug 30, 2016'
+        let fromDateInSecs = getDateInSecs(fromDate)
+        let toDateInSecs = getDateInSecs(toDate)
+
+        mocker.mock({
+          url: `${SUB_PATH}/${TEST_QRCODE_ID}/payments`
+        })
+
+        rzpInstance.qrCode.fetchAllPayments(TEST_QRCODE_ID, {
+          from: fromDate,
+          to: toDate
+        }).then((response) => {
+          assert.equal(response.__JUST_FOR_TESTS__.requestQueryParams.from, fromDateInSecs)
+          assert.equal(response.__JUST_FOR_TESTS__.requestQueryParams.to, toDateInSecs)
+          done()
+        })
+      });
+  });
+
+  describe("Fetch all QrCode date normalization", () => {
+
+      it('`From` & `To` dates are converted to seconds', (done) => {
+        let fromDate = 'Aug 25, 2016'
+        let toDate = 'Aug 30, 2016'
+        let fromDateInSecs = getDateInSecs(fromDate)
+        let toDateInSecs = getDateInSecs(toDate)
+
+        mocker.mock({
+          url: SUB_PATH
+        })
+
+        rzpInstance.qrCode.all({
+          from: fromDate,
+          to: toDate
+        }).then((response) => {
+          assert.equal(response.__JUST_FOR_TESTS__.requestQueryParams.from, fromDateInSecs)
+          assert.equal(response.__JUST_FOR_TESTS__.requestQueryParams.to, toDateInSecs)
+          done()
+        })
+      });
   });
 });
