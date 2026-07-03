@@ -72,6 +72,37 @@ describe('PAYMENTS', () => {
     })
   })
 
+  describe('Fetch multiple refunds for a payment', () => {
+    it('`From` & `To` dates are converted to seconds', (done) => {
+      let fromDate = 'Aug 25, 2016'
+      let toDate = 'Aug 30, 2016'
+      let fromDateInSecs = getDateInSecs(fromDate)
+      let toDateInSecs = getDateInSecs(toDate)
+
+      mocker.mock({
+        url: `/payments/${TEST_PAYMENT_ID}/refunds`
+      })
+
+      rzpInstance.payments.fetchMultipleRefund(TEST_PAYMENT_ID, {
+        from: fromDate,
+        to: toDate,
+        count: 25,
+        skip: 5
+      }).then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          {
+            from: fromDateInSecs,
+            to: toDateInSecs,
+            count: 25,
+            skip: 5
+          }
+        ), 'from & to dates are converted to seconds')
+        done()
+      })
+    })
+  })
+
   describe('Payment fetch', () => {
     it('Throw error when paymentId is not provided', () => {
       assert.throws(
