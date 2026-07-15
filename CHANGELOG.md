@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.9.8 - 2026-07-15
+chore: Bump `axios` from `^1.6.8` to `^1.18.1` to pick up upstream security fixes
+
 ## 2.9.7 - 2026-06-10
 fix: Use random nonce per call in AES-GCM onboarding signature
 
