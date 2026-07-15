@@ -2,6 +2,7 @@
 
 ## 2.9.8 - 2026-07-15
 chore: Bump `axios` from `^1.6.8` to `^1.18.1` to pick up upstream security fixes
+chore: Migrate build toolchain from Babel 6 to Babel 7 (`@babel/cli`, `@babel/core`, `@babel/preset-env`, `@babel/register`); resolves critical `babel-traverse@6.26.0` advisory GHSA-67hx-6x53-jw92. Dev-only change, no runtime impact.
 
 ## 2.9.7 - 2026-06-10
 fix: Use random nonce per call in AES-GCM onboarding signature
