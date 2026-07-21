@@ -49,5 +49,11 @@
   },
   "dependencies": {
     "axios": "^1.18.1"
+  },
+  "overrides": {
+    "js-yaml": "^4.1.1",
+    "serialize-javascript": "^6.0.2",
+    "uuid": "^11.1.1",
+    "diff": "^5.2.2"
   }
 }
