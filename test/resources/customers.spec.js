@@ -284,4 +284,24 @@ describe('CUSTOMERS', () => {
       done()
     })
   })
+
+  it('Cancel token', (done) => {
+    const TEST_CUSTOMER_ID = 'cust_PNSQEApWqQgwux'
+    const TEST_TOKEN_ID = 'token_RBBG4pD0oBpZ64'
+
+    mocker.mock({
+      url: `/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}/cancel`,
+      method: 'PUT'
+    })
+
+    rzpInstance.customers.cancelToken(TEST_CUSTOMER_ID, TEST_TOKEN_ID).then((response) => {
+      assert.equal(
+        response.__JUST_FOR_TESTS__.url,
+        `/v1/customers/${TEST_CUSTOMER_ID}/tokens/${TEST_TOKEN_ID}/cancel`,
+        'Cancel token url formed correctly'
+      )
+      done()
+    })
+  })
+
 })
