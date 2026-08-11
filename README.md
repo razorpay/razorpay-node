@@ -162,7 +162,7 @@ npm test
 1.  Switch to `master` branch. Make sure you have the latest changes in the local master
 2.  Update the `CHANGELOG.md` & bump the version in `package.json`
 3.  Commit
-4.  Tag the release & push to Github
+4.  Tag the release & push to GitHub
 5.  Create a release on GitHub using the website with more details about the release
 6.  Publish to npm with `npm publish` command
 
