@@ -101,9 +101,9 @@ export declare namespace PaymentLinks {
         /**
          * Payment details such as amount, payment ID, Payment Link ID and more. 
          * This array gets populated only after the customer makes a payment. 
-         * Until then, the value is `null`.
+         * Until then, the value is `Empty Array`.
          */
-        payments: RazorpayPaymentBaseRequestBody | null;
+        payments: RazorpayPaymentBaseRequestBody[];
         reminders: {
             status: string;
         };
