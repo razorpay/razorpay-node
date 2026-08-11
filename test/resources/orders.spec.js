@@ -67,6 +67,40 @@ describe('ORDERS', () => {
         done()
       })
     })
+
+    it('`authorized` boolean is normalized to 1/0', (done) => {
+      mocker.mock({
+        url: '/orders'
+      })
+
+      rzpInstance.orders.all({
+        authorized: true
+      }).then((response) => {
+        assert.strictEqual(
+          response.__JUST_FOR_TESTS__.requestQueryParams.authorized,
+          '1',
+          '`authorized: true` is sent to the API as 1'
+        )
+        done()
+      }).catch(done)
+    })
+
+    it('`authorized: false` is normalized to 0', (done) => {
+      mocker.mock({
+        url: '/orders'
+      })
+
+      rzpInstance.orders.all({
+        authorized: false
+      }).then((response) => {
+        assert.strictEqual(
+          response.__JUST_FOR_TESTS__.requestQueryParams.authorized,
+          '0',
+          '`authorized: false` is sent to the API as 0'
+        )
+        done()
+      }).catch(done)
+    })
   })
 
   describe('Order fetch', () => {
