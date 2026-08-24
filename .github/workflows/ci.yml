@@ -22,8 +22,8 @@ jobs:
       - uses: safedep/pmg@v1
         with:
           server-mode: true
-          api-key: ${{ secrets.SAFEDEP_API_KEY }}
-          tenant-id: ${{ secrets.SAFEDEP_TENANT_ID }}
+          api-key: ${{ secrets.PMG_PUBLIC_REPOS_TOKEN }}
+          tenant-id: ${{ secrets.PMG_TENANT_ID }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -55,8 +55,8 @@ jobs:
       - uses: safedep/pmg@v1
         with:
           server-mode: true
-          api-key: ${{ secrets.SAFEDEP_API_KEY }}
-          tenant-id: ${{ secrets.SAFEDEP_TENANT_ID }}
+          api-key: ${{ secrets.PMG_PUBLIC_REPOS_TOKEN }}
+          tenant-id: ${{ secrets.PMG_TENANT_ID }}
       - run: sudo apt-get install -y oathtool
       - uses: actions/setup-node@v4
         with:
