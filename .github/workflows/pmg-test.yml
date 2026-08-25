@@ -17,9 +17,13 @@ jobs:
           api-key: ${{ secrets.PMG_PUBLIC_REPOS_TOKEN }}
           tenant-id: ${{ secrets.PMG_TENANT_ID }}
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      - name: Install npm via nvm
+        run: |
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install 20
+          echo "$NVM_DIR/versions/node/$(nvm version 20)/bin" >> $GITHUB_PATH
 
       - name: Install clean package (should succeed)
         run: npm install lodash
@@ -39,9 +43,13 @@ jobs:
           api-key: ${{ secrets.PMG_PUBLIC_REPOS_TOKEN }}
           tenant-id: ${{ secrets.PMG_TENANT_ID }}
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      - name: Install npm via nvm
+        run: |
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install 20
+          echo "$NVM_DIR/versions/node/$(nvm version 20)/bin" >> $GITHUB_PATH
 
       - name: Install flagged test package (PMG should block this)
         continue-on-error: true
