@@ -201,6 +201,14 @@ export declare namespace Orders {
         'expand[]'?: 'payments' | 'payments.card' | 'transfers' | 'virtual_account';
     }
 
+    interface ExpandDetails {
+        /**
+         * Used to retrieve additional information about the order.
+         * Using this parameter will cause a sub-entity to be added to the response.
+         */
+        'expand[]'?: 'payments' | 'payments.card' | 'transfers' | 'virtual_account';
+    }
+
     interface RazorpayBankAccountBaseRequestBody {
         /**
          * Name of the beneficiary.
@@ -451,8 +459,9 @@ declare function orders(api: any): {
     * @param orderId - The unique identifier of the order 
     *
     */
-    fetch(orderId: string): Promise<Orders.RazorpayOrder>
+    fetch(orderId: string, params?: Orders.ExpandDetails): Promise<Orders.RazorpayOrder>
     fetch(orderId: string, callback: (err: INormalizeError | null, data: Orders.RazorpayOrder) => void): void
+    fetch(orderId: string, params: Orders.ExpandDetails, callback: (err: INormalizeError | null, data: Orders.RazorpayOrder) => void): void
     /**
     * Edit a order given Order ID
     *

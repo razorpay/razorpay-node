@@ -148,6 +148,13 @@ instance.orders.fetch(orderId)
 | Name     | Type   | Description                         |
 |----------|--------|-------------------------------------|
 | orderId* | string | The id of the order to be fetched |
+| expand[] | string | Used to retrieve additional information about the order. Possible value is `payments`,`payments.card`,`transfers` or `virtual_account` |
+
+For example, to include the order's payments in the response:
+
+```js
+instance.orders.fetch(orderId, { "expand[]": "payments" })
+```
 
 **Response:**
 
