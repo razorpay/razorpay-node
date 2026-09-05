@@ -97,6 +97,22 @@ describe('PAYMENTS', () => {
         done()
       })
     })
+
+    it('Passes expand[] as a query param', (done) => {
+      let paymentId = 'pay_sometestId'
+
+      mocker.mock({
+        url: `/payments/${paymentId}`
+      })
+
+      rzpInstance.payments.fetch(paymentId, { 'expand[]': 'card' }).then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          { 'expand[]': 'card' }
+        ), 'expand[] is sent as expand[]=card')
+        done()
+      })
+    })
   })
 
   describe('Fetch Transfer', () => {

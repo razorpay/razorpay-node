@@ -28,6 +28,20 @@ describe('ORDERS', () => {
       })
     })
 
+    it('Passes expand[] as a query param', (done) => {
+      mocker.mock({
+        url: '/orders'
+      })
+
+      rzpInstance.orders.all({ 'expand[]': 'payments' }).then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          { skip: 0, count: 10, 'expand[]': 'payments' }
+        ), 'expand[] is sent as expand[]=payments alongside the defaults')
+        done()
+      })
+    })
+
     it('`From` & `To` date are converted to ms', (done) => {
       let fromDate = 'Aug 25, 2016'
       let toDate = 'Aug 30, 2016'
@@ -86,6 +100,61 @@ describe('ORDERS', () => {
       })
 
       rzpInstance.orders.fetch(orderId).then((response) => {
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/orders/${orderId}`,
+          'Fetch order url formed correctly'
+        )
+        done()
+      })
+    })
+
+    it('Passes expand[] as a query param', (done) => {
+      let orderId = 'order_sometestId'
+
+      mocker.mock({
+        url: `/orders/${orderId}`
+      })
+
+      rzpInstance.orders.fetch(orderId, { 'expand[]': 'payments' }).then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          { 'expand[]': 'payments' }
+        ), 'expand[] is sent as expand[]=payments')
+        assert.equal(
+          response.__JUST_FOR_TESTS__.url,
+          `/v1/orders/${orderId}?expand%5B%5D=payments`,
+          'expand[] is appended to the fetch url'
+        )
+        done()
+      })
+    })
+
+    it('Passes multiple expand[] values', (done) => {
+      let orderId = 'order_sometestId'
+
+      mocker.mock({
+        url: `/orders/${orderId}`
+      })
+
+      rzpInstance.orders.fetch(orderId, { 'expand[]': ['payments', 'transfers'] }).then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          { 'expand[]': ['payments', 'transfers'] }
+        ), 'each expand[] value is sent as its own expand[] param')
+        done()
+      })
+    })
+
+    it('Still accepts a callback as the second argument', (done) => {
+      let orderId = 'order_sometestId'
+
+      mocker.mock({
+        url: `/orders/${orderId}`
+      })
+
+      rzpInstance.orders.fetch(orderId, (err, response) => {
+        assert.equal(err, null, 'No error is returned')
         assert.equal(
           response.__JUST_FOR_TESTS__.url,
           `/v1/orders/${orderId}`,
