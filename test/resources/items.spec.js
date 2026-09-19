@@ -137,6 +137,45 @@ describe("ITEMS", () => {
       testTitle: "Check if skip and count are automatically populated"
     });
 
+    params = { "active": 1 };
+    methodArgs = [params];
+    expectedParams = { "active": 1, "skip": 0, "count": 10 };
+
+    runParamsCheckTest({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedParams,
+      testTitle: "Check if the active filter is forwarded"
+    });
+
+    params = { "active": true };
+    methodArgs = [params];
+    expectedParams = { "active": 1, "skip": 0, "count": 10 };
+
+    runParamsCheckTest({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedParams,
+      testTitle: "Check if a boolean active is normalized to 1"
+    });
+
+    params = { "active": false };
+    methodArgs = [params];
+    expectedParams = { "active": 0, "skip": 0, "count": 10 };
+
+    runParamsCheckTest({
+      apiObj,
+      methodName,
+      methodArgs,
+      mockerParams,
+      expectedParams,
+      testTitle: "Check if a boolean active is normalized to 0"
+    });
+
     methodArgs = [{}];
 
     runCallbackCheckTest({
