@@ -62,6 +62,30 @@ validatePaymentVerification({
 | secret* | string   | your api secret as secret |
 
 -------------------------------------------------------------------------------------------------------
+### Verify invoice payment verification
+
+```js
+validatePaymentVerification({
+  "invoice_id": InvoiceId,
+  "payment_id": PaymentId,
+  "invoice_receipt_id": InvoiceReceiptId,
+  "invoice_status": InvoiceStatus,
+}, signature , secret);
+```
+
+**Parameters:**
+
+
+| Name  | Type      | Description                                      |
+|-------|-----------|--------------------------------------------------|
+| invoiceId*  | string | The id of the invoice (`razorpay_invoice_id` returned by the Checkout)  |
+| paymentId*  | string | The id of the payment (`razorpay_payment_id` returned by the Checkout)  |
+| invoiceReceiptId*  | string | Receipt of the invoice (`razorpay_invoice_receipt` returned by the Checkout)  |
+| invoiceStatus*  | string | Current status of the invoice (`razorpay_invoice_status` returned by the Checkout)  |
+| signature* | string   | Signature returned by the Checkout. This is used to verify the payment. |
+| secret* | string   | your api secret as secret |
+
+-------------------------------------------------------------------------------------------------------
 
 ### Verify webhook verification
 
