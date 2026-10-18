@@ -423,6 +423,33 @@ describe("SUBSCRIPTIONS", () => {
       testTitle: "Check if cancel at end of cycle is being sent or not"
     });
 
+    runParamsCheckTest({
+      apiObj,
+      methodName,
+      methodArgs: [TEST_SUBSCRIPTION_ID, { cancel_at_cycle_end: true }],
+      mockerParams,
+      expectedParams: { cancel_at_cycle_end: 1 },
+      testTitle: "Check if cancel with options object { cancel_at_cycle_end: true } sends cancel_at_cycle_end: 1"
+    });
+
+    runParamsCheckTest({
+      apiObj,
+      methodName,
+      methodArgs: [TEST_SUBSCRIPTION_ID, { cancel_at_cycle_end: false }],
+      mockerParams,
+      expectedParams: { cancel_at_cycle_end: 0 },
+      testTitle: "Check if cancel with options object { cancel_at_cycle_end: false } sends cancel_at_cycle_end: 0"
+    });
+
+    it("Supports callback as second argument", (done) => {
+      mocker.mock(mockerParams);
+
+      apiObj.cancel(TEST_SUBSCRIPTION_ID, (err, data) => {
+        if (err) return done(err);
+        done();
+      });
+    });
+
     runCommonTests({
       apiObj,
       methodName,
