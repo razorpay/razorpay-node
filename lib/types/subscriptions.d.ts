@@ -359,8 +359,9 @@ declare function subscriptions(api: any): {
     * @param cancelAtCycleEnd - `false` or `0` (default): Cancel the subscription immediately.
     * 
     */
-    cancel(subscriptionId: string, cancelAtCycleEnd?: boolean | number): Promise<Subscriptions.RazorpaySubscription>
-    cancel(subscriptionId: string, cancelAtCycleEnd: boolean| number, callback: (err: INormalizeError | null, data: Subscriptions.RazorpaySubscription) => void): void;
+    cancel(subscriptionId: string, callback: (err: INormalizeError | null, data: Subscriptions.RazorpaySubscription) => void): void;
+    cancel(subscriptionId: string, cancelAtCycleEnd?: boolean | number | { cancel_at_cycle_end?: boolean | number }): Promise<Subscriptions.RazorpaySubscription>;
+    cancel(subscriptionId: string, cancelAtCycleEnd: boolean | number | { cancel_at_cycle_end?: boolean | number }, callback: (err: INormalizeError | null, data: Subscriptions.RazorpaySubscription) => void): void;
     /**
     * Delete offer linked to a subscription
     *
