@@ -72,6 +72,30 @@ describe('PAYMENTS', () => {
     })
   })
 
+    it('Additional params are forwarded to the request', (done) => {
+      let expectedParams = {
+        skip: 0,
+        count: 10,
+        order_id: 'order_123',
+        customer_id: 'cust_456'
+      }
+
+      mocker.mock({
+        url: '/payments'
+      })
+
+      rzpInstance.payments.all({
+        order_id: 'order_123',
+        customer_id: 'cust_456'
+      }).then((response) => {
+        assert.ok(equal(
+          response.__JUST_FOR_TESTS__.requestQueryParams,
+          expectedParams
+        ), 'Additional params like order_id and customer_id are forwarded')
+        done()
+      })
+    })
+
   describe('Payment fetch', () => {
     it('Throw error when paymentId is not provided', () => {
       assert.throws(
