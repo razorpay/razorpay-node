@@ -107,6 +107,34 @@ describe('Razorpay Utils', () => {
     );
   });
 
+  it('validateWebhookSignature uses timing-safe comparison', () => {
+    const respBody = '{"a":1,"b":2,"c":{"d":3}}'
+    const secret = "123456"
+    const correctSignature = "2fe04e22977002e6c7cb553adab8b460cb" +
+                              "9e2a4970d5953cb27a8472752e3bbc"
+    const wrongSignature = "000000000000000000000000000000000" +
+                           "0000000000000000000000000000"
+
+    assert.ok(
+      validateWebhookSignature(respBody, correctSignature, secret) &&
+      !validateWebhookSignature(respBody, wrongSignature, secret),
+      'Timing-safe: validates webhook signature with correct and wrong signatures'
+    );
+  });
+
+  it('validateWebhookSignature rejects signatures of different length', () => {
+    const respBody = '{"test":"data"}'
+    const secret = "mysecret"
+    const shortSignature = "abcdef"
+    const longSignature = "a".repeat(128)
+
+    assert.ok(
+      !validateWebhookSignature(respBody, shortSignature, secret) &&
+      !validateWebhookSignature(respBody, longSignature, secret),
+      'Rejects signatures with different lengths than expected HMAC-SHA256 (64 hex chars)'
+    );
+  });
+
   it('Subscription Verfication', () => {
       
     const respBody = {
